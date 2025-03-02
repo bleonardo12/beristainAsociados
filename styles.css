@@ -450,6 +450,27 @@ nav.navbar .btn-primary:hover {
 .slider-controls button:hover {
     background-color: rgba(0, 0, 0, 0.8); /* Fondo más oscuro al hacer hover */
 }
+
+
+/* Ajustes para dispositivos móviles */
+@media (max-width: 768px) {
+    .slider-area .row.align-items-center {
+        flex-direction: column; /* Apilar elementos verticalmente en móviles */
+    }
+
+    .slider-area .hero-content {
+        padding: 0 15px; /* Añadir padding para mejorar la legibilidad */
+    }
+
+    .slider-area .text-desing {
+        font-size: 0.9rem; /* Tamaño de fuente más pequeño en móviles */
+        line-height: 1.5; /* Espaciado más ajustado */
+    }
+
+    .slider-area .hero-img {
+        margin-top: 20px; /* Espaciado superior para la imagen */
+    }
+}
 /* Estilos para la sección "Áreas de Práctica" */
 .container {
     text-align: center; /* Centra el contenido del contenedor */
