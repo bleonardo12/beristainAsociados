@@ -1,0 +1,440 @@
+/* overrides.css - Este archivo debe cargarse DESPUÉS de bootstrap.css y styles.css */
+
+/* ==== AUMENTAR ESPECIFICIDAD PARA SOBRESCRIBIR BOOTSTRAP ==== */
+
+/* Dropdown automático */
+body .navbar-nav .dropdown:hover .dropdown-menu {
+    display: block !important;
+    margin-top: 0 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateY(0) !important;
+    transition: opacity 0.3s ease, transform 0.3s ease !important;
+}
+
+body .navbar-nav .dropdown-menu {
+    display: block !important;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s linear 0.3s !important;
+    margin-top: 0 !important;
+}
+
+/* Modal mejorado */
+body .modal-content {
+    border: none !important;
+    border-radius: var(--border-radius-lg) !important;
+    overflow: hidden !important;
+    box-shadow: var(--shadow-lg) !important;
+}
+
+body .modal-header {
+    background-color: var(--primary) !important;
+    color: var(--neutral-100) !important;
+    border: none !important;
+    padding: 1.5rem 2rem !important;
+}
+
+body .modal-title {
+    font-family: var(--font-primary) !important;
+    font-size: 1.75rem !important;
+    color: var(--neutral-100) !important;
+    margin-bottom: 0 !important;
+}
+
+body .modal-body {
+    padding: 2rem !important;
+    background-color: var(--neutral-100) !important;
+}
+
+body .contact-info {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1.25rem !important;
+}
+
+body .contact-info p {
+    margin-bottom: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    width: 100% !important;
+}
+
+body .contact-info a {
+    color: var(--primary) !important;
+    text-decoration: none !important;
+    font-weight: 500 !important;
+}
+
+body .contact-info a:hover {
+    color: var(--secondary) !important;
+}
+
+body .contact-info i {
+    color: var(--secondary) !important;
+    margin-right: 1rem !important;
+    font-size: 1.25rem !important;
+    width: 24px !important;
+    text-align: center !important;
+    flex-shrink: 0 !important;
+}
+
+body .modal-footer {
+    border-top: 1px solid var(--neutral-300) !important;
+    background-color: var(--neutral-200) !important;
+    padding: 0.75rem 1.5rem !important;
+}
+
+/* Asegurar que el botón en el modal se comporte como un enlace */
+.modal-footer a.btn {
+    display: inline-block !important;
+    text-decoration: none !important;
+    cursor: pointer !important;
+}
+
+/* Cards uniformes */
+body .areas-practica-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)) !important;
+    gap: 1.5rem !important;
+    margin-top: 2.5rem !important;
+}
+
+body .card-container {
+    height: 100% !important;
+}
+
+body .card {
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    min-height: 350px !important;
+    border: none !important;
+    border-radius: 12px !important;
+    overflow: hidden !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08) !important;
+    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+
+body .card:hover {
+    transform: scale(1.02) translateY(-8px) !important;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15) !important;
+}
+
+body .card-header {
+    background-color: var(--neutral-200) !important;
+    color: var(--primary) !important;
+    text-align: center !important;
+    padding: 1.5rem !important;
+    border-bottom: none !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    flex-shrink: 0 !important;
+}
+
+body .card-header img {
+    width: 60px !important;
+    height: 60px !important;
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+
+body .card:hover .card-header img {
+    transform: scale(1.1) !important;
+}
+
+body .card-body {
+    padding: 1.5rem !important;
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+body .card-body h4 {
+    color: var(--primary) !important;
+    font-size: 1.5rem !important;
+    margin-bottom: 1rem !important;
+    text-align: center !important;
+}
+
+body .card-text {
+    list-style: none !important;
+    padding-left: 0 !important;
+    margin: 0 !important;
+    flex-grow: 1 !important;
+}
+
+body .card-text li {
+    position: relative !important;
+    padding-left: 1.5rem !important;
+    margin-bottom: 0.625rem !important;
+    font-size: var(--fs-sm) !important;
+    color: var(--neutral-600) !important;
+}
+
+body .card-text li::before {
+    content: '' !important;
+    position: absolute !important;
+    left: 0 !important;
+    top: 12px !important;
+    width: 6px !important;
+    height: 6px !important;
+    border-radius: 50% !important;
+    background-color: var(--secondary) !important;
+}
+
+/* Corregir los iconos del tema */
+body .dark-icon {
+    opacity: 1 !important; /* Visible en modo claro (luna) */
+    transform: rotate(0) !important;
+}
+
+body .light-icon {
+    opacity: 0 !important; /* Oculto en modo claro */
+    transform: rotate(90deg) !important;
+}
+
+body.dark-theme .dark-icon,
+html.dark-theme .dark-icon {
+    opacity: 0 !important; /* Oculto en modo oscuro */
+    transform: rotate(-90deg) !important;
+}
+
+body.dark-theme .light-icon,
+html.dark-theme .light-icon {
+    opacity: 1 !important; /* Visible en modo oscuro (sol) */
+    transform: rotate(0) !important;
+}
+
+/* Colores de tema oscuro con mayor especificidad */
+html.dark-theme,
+html.dark-theme body,
+html.dark-theme main,
+body.dark-theme,
+.dark-theme .navbar,
+.dark-theme .card,
+.dark-theme .modal-content,
+.dark-theme .modal-body,
+.dark-theme .card-header,
+.dark-theme section,
+.dark-theme footer {
+    background-color: #121212 !important;
+    color: #b0b0b0 !important;
+}
+
+.dark-theme .navbar {
+    background-color: rgba(18, 18, 18, 0.85) !important;
+}
+
+.dark-theme .card-header {
+    background-color: #2d2d2d !important;
+}
+
+.dark-theme .section-title,
+.dark-theme .card-body h4,
+.dark-theme h1, 
+.dark-theme h2, 
+.dark-theme h3, 
+.dark-theme h4, 
+.dark-theme h5, 
+.dark-theme h6 {
+    color: #f0f0f0 !important;
+}
+
+.dark-theme .card-text li {
+    color: #b0b0b0 !important;
+}
+
+.dark-theme .modal-header {
+    background-color: #1a365d !important;
+}
+
+.dark-theme .modal-body {
+    background-color: #121212 !important;
+}
+
+.dark-theme .modal-footer {
+    background-color: #1e1e1e !important;
+}
+
+/* Estilo para resaltar secciones al navegar desde el modal */
+.highlight-section {
+    animation: highlight-pulse 2s ease-out;
+}
+
+@keyframes highlight-pulse {
+    0% { 
+        box-shadow: 0 0 0 0 rgba(var(--secondary-rgb), 0.7);
+    }
+    70% { 
+        box-shadow: 0 0 0 20px rgba(var(--secondary-rgb), 0);
+    }
+    100% { 
+        box-shadow: 0 0 0 0 rgba(var(--secondary-rgb), 0);
+    }
+}
+
+/* Estilos específicos para HOME */
+body .home-text h1 {
+    font-family: var(--font-primary) !important;
+    font-size: clamp(2.8rem, 5vw + 0.5rem, 4.5rem) !important; /* Tamaño reducido */
+    color: #ffffff !important;
+    text-transform: uppercase !important;
+    font-weight: 700 !important;
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.8) !important;
+    transition: color 0.3s ease !important;
+    margin-bottom: var(--spacing-sm) !important;
+}
+
+body .home-text h1:hover {
+    color: var(--secondary) !important;
+    cursor: default !important;
+}
+
+body .home-text h3 {
+    font-family: var(--font-secondary) !important;
+    font-size: clamp(1.2rem, 2.5vw + 0.3rem, 2.2rem) !important; /* Tamaño reducido */
+    color: #ffffff !important;
+    font-weight: 500 !important;
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.8) !important;
+    transition: color 0.3s ease !important;
+}
+
+body .home-text h3:hover {
+    color: var(--secondary) !important;
+    cursor: default !important;
+}
+
+body .home-text h3 span {
+    color: #f0ca45 !important;
+    font-weight: 700 !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9) !important;
+    transition: color 0.3s ease, transform 0.3s ease !important;
+    display: inline-block !important;
+}
+
+body .home-text h3:hover span {
+    color: #ffffff !important;
+    transform: scale(1.05) !important;
+}
+
+/* Hacer el fondo oscuro más transparente */
+body .home-text {
+    background-color: rgba(0, 0, 0, 0.5) !important; /* Fondo más transparente */
+    padding: 2rem var(--spacing-lg) !important;
+}
+
+/* Asegurar que la imagen de fondo se vea mejor */
+body .home {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('img/Facultad_de_derecho_uba.webp') !important; /* Gradiente más transparente */
+    background-position: center !important;
+    background-size: cover !important;
+}
+
+/* Corregir colores en tema oscuro */
+.dark-theme .comentario-card {
+    background-color: #1e1e1e !important;
+}
+
+.dark-theme .comentario-header h4 {
+    color: #f0f0f0 !important;
+}
+
+.dark-theme .comentario-body p {
+    color: #b0b0b0 !important;
+}
+
+.dark-theme .form-control,
+.dark-theme .form-select {
+    background-color: #2d2d2d !important;
+    border-color: #353535 !important;
+    color: #f0f0f0 !important;
+}
+
+.dark-theme .form-floating label {
+    color: #8d959e !important;
+}
+
+.dark-theme .contact-info a {
+    color: #6d93d1 !important;
+}
+
+.dark-theme .contact-info a:hover {
+    color: #d4bc45 !important;
+}
+
+/* Mejorar contraste de texto en modo oscuro */
+.dark-theme p,
+.dark-theme .card-text li,
+.dark-theme .section-text,
+.dark-theme .comentario-body p {
+    color: #e0e0e0 !important; /* Casi blanco para mejor legibilidad */
+}
+
+/* Forzar el dropdown en hover también en móvil */
+@media (max-width: 991.98px) {
+    body .navbar-nav .dropdown:hover .dropdown-menu {
+        display: block !important;
+        position: static !important;
+        float: none !important;
+        width: auto !important;
+        margin-top: 0 !important;
+        background-color: transparent !important;
+        border: 0 !important;
+        box-shadow: none !important;
+    }
+    
+    body .navbar-nav .dropdown-menu .dropdown-item {
+        padding-left: 2rem !important;
+        color: var(--neutral-600) !important;
+    }
+    
+    body .navbar-nav .dropdown-menu .dropdown-item:hover {
+        background-color: transparent !important;
+        color: var(--primary) !important;
+    }
+}
+
+/* Mejorar la apariencia de los elementos de formulario */
+body .form-floating > .form-control:focus,
+body .form-floating > .form-select:focus {
+    border-color: var(--primary) !important;
+    box-shadow: 0 0 0 0.25rem rgba(var(--primary-rgb), 0.25) !important;
+}
+
+/* Ajustar botones en el formulario */
+body .btn-lg {
+    padding: 0.75rem 2rem !important;
+    font-size: 1.125rem !important;
+    border-radius: 8px !important;
+}
+
+/* Mejorar el aspecto del footer */
+body footer a {
+    transition: all 0.3s ease !important;
+}
+
+body footer .social-links a:hover {
+    transform: translateY(-5px) !important;
+}
+
+/* Asegurar que el chatbot se vea correctamente en modo oscuro */
+.dark-theme .chatbot-panel {
+    background-color: #1e1e1e !important;
+}
+
+.dark-theme .chatbot-header {
+    background-color: var(--primary) !important;
+}
+
+.dark-theme .message.bot {
+    background-color: #2d2d2d !important;
+    color: #f0f0f0 !important;
+}
+
+.dark-theme .chat-input input {
+    background-color: #2d2d2d !important;
+    border-color: #353535 !important;
+    color: #f0f0f0 !important;
+}
