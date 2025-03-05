@@ -21,6 +21,7 @@ body .navbar-nav .dropdown-menu {
     margin-top: 0 !important;
 }
 
+
 /* Modal mejorado */
 body .modal-content {
     border: none !important;
@@ -281,10 +282,11 @@ body .home-text h1 {
     font-size: clamp(2.8rem, 5vw + 0.5rem, 4.5rem) !important; /* Tamaño reducido */
     color: #ffffff !important;
     text-transform: uppercase !important;
-    font-weight: 700 !important;
+    line-height: 1.2 !important;
+    font-weight: 500 !important;
     text-shadow: 0 4px 8px rgba(0, 0, 0, 0.8) !important;
     transition: color 0.3s ease !important;
-    margin-bottom: var(--spacing-sm) !important;
+    margin-bottom: var(--spacing-lg) !important;
 }
 
 body .home-text h1:hover {

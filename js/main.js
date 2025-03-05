@@ -10,6 +10,7 @@ import { initLazyLoad } from './modules/lazyLoad.js';
 import { initChatbot } from './modules/chatbot.js';
 import { initDropdownHover } from './modules/dropdown.js'; // Nuevo módulo para el dropdown
 import { initModalLinks } from './modules/modalLinks.js';
+import LogoManager from './modules/logoModule.js'; // Importar la clase LogoManager
 
 
 /**
@@ -29,7 +30,16 @@ class App {
       { name: 'contactForm', priority: 'medium', init: initContactForm, selector: '#contacto-rapido' },
       { name: 'animations', priority: 'low', init: initScrollAnimations },
       { name: 'chatbot', priority: 'low', init: initChatbot, selector: '#chatbot-container' },
-      { name: 'modalLinks', priority: 'high', init: initModalLinks }
+      { name: 'modalLinks', priority: 'high', init: initModalLinks },
+      { 
+        name: 'logo', 
+        priority: 'high', 
+        init: () => { 
+          // Inicializar LogoManager con constructor
+          this.logoManager = new LogoManager(); 
+          return this.logoManager;
+        }
+      }
     ];
     
     // Métricas de rendimiento
