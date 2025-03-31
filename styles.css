@@ -86,6 +86,49 @@
         scroll-behavior: auto !important;
     }
 }
+
+/* Keyframes para animaciones */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+@keyframes enterFromRight {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
+}
+
+@keyframes enterFromLeft {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(0); }
+}
+
+@keyframes leaveToRight {
+    from { transform: translateX(0); }
+    to { transform: translateX(100%); }
+}
+
+@keyframes leaveToLeft {
+    from { transform: translateX(0); }
+    to { transform: translateX(-100%); }
+}
+
+@keyframes highlight-pulse {
+    0% { 
+        box-shadow: 0 0 0 0 rgba(var(--secondary-rgb), 0.7);
+    }
+    70% { 
+        box-shadow: 0 0 0 20px rgba(var(--secondary-rgb), 0);
+    }
+    100% { 
+        box-shadow: 0 0 0 0 rgba(var(--secondary-rgb), 0);
+    }
+}
   
 /* ========== RESET Y ESTILOS BASE MODERNIZADOS ========== */
 @layer base {
@@ -185,9 +228,16 @@
     .skip-link:focus {
         top: 20px;
     }
+    
+    /* Mejora de espaciado entre secciones */
+    section {
+        margin-bottom: var(--spacing-sm);
+        padding-top: var(--spacing-sm);
+        padding-bottom: var(--spacing-sm);
+    }
 }
-  
-/* ========== MODO OSCURO MEJORADO ========== */
+
+/* ========== TEMA OSCURO ========== */
 @layer base {
     /* Preferencia del sistema */
     @media (prefers-color-scheme: dark) {
@@ -225,7 +275,7 @@
         }
         
         .home {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('img/Facultad_de_derecho_uba.webp');
+            background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('img/Facultad_de_derecho_uba.webp');
         }
         
         .card {
@@ -243,12 +293,11 @@
         }
     }
     
-    /* En styles.css */
-@layer base {
     /* Tema oscuro con toggle */
     html.dark-theme {
       color-scheme: dark;
       
+      /* Paleta oscura */
       --neutral-100: #121212;
       --neutral-200: #1e1e1e;
       --neutral-300: #2d2d2d;
@@ -283,94 +332,168 @@
       background-color: var(--neutral-100);
       color: var(--neutral-600);
     }
-  }
+    
+    /* Estilos específicos para tema oscuro */
+    html.dark-theme .navbar {
+      background-color: rgba(var(--neutral-100-rgb), 0.85) !important;
+    }
+    
+    html.dark-theme .card {
+      background-color: var(--neutral-200) !important;
+      border: 1px solid var(--neutral-300) !important;
+    }
+    
+    html.dark-theme .card-header {
+      background-color: var(--neutral-300) !important;
+    }
+    
+    html.dark-theme .section-title,
+    html.dark-theme .card-body h4,
+    html.dark-theme h1, 
+    html.dark-theme h2, 
+    html.dark-theme h3, 
+    html.dark-theme h4, 
+    html.dark-theme h5, 
+    html.dark-theme h6 {
+      color: var(--neutral-700) !important;
+    }
+    
+    html.dark-theme .card-text li {
+      color: var(--neutral-600) !important;
+    }
+    
+    html.dark-theme .comentario-card {
+      background-color: var(--neutral-200) !important;
+    }
+    
+    html.dark-theme .form-control,
+    html.dark-theme .form-select {
+      background-color: var(--neutral-300) !important;
+      border-color: var(--neutral-400) !important;
+      color: var(--neutral-700) !important;
+    }
+    
+    html.dark-theme .form-floating label {
+      color: var(--neutral-500) !important;
+    }
+    
+    html.dark-theme .contact-info a {
+      color: var(--accent) !important;
+    }
+    
+    html.dark-theme .contact-info a:hover {
+      color: var(--secondary) !important;
+    }
+    
+    html.dark-theme p,
+    html.dark-theme .card-text li,
+    html.dark-theme .section-text,
+    html.dark-theme .comentario-body p {
+      color: var(--neutral-600) !important;
+    }
+    
+    html.dark-theme .chatbot-panel {
+      background-color: var(--neutral-200) !important;
+    }
+    
+    html.dark-theme .chatbot-header {
+      background-color: var(--primary) !important;
+    }
+    
+    html.dark-theme .message.bot {
+      background-color: var(--neutral-300) !important;
+      color: var(--neutral-700) !important;
+    }
+    
+    html.dark-theme .chat-input input {
+      background-color: var(--neutral-300) !important;
+      border-color: var(--neutral-400) !important;
+      color: var(--neutral-700) !important;
+    }
+    
+    html.dark-theme .home {
+      background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('img/Facultad_de_derecho_uba.webp');
+    }
     
     /* Transición suave entre temas */
     html.color-theme-in-transition,
     html.color-theme-in-transition *,
     html.color-theme-in-transition *:before,
     html.color-theme-in-transition *:after {
-        transition: all 750ms !important;
-        transition-delay: 0 !important;
+      transition: all 750ms !important;
+      transition-delay: 0 !important;
     }
     
     /* Selector de tema */
     #theme-toggle {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        z-index: 100;
-        width: 50px;
-        height: 50px;
-        border-radius: var(--border-radius-full);
-        background-color: var(--primary);
-        color: var(--neutral-100);
-        border: none;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: var(--shadow-md);
-        transition: transform var(--transition-bounce), background-color var(--transition-normal);
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 100;
+      width: 50px;
+      height: 50px;
+      border-radius: var(--border-radius-full);
+      background-color: var(--primary);
+      color: var(--neutral-100);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-md);
+      transition: transform var(--transition-bounce), background-color var(--transition-normal);
     }
     
     #theme-toggle:hover {
-        transform: scale(1.1);
-        background-color: var(--secondary);
+      transform: scale(1.1);
+      background-color: var(--secondary);
     }
     
-    /* Corregir los iconos del tema */
+    /* Iconos del tema */
     .dark-icon {
-        opacity: 1; /* Visible en modo claro (luna) */
-        transform: rotate(0);
-        position: absolute;
-        font-size: 1.5rem;
-        transition: opacity var(--transition-normal), transform var(--transition-normal);
+      opacity: 1;
+      transform: rotate(0);
+      position: absolute;
+      font-size: 1.5rem;
+      transition: opacity var(--transition-normal), transform var(--transition-normal);
+      will-change: opacity, transform;
     }
     
     .light-icon {
-        opacity: 0; /* Oculto en modo claro */
-        transform: rotate(90deg);
-        position: absolute;
-        font-size: 1.5rem;
-        transition: opacity var(--transition-normal), transform var(--transition-normal);
+      opacity: 0;
+      transform: rotate(90deg);
+      position: absolute;
+      font-size: 1.5rem;
+      transition: opacity var(--transition-normal), transform var(--transition-normal);
+      will-change: opacity, transform;
     }
     
     html.dark-theme .dark-icon {
-        opacity: 0; /* Oculto en modo oscuro */
-        transform: rotate(-90deg);
+      opacity: 0 !important;
+      transform: rotate(-90deg) !important;
     }
     
     html.dark-theme .light-icon {
-        opacity: 1; /* Visible en modo oscuro (sol) */
-        transform: rotate(0);
+      opacity: 1 !important;
+      transform: rotate(0) !important;
     }
 }
 
 /* ========== NAVBAR CON LOGO PROMINENTE ========== */
 @layer components {
-    /* Base del navbar - altura aumentada */
+    /* Base del navbar */
     nav.navbar {
-        /* Estilos visuales */
         background-color: rgba(var(--neutral-100-rgb), 0.85) !important;
         backdrop-filter: blur(10px) !important;
         -webkit-backdrop-filter: blur(10px) !important;
         box-shadow: none;
-        
-        /* Posicionamiento y dimensiones - aumentada para acomodar logo más grande */
         position: fixed !important;
         width: 100% !important;
-        height: 120px; /* Altura aumentada */
+        height: 120px !important;
         z-index: 1000;
-        
-        /* Espaciado interno */
         padding: var(--spacing-sm) var(--spacing-lg) !important;
-        
-        /* Layout */
         display: flex;
         align-items: center;
-        
-        /* Transiciones */
         transition: all var(--transition-normal);
     }
     
@@ -379,15 +502,21 @@
         padding: var(--spacing-xs) var(--spacing-lg) !important;
         background-color: var(--neutral-100) !important;
         box-shadow: var(--shadow-md) !important;
-        height: 80px; /* Altura scrolled ajustada */
+        height: 80px !important;
     }
     
     /* Contenedor principal del navbar */
     .navbar .container-fluid {
-        position: relative;
-        height: 100%;
         display: flex;
         align-items: center;
+    }
+
+    .navbar-nav .dropdown-menu {
+        transition: 
+            opacity 0.3s ease, 
+            transform 0.3s ease, 
+            visibility 0.3s;
+        will-change: opacity, transform, visibility;
     }
     
     /* Contenedor del logo */
@@ -402,46 +531,57 @@
         transition: all var(--transition-normal);
     }
 
-    /* Logo principal - versión más prominente */
-    .navbar .logo-principal {
-        /* Dimensiones aumentadas */
-        height: 110; /* Mucho más grande */
-        width: auto;
-        
-        /* Efectos visuales mejorados */
-        filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.15));
-        
-        /* Transiciones */
-        transition: all var(--transition-normal);
+    /* Logo principal - versión más prominente con alta especificidad */
+    .navbar .logo-principal,
+    body nav.navbar .navbar-brand img.logo-principal,
+    html body .navbar .navbar-brand img.logo-principal {
+        height: 105px !important;
+        width: auto !important;
+        max-height: none !important; 
+        min-height: 95px !important;
+        filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.15)) !important;
+        position: relative !important;
+        transition: all 0.3s ease !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        display: block !important;
     }
 
     /* Logo cuando el navbar está scrolled */
-    .navbar.scrolled .logo-principal {
-        height: 70px; /* Tamaño scrolled aumentado */
+    .navbar.scrolled .logo-principal,
+    body nav.navbar.scrolled .navbar-brand img.logo-principal,
+    html body .navbar.scrolled .navbar-brand img.logo-principal {
+        height: 70px !important;
+        min-height: 60px !important;
     }
 
     /* Efecto hover en el logo */
-    .navbar .navbar-brand:hover .logo-principal {
-        filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.2));
-        transform: scale(1.05); /* Efecto de escala al pasar el mouse */
+    .navbar .navbar-brand:hover .logo-principal,
+    body nav.navbar .navbar-brand:hover img.logo-principal,
+    html body .navbar .navbar-brand:hover img.logo-principal {
+        filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.2)) !important;
+        transform: scale(1.05) !important;
     }
     
     /* Ajuste para el menú colapsable */
     .navbar .navbar-collapse {
-        margin-left: 150px; /* Espacio aumentado para el logo grande */
+        margin-left: 150px;
     }
     
     /* Navegación principal */
     .navbar-nav {
-        margin-left: auto;
+        display: flex;
+        flex-grow: 1; /* Crecer para ocupar espacio disponible */
+        margin-left: 50px; /* Separación desde el logo */
+        
     }
     
     /* Enlaces de navegación */
     .navbar-nav .nav-link {
         color: var(--neutral-600) !important;
-        font-weight: 500 !important;
-        font-size: 0.95rem !important;
-        margin: 0 var(--spacing-sm) !important;
+        font-weight: 400 !important;
+        font-size: 1.1rem !important;
+        margin: 0 var(--spacing-lg) !important;
         transition: all var(--transition-normal) !important;
         position: relative;
         padding: var(--spacing-xs) 0 !important;
@@ -478,19 +618,21 @@
         box-shadow: var(--shadow-md) !important;
         padding: var(--spacing-xs) 0 !important;
         margin-top: 0 !important;
-        display: block;
+        display: block !important;
         opacity: 0;
         visibility: hidden;
         transform: translateY(-10px);
-        transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s linear 0.3s;
+        transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s linear 0.3s !important;
     }
     
     /* Despliegue automático del menú al pasar el cursor */
     .navbar-nav .dropdown:hover .dropdown-menu {
-        opacity: 1;
-        visibility: visible;
-        transform: translateY(0);
-        transition: opacity 0.3s ease, transform 0.3s ease;
+        display: block !important;
+        margin-top: 0 !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: translateY(0) !important;
+        transition: opacity 0.3s ease, transform 0.3s ease !important;
     }
     
     nav.navbar .dropdown-item {
@@ -505,8 +647,11 @@
         color: var(--primary) !important;
         transform: translateX(5px);
     }
-    
-    /* Botón de contacto refinado */
+}
+
+/* ========== BOTONES Y COMPONENTES INTERACTIVOS ========== */
+@layer components {
+    /* Botón primario */
     .btn-primary {
         background-color: var(--primary) !important;
         border: none !important;
@@ -541,16 +686,69 @@
         transform: translate(-50%, -50%) scale(0);
         opacity: 0;
         z-index: -1;
-        transition: transform 0.6s, opacity 0.6s;
+        transition: transform 0.4s, opacity 0.4s;
     }
     
     .btn-primary:active::after {
         transform: translate(-50%, -50%) scale(1);
         opacity: 1;
-        transition: transform 0s, opacity 0.3s;
+    }
+    
+    .btn-lg {
+        padding: 0.75rem 2rem !important;
+        font-size: 1.125rem !important;
+        border-radius: 8px !important;
+    }
+    
+    /* Botón secundario */
+    .btn-secondary, .btn-outline-secondary {
+        background-color: var(--neutral-300);
+        color: var(--neutral-700);
+        border: none;
+        transition: all var(--transition-normal);
+    }
+    
+    .btn-outline-secondary {
+        background-color: transparent;
+        border: 1px solid var(--neutral-400);
+    }
+    
+    .btn-secondary:hover, .btn-outline-secondary:hover {
+        background-color: var(--neutral-400);
+        transform: translateY(-2px);
+    }
+    
+    /* Animaciones para elementos al scroll */
+    .animate-on-scroll {
+        opacity: 0;
+        transition: opacity 0.6s ease, transform 0.6s ease;
+        transition-delay: calc(var(--delay, 0) * 1ms);
+        will-change: opacity, transform;
+    }
+    
+    .animate-on-scroll.fade-up {
+        transform: translateY(20px);
+    }
+    
+    .animate-on-scroll.slide-left {
+        transform: translateX(-20px);
+    }
+    
+    .animate-on-scroll.slide-right {
+        transform: translateX(20px);
+    }
+    
+    .animate-on-scroll.scale-in {
+        transform: scale(0.95);
+    }
+    
+    .animate-on-scroll.visible {
+        opacity: 1;
+        transform: translate(0) scale(1);
     }
 }
-/* ========== BANNER DE COOKIES ========== */
+
+/* ========== COOKIE BANNER ========== */
 @layer components {
     .cookie-banner {
         position: fixed;
@@ -564,7 +762,6 @@
         box-shadow: var(--shadow-lg);
         transform: translateY(100%);
         transition: transform var(--transition-normal);
-        /* Asegurar que el banner esté por encima de todo */
         isolation: isolate;
     }
     
@@ -578,8 +775,8 @@
         justify-content: space-between;
         align-items: center;
         gap: var(--spacing-md);
-        position: relative; /* Agregar posición relativa */
-        z-index: 10000; /* Valor mayor que el navbar */
+        position: relative;
+        z-index: 10000;
     }
     
     .cookie-banner p {
@@ -609,245 +806,146 @@
         color: var(--neutral-700);
     }
 }
-  
-/* ========== HOME MINIMALISTA CON ALTA LEGIBILIDAD Y EFECTOS HOVER ========== */
+
+/* ========== CHATBOT ========== */
 @layer components {
-    .home {
-        background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('img/Facultad_de_derecho_uba.webp');
-        background-size: cover;
-        background-position: center;
-        height: 100vh;
+    .chatbot-container {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        z-index: 9999;
+    }
+    
+    .chatbot-toggle {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background-color: var(--primary);
+        color: var(--neutral-100);
         display: flex;
         align-items: center;
         justify-content: center;
-        position: relative;
-        margin-top: 0;
-        padding-top: 70px; /* Para compensar la navbar fija */
+        border: none;
+        box-shadow: var(--shadow-lg);
+        cursor: pointer;
+        transition: transform var(--transition-bounce);
+        font-size: 1.5rem;
     }
     
-    .home-text {
-        max-width: 800px;
-        padding: 2.5rem var(--spacing-lg);
-        background-color: rgba(0, 0, 0, 0.7); /* Fondo más oscuro para mayor contraste */
-        border-radius: var(--border-radius-lg);
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    .chatbot-toggle:hover {
+        transform: scale(1.1);
     }
     
-    .home-text h1 {
-        font-family: var(--font-primary);
-        font-size: clamp(3.5rem, 6vw + 1rem, 6rem); /* Tamaño mucho más grande */
-        color: #ffffff !important; /* Blanco puro, sin variables para máxima legibilidad */
-        margin-bottom: var(--spacing-lg);
-        line-height: 1.2;
-        letter-spacing: 0.05em;
-        padding-top: var(--spacing-md); /* Añadir espacio superior */
-        padding-bottom: var(--spacing-md); /* Añadir espacio inferior */
-        position: relative;
-        font-stretch: 105%;
-        font-optical-sizing: auto;
-        text-shadow: 0 4px 8px rgba(0, 0, 0, 0.8); /* Sombra más intensa */
-        font-weight: 700; /* Más negrita */
-        text-transform: uppercase; /* Texto en mayúsculas */
-        transition: color 0.3s ease; /* Transición suave para el hover */
-    }
-    
-    .home-text h1:hover {
-        color: var(--secondary) !important; /* Cambiar a color dorado al pasar el cursor */
-        cursor: default; /* Cursor normal para indicar que no es un enlace */
-    }
-    
-    .home-text h1::after {
-        content: '';
+    .chatbot-panel {
         position: absolute;
-        width: 150px; /* Más ancho */
-        height: 6px; /* Más alto */
-        background-color: var(--secondary);
-        bottom: -15px;
+        bottom: 80px;
         left: 0;
-        transition: width 0.3s ease; /* Transición para efecto hover */
+        width: 350px;
+        height: 450px;
+        background-color: var(--neutral-100);
+        border-radius: var(--border-radius-lg);
+        box-shadow: var(--shadow-lg);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        transform: scale(0);
+        opacity: 0;
+        transform-origin: bottom left;
+        transition: transform var(--transition-bounce), opacity var(--transition-normal);
     }
     
-    .home-text h1:hover::after {
-        width: 200px; /* Se amplía al pasar el cursor */
+    .chatbot-panel.open {
+        transform: scale(1);
+        opacity: 1;
     }
     
-    .home-text h3 {
-        font-family: var(--font-secondary);
-        font-size: clamp(1.5rem, 3vw + 0.5rem, 3rem); /* Tamaño mucho más grande */
-        font-weight: 500; /* Más negrita */
-        color: #ffffff !important; /* Blanco puro, sin variables */
-        margin-top: var(--spacing-lg);
-        max-width: 700px;
-        letter-spacing: 0.3px;
-        text-shadow: 0 4px 8px rgba(0, 0, 0, 0.8); /* Sombra más intensa */
+    .chatbot-header {
+        background-color: var(--primary);
+        color: var(--neutral-100);
+        padding: var(--spacing-sm) var(--spacing-md);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .chatbot-header h3 {
+        margin: 0;
+        font-size: var(--fs-md);
+        color: var(--neutral-100);
+    }
+    
+    .chatbot-header button {
+        background: none;
+        border: none;
+        color: var(--neutral-100);
+        cursor: pointer;
+        font-size: 1.25rem;
+    }
+    
+    .chat-messages {
+        flex: 1;
+        overflow-y: auto;
+        padding: var(--spacing-sm);
+    }
+    
+    .message {
+        margin-bottom: var(--spacing-sm);
+        max-width: 80%;
+        padding: var(--spacing-sm);
+        border-radius: var(--border-radius-md);
         line-height: 1.4;
-        transition: color 0.3s ease; /* Transición suave para el hover */
+        font-size: var(--fs-sm);
     }
     
-    .home-text h3:hover {
-        color: var(--secondary) !important; /* Cambiar a color dorado al pasar el cursor */
-        cursor: default; /* Cursor normal para indicar que no es un enlace */
+    .message.bot {
+        background-color: var(--neutral-200);
+        color: var(--neutral-700);
+        border-top-left-radius: 0;
+        align-self: flex-start;
     }
     
-    .home-text h3 span {
-        color: #f0ca45; /* Amarillo más brillante y específico para maximizar contraste */
-        font-weight: 700; /* Negrita total */
-        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9); /* Sombra más profunda */
-        transition: color 0.3s ease, transform 0.3s ease; /* Transición para color y transformación */
-        display: inline-block; /* Necesario para la transformación */
+    .message.user {
+        background-color: var(--primary-light);
+        color: var(--neutral-100);
+        border-top-right-radius: 0;
+        margin-left: auto;
     }
     
-    .home-text h3:hover span {
-        color: #ffffff; /* Cambiar a blanco al pasar el cursor sobre h3 */
-        transform: scale(1.05); /* Ligero aumento de tamaño */
+    .chat-input {
+        display: flex;
+        padding: var(--spacing-sm);
+        border-top: 1px solid var(--neutral-300);
     }
     
-    /* Asegurar que el texto sea legible en dispositivos móviles */
-    @media (max-width: 767.98px) {
-        .home-text {
-            padding: 2rem var(--spacing-md);
-            margin: 0 var(--spacing-sm);
-            width: 90%;
-        }
-        
-        .home-text h1 {
-            font-size: clamp(2.8rem, 10vw, 4rem);
-        }
-        
-        .home-text h3 {
-            font-size: clamp(1.4rem, 5vw, 2rem);
-            margin-top: var(--spacing-md);
-        }
+    .chat-input input {
+        flex: 1;
+        padding: var(--spacing-sm);
+        border: 1px solid var(--neutral-300);
+        border-radius: var(--border-radius-md);
+        font-size: var(--fs-sm);
+        margin-right: var(--spacing-xs);
+    }
+    
+    .chat-input button {
+        background-color: var(--primary);
+        color: var(--neutral-100);
+        border: none;
+        border-radius: var(--border-radius-md);
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: background-color var(--transition-normal);
+    }
+    
+    .chat-input button:hover {
+        background-color: var(--primary-dark);
     }
 }
 
-/* ========== SECCIONES GENERALES ========== */
-@layer components {
-    .section-padding {
-        padding: var(--spacing-xl) 0;
-    }
-    
-    .bg-light {
-        background-color: var(--neutral-200);
-    }
-    
-    .section-title {
-        font-family: var(--font-primary);
-        color: var(--primary);
-        font-size: var(--fs-3xl);
-        margin-bottom: var(--spacing-lg);
-        position: relative;
-        display: inline-block;
-    }
-    
-    .section-title::after {
-        content: '';
-        position: absolute;
-        width: 60px;
-        height: 3px;
-        background-color: var(--secondary);
-        bottom: -10px;
-        left: 0;
-    }
-    
-    .section-title span {
-        color: var(--secondary);
-    }
-    
-    .section-text {
-        color: var(--neutral-600);
-        font-size: var(--fs-md);
-        line-height: var(--line-height-relaxed);
-        margin-bottom: var(--spacing-lg);
-        max-width: 800px;
-    }
-}
-  
-/* ========== ANIMACIONES AL SCROLL ========== */
-@layer components {
-    /* Definir keyframes para las animaciones */
-    @keyframes fadeInUp {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-    
-    @keyframes fadeInLeft {
-        from {
-            opacity: 0;
-            transform: translateX(-20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateX(0);
-        }
-    }
-    
-    @keyframes fadeInRight {
-        from {
-            opacity: 0;
-            transform: translateX(20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateX(0);
-        }
-    }
-    
-    @keyframes scaleIn {
-        from {
-            opacity: 0;
-            transform: scale(0.9);
-        }
-        to {
-            opacity: 1;
-            transform: scale(1);
-        }
-    }
-    
-    /* Elementos con animación al scroll */
-    .animate-on-scroll {
-        opacity: 0;
-        transition: opacity 0.6s ease, transform 0.6s ease;
-        transition-delay: calc(var(--delay, 0) * 1ms);
-    }
-    
-    .animate-on-scroll.fade-up {
-        transform: translateY(20px);
-    }
-    
-    .animate-on-scroll.slide-left {
-        transform: translateX(-20px);
-    }
-    
-    .animate-on-scroll.slide-right {
-        transform: translateX(20px);
-    }
-    
-    .animate-on-scroll.scale-in {
-        transform: scale(0.95);
-    }
-    
-    .animate-on-scroll.visible {
-        opacity: 1;
-        transform: translate(0) scale(1);
-    }
-    
-    @media (prefers-reduced-motion: reduce) {
-        .animate-on-scroll {
-            transition: none;
-            opacity: 1;
-            transform: none;
-        }
-    }
-}
-  
-/* ========== SLIDER MODERNO ========== */
+/* ========== SLIDER Y CARRUSEL ========== */
 @layer components {
     .slider-area {
         padding: var(--spacing-xl) 0;
@@ -894,64 +992,38 @@
         animation-name: leaveToLeft;
     }
     
-    @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
-    }
-    
-    @keyframes fadeOut {
-        from { opacity: 1; }
-        to { opacity: 0; }
-    }
-    
-    @keyframes enterFromRight {
-        from { transform: translateX(100%); }
-        to { transform: translateX(0); }
-    }
-    
-    @keyframes enterFromLeft {
-        from { transform: translateX(-100%); }
-        to { transform: translateX(0); }
-    }
-    
-    @keyframes leaveToRight {
-        from { transform: translateX(0); }
-        to { transform: translateX(100%); }
-    }
-    
-    @keyframes leaveToLeft {
-        from { transform: translateX(0); }
-        to { transform: translateX(-100%); }
-    }
-    
     .slider-area .hero-content {
         padding: 0 var(--spacing-lg);
     }
     
     .slider-area .hero-content h3 {
-        font-family: var(--font-primary);
-        font-size: var(--fs-2xl);
+        text-align: left !important;
+        font-size: var(--fs-3xl) !important; /* Aumentar significativamente el tamaño */
         color: var(--primary);
-        margin-bottom: var(--spacing-sm);
+        margin-bottom: var(--spacing-xl) !important; /* Aumentar separación con el texto */
+        position: relative;
+        padding-bottom: var(--spacing-sm);
+        line-height: 1.2;
+    
     }
     
     .slider-area .hero-content h4 {
-        color: var(--primary);
-        font-size: var(--fs-xl);
-        margin-bottom: var(--spacing-xs);
+        color: var(--primary) !important;
+        font-size: var(--fs-2xl) !important;
+        margin-bottom: var(--spacing-xs) !important;
     }
     
     .slider-area .hero-content h5.title-design {
-        color: var(--secondary);
-        font-family: var(--font-secondary);
-        font-weight: 500;
-        font-size: var(--fs-md);
-        margin-bottom: var(--spacing-md);
+        color: var(--neutral-600) !important;
+        font-family: var(--font-secondary) !important;
+        font-weight: 500 !important;
+        font-size: var(--fs-lg) !important;
+        margin-bottom: var(--spacing-md) !important;
     }
     
     .slider-area .hero-content p.text-design {
-        font-size: var(--fs-base);
-        color: var(--neutral-600);
+        font-size: var(--fs-md);
+        color: var(--neutral-700);
         line-height: var(--line-height-relaxed);
     }
     
@@ -969,200 +1041,301 @@
         transform: scale(1.02);
     }
     
-    /* Controles del slider */
-    .slider-controls {
+    
+}
+
+/* ========== HOME & SECCIONES ========== */
+@layer components {
+    /* Home con efectos */
+    .home {
+        background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('img/Facultad_de_derecho_uba.webp') !important;
+        background-size: cover !important;
+        background-position: center !important;
+        height: 120vh !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        position: relative !important;
+        margin-top: 0;
+        padding-top: 70px; /* Para compensar la navbar fija */
+    }
+    
+    .home-text {
+        max-width: 900px !important;
+        padding: 2rem var(--spacing-lg) !important;
+        background-color: rgba(0, 0, 0, 0.3) !important;
+        border-radius: var(--border-radius-lg);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        width: 90% !important;
+        margin: 0 auto !important;
+    }
+    
+    .home-text h1 {
+        font-family: var(--font-primary) !important;
+        font-size: clamp(2.2rem, 4vw + 0.5rem, 3.5rem) !important;
+        color: #ffffff !important;
+        margin-bottom: var(--spacing-lg) !important;
+        line-height: 1.3 !important;
+        letter-spacing: 0.05em;
+        padding-top: var(--spacing-md);
+        padding-bottom: var(--spacing-md);
+        position: relative;
+        font-stretch: 105%;
+        font-optical-sizing: auto;
+        text-shadow: 0 4px 8px rgba(0, 0, 0, 0.8) !important;
+        text-transform: uppercase !important;
+        text-align: center !important;
+        will-change: color;
+        max-width: 900px;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+    
+    .home-text h1:hover {
+        cursor: default !important;
+    }
+    
+    .home-text h1::after {
+                      
+        content: '';
         position: absolute;
-        bottom: var(--spacing-md);
-        left: 0;
-        right: 0;
-        display: flex;
-        justify-content: center;
-        gap: var(--spacing-md);
-        z-index: 10;
-    }
-    
-    .slider-control {
-        background-color: var(--primary);
-        color: var(--neutral-100);
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        border: none;
-        opacity: 0.7;
-        transition: all var(--transition-normal);
-        box-shadow: var(--shadow-md);
-    }
-    
-    .slider-control:hover {
-        opacity: 1;
+        width: 0;
+        height: 4px;
         background-color: var(--secondary);
-        transform: scale(1.1);
+        bottom: 0px;
+        left: 0;
+        transition: width 0.6s ease;
+
     }
     
-    .slider-control i {
-        font-size: 1.5rem;
+    .home-text h1:hover::after {
+        width: 350px;
+        height: 4px;
+        border-radius: 0;
+        transform: translateY(0); /* Volver a la posición original */
+    }
+
+    .home-text h1 {
+        transition: color 0.6s ease; /* Transición más lenta */
     }
     
-    /* Indicadores del slider */
-    .slider-indicators {
+    .home-text h1:hover {
+        color: var(--secondary) !important;
+    }    
+    
+    .home-text h3 {
+        font-family: var(--font-secondary) !important;
+        font-size: clamp(1.2rem, 2.5vw + 0.3rem, 2.2rem) !important;
+        font-weight: 300 !important;
+        color: #ffffff !important;
+        margin-top: var(--spacing-lg);
+        letter-spacing: 0.3px;
+        text-shadow: 0 4px 8px rgba(0, 0, 0, 0.8) !important;
+        line-height: 1.4;
+        transition: color 0.3s ease !important;
+        will-change: color;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        position: relative;
+        padding-bottom: 15px;
+    }
+    
+    .home-text h3::after {
+        content: '';
         position: absolute;
-        bottom: var(--spacing-sm);
-        left: 0;
-        right: 0;
-        display: flex;
-        justify-content: center;
-        gap: var(--spacing-xs);
-        z-index: 10;
-    }
-    
-    .slider-indicator {
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        background-color: var(--neutral-400);
-        border: none;
-        cursor: pointer;
-        transition: all var(--transition-normal);
-    }
-    
-    .slider-indicator.active {
+        width: 0;
+        height: 4px;
         background-color: var(--secondary);
-        transform: scale(1.3);
+        bottom: 0px;
+        right: 0;
+        transition: width 0.6s ease;
+    }
+    
+    .home-text h3:hover::after {
+        width: 90px;
+    }
+    
+    .home-text h3:hover {
+        color: var(--secondary) !important;
+        cursor: default !important;
+    }
+    
+    .home-text h3 span {
+        color: #f0ca45 !important;
+        font-weight: 700 !important;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9) !important;
+        transition: color 0.3s ease, transform 0.3s ease !important;
+        display: inline-block !important;
+        will-change: transform, color;
+    }
+    
+    .home-text h3:hover span {
+        color: #ffffff !important;
+        transform: scale(1.05) !important;
+    }
+    
+    /* Secciones generales */
+    .section-padding {
+        padding: calc(var(--spacing-xl) * 1.5) 0;
+    }
+    
+    .bg-light {
+        background-color: var(--neutral-200);
+    }
+    
+   #profesionales .section-title {
+        text-align: left !important;
+        font-size: var(--fs-3xl) !important; /* Aumentar significativamente el tamaño */
+        color: var(--primary);
+        margin-bottom: var(--spacing-xl) !important; /* Aumentar separación con el texto */
+        position: relative;
+        padding-bottom: var(--spacing-sm);
+        line-height: 1.2;
+    }
+    
+    .section-title::after {
+        content: '';
+        position: absolute;
+        width: 60px;
+        height: 3px;
+        background-color: var(--secondary);
+        bottom: -10px;
+        left: 0;
+    }
+    
+    .section-title span {
+        color: var(--secondary);
+    }
+    
+    #profesionales .section-text {
+        text-align: left !important; /* Alinear texto a la izquierda */
+        max-width: 800px; /* Mantener un ancho máximo para legibilidad */
+        margin: 0 auto; /* Centrar el bloque de texto si es necesario */
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.6s ease, transform 0.6s ease;
+        font-size: var(--fs-md) !important; /* Aumentar significativamente el tamaño */
+    }
+
+    #areasDePractica .container h2 {
+        text-align: left !important;
+        font-size: var(--fs-3xl) !important; /* Aumentar significativamente el tamaño */
+        color: var(--primary);
+        margin-bottom: var(--spacing-xl) !important; /* Aumentar separación con el texto */
+        position: relative;
+        padding-bottom: var(--spacing-sm);
+        line-height: 1.2;
+    
+    }
+    
+    #areasDePractica .container p {
+        text-align: left !important; /* Alinear texto a la izquierda */
+        max-width: 800px; /* Mantener un ancho máximo para legibilidad */
+        margin: 0 auto; /* Centrar el bloque de texto si es necesario */
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.6s ease, transform 0.6s ease;
+        font-size: var(--fs-md) !important; /* Aumentar significativamente el tamaño */
     }
 }
 
-/* ========== TARJETAS MINIMALISTAS ========== */
+/* ========== TARJETAS Y GRID ========== */
 @layer components {
     .areas-practica-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        gap: var(--spacing-md);
-        margin-top: var(--spacing-lg);
+        display: grid !important;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
+        gap: var(--spacing-md) !important;
+        grid-auto-rows: 1fr !important;
+        margin-top: var(--spacing-lg) !important;
     }
     
     .card-container {
         container-type: inline-size;
         container-name: card-area;
-        height: 100%;
+        height: 100% !important;
     }
     
     .card {
-        --card-scale: 1;
-        --card-translate-y: 0;
-        --card-shadow-opacity: 0.08;
-        border: none;
-        border-radius: var(--border-radius-lg);
-        overflow: hidden;
+        height: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+        min-height: 350px !important;
+        border: none !important;
+        border-radius: var(--border-radius-lg) !important;
+        overflow: hidden !important;
         background-color: var(--neutral-100);
-        transition: transform var(--transition-bounce), 
-                    box-shadow var(--transition-normal);
-        transform: scale(var(--card-scale)) translateY(var(--card-translate-y));
-        box-shadow: 0 8px 24px rgba(0, 0, 0, var(--card-shadow-opacity));
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        min-height: 350px;
+        box-shadow: var(--shadow-md) !important;
+        transition: all var(--transition-bounce) !important;
+        will-change: transform, box-shadow;
     }
     
     .card:hover {
-        --card-scale: 1.02;
-        --card-translate-y: -8px;
-        --card-shadow-opacity: 0.15;
+        transform: scale(1.02) translateY(-8px) !important;
+        box-shadow: var(--shadow-lg) !important;
     }
     
     .card-header {
-        background-color: var(--neutral-200);
-        color: var(--primary);
-        text-align: center;
-        padding: var(--spacing-md);
-        border-bottom: none;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-shrink: 0;
+        background-color: var(--neutral-200) !important;
+        color: var(--primary) !important;
+        text-align: center !important;
+        padding: var(--spacing-md) !important;
+        border-bottom: none !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        flex-shrink: 0 !important;
     }
     
     .card-header img {
-        width: 60px;
-        height: 60px;
-        transition: transform var(--transition-bounce);
+        width: 60px !important;
+        height: 60px !important;
+        transition: transform var(--transition-bounce) !important;
+        will-change: transform;
     }
     
     .card:hover .card-header img {
-        transform: scale(1.1);
+        transform: scale(1.1) !important;
     }
     
     .card-body {
-        padding: var(--spacing-md);
-        flex: 1;
-        display: flex;
-        flex-direction: column;
+        padding: var(--spacing-md) !important;
+        flex: 1 !important;
+        display: flex !important;
+        flex-direction: column !important;
     }
     
     .card-body h4 {
-        color: var(--primary);
-        font-size: var(--fs-lg);
-        margin-bottom: var(--spacing-sm);
-        text-align: center;
+        color: var(--primary) !important;
+        font-size: var(--fs-lg) !important;
+        margin-bottom: var(--spacing-sm) !important;
+        text-align: center !important;
     }
     
     .card-text {
-        list-style: none;
-        padding-left: 0;
-        margin: 0;
-        flex-grow: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
+        list-style: none !important;
+        padding-left: 0 !important;
+        margin: 0 !important;
+        flex-grow: 1 !important;
     }
     
     .card-text li {
-        position: relative;
-        padding-left: var(--spacing-md);
-        margin-bottom: var(--spacing-xs);
-        font-size: var(--fs-sm);
-        color: var(--neutral-600);
+        position: relative !important;
+        padding-left: var(--spacing-md) !important;
+        margin-bottom: var(--spacing-xs) !important;
+        font-size: var(--fs-sm) !important;
+        color: var(--neutral-600) !important;
     }
     
     .card-text li::before {
-        content: '';
-        position: absolute;
-        left: 0;
-        top: 12px;
-        width: 6px;
-        height: 6px;
-        border-radius: 50%;
-        background-color: var(--secondary);
-    }
-    
-    @container card-area (min-width: 350px) {
-        .card-body h4 {
-            font-size: var(--fs-xl);
-        }
-        
-        .card-text li {
-            font-size: var(--fs-base);
-        }
-    }
-    
-    @container card-area (max-width: 349px) {
-        .card-body h4 {
-            font-size: var(--fs-md);
-        }
-        
-        .card-text li {
-            font-size: var(--fs-xs);
-            padding-left: var(--spacing-sm);
-        }
-        
-        .card-header img {
-            width: 50px;
-            height: 50px;
-        }
+        content: '' !important;
+        position: absolute !important;
+        left: 0 !important;
+        top: 12px !important;
+        width: 6px !important;
+        height: 6px !important;
+        border-radius: 50% !important;
+        background-color: var(--secondary) !important;
     }
 }
 
@@ -1175,6 +1348,16 @@
         overflow: hidden;
     }
     
+    .comentarios-section h2{
+        text-align: left !important;
+        font-size: var(--fs-2xl) !important; /* Aumentar significativamente el tamaño */
+        color: var(--primary);
+        margin-bottom: var(--spacing-xl) !important; /* Aumentar separación con el texto */
+        position: relative;
+        padding-bottom: var(--spacing-sm);
+        line-height: 1.2;
+    }
+
     .comentarios-wrapper {
         position: relative;
         margin-top: var(--spacing-lg);
@@ -1287,21 +1470,26 @@
         color: var(--neutral-100);
         transform: scale(1.1);
     }
-    
-    .comentario-control i {
-        font-size: 1.25rem;
-    }
 }
 
-/* ========== FORMULARIO DE CONTACTO ========== */
+/* ========== MODAL Y CONTACTO ========== */
 @layer components {
+    /* Formulario de contacto */
     .contact-form {
         background-color: var(--neutral-100);
         border-radius: var(--border-radius-lg);
         padding: var(--spacing-lg);
         box-shadow: var(--shadow-md);
     }
-    
+    #contacto-rapido h2{
+        text-align: left !important;
+        font-size: var(--fs-2xl) !important; /* Aumentar significativamente el tamaño */
+        color: var(--primary);
+        margin-bottom: var(--spacing-xl) !important; /* Aumentar separación con el texto */
+        position: relative;
+        padding-bottom: var(--spacing-sm);
+        line-height: 1.2;
+    }
     .form-floating > .form-control,
     .form-floating > .form-select {
         border: 1px solid var(--neutral-300);
@@ -1311,198 +1499,90 @@
     
     .form-floating > .form-control:focus,
     .form-floating > .form-select:focus {
-        border-color: var(--primary);
-        box-shadow: 0 0 0 0.25rem rgba(var(--primary-rgb), 0.25);
+        border-color: var(--primary) !important;
+        box-shadow: 0 0 0 0.25rem rgba(var(--primary-rgb), 0.25) !important;
     }
     
     .form-floating > label {
         color: var(--neutral-500);
     }
     
-    .btn-lg {
-        padding: var(--spacing-sm) var(--spacing-lg) !important;
-        font-size: var(--fs-base) !important;
-    }
-}
-
-/* ========== MODAL REFINADO ========== */
-@layer components {
+    /* Modal */
     .modal-content {
-        border: none;
-        border-radius: var(--border-radius-lg);
-        overflow: hidden;
-        box-shadow: var(--shadow-lg);
+        border: none !important;
+        border-radius: var(--border-radius-lg) !important;
+        overflow: hidden !important;
+        box-shadow: var(--shadow-lg) !important;
     }
     
     .modal-header {
-        background-color: var(--primary);
-        color: var(--neutral-100);
-        border: none;
-        padding: var(--spacing-md) var(--spacing-lg);
+        background-color: var(--primary) !important;
+        color: var(--neutral-100) !important;
+        border: none !important;
+        padding: 1.5rem 2rem !important;
     }
     
     .modal-title {
-        font-family: var(--font-primary);
-        font-size: var(--fs-xl);
-        color: var(--neutral-100);
-        margin-bottom: 0;
+        font-family: var(--font-primary) !important;
+        font-size: 1.75rem !important;
+        color: var(--neutral-100) !important;
+        margin-bottom: 0 !important;
     }
     
     .modal-body {
-        padding: var(--spacing-lg);
-        background-color: var(--neutral-100);
+        padding: 2rem !important;
+        background-color: var(--neutral-100) !important;
     }
     
-    /* Modal de contacto mejorado */
     .contact-info {
-        display: flex;
-        flex-direction: column;
-        gap: var(--spacing-md);
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 1.25rem !important;
     }
     
     .contact-info p {
-        margin-bottom: 0;
-        display: flex;
-        align-items: center;
-        font-size: var(--fs-base);
-        width: 100%;
+        margin-bottom: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        width: 100% !important;
     }
     
     .contact-info a {
         color: var(--primary) !important;
         text-decoration: none !important;
-        transition: color var(--transition-normal);
-        font-weight: 500;
+        font-weight: 500 !important;
     }
     
     .contact-info a:hover {
         color: var(--secondary) !important;
-        text-decoration: none !important;
     }
     
     .contact-info i {
-        color: var(--secondary);
-        margin-right: var(--spacing-sm);
-        font-size: 1.2rem;
-        width: 24px;
-        text-align: center;
-        flex-shrink: 0;
+        color: var(--secondary) !important;
+        margin-right: 1rem !important;
+        font-size: 1.25rem !important;
+        width: 24px !important;
+        text-align: center !important;
+        flex-shrink: 0 !important;
     }
     
     .modal-footer {
-        border-top: 1px solid var(--neutral-300);
-        background-color: var(--neutral-200);
-        padding: var(--spacing-sm) var(--spacing-md);
+        border-top: 1px solid var(--neutral-300) !important;
+        background-color: var(--neutral-200) !important;
+        padding: 0.75rem 1.5rem !important;
+    }
+    
+    /* Asegurar que el botón en el modal se comporte como un enlace */
+    .modal-footer a.btn {
+        display: inline-block !important;
+        text-decoration: none !important;
+        cursor: pointer !important;
     }
 }
 
-/* ========== CHATBOT ========== */
+/* ========== FOOTER Y EFECTO DE RESALTE ========== */
 @layer components {
-    .chatbot-container {
-        position: fixed;
-        bottom: 20px;
-        left: 20px;
-        z-index: 9999;
-    }
-    
-    .chatbot-toggle {
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        background-color: var(--primary);
-        color: var(--neutral-100);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border: none;
-        box-shadow: var(--shadow-lg);
-        cursor: pointer;
-        transition: transform var(--transition-bounce);
-        font-size: 1.5rem;
-    }
-    
-    .chatbot-toggle:hover {
-        transform: scale(1.1);
-    }
-    
-    .chatbot-panel {
-        position: absolute;
-        bottom: 80px;
-        left: 0;
-        width: 350px;
-        height: 450px;
-        background-color: var(--neutral-100);
-        border-radius: var(--border-radius-lg);
-        box-shadow: var(--shadow-lg);
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
-        transform: scale(0);
-        opacity: 0;
-        transform-origin: bottom left;
-        transition: transform var(--transition-bounce), opacity var(--transition-normal);
-    }
-    
-    .chatbot-panel.open {
-        transform: scale(1);
-        opacity: 1;
-    }
-    
-    .chatbot-header {
-        background-color: var(--primary);
-        color: var(--neutral-100);
-        padding: var(--spacing-sm) var(--spacing-md);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-    
-    .chatbot-header h3 {
-        margin: 0;
-        font-size: var(--fs-md);
-        color: var(--neutral-100);
-    }
-    
-    .chatbot-header button {
-        background: none;
-        border: none;
-        color: var(--neutral-100);
-        cursor: pointer;
-        font-size: 1.25rem;
-    }
-    
-    .chat-messages {
-        flex: 1;
-        overflow-y: auto;
-        padding: var(--spacing-sm);
-    }
-    
-    .message {
-        margin-bottom: var(--spacing-sm);
-        max-width: 80%;
-        padding: var(--spacing-sm);
-        border-radius: var(--border-radius-md);
-        line-height: 1.4;
-        font-size: var(--fs-sm);
-    }
-    
-    .message.bot {
-        background-color: var(--neutral-200);
-        color: var(--neutral-700);
-        border-top-left-radius: 0;
-        align-self: flex-start;
-    }
-    
-    .message.user {
-        background-color: var(--primary-light);
-        color: var(--neutral-100);
-        border-top-right-radius: 0;
-        margin-left: auto;
-    }
-}
-
-/* ========== FOOTER MODERNO ========== */
-@layer components {
+    /* Footer */
     footer {
         background-color: var(--neutral-700);
         color: var(--neutral-300);
@@ -1555,8 +1635,6 @@
         text-decoration: none;
     }
     
-
-    
     .social-links {
         display: flex;
         gap: var(--spacing-sm);
@@ -1594,86 +1672,39 @@
         font-size: var(--fs-xs);
         color: var(--neutral-400);
     }
-}
-
-
-/* ========== LOGO PROMINENTE CON ESPECIFICIDAD ELEVADA ========== */
-
-/* Aumentamos la especificidad y forzamos con !important para superar cualquier regla de Bootstrap */
-body nav.navbar .navbar-brand img.logo-principal,
-html body .navbar .navbar-brand img.logo-principal {
-    /* Dimensiones forzadas */
-    height: 150px !important;
-    width: auto !important;
-    max-height: none !important; /* Anula cualquier max-height */
-    min-height: 110px !important; /* Fuerza la altura mínima */
     
-    /* Estilos visuales */
-    filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.15)) !important;
-    
-    /* Reset de cualquier posicionamiento que pueda estar afectando */
-    position: relative !important;
-    
-    /* Transiciones */
-    transition: all 0.3s ease !important;
-    
-    /* Asegurar visibilidad */
-    opacity: 1 !important;
-    visibility: visible !important;
-    display: block !important;
+    /* Highlight para secciones */
+    .highlight-section {
+        animation: highlight-pulse 2s ease-out;
+        will-change: box-shadow;
+    }
 }
 
-/* Logo cuando el navbar está scrolled - con especificidad elevada */
-body nav.navbar.scrolled .navbar-brand img.logo-principal,
-html body .navbar.scrolled .navbar-brand img.logo-principal {
-    height: 70px !important;
-    min-height: 50px !important;
-}
-
-/* Efecto hover con especificidad elevada */
-body nav.navbar .navbar-brand:hover img.logo-principal,
-html body .navbar .navbar-brand:hover img.logo-principal {
-    filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.2)) !important;
-    transform: scale(1.05) !important;
-}
-
-
-/* Asegurar que Bootstrap no altere nuestro navbar */
-body nav.navbar,
-html body .navbar {
-    height: 120px !important;
-    padding: 0.5rem 2rem !important;
-}
-
-body nav.navbar.scrolled,
-html body .navbar.scrolled {
-    height: 80px !important;
-}
-
-
-/* Primero mantenemos todas las reglas no responsivas */
-/* ... código existente ... */
-
-/* Luego agrupamos todos los media queries en un solo lugar al final del archivo */
-/* ==== MEDIA QUERIES CONSOLIDADOS ==== */
+/* ========== MEDIA QUERIES CONSOLIDADOS ========== */
 
 /* XL - Pantallas grandes (hasta 1199.98px) */
 @media (max-width: 1199.98px) {
     /* Navbar */
     nav.navbar {
-        height: 110px;
+        height: 110px !important;
     }
     
     nav.navbar.scrolled {
-        height: 75px;
+        height: 75px !important;
     }
     
-    .navbar .logo-principal {
-        height: 100px;
+    .navbar .logo-principal,
+    body nav.navbar .navbar-brand img.logo-principal,
+    html body .navbar .navbar-brand img.logo-principal {
+        height: 100px !important;
+        min-height: 100px !important;
     }
     
-    .navbar.scrolled .logo-principal {
-        height: 65px;
+    .navbar.scrolled .logo-principal,
+    body nav.navbar.scrolled .navbar-brand img.logo-principal,
+    html body .navbar.scrolled .navbar-brand img.logo-principal {
+        height: 65px !important;
+        min-height: 65px !important;
     }
     
     .navbar .navbar-collapse {
@@ -1685,17 +1716,13 @@ html body .navbar.scrolled {
         font-size: var(--fs-2xl);
     }
     
-    /* Estilos específicos con alta especificidad */
-    body nav.navbar .navbar-brand img.logo-principal,
-    html body .navbar .navbar-brand img.logo-principal {
-        height: 100px !important;
-        min-height: 100px !important;
+    /* Modal ajustes */
+    .modal-header {
+        padding: 1.25rem 1.75rem !important;
     }
     
-    body nav.navbar.scrolled .navbar-brand img.logo-principal,
-    html body .navbar.scrolled .navbar-brand img.logo-principal {
-        height: 65px !important;
-        min-height: 65px !important;
+    .modal-body {
+        padding: 1.75rem !important;
     }
 }
 
@@ -1703,19 +1730,25 @@ html body .navbar.scrolled {
 @media (max-width: 991.98px) {
     /* Navbar */
     nav.navbar {
-        height: 100px;
+        height: 100px !important;
     }
     
     nav.navbar.scrolled {
-        height: 70px;
+        height: 70px !important;
     }
     
-    .navbar .logo-principal {
-        height: 90px;
+    .navbar .logo-principal,
+    body nav.navbar .navbar-brand img.logo-principal,
+    html body .navbar .navbar-brand img.logo-principal {
+        height: 90px !important;
+        min-height: 90px !important;
     }
     
-    .navbar.scrolled .logo-principal {
-        height: 60px;
+    .navbar.scrolled .logo-principal,
+    body nav.navbar.scrolled .navbar-brand img.logo-principal,
+    html body .navbar.scrolled .navbar-brand img.logo-principal {
+        height: 60px !important;
+        min-height: 60px !important;
     }
     
     .navbar .navbar-collapse {
@@ -1723,46 +1756,74 @@ html body .navbar.scrolled {
         margin-top: 90px;
     }
     
-    /* Estilos de sección */
+    /* estilos de seccion */
     .section-title {
         font-size: var(--fs-xl);
     }
     
-    .slider-area .hero-content {
-        margin-bottom: var(--spacing-md);
+    /* Forzar el dropdown en hover también en móvil */
+    .navbar-nav .dropdown:hover .dropdown-menu {
+        display: block !important;
+        position: static !important;
+        float: none !important;
+        width: auto !important;
+        margin-top: 0 !important;
+        background-color: transparent !important;
+        border: 0 !important;
+        box-shadow: none !important;
     }
     
-    /* Estilos específicos con alta especificidad */
-    body nav.navbar .navbar-brand img.logo-principal,
-    html body .navbar .navbar-brand img.logo-principal {
-        height: 90px !important;
-        min-height: 90px !important;
+    .navbar-nav .dropdown-menu .dropdown-item {
+        padding-left: 2rem !important;
+        color: var(--neutral-600) !important;
     }
     
-    body nav.navbar.scrolled .navbar-brand img.logo-principal,
-    html body .navbar.scrolled .navbar-brand img.logo-principal {
-        height: 60px !important;
-        min-height: 60px !important;
+    .navbar-nav .dropdown-menu .dropdown-item:hover {
+        background-color: transparent !important;
+        color: var(--primary) !important;
+    }
+    
+    /* Ajuste para modal en tablet */
+    .modal-title {
+        font-size: 1.5rem !important;
+    }
+    
+    /* Mejorar cards en tablet */
+    .card {
+        min-height: 300px !important;
     }
 }
 
 /* MD - Tablets (hasta 767.98px) */
 @media (max-width: 767.98px) {
+    /* Secciones - espaciado en móviles */
+    section {
+        margin-bottom: var(--spacing-lg);
+        padding-top: var(--spacing-lg);
+        padding-bottom: var(--spacing-lg);
+    }
+    
     /* Navbar */
     nav.navbar {
-        height: 90px;
+        height: 90px !important;
     }
     
     nav.navbar.scrolled {
-        height: 65px;
+        height: 65px !important;
     }
     
-    .navbar .logo-principal {
-        height: 80px;
+    .navbar .logo-principal,
+    body nav.navbar .navbar-brand img.logo-principal,
+    html body .navbar .navbar-brand img.logo-principal {
+        height: 80px !important;
+        min-height: 80px !important;
     }
     
-    .navbar.scrolled .logo-principal {
-        height: 55px;
+    .navbar.scrolled .logo-principal,
+    body nav.navbar.scrolled .navbar-brand img.logo-principal,
+    html body .navbar.scrolled .navbar-brand img.logo-principal {
+        height: 55px !important;
+        min-height: 55px !important;
     }
     
     /* Secciones */
@@ -1799,55 +1860,55 @@ html body .navbar.scrolled {
         margin-top: var(--spacing-sm);
     }
     
-    /* Slider/Hero */
-    .slider-area .hero-content {
-        text-align: center;
-    }
-    
-    .slider-area .hero-content h3,
-    .slider-area .hero-content h4,
-    .slider-area .hero-content h5 {
-        text-align: center;
-    }
-    
-    .slider-area .hero-content h3::after,
-    .slider-area .hero-content h4::after {
-        left: 50%;
-        transform: translateX(-50%);
-    }
-    
     /* Home */
     .home-text {
-        padding: 2rem var(--spacing-md);
-        margin: 0 var(--spacing-sm);
-        width: 90%;
+        width: 90% !important;
+        padding: 1.5rem var(--spacing-md) !important;
     }
     
     .home-text h1 {
-        font-size: clamp(2.8rem, 10vw, 4rem);
+        font-size: clamp(2rem, 3.5vw + 0.5rem, 3rem) !important;
     }
     
-    .home-text h3 {
-        font-size: clamp(1.4rem, 5vw, 2rem);
-        margin-top: var(--spacing-md);
+    /* Tarjetas más compactas en dispositivos medianos */
+    .card-header {
+        padding: 1.25rem !important;
     }
     
-    /* Chatbot */
+    .card-body {
+        padding: 1.25rem !important;
+    }
+    
+    .card-body h4 {
+        font-size: 1.3rem !important;
+    }
+    
+    /* Modal ajustes */
+    .modal-header {
+        padding: 1rem 1.5rem !important;
+    }
+    
+    .modal-body {
+        padding: 1.5rem !important;
+    }
+    
+    .modal-title {
+        font-size: 1.3rem !important;
+    }
+    
+    /* Contacto info en modal más compacto */
+    .contact-info {
+        gap: 1rem !important;
+    }
+    
+    .contact-info i {
+        font-size: 1.1rem !important;
+        margin-right: 0.75rem !important;
+    }
+    
+    /* Chatbot ajustes */
     .chatbot-panel {
-        width: 300px;
-    }
-    
-    /* Estilos específicos con alta especificidad */
-    body nav.navbar .navbar-brand img.logo-principal,
-    html body .navbar .navbar-brand img.logo-principal {
-        height: 80px !important;
-        min-height: 80px !important;
-    }
-    
-    body nav.navbar.scrolled .navbar-brand img.logo-principal,
-    html body .navbar.scrolled .navbar-brand img.logo-principal {
-        height: 55px !important;
-        min-height: 55px !important;
+        width: 280px;
     }
 }
 
@@ -1861,24 +1922,96 @@ html body .navbar.scrolled {
     
     /* Navbar */
     nav.navbar {
-        height: 80px;
+        height: 80px !important;
         padding: var(--spacing-xs) var(--spacing-md) !important;
     }
     
     nav.navbar.scrolled {
-        height: 60px;
+        height: 60px !important;
         padding: var(--spacing-xs) var(--spacing-md) !important;
     }
     
-    .navbar .logo-principal {
-        height: 70px;
+    .navbar .logo-principal,
+    body nav.navbar .navbar-brand img.logo-principal,
+    html body .navbar .navbar-brand img.logo-principal {
+        height: 70px !important;
+        min-height: 70px !important;
     }
     
-    .navbar.scrolled .logo-principal {
-        height: 50px;
+    .navbar.scrolled .logo-principal,
+    body nav.navbar.scrolled .navbar-brand img.logo-principal,
+    html body .navbar.scrolled .navbar-brand img.logo-principal {
+        height: 50px !important;
+        min-height: 50px !important;
     }
     
-    /* Testimonios */
+    /* Home más compacto */
+    .home-text {
+        padding: 1.25rem var(--spacing-sm) !important;
+    }
+    
+    .home-text h1 {
+        font-size: clamp(1.8rem, 3vw + 0.5rem, 2.5rem) !important;
+        margin-bottom: var(--spacing-md) !important;
+    }
+    
+    .home-text h3 {
+        font-size: clamp(1rem, 1.8vw + 0.3rem, 1.5rem) !important;
+    }
+    
+    /* Botones más compactos */
+    .btn-lg {
+        padding: 0.5rem 1.5rem !important;
+        font-size: 1rem !important;
+    }
+    
+    /* Modal más compacto para móvil */
+    .modal-header {
+        padding: 0.75rem 1rem !important;
+    }
+    
+    .modal-body {
+        padding: 1rem !important;
+    }
+    
+    .modal-title {
+        font-size: 1.2rem !important;
+    }
+    
+    .modal-footer {
+        padding: 0.5rem 1rem !important;
+    }
+    
+    /* Tarjetas más verticales */
+    .card {
+        min-height: 280px !important;
+    }
+    
+    .card-header {
+        padding: 1rem !important;
+    }
+    
+    .card-header img {
+        width: 50px !important;
+        height: 50px !important;
+    }
+    
+    .card-body {
+        padding: 1rem !important;
+    }
+    
+    .card-body h4 {
+        font-size: 1.2rem !important;
+        margin-bottom: 0.75rem !important;
+    }
+    
+    .card-text li {
+        font-size: var(--fs-xs) !important;
+        padding-left: 1.25rem !important;
+        margin-bottom: 0.5rem !important;
+    }
+    
+    /* Adjustments for testimonials */
     .cliente-foto {
         width: 50px;
         height: 50px;
@@ -1892,30 +2025,34 @@ html body .navbar.scrolled {
         font-size: var(--fs-sm);
     }
     
-    /* Slider */
-    .slider-control {
-        width: 40px;
-        height: 40px;
-    }
-    
-    /* Chatbot */
+    /* Chatbot ajustes para móvil */
     .chatbot-panel {
-        width: 280px;
+        width: 250px;
         height: 400px;
-        bottom: 70px;
     }
     
-    /* Estilos específicos con alta especificidad */
-    body nav.navbar .navbar-brand img.logo-principal,
-    html body .navbar .navbar-brand img.logo-principal {
-        height: 70px !important;
-        min-height: 70px !important;
+    .chatbot-toggle {
+        width: 50px;
+        height: 50px;
+        font-size: 1.3rem;
     }
     
-    body nav.navbar.scrolled .navbar-brand img.logo-principal,
-    html body .navbar.scrolled .navbar-brand img.logo-principal {
-        height: 50px !important;
-        min-height: 50px !important;
+    /* Footer ajustado para móvil */
+    footer h4 {
+        font-size: var(--fs-md);
+        margin-bottom: var(--spacing-sm);
+    }
+    
+    footer p {
+        font-size: var(--fs-xs);
+    }
+    
+    .social-links a {
+        width: 36px;
+        height: 36px;
+    }
+    
+    .social-links i {
+        font-size: 1rem;
     }
 }
-

@@ -505,3 +505,4 @@ function createAnimationAPI(state) {
     })
   };
 }
+
