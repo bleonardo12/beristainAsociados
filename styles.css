@@ -243,76 +243,47 @@
         }
     }
     
+    /* En styles.css */
+@layer base {
     /* Tema oscuro con toggle */
     html.dark-theme {
-        color-scheme: dark;
-        
-        --neutral-100: #121212;
-        --neutral-200: #1e1e1e;
-        --neutral-300: #2d2d2d;
-        --neutral-400: #353535;
-        --neutral-500: #5c5c5c;
-        --neutral-600: #b0b0b0;
-        --neutral-700: #f0f0f0;
-        
-        --neutral-100-rgb: 18, 18, 18;
-        --neutral-700-rgb: 240, 240, 240;
-        
-        --primary: #4a6fa5;
-        --primary-rgb: 74, 111, 165;
-        --secondary: #d4bc45;
-        --secondary-rgb: 212, 188, 69;
-        --accent: #6d93d1;
-        
-        --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
-        --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.25);
-        --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.3);
+      color-scheme: dark;
+      
+      --neutral-100: #121212;
+      --neutral-200: #1e1e1e;
+      --neutral-300: #2d2d2d;
+      --neutral-400: #353535;
+      --neutral-500: #5c5c5c;
+      --neutral-600: #b0b0b0;
+      --neutral-700: #f0f0f0;
+      
+      --neutral-100-rgb: 18, 18, 18;
+      --neutral-700-rgb: 240, 240, 240;
+      
+      --primary: #4a6fa5;
+      --primary-rgb: 74, 111, 165;
+      --secondary: #d4bc45;
+      --secondary-rgb: 212, 188, 69;
+      --accent: #6d93d1;
+      
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
+      --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.25);
+      --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.3);
+      
+      background-color: var(--neutral-100);
+      color: var(--neutral-600);
     }
     
-    /* Asegurar que el tema oscuro se aplique a toda la página */
+    /* Aplicar a todos los elementos principales */
     html.dark-theme body,
     html.dark-theme main,
     html.dark-theme section,
-    html.dark-theme .card,
-    html.dark-theme .modal-content,
-    html.dark-theme .comentario-card {
-        background-color: var(--neutral-100);
-        color: var(--neutral-600);
+    html.dark-theme .container,
+    html.dark-theme .container-fluid {
+      background-color: var(--neutral-100);
+      color: var(--neutral-600);
     }
-    
-    html.dark-theme .navbar {
-        background-color: rgba(var(--neutral-100-rgb), 0.85) !important;
-    }
-    
-    html.dark-theme .home {
-        background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('img/Facultad_de_derecho_uba.webp');
-    }
-    
-    html.dark-theme .card {
-        background-color: var(--neutral-200);
-        border: 1px solid var(--neutral-300);
-    }
-    
-    html.dark-theme .card-header {
-        background-color: var(--neutral-300);
-    }
-    
-    html.dark-theme .section-title,
-    html.dark-theme .card-body h4 {
-        color: var(--neutral-200);
-    }
-    
-    html.dark-theme .card-text li {
-        color: var(--neutral-400);
-    }
-    
-    html.dark-theme .comentario-card {
-        background-color: var(--neutral-200);
-    }
-    
-    html.dark-theme .invert-in-dark {
-        filter: invert(1) hue-rotate(180deg);
-    }
+  }
     
     /* Transición suave entre temas */
     html.color-theme-in-transition,
@@ -497,96 +468,6 @@
     .navbar-nav .nav-link:hover:after,
     .navbar-nav .nav-item.active .nav-link:after {
         width: 100%;
-    }
-    
-    /* ========== AJUSTES RESPONSIVOS ========== */
-    
-    /* XL - Pantallas grandes */
-    @media (max-width: 1199.98px) {
-        nav.navbar {
-            height: 110px;
-        }
-        
-        nav.navbar.scrolled {
-            height: 75px;
-        }
-        
-        .navbar .logo-principal {
-            height: 100px;
-        }
-        
-        .navbar.scrolled .logo-principal {
-            height: 65px;
-        }
-        
-        .navbar .navbar-collapse {
-            margin-left: 130px;
-        }
-    }
-    
-    /* LG - Pantallas medianas */
-    @media (max-width: 991.98px) {
-        nav.navbar {
-            height: 100px;
-        }
-        
-        nav.navbar.scrolled {
-            height: 70px;
-        }
-        
-        .navbar .logo-principal {
-            height: 90px;
-        }
-        
-        .navbar.scrolled .logo-principal {
-            height: 60px;
-        }
-        
-        /* En dispositivos móviles, el menú colapsado no necesita margen */
-        .navbar .navbar-collapse {
-            margin-left: 0;
-            margin-top: 90px; /* Espacio desde arriba para el menú colapsado */
-        }
-    }
-    
-    /* MD - Tablets */
-    @media (max-width: 767.98px) {
-        nav.navbar {
-            height: 90px;
-        }
-        
-        nav.navbar.scrolled {
-            height: 65px;
-        }
-        
-        .navbar .logo-principal {
-            height: 80px;
-        }
-        
-        .navbar.scrolled .logo-principal {
-            height: 55px;
-        }
-    }
-    
-    /* SM - Móviles */
-    @media (max-width: 575.98px) {
-        nav.navbar {
-            height: 80px;
-            padding: var(--spacing-xs) var(--spacing-md) !important;
-        }
-        
-        nav.navbar.scrolled {
-            height: 60px;
-            padding: var(--spacing-xs) var(--spacing-md) !important;
-        }
-        
-        .navbar .logo-principal {
-            height: 70px;
-        }
-        
-        .navbar.scrolled .logo-principal {
-            height: 50px;
-        }
     }
     
     /* Dropdown modernizado */
@@ -1715,109 +1596,6 @@
     }
 }
 
-/* ========== RESPONSIVE DESIGN ========== */
-@layer components {
-    @media (max-width: 1199.98px) {
-        .section-title {
-            font-size: var(--fs-2xl);
-        }
-    }
-    
-    @media (max-width: 991.98px) {
-        .section-title {
-            font-size: var(--fs-xl);
-        }
-        
-        .slider-area .hero-content {
-            margin-bottom: var(--spacing-md);
-        }
-    }
-    
-    @media (max-width: 767.98px) {
-        .section-title {
-            text-align: center;
-            width: 100%;
-        }
-        
-        .section-title::after {
-            left: 50%;
-            transform: translateX(-50%);
-        }
-        
-        .section-text {
-            text-align: center;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        
-        .navbar-nav {
-            background-color: var(--neutral-100);
-            padding: var(--spacing-md);
-            border-radius: var(--border-radius-md);
-            box-shadow: var(--shadow-md);
-        }
-        
-        .navbar-nav .nav-link {
-            margin: var(--spacing-xs) 0 !important;
-        }
-        
-        nav.navbar .btn-primary {
-            width: 100%;
-            margin-top: var(--spacing-sm);
-        }
-        
-        .slider-area .hero-content {
-            text-align: center;
-        }
-        
-        .slider-area .hero-content h3,
-        .slider-area .hero-content h4,
-        .slider-area .hero-content h5 {
-            text-align: center;
-        }
-        
-        .slider-area .hero-content h3::after,
-        .slider-area .hero-content h4::after {
-            left: 50%;
-            transform: translateX(-50%);
-        }
-        
-        .chatbot-panel {
-            width: 300px;
-        }
-    }
-    
-    @media (max-width: 575.98px) {
-        :root {
-            --spacing-lg: 1.5rem;
-            --spacing-xl: 2.5rem;
-        }
-        
-        .cliente-foto {
-            width: 50px;
-            height: 50px;
-        }
-        
-        .comentario-header h4 {
-            font-size: var(--fs-base);
-        }
-        
-        .comentario-body p {
-            font-size: var(--fs-sm);
-        }
-        
-        .slider-control {
-            width: 40px;
-            height: 40px;
-        }
-        
-        .chatbot-panel {
-            width: 280px;
-            height: 400px;
-            bottom: 70px;
-        }
-    }
-}
 
 /* ========== LOGO PROMINENTE CON ESPECIFICIDAD ELEVADA ========== */
 
@@ -1859,62 +1637,6 @@ html body .navbar .navbar-brand:hover img.logo-principal {
     transform: scale(1.05) !important;
 }
 
-/* Ajustes responsivos con especificidad elevada */
-@media (max-width: 1199.98px) {
-    body nav.navbar .navbar-brand img.logo-principal,
-    html body .navbar .navbar-brand img.logo-principal {
-        height: 100px !important;
-        min-height: 100px !important;
-    }
-    
-    body nav.navbar.scrolled .navbar-brand img.logo-principal,
-    html body .navbar.scrolled .navbar-brand img.logo-principal {
-        height: 65px !important;
-        min-height: 65px !important;
-    }
-}
-
-@media (max-width: 991.98px) {
-    body nav.navbar .navbar-brand img.logo-principal,
-    html body .navbar .navbar-brand img.logo-principal {
-        height: 90px !important;
-        min-height: 90px !important;
-    }
-    
-    body nav.navbar.scrolled .navbar-brand img.logo-principal,
-    html body .navbar.scrolled .navbar-brand img.logo-principal {
-        height: 60px !important;
-        min-height: 60px !important;
-    }
-}
-
-@media (max-width: 767.98px) {
-    body nav.navbar .navbar-brand img.logo-principal,
-    html body .navbar .navbar-brand img.logo-principal {
-        height: 80px !important;
-        min-height: 80px !important;
-    }
-    
-    body nav.navbar.scrolled .navbar-brand img.logo-principal,
-    html body .navbar.scrolled .navbar-brand img.logo-principal {
-        height: 55px !important;
-        min-height: 55px !important;
-    }
-}
-
-@media (max-width: 575.98px) {
-    body nav.navbar .navbar-brand img.logo-principal,
-    html body .navbar .navbar-brand img.logo-principal {
-        height: 70px !important;
-        min-height: 70px !important;
-    }
-    
-    body nav.navbar.scrolled .navbar-brand img.logo-principal,
-    html body .navbar.scrolled .navbar-brand img.logo-principal {
-        height: 50px !important;
-        min-height: 50px !important;
-    }
-}
 
 /* Asegurar que Bootstrap no altere nuestro navbar */
 body nav.navbar,
@@ -1928,51 +1650,272 @@ html body .navbar.scrolled {
     height: 80px !important;
 }
 
-/* Ajustes responsivos para el navbar */
+
+/* Primero mantenemos todas las reglas no responsivas */
+/* ... código existente ... */
+
+/* Luego agrupamos todos los media queries en un solo lugar al final del archivo */
+/* ==== MEDIA QUERIES CONSOLIDADOS ==== */
+
+/* XL - Pantallas grandes (hasta 1199.98px) */
 @media (max-width: 1199.98px) {
-    body nav.navbar,
-    html body .navbar {
-        height: 110px !important;
+    /* Navbar */
+    nav.navbar {
+        height: 110px;
     }
     
-    body nav.navbar.scrolled,
-    html body .navbar.scrolled {
-        height: 75px !important;
+    nav.navbar.scrolled {
+        height: 75px;
     }
-}
-
-@media (max-width: 991.98px) {
-    body nav.navbar,
-    html body .navbar {
+    
+    .navbar .logo-principal {
+        height: 100px;
+    }
+    
+    .navbar.scrolled .logo-principal {
+        height: 65px;
+    }
+    
+    .navbar .navbar-collapse {
+        margin-left: 130px;
+    }
+    
+    /* Estilos de sección */
+    .section-title {
+        font-size: var(--fs-2xl);
+    }
+    
+    /* Estilos específicos con alta especificidad */
+    body nav.navbar .navbar-brand img.logo-principal,
+    html body .navbar .navbar-brand img.logo-principal {
         height: 100px !important;
+        min-height: 100px !important;
     }
     
-    body nav.navbar.scrolled,
-    html body .navbar.scrolled {
-        height: 70px !important;
-    }
-}
-
-@media (max-width: 767.98px) {
-    body nav.navbar,
-    html body .navbar {
-        height: 90px !important;
-    }
-    
-    body nav.navbar.scrolled,
-    html body .navbar.scrolled {
+    body nav.navbar.scrolled .navbar-brand img.logo-principal,
+    html body .navbar.scrolled .navbar-brand img.logo-principal {
         height: 65px !important;
+        min-height: 65px !important;
     }
 }
 
-@media (max-width: 575.98px) {
-    body nav.navbar,
-    html body .navbar {
-        height: 80px !important;
+/* LG - Pantallas medianas (hasta 991.98px) */
+@media (max-width: 991.98px) {
+    /* Navbar */
+    nav.navbar {
+        height: 100px;
     }
     
-    body nav.navbar.scrolled,
-    html body .navbar.scrolled {
+    nav.navbar.scrolled {
+        height: 70px;
+    }
+    
+    .navbar .logo-principal {
+        height: 90px;
+    }
+    
+    .navbar.scrolled .logo-principal {
+        height: 60px;
+    }
+    
+    .navbar .navbar-collapse {
+        margin-left: 0;
+        margin-top: 90px;
+    }
+    
+    /* Estilos de sección */
+    .section-title {
+        font-size: var(--fs-xl);
+    }
+    
+    .slider-area .hero-content {
+        margin-bottom: var(--spacing-md);
+    }
+    
+    /* Estilos específicos con alta especificidad */
+    body nav.navbar .navbar-brand img.logo-principal,
+    html body .navbar .navbar-brand img.logo-principal {
+        height: 90px !important;
+        min-height: 90px !important;
+    }
+    
+    body nav.navbar.scrolled .navbar-brand img.logo-principal,
+    html body .navbar.scrolled .navbar-brand img.logo-principal {
         height: 60px !important;
+        min-height: 60px !important;
     }
 }
+
+/* MD - Tablets (hasta 767.98px) */
+@media (max-width: 767.98px) {
+    /* Navbar */
+    nav.navbar {
+        height: 90px;
+    }
+    
+    nav.navbar.scrolled {
+        height: 65px;
+    }
+    
+    .navbar .logo-principal {
+        height: 80px;
+    }
+    
+    .navbar.scrolled .logo-principal {
+        height: 55px;
+    }
+    
+    /* Secciones */
+    .section-title {
+        text-align: center;
+        width: 100%;
+    }
+    
+    .section-title::after {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    
+    .section-text {
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    /* Navbar móvil */
+    .navbar-nav {
+        background-color: var(--neutral-100);
+        padding: var(--spacing-md);
+        border-radius: var(--border-radius-md);
+        box-shadow: var(--shadow-md);
+    }
+    
+    .navbar-nav .nav-link {
+        margin: var(--spacing-xs) 0 !important;
+    }
+    
+    nav.navbar .btn-primary {
+        width: 100%;
+        margin-top: var(--spacing-sm);
+    }
+    
+    /* Slider/Hero */
+    .slider-area .hero-content {
+        text-align: center;
+    }
+    
+    .slider-area .hero-content h3,
+    .slider-area .hero-content h4,
+    .slider-area .hero-content h5 {
+        text-align: center;
+    }
+    
+    .slider-area .hero-content h3::after,
+    .slider-area .hero-content h4::after {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    
+    /* Home */
+    .home-text {
+        padding: 2rem var(--spacing-md);
+        margin: 0 var(--spacing-sm);
+        width: 90%;
+    }
+    
+    .home-text h1 {
+        font-size: clamp(2.8rem, 10vw, 4rem);
+    }
+    
+    .home-text h3 {
+        font-size: clamp(1.4rem, 5vw, 2rem);
+        margin-top: var(--spacing-md);
+    }
+    
+    /* Chatbot */
+    .chatbot-panel {
+        width: 300px;
+    }
+    
+    /* Estilos específicos con alta especificidad */
+    body nav.navbar .navbar-brand img.logo-principal,
+    html body .navbar .navbar-brand img.logo-principal {
+        height: 80px !important;
+        min-height: 80px !important;
+    }
+    
+    body nav.navbar.scrolled .navbar-brand img.logo-principal,
+    html body .navbar.scrolled .navbar-brand img.logo-principal {
+        height: 55px !important;
+        min-height: 55px !important;
+    }
+}
+
+/* SM - Móviles (hasta 575.98px) */
+@media (max-width: 575.98px) {
+    /* Ajuste de variables */
+    :root {
+        --spacing-lg: 1.5rem;
+        --spacing-xl: 2.5rem;
+    }
+    
+    /* Navbar */
+    nav.navbar {
+        height: 80px;
+        padding: var(--spacing-xs) var(--spacing-md) !important;
+    }
+    
+    nav.navbar.scrolled {
+        height: 60px;
+        padding: var(--spacing-xs) var(--spacing-md) !important;
+    }
+    
+    .navbar .logo-principal {
+        height: 70px;
+    }
+    
+    .navbar.scrolled .logo-principal {
+        height: 50px;
+    }
+    
+    /* Testimonios */
+    .cliente-foto {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .comentario-header h4 {
+        font-size: var(--fs-base);
+    }
+    
+    .comentario-body p {
+        font-size: var(--fs-sm);
+    }
+    
+    /* Slider */
+    .slider-control {
+        width: 40px;
+        height: 40px;
+    }
+    
+    /* Chatbot */
+    .chatbot-panel {
+        width: 280px;
+        height: 400px;
+        bottom: 70px;
+    }
+    
+    /* Estilos específicos con alta especificidad */
+    body nav.navbar .navbar-brand img.logo-principal,
+    html body .navbar .navbar-brand img.logo-principal {
+        height: 70px !important;
+        min-height: 70px !important;
+    }
+    
+    body nav.navbar.scrolled .navbar-brand img.logo-principal,
+    html body .navbar.scrolled .navbar-brand img.logo-principal {
+        height: 50px !important;
+        min-height: 50px !important;
+    }
+}
+
