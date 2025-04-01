@@ -5,10 +5,43 @@ const nodemailer = require('nodemailer');
 const { body, validationResult } = require('express-validator');
 const rateLimit = require('express-rate-limit');
 require('dotenv').config();
+const pino = require('pino');
+const pinoHttp = require('pino-http');
+const logger = require('./logger');
 
 // Inicializar app Express
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+
+// Configurar el middleware de logging
+const httpLogger = pinoHttp({
+    logger: logger,
+    genReqId: (req) => req.id || require('crypto').randomUUID(),
+    customProps: (req, res) => {
+      return {
+        route: req.originalUrl,
+        method: req.method
+      };
+    },
+    // No loguear rutas de healthcheck para no llenar los logs
+  autoLogging: {
+    ignore: (req) => req.url === '/api/status' || req.url === '/health'
+  },
+  // Loguear el cuerpo de la solicitud en desarrollo, pero no en producción
+  serializers: {
+    req: (req) => {
+      const serialized = pino.stdSerializers.req(req);
+      if (process.env.NODE_ENV !== 'production' && req.raw.body) {
+        serialized.body = req.raw.body;
+      }
+      return serialized;
+    }
+  }
+});
+
+// Aplicar el middleware a Express
+app.use(httpLogger);
 
 // Middleware
 app.use(express.json());
@@ -35,13 +68,13 @@ const transporter = nodemailer.createTransport({
 // Verificar configuración de correo
 transporter.verify((error, success) => {
   if (error) {
-    console.error('Error de configuración de correo:', {
+    logger.error({ err: error }, 'Error de configuración de correo:', {
       message: error.message,
       name: error.name,
       stack: error.stack
     });
   } else {
-    console.log('Servidor de correo configurado correctamente');
+    logger.info('Servidor de correo configurado correctamente');
   }
 });
 
@@ -155,7 +188,7 @@ app.post('/api/contacto',
 
     } catch (error) {
       // Registro detallado de errores
-      console.error('Error al procesar formulario de contacto:', {
+      logger.error({ err: error }, 'Error al procesar formulario de contacto:', {
         message: error.message,
         name: error.name,
         stack: error.stack
@@ -179,27 +212,27 @@ app.use((req, res, next) => {
 
 // Iniciar servidor
 const server = app.listen(PORT, '0.0.0.0', () => {
-  console.log(`Servidor para formulario de contacto iniciado en puerto ${PORT}`);
-  console.log(`Ambiente: ${process.env.NODE_ENV || 'development'}`);
-});
+    logger.info(`Servidor para formulario de contacto iniciado en puerto ${PORT}`);
+    logger.info(`Ambiente: ${process.env.NODE_ENV || 'development'}`);
+  });
+  module.exports = server;
 
 // Manejar errores no capturados
 process.on('uncaughtException', (error) => {
-  console.error('Error no capturado:', {
-    message: error.message,
-    name: error.name,
-    stack: error.stack
+    logger.error({ err: error }, 'Error no capturado:', {
+      message: error.message,
+      name: error.name,
+      stack: error.stack
+    });
+    
+    server.close(() => {
+      process.exit(1);
+    });
   });
-  
-  // Cerrar el servidor de forma segura
-  server.close(() => {
-    process.exit(1);
-  });
-});
 
 // Manejar rechazos de promesas no manejados
 process.on('unhandledRejection', (reason, promise) => {
-  console.error('Rechazo de promesa no manejado:', reason);
+  logger.error({ err: error }, 'Rechazo de promesa no manejado:', reason);
 });
 
-module.exports = app; // Para testing
+module.exports = server;
