@@ -1,0 +1,621 @@
+/* overrides.css - Este archivo debe cargarse DESPUÉS de bootstrap.css y styles.css */
+
+/* ==== AUMENTAR ESPECIFICIDAD PARA SOBRESCRIBIR BOOTSTRAP ==== */
+
+/* Dropdown automático */
+body .navbar-nav .dropdown:hover .dropdown-menu {
+    display: block !important;
+    margin-top: 0 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateY(0) !important;
+    transition: opacity 0.3s ease, transform 0.3s ease !important;
+}
+
+body .navbar-nav .dropdown-menu {
+    display: block !important;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s linear 0.3s !important;
+    margin-top: 0 !important;
+}
+
+
+/* Modal mejorado */
+body .modal-content {
+    border: none !important;
+    border-radius: var(--border-radius-lg) !important;
+    overflow: hidden !important;
+    box-shadow: var(--shadow-lg) !important;
+}
+
+body .modal-header {
+    background-color: var(--primary) !important;
+    color: var(--neutral-100) !important;
+    border: none !important;
+    padding: 1.5rem 2rem !important;
+}
+
+body .modal-title {
+    font-family: var(--font-primary) !important;
+    font-size: 1.75rem !important;
+    color: var(--neutral-100) !important;
+    margin-bottom: 0 !important;
+}
+
+body .modal-body {
+    padding: 2rem !important;
+    background-color: var(--neutral-100) !important;
+}
+
+body .contact-info {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1.25rem !important;
+}
+
+body .contact-info p {
+    margin-bottom: 1rem !important;
+    display: flex !important;
+    align-items: center !important;
+    width: 100% !important;
+}
+
+body .contact-info strong {
+    margin-right: 5px !important; /* Añadir espacio entre strong y el enlace */
+    min-width: 80px !important; /* Dar un ancho mínimo para alinear */
+    display: inline-block !important;
+    color: var(--neutral-700) !important; /* Color más oscuro para el texto */
+}
+
+body .contact-info a {
+    color: var(--primary) !important;
+    text-decoration: none !important;
+    transition: color 0.3s ease !important;
+}
+
+body .contact-info a:hover {
+    color: var(--secondary) !important;
+    text-decoration: underline !important;
+}
+
+body .contact-info i {
+    margin-right: 10px !important;
+    color: var(--secondary) !important;
+    width: 24px !important;
+    text-align: center !important;
+}
+
+body .modal-footer {
+    border-top: 1px solid var(--neutral-300) !important;
+    background-color: var(--neutral-200) !important;
+    padding: 0.75rem 1.5rem !important;
+}
+
+/* Asegurar que el botón en el modal se comporte como un enlace */
+.modal-footer a.btn {
+    display: inline-block !important;
+    text-decoration: none !important;
+    cursor: pointer !important;
+}
+
+/* Cards uniformes */
+body .areas-practica-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)) !important;
+    gap: 1.5rem !important;
+    margin-top: 2.5rem !important;
+}
+
+body .card-container {
+    height: 100% !important;
+}
+
+body .card {
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    min-height: 350px !important;
+    border: none !important;
+    border-radius: 12px !important;
+    overflow: hidden !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08) !important;
+    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    will-change: transform, box-shadow;
+}
+
+body .card:hover {
+    transform: scale(1.02) translateY(-8px) !important;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15) !important;
+}
+
+body .card-header {
+    background-color: var(--neutral-200) !important;
+    color: var(--primary) !important;
+    text-align: center !important;
+    padding: 1.5rem !important;
+    border-bottom: none !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    flex-shrink: 0 !important;
+}
+
+body .card-header img {
+    width: 60px !important;
+    height: 60px !important;
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    will-change: transform;
+}
+
+body .card:hover .card-header img {
+    transform: scale(1.1) !important;
+}
+
+body .card-body {
+    padding: 1.5rem !important;
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+body .card-body h4 {
+    color: var(--primary) !important;
+    font-size: 1.5rem !important;
+    margin-bottom: 1rem !important;
+    text-align: center !important;
+}
+
+body .card-text {
+    list-style: none !important;
+    padding-left: 0 !important;
+    margin: 0 !important;
+    flex-grow: 1 !important;
+}
+
+body .card-text li {
+    position: relative !important;
+    padding-left: 1.5rem !important;
+    margin-bottom: 0.625rem !important;
+    font-size: var(--fs-sm) !important;
+    color: var(--neutral-600) !important;
+}
+
+body .card-text li::before {
+    content: '' !important;
+    position: absolute !important;
+    left: 0 !important;
+    top: 12px !important;
+    width: 6px !important;
+    height: 6px !important;
+    border-radius: 50% !important;
+    background-color: var(--secondary) !important;
+}
+
+/* Corregir los iconos del tema */
+body .dark-icon {
+    opacity: 1 !important; /* Visible en modo claro (luna) */
+    transform: rotate(0) !important;
+    will-change: opacity, transform;
+}
+
+body .light-icon {
+    opacity: 0 !important; /* Oculto en modo claro */
+    transform: rotate(90deg) !important;
+    will-change: opacity, transform;
+}
+
+/* CONSOLIDACIÓN DE SELECTORES TEMA OSCURO */
+/* Usar consistentemente html.dark-theme para coincidencia con styles.css */
+
+html.dark-theme .dark-icon {
+    opacity: 0 !important; /* Oculto en modo oscuro */
+    transform: rotate(-90deg) !important;
+}
+
+html.dark-theme .light-icon {
+    opacity: 1 !important; /* Visible en modo oscuro (sol) */
+    transform: rotate(0) !important;
+}
+
+/* Colores de tema oscuro */
+html.dark-theme body,
+html.dark-theme main,
+html.dark-theme section {
+    background-color: var(--neutral-100) !important;
+    color: var(--neutral-600) !important;
+}
+
+html.dark-theme .navbar {
+    background-color: rgba(var(--neutral-100-rgb), 0.85) !important;
+}
+
+html.dark-theme .card {
+    background-color: var(--neutral-200) !important;
+    border: 1px solid var(--neutral-300) !important;
+}
+
+html.dark-theme .card-header {
+    background-color: var(--neutral-300) !important;
+}
+
+html.dark-theme .section-title,
+html.dark-theme .card-body h4,
+html.dark-theme h1, 
+html.dark-theme h2, 
+html.dark-theme h3, 
+html.dark-theme h4, 
+html.dark-theme h5, 
+html.dark-theme h6 {
+    color: var(--neutral-700) !important;
+}
+
+html.dark-theme .card-text li {
+    color: var(--neutral-600) !important;
+}
+
+html.dark-theme .modal-header {
+    background-color: var(--primary) !important;
+}
+
+html.dark-theme .modal-content,
+html.dark-theme .modal-body {
+    background-color: var(--neutral-100) !important;
+}
+
+html.dark-theme .modal-footer {
+    background-color: var(--neutral-200) !important;
+}
+
+html.dark-theme .comentario-card {
+    background-color: var(--neutral-200) !important;
+}
+
+html.dark-theme .comentario-header h4 {
+    color: var(--neutral-700) !important;
+}
+
+html.dark-theme .comentario-body p {
+    color: var(--neutral-600) !important;
+}
+
+html.dark-theme .form-control,
+html.dark-theme .form-select {
+    background-color: var(--neutral-300) !important;
+    border-color: var(--neutral-400) !important;
+    color: var(--neutral-700) !important;
+}
+
+html.dark-theme .form-floating label {
+    color: var(--neutral-500) !important;
+}
+
+html.dark-theme .contact-info a {
+    color: var(--accent) !important;
+}
+
+html.dark-theme .contact-info a:hover {
+    color: var(--secondary) !important;
+}
+
+/* Mejorar contraste de texto en modo oscuro */
+html.dark-theme p,
+html.dark-theme .card-text li,
+html.dark-theme .section-text,
+html.dark-theme .comentario-body p {
+    color: var(--neutral-600) !important;
+}
+
+/* Asegurar que el chatbot se vea correctamente en modo oscuro */
+html.dark-theme .chatbot-panel {
+    background-color: var(--neutral-200) !important;
+}
+
+html.dark-theme .chatbot-header {
+    background-color: var(--primary) !important;
+}
+
+html.dark-theme .message.bot {
+    background-color: var(--neutral-300) !important;
+    color: var(--neutral-700) !important;
+}
+
+html.dark-theme .chat-input input {
+    background-color: var(--neutral-300) !important;
+    border-color: var(--neutral-400) !important;
+    color: var(--neutral-700) !important;
+}
+
+/* Estilo para resaltar secciones al navegar desde el modal */
+.highlight-section {
+    animation: highlight-pulse 2s ease-out;
+    will-change: box-shadow;
+}
+
+@keyframes highlight-pulse {
+    0% { 
+        box-shadow: 0 0 0 0 rgba(var(--secondary-rgb), 0.7);
+    }
+    70% { 
+        box-shadow: 0 0 0 20px rgba(var(--secondary-rgb), 0);
+    }
+    100% { 
+        box-shadow: 0 0 0 0 rgba(var(--secondary-rgb), 0);
+    }
+}
+
+/* Estilos específicos para HOME */
+body .home-text h1 {
+    font-family: var(--font-primary) !important;
+    font-size: clamp(2.8rem, 5vw + 0.5rem, 4.5rem) !important; /* Tamaño reducido */
+    color: #ffffff !important;
+    text-transform: uppercase !important;
+    line-height: 1.3 !important;
+    font-weight: 200 !important;
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.8) !important;
+    transition: color 0.3s ease !important;
+    margin-bottom: var(--spacing-lg) !important;
+    will-change: color;
+    text-align: center;
+    letter-spacing: 0.05em !important;
+    max-width: 900px;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+body .home-text h1:hover {
+    color: var(--secondary) !important;
+    cursor: default !important;
+}
+
+body .home-text h3 {
+    font-family: var(--font-secondary) !important;
+    font-size: clamp(1.2rem, 2.5vw + 0.3rem, 2.2rem) !important; /* Tamaño reducido */
+    color: #ffffff !important;
+    font-weight: 500 !important;
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.8) !important;
+    transition: color 0.3s ease !important;
+    will-change: color;
+}
+
+body .home-text h3:hover {
+    color: var(--secondary) !important;
+    cursor: default !important;
+}
+
+body .home-text h3 span {
+    color: #f0ca45 !important;
+    font-weight: 700 !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9) !important;
+    transition: color 0.3s ease, transform 0.3s ease !important;
+    display: inline-block !important;
+    will-change: transform, color;
+}
+
+body .home-text h3:hover span {
+    color: #ffffff !important;
+    transform: scale(1.05) !important;
+}
+
+/* Hacer el fondo oscuro más transparente */
+body .home-text {
+    background-color: rgba(0, 0, 0, 0.3) !important; /* Fondo más transparente */
+    padding: 2rem var(--spacing-lg) !important;
+}
+
+/* Asegurar que la imagen de fondo se vea mejor */
+body .home {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('img/Facultad_de_derecho_uba.webp') !important; /* Gradiente más transparente */
+    background-position: center !important;
+    background-size: cover !important;
+}
+
+/* Mejorar la apariencia de los elementos de formulario */
+body .form-floating > .form-control:focus,
+body .form-floating > .form-select:focus {
+    border-color: var(--primary) !important;
+    box-shadow: 0 0 0 0.25rem rgba(var(--primary-rgb), 0.25) !important;
+}
+
+/* Ajustar botones en el formulario */
+body .btn-lg {
+    padding: 0.75rem 2rem !important;
+    font-size: 1.125rem !important;
+    border-radius: 8px !important;
+}
+
+/* Mejorar el aspecto del footer */
+body footer a {
+    transition: all 0.3s ease !important;
+}
+
+body footer .social-links a:hover {
+    transform: translateY(-5px) !important;
+    will-change: transform;
+}
+
+/* ==== MEDIA QUERIES NECESARIOS ==== */
+
+/* XL - Pantallas grandes (hasta 1199.98px) */
+@media (max-width: 1199.98px) {
+    /* Ajustes específicos para pantallas grandes */
+    body .home-text h1 {
+        font-size: clamp(2.5rem, 4.5vw + 0.5rem, 4rem) !important;
+    }
+    
+    body .home-text h3 {
+        font-size: clamp(1.1rem, 2.2vw + 0.3rem, 2rem) !important;
+    }
+    
+    /* Modal ajustes */
+    body .modal-header {
+        padding: 1.25rem 1.75rem !important;
+    }
+    
+    body .modal-body {
+        padding: 1.75rem !important;
+    }
+}
+
+/* LG - Pantallas medianas (hasta 991.98px) */
+@media (max-width: 991.98px) {
+    /* Forzar el dropdown en hover también en móvil */
+    body .navbar-nav .dropdown:hover .dropdown-menu {
+        display: block !important;
+        position: static !important;
+        float: none !important;
+        width: auto !important;
+        margin-top: 0 !important;
+        background-color: transparent !important;
+        border: 0 !important;
+        box-shadow: none !important;
+    }
+    
+    body .navbar-nav .dropdown-menu .dropdown-item {
+        padding-left: 2rem !important;
+        color: var(--neutral-600) !important;
+    }
+    
+    body .navbar-nav .dropdown-menu .dropdown-item:hover {
+        background-color: transparent !important;
+        color: var(--primary) !important;
+    }
+    
+    /* Home ajustes */
+    body .home-text h1 {
+        font-size: clamp(2.2rem, 4vw + 0.5rem, 3.5rem) !important;
+    }
+    
+    body .home-text h3 {
+        font-size: clamp(1rem, 2vw + 0.3rem, 1.8rem) !important;
+    }
+    
+    /* Ajuste para modal en tablet */
+    body .modal-title {
+        font-size: 1.5rem !important;
+    }
+    
+    /* Mejorar cards en tablet */
+    body .card {
+        min-height: 300px !important;
+    }
+}
+
+/* MD - Tablets (hasta 767.98px) */
+@media (max-width: 767.98px) {
+    /* Home ajustes */
+    body .home-text {
+        width: 90% !important;
+        padding: 1.5rem var(--spacing-md) !important;
+    }
+    
+    body .home-text h1 {
+        font-size: clamp(2rem, 3.5vw + 0.5rem, 3rem) !important;
+    }
+    
+    /* Tarjetas más compactas en dispositivos medianos */
+    body .card-header {
+        padding: 1.25rem !important;
+    }
+    
+    body .card-body {
+        padding: 1.25rem !important;
+    }
+    
+    body .card-body h4 {
+        font-size: 1.3rem !important;
+    }
+    
+    /* Modal ajustes */
+    body .modal-header {
+        padding: 1rem 1.5rem !important;
+    }
+    
+    body .modal-body {
+        padding: 1.5rem !important;
+    }
+    
+    body .modal-title {
+        font-size: 1.3rem !important;
+    }
+    
+    /* Contacto info en modal más compacto */
+    body .contact-info {
+        gap: 1rem !important;
+    }
+    
+    body .contact-info i {
+        font-size: 1.1rem !important;
+        margin-right: 0.75rem !important;
+    }
+}
+
+/* SM - Móviles (hasta 575.98px) */
+@media (max-width: 575.98px) {
+    /* Home más compacto */
+    body .home-text {
+        padding: 1.25rem var(--spacing-sm) !important;
+    }
+    
+    body .home-text h1 {
+        font-size: clamp(1.8rem, 3vw + 0.5rem, 2.5rem) !important;
+        margin-bottom: var(--spacing-md) !important;
+    }
+    
+    body .home-text h3 {
+        font-size: clamp(1rem, 1.8vw + 0.3rem, 1.5rem) !important;
+    }
+    
+    /* Botones más compactos */
+    body .btn-lg {
+        padding: 0.5rem 1.5rem !important;
+        font-size: 1rem !important;
+    }
+    
+    /* Modal más compacto para móvil */
+    body .modal-header {
+        padding: 0.75rem 1rem !important;
+    }
+    
+    body .modal-body {
+        padding: 1rem !important;
+    }
+    
+    body .modal-title {
+        font-size: 1.2rem !important;
+    }
+    
+    body .modal-footer {
+        padding: 0.5rem 1rem !important;
+    }
+    
+    /* Tarjetas más verticales */
+    body .card {
+        min-height: 280px !important;
+    }
+    
+    body .card-header {
+        padding: 1rem !important;
+    }
+    
+    body .card-header img {
+        width: 50px !important;
+        height: 50px !important;
+    }
+    
+    body .card-body {
+        padding: 1rem !important;
+    }
+    
+    body .card-body h4 {
+        font-size: 1.2rem !important;
+        margin-bottom: 0.75rem !important;
+    }
+    
+    body .card-text li {
+        font-size: var(--fs-xs) !important;
+        padding-left: 1.25rem !important;
+        margin-bottom: 0.5rem !important;
+    }
+}
