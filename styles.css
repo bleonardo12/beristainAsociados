@@ -1339,6 +1339,157 @@
     }
 }
 
+/* ========== SECCIÓN TERRITORIO PROFESIONAL ========== */
+@layer components {
+    .territorio-grid {
+        margin-top: var(--spacing-lg);
+    }
+    
+    .territorio-card {
+        background-color: var(--neutral-100);
+        border-radius: var(--border-radius-lg);
+        overflow: hidden;
+        box-shadow: var(--shadow-sm);
+        transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .territorio-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-md);
+    }
+    
+    .territorio-img {
+        padding: var(--spacing-md);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: var(--neutral-200);
+    }
+    
+    .territorio-mapa {
+        max-height: 200px;
+        width: auto;
+        transition: transform var(--transition-normal);
+    }
+    
+    .territorio-card:hover .territorio-mapa {
+        transform: scale(1.05);
+    }
+    
+    .territorio-content {
+        padding: var(--spacing-md);
+        flex: 1;
+    }
+    
+    .territorio-content h3 {
+        color: var(--primary);
+        font-size: var(--fs-lg);
+        margin-bottom: var(--spacing-sm);
+        text-align: center;
+    }
+    
+    .territorio-content p {
+        color: var(--neutral-600);
+        font-size: var(--fs-base);
+        text-align: center;
+    }
+    
+    /* Versión responsive */
+    @media (max-width: 991.98px) {
+        .territorio-card {
+            margin-bottom: var(--spacing-md);
+        }
+    }
+    
+    @media (max-width: 767.98px) {
+        .territorio-mapa {
+            max-height: 180px;
+        }
+    }
+    
+    @media (max-width: 575.98px) {
+        .territorio-mapa {
+            max-height: 150px;
+        }
+    }
+}
+
+/* Banner de emergencia 24h */
+.emergency-banner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--primary-dark);
+    color: var(--neutral-100);
+    padding: var(--spacing-xs) 0;
+    z-index: 1001;
+    text-align: center;
+    font-weight: 500;
+    box-shadow: var(--shadow-md);
+    transform: translateY(-100%);
+    transition: transform var(--transition-normal);
+}
+
+.emergency-banner.visible {
+    transform: translateY(0);
+}
+
+.emergency-banner .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.emergency-banner p {
+    margin: 0;
+    font-size: var(--fs-sm);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.emergency-banner i {
+    color: var(--secondary);
+}
+
+.emergency-banner a {
+    color: var(--secondary);
+    font-weight: 700;
+    margin-left: var(--spacing-xs);
+    text-decoration: underline;
+}
+
+.emergency-banner a:hover {
+    color: var(--neutral-100);
+}
+
+#close-emergency-banner {
+    background: none;
+    border: none;
+    color: var(--neutral-300);
+    position: absolute;
+    right: 1rem;
+    padding: 0.25rem;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+/* Ajustar posición de navbar cuando el banner está visible */
+body.has-emergency-banner .navbar {
+    top: 36px;
+}
+
+@media (max-width: 767.98px) {
+    .emergency-banner p {
+        font-size: 0.8rem;
+    }
+}
+
 /* ========== TESTIMONIOS ========== */
 @layer components {
     .comentarios-section {

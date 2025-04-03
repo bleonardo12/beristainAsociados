@@ -1,14 +1,15 @@
 /**
  * Módulo para la gestión del formulario de contacto
  * Implementa validación en tiempo real, animaciones,
- * accesibilidad y simulación de envío con feedback visual.
+ * accesibilidad y envío a API backend.
  */
 
 // Configuración global
 const CONFIG = {
   DEBOUNCE_DELAY: 300, // ms para debounce en validaciones
   ERROR_TIMEOUT: 5000,  // ms para ocultar mensajes de error
-  SUBMIT_TIMEOUT: 1500  // ms para simular envío
+  API_ENDPOINT: 'http://localhost:3000/api/contacto', // URL del endpoint del backend
+  API_TIMEOUT: 15000 // Timeout para llamadas a la API (15 segundos)
 };
 
 /**
@@ -323,7 +324,7 @@ function styleInputInteractions(field) {
 }
 
 /**
- * Configura el envío del formulario con feedback visual
+ * Configura el envío del formulario con conexión al backend
  * @param {HTMLFormElement} form - Formulario a configurar
  */
 function setupFormSubmission(form) {
@@ -370,14 +371,14 @@ function setupFormSubmission(form) {
         // Anunciar estado para lectores de pantalla
         announceFormStatus('Enviando formulario, por favor espere...');
         
-        // Enviar datos (simulado o real)
-        const result = await sendFormData(data);
+        // Enviar datos al backend
+        const result = await sendFormDataToAPI(data);
         
         // Procesar respuesta exitosa
         announceFormStatus('¡Formulario enviado con éxito!');
         
         // Mostrar mensaje de éxito con animación
-        formContainer.innerHTML = createSuccessMessage();
+        formContainer.innerHTML = createSuccessMessage(result.message);
         
         // Aplicar animación de éxito
         const checkmark = formContainer.querySelector('.checkmark-circle');
@@ -405,6 +406,57 @@ function setupFormSubmission(form) {
     });
   } catch (error) {
     console.error('Error al configurar envío del formulario:', error);
+  }
+}
+
+/**
+ * Envía los datos del formulario a la API backend
+ * @param {Object} data - Datos del formulario
+ * @returns {Promise<Object>} Respuesta del servidor
+ * @throws {Error} Si hay error en la comunicación
+ */
+async function sendFormDataToAPI(data) {
+  try {
+    // Crear controlador para el timeout
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), CONFIG.API_TIMEOUT);
+    
+    // Realizar la solicitud
+    const response = await fetch(CONFIG.API_ENDPOINT, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data),
+      signal: controller.signal
+    });
+    
+    // Limpiar timeout
+    clearTimeout(timeoutId);
+    
+    // Procesar respuesta
+    const responseData = await response.json();
+    
+    if (!response.ok) {
+      throw new Error(responseData.message || 'Error en el servidor');
+    }
+    
+    if (!responseData.success) {
+      throw new Error(responseData.message || 'No se pudo procesar la solicitud');
+    }
+    
+    return responseData;
+  } catch (error) {
+    // Manejar errores específicos
+    if (error.name === 'AbortError') {
+      throw new Error('La solicitud ha excedido el tiempo máximo de espera. Por favor, intente nuevamente.');
+    }
+    
+    if (error.message === 'Failed to fetch') {
+      throw new Error('No se pudo conectar con el servidor. Verifique su conexión a internet.');
+    }
+    
+    throw error;
   }
 }
 
@@ -455,37 +507,20 @@ function disableForm(form, disabled) {
 }
 
 /**
- * Envía los datos del formulario al servidor
- * @param {Object} data - Datos del formulario
- * @returns {Promise} Promesa con el resultado
- */
-async function sendFormData(data) {
-  // TODO: Reemplazar con implementación real de API
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      // Simulación: 90% éxito, 10% error
-      if (Math.random() > 0.1) {
-        console.log('Datos que se enviarían:', data);
-        resolve({ success: true, message: 'Mensaje enviado correctamente' });
-      } else {
-        reject(new Error('Error en el servidor. Por favor, intente nuevamente.'));
-      }
-    }, CONFIG.SUBMIT_TIMEOUT);
-  });
-}
-
-/**
  * Crea el mensaje de éxito tras envío exitoso
+ * @param {string} message - Mensaje personalizado de éxito
  * @returns {string} HTML del mensaje de éxito
  */
-function createSuccessMessage() {
+function createSuccessMessage(message = null) {
+  const successMessage = message || '¡Gracias por su mensaje! Nos pondremos en contacto con usted a la brevedad.';
+  
   return `
     <div class="success-animation text-center py-5" role="alert" aria-live="polite">
       <div class="checkmark-circle">
         <div class="checkmark draw"></div>
       </div>
-      <h3 class="mt-4">¡Gracias por su mensaje!</h3>
-      <p>Nos pondremos en contacto con usted a la brevedad.</p>
+      <h3 class="mt-4">¡Envío exitoso!</h3>
+      <p>${successMessage}</p>
       <p class="mt-4">
         <a href="#" class="btn btn-outline-primary" onclick="window.location.reload()">
           Enviar otra consulta
@@ -543,163 +578,8 @@ function showErrorMessage(form, message) {
         setTimeout(() => errorAlert.remove(), 300);
       }
     }, CONFIG.ERROR_TIMEOUT);
-  } catch (error) {
+  }
+  catch (error) {
     console.error('Error al mostrar mensaje de error:', error);
   }
-}
-
-/**
- * Mejora la accesibilidad del formulario
- * @param {HTMLFormElement} form - Formulario a mejorar
- */
-function enhanceAccessibility(form) {
-  try {
-    // Verificar que los campos tengan labels y atributos adecuados
-    const fields = form.querySelectorAll('input, textarea, select');
-    
-    fields.forEach(field => {
-      // Verificar si tiene id
-      if (!field.id) {
-        field.id = `field-${Math.random().toString(36).substr(2, 9)}`;
-      }
-      
-      // Verificar label
-      const label = form.querySelector(`label[for="${field.id}"]`);
-      if (!label) {
-        const parentLabel = field.closest('label');
-        if (!parentLabel) {
-          console.warn(`Campo sin etiqueta: ${field.name || field.id}`);
-        }
-      }
-      
-      // Añadir atributos de accesibilidad
-      if (field.required && !field.hasAttribute('aria-required')) {
-        field.setAttribute('aria-required', 'true');
-      }
-      
-      if (!field.hasAttribute('aria-invalid')) {
-        field.setAttribute('aria-invalid', 'false');
-      }
-    });
-    
-    // Asegurar que el formulario tenga un título descriptivo
-    if (!form.hasAttribute('aria-labelledby')) {
-      const formTitle = document.createElement('h2');
-      formTitle.id = 'form-title';
-      formTitle.className = 'sr-only';
-      formTitle.textContent = 'Formulario de contacto';
-      form.prepend(formTitle);
-      form.setAttribute('aria-labelledby', 'form-title');
-    }
-  } catch (error) {
-    console.error('Error al mejorar accesibilidad del formulario:', error);
-  }
-}
-
-/**
- * Hace scroll suave hacia un elemento
- * @param {HTMLElement} element - Elemento destino
- */
-function scrollSmoothly(element) {
-  try {
-    if ('scrollBehavior' in document.documentElement.style) {
-      // Navegadores modernos
-      element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    } else {
-      // Fallback para navegadores antiguos
-      const rect = element.getBoundingClientRect();
-      const targetY = rect.top + window.pageYOffset - (window.innerHeight / 2);
-      window.scrollTo(0, targetY);
-    }
-  } catch (error) {
-    console.error('Error al realizar scroll:', error);
-    // Fallback seguro
-    window.scrollTo(0, element.offsetTop);
-  }
-}
-
-/**
- * Crea una función con debounce
- * @param {Function} func - Función a aplicar debounce
- * @param {number} wait - Tiempo de espera en ms
- * @returns {Function} Función con debounce
- */
-function debounce(func, wait) {
-  let timeout;
-  return function(...args) {
-    clearTimeout(timeout);
-    timeout = setTimeout(() => func.apply(this, args), wait);
-  };
-}
-
-/**
- * Crea una API pública para el formulario
- * @param {HTMLFormElement} form - Formulario
- * @returns {Object} API del formulario
- */
-function createFormAPI(form) {
-  return {
-    /**
-     * Valida el formulario completo
-     * @param {boolean} showErrors - Indica si se deben mostrar errores
-     * @returns {boolean} Indica si el formulario es válido
-     */
-    validate: (showErrors = true) => {
-      const fields = form.querySelectorAll('input, textarea, select');
-      let isValid = true;
-      
-      fields.forEach(field => {
-        if (!validateField(field, showErrors)) {
-          isValid = false;
-        }
-      });
-      
-      return isValid;
-    },
-    
-    /**
-     * Resetea el formulario a su estado inicial
-     */
-    reset: () => {
-      form.reset();
-      const fields = form.querySelectorAll('input, textarea, select');
-      
-      fields.forEach(field => {
-        field.classList.remove('is-valid', 'is-invalid', 'has-content');
-        field.setAttribute('aria-invalid', 'false');
-        
-        // Resetear mensajes de error
-        const parent = field.closest('.form-floating') || field.parentNode;
-        const errorContainer = parent.querySelector('.invalid-feedback');
-        if (errorContainer) {
-          errorContainer.style.display = 'none';
-        }
-      });
-      
-      // Actualizar botón
-      updateSubmitButton(form);
-    },
-    
-    /**
-     * Rellena el formulario con datos
-     * @param {Object} data - Datos para rellenar
-     */
-    fill: (data) => {
-      Object.entries(data).forEach(([key, value]) => {
-        const field = form.elements[key];
-        if (field) {
-          field.value = value;
-          field.dispatchEvent(new Event('input'));
-          field.classList.add('has-content');
-        }
-      });
-      
-      // Validar después de rellenar
-      setTimeout(() => {
-        const fields = form.querySelectorAll('input, textarea, select');
-        fields.forEach(field => validateField(field, false));
-        updateSubmitButton(form);
-      }, 100);
-    }
-  };
 }

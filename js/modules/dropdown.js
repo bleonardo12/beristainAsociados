@@ -1,14 +1,13 @@
 /**
- * dropdown.js - Módulo para habilitar el menú desplegable al pasar el cursor
- * Con soporte mejorado para dispositivos táctiles, accesibilidad y configuración
+ * dropdown.js - Módulo para habilitar el menú desplegable solo con clic
+ * Con soporte para dispositivos táctiles, accesibilidad y configuración
  */
 
 // Configuración por defecto
 const DEFAULT_CONFIG = {
-  hoverDelay: 200,      // ms antes de mostrar al hacer hover
-  hideDelay: 300,       // ms antes de ocultar al quitar hover
   touchSupport: true,   // habilitar soporte para dispositivos táctiles
   selector: '.navbar-nav .dropdown', // selector de elementos dropdown
+  clickOnly: true,      // solo abrir al hacer clic (no hover)
   debug: false          // modo de depuración
 };
 
@@ -20,12 +19,12 @@ const timers = new Map();
  * @param {Object} config - Configuración personalizada (opcional)
  * @returns {Object} API para controlar los dropdowns
  */
-export function initDropdownHover(config = {}) {
+export function initDropdown(config = {}) {
   try {
     const options = { ...DEFAULT_CONFIG, ...config };
     
     if (options.debug) {
-      console.log('Inicializando menús desplegables automáticos...', options);
+      console.log('Inicializando menús desplegables con modo clic...', options);
     }
     
     // Encontrar todos los dropdowns
@@ -56,13 +55,8 @@ export function initDropdownHover(config = {}) {
       // Mejorar accesibilidad
       enhanceAccessibility(dropdown);
       
-      // Configurar comportamiento hover
-      setupHoverBehavior(dropdown, options);
-      
-      // Configurar soporte para táctil si está habilitado
-      if (options.touchSupport) {
-        setupTouchBehavior(dropdown, options);
-      }
+      // Configurar comportamiento de clic
+      setupClickBehavior(dropdown, options);
       
       // Soporte para teclado
       setupKeyboardSupport(dropdown, options);
@@ -116,66 +110,18 @@ function enhanceAccessibility(dropdown) {
 }
 
 /**
- * Configura el comportamiento hover para un dropdown
+ * Configura el comportamiento de clic para un dropdown
  * @param {HTMLElement} dropdown - Elemento dropdown
  * @param {Object} options - Opciones de configuración
  */
-function setupHoverBehavior(dropdown, options) {
-  try {
-    const menu = dropdown.querySelector('.dropdown-menu');
-    const toggle = dropdown.querySelector('.dropdown-toggle');
-    
-    if (!menu || !toggle) return;
-    
-    // Al entrar con el cursor
-    dropdown.addEventListener('mouseenter', () => {
-      // Cancelar timer de ocultado si existe
-      if (timers.has(dropdown.id)) {
-        clearTimeout(timers.get(dropdown.id));
-        timers.delete(dropdown.id);
-      }
-      
-      // Timer para mostrar (evita flickering)
-      const timer = setTimeout(() => {
-        showDropdown(dropdown, menu, toggle);
-      }, options.hoverDelay);
-      
-      timers.set(dropdown.id, timer);
-    });
-    
-    // Al salir con el cursor
-    dropdown.addEventListener('mouseleave', () => {
-      // Cancelar timer previo si existe
-      if (timers.has(dropdown.id)) {
-        clearTimeout(timers.get(dropdown.id));
-        timers.delete(dropdown.id);
-      }
-      
-      // Timer para ocultar (permite moverse al menú)
-      const timer = setTimeout(() => {
-        hideDropdown(dropdown, menu, toggle);
-      }, options.hideDelay);
-      
-      timers.set(dropdown.id, timer);
-    });
-  } catch (error) {
-    console.error('Error al configurar comportamiento hover:', error);
-  }
-}
-
-/**
- * Configura el soporte táctil para un dropdown
- * @param {HTMLElement} dropdown - Elemento dropdown
- * @param {Object} options - Opciones de configuración
- */
-function setupTouchBehavior(dropdown, options) {
+function setupClickBehavior(dropdown, options) {
   try {
     const toggle = dropdown.querySelector('.dropdown-toggle');
     const menu = dropdown.querySelector('.dropdown-menu');
     
     if (!toggle || !menu) return;
     
-    // En dispositivos táctiles, permitir clic en el toggle
+    // Configurar solo para clic
     toggle.addEventListener('click', (e) => {
       // Prevenir comportamiento predeterminado
       e.preventDefault();
@@ -200,14 +146,14 @@ function setupTouchBehavior(dropdown, options) {
       }
     });
     
-    // Cerrar al tocar fuera
+    // Cerrar al hacer clic fuera
     document.addEventListener('click', (e) => {
       if (!dropdown.contains(e.target) && menu.classList.contains('show')) {
         hideDropdown(dropdown, menu, toggle);
       }
     });
   } catch (error) {
-    console.error('Error al configurar soporte táctil:', error);
+    console.error('Error al configurar comportamiento de clic:', error);
   }
 }
 
