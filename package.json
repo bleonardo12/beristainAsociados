@@ -1,5 +1,16 @@
 {
+  "name": "pag-web-boga",
+  "version": "1.0.0",
+  "description": "",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
   "dependencies": {
-    "bootstrap": "^5.3.3"
+    "bootstrap": "^5.3.1",
+    "bootstrap-icons": "^1.10.5",
+    "jquery": "^3.7.0"
   }
 }
