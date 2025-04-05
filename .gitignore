@@ -1,13 +1,38 @@
+# Dependencias
 node_modules/
-<<<<<<< HEAD
-.env
 npm-debug.log
+package-lock.json
+yarn.lock
+
+# Entornos de desarrollo
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Archivos de sistema
 .DS_Store
-=======
-node_modules/
+Thumbs.db
 
-git rm -r --cached node_modules/
-x
+# IDEs y editores
+.vscode/
+.idea/
+*.swp
+*.swo
 
->>>>>>> 0e51fb724bc593e75aafc6a9ee55473678df7b95
-backend.tar.gz
+# Logs
+logs/
+*.log
+
+# Compilación y construcción
+dist/
+build/
+out/
+
+# Pruebas
+coverage/
+.nyc_output/
+
+# Caché
+.cache/

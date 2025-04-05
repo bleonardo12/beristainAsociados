@@ -9,7 +9,6 @@ import { initCookieConsent } from './modules/cookies.js';
 import { initLazyLoad } from './modules/lazyLoad.js';
 import { initChatbot } from './modules/chatbot.js';
 import { initDropdown } from './modules/dropdown.js'; // Nuevo módulo para el dropdown
-import { initDropdown } from './modules/dropdown.js'; // Nuevo módulo para el dropdown
 import { initModalLinks } from './modules/modalLinks.js';
 import { initEmergencyBanner } from './modules/emergencyBanner.js';
 import LogoManager from './modules/logoModule.js'; // Importar la clase LogoManager
@@ -24,7 +23,6 @@ class App {
     this.components = [
       { name: 'navbar', priority: 'critical', init: initNavbar },
       { name: 'theme', priority: 'high', init: initThemeSystem },
-      { name: 'dropdown', priority: 'high', init: initDropdown }, // Nuevo componente
       { name: 'dropdown', priority: 'high', init: initDropdown }, // Nuevo componente
       { name: 'lazyLoad', priority: 'high', init: initLazyLoad },
       { name: 'cookies', priority: 'high', init: initCookieConsent },
@@ -223,4 +221,3 @@ const isDevelopment =
 if (isDevelopment) {
   window.app = app;
 }
-
