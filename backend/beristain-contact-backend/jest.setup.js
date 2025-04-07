@@ -5,7 +5,7 @@ jest.setTimeout(10000);
 process.env.NODE_ENV = 'test';
 
 // Silenciar logs durante pruebas
-jest.mock('./logger', () => {
+jest.mock('./server/logger', () => {
   return {
     info: jest.fn(),
     error: jest.fn(),
@@ -17,6 +17,51 @@ jest.mock('./logger', () => {
       warn: jest.fn(),
       debug: jest.fn(),
     })),
+  };
+});
+
+// Mock para pino-http
+jest.mock('pino-http', () => {
+  return jest.fn().mockImplementation(() => {
+    return (req, res, next) => {
+      req.log = {
+        info: jest.fn(),
+        error: jest.fn(),
+        warn: jest.fn(),
+        debug: jest.fn(),
+      };
+      if (next) next();
+    };
+  });
+});
+
+// Mock para pino
+jest.mock('pino', () => {
+  return {
+    stdSerializers: {
+      req: jest.fn().mockImplementation((req) => req)
+    }
+  };
+});
+
+// Mock para nodemailer
+jest.mock('nodemailer', () => {
+  return {
+    createTransport: jest.fn().mockReturnValue({
+      verify: jest.fn().mockImplementation((callback) => callback(null, true)),
+      sendMail: jest.fn().mockImplementation((mailOptions) => 
+        Promise.resolve({
+          messageId: 'test-message-id',
+          envelope: {
+            from: mailOptions.from,
+            to: [mailOptions.to]
+          },
+          accepted: [mailOptions.to],
+          rejected: [],
+          pending: []
+        })
+      )
+    })
   };
 });
 
