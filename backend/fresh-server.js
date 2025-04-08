@@ -1,7 +1,6 @@
-  // server.js - Servidor Express para manejar el formulario de contacto
+// server.js - Servidor Express para manejar el formulario de contacto
 const express = require('express');
 const cors = require('cors');
-const nodemailer = require('nodemailer');
 const { body, validationResult } = require('express-validator');
 const rateLimit = require('express-rate-limit');
 require('dotenv').config();
@@ -9,10 +8,13 @@ const pino = require('pino');
 const pinoHttp = require('pino-http');
 const logger = require('./logger');
 
+// SendGrid para envío de correos
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey('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'); // Reemplaza con tu API key
+
 // Inicializar app Express
 const app = express();
 const PORT = process.env.PORT || 3000;
-
 
 // Configurar el middleware de logging
 const httpLogger = pinoHttp({
@@ -24,20 +26,18 @@ const httpLogger = pinoHttp({
         method: req.method
       };
     },
-    // No loguear rutas de healthcheck para no llenar los logs
-  autoLogging: {
-    ignore: (req) => req.url === '/api/status' || req.url === '/health'
-  },
-  // Loguear el cuerpo de la solicitud en desarrollo, pero no en producción
-  serializers: {
-    req: (req) => {
-      const serialized = pino.stdSerializers.req(req);
-      if (process.env.NODE_ENV !== 'production' && req.raw.body) {
-        serialized.body = req.raw.body;
+    autoLogging: {
+      ignore: (req) => req.url === '/api/status' || req.url === '/health'
+    },
+    serializers: {
+      req: (req) => {
+        const serialized = pino.stdSerializers.req(req);
+        if (process.env.NODE_ENV !== 'production' && req.raw.body) {
+          serialized.body = req.raw.body;
+        }
+        return serialized;
       }
-      return serialized;
     }
-  }
 });
 
 // Aplicar el middleware a Express
@@ -47,7 +47,7 @@ app.use(httpLogger);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Configurar CORS para permitir solicitudes desde tu dominio
+// Configurar CORS
 app.use(cors({
   origin: [
     'https://www.beristainyasociados.com.ar',
@@ -57,33 +57,7 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
-// Configuración de transporte de correo con verificación de conexión
-const transporter = nodemailer.createTransport({
-  host: 'smtp.gmail.com',
-  port: 465,
-  secure: true,
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS
-  },
-  debug: true, // Para ver logs detallados
-  logger: true  // Habilitar logging
-});
-
-// Verificar configuración de correo (esto se mantiene pero con la sintaxis correcta)
-transporter.verify((error, success) => {
-  if (error) {
-    logger.error({ err: error }, 'Error de configuración de correo:', {
-      message: error.message,
-      name: error.name,
-      stack: error.stack
-    });
-  } else {
-    logger.info('Servidor de correo configurado correctamente');
-  }
-});
-
-// Limitar las solicitudes para prevenir spam (máximo 5 por hora)
+// Limitar las solicitudes
 const contactFormLimiter = rateLimit({
   windowMs: 60 * 60 * 1000, // 1 hora
   max: 5, // máximo 5 solicitudes por ventana
@@ -124,7 +98,12 @@ const validateContactForm = [
     .isLength({ min: 10, max: 3000 }).withMessage('El mensaje debe tener entre 10 y 3000 caracteres')
 ];
 
-// Ruta de estado del servidor
+// Ruta de prueba simple
+app.get('/api/test', (req, res) => {
+  res.status(200).send('El servidor está funcionando correctamente.');
+});
+
+// Ruta de estado
 app.get('/api/status', (req, res) => {
   res.status(200).json({
     status: 'online',
@@ -152,10 +131,10 @@ app.post('/api/contacto',
       // Extraer datos del formulario
       const { nombre, email, telefono, asunto, mensaje } = req.body;
 
-      // Configurar correo al estudio
-      const mailOptions = {
-        from: `"Formulario Web Beristain" <${process.env.EMAIL_USER}>`,
+      // Configurar correo con SendGrid
+      const msg = {
         to: process.env.ADMIN_EMAIL || 'beristainyasociadosej@gmail.com',
+        from: 'beristainyasociadosej@gmail.com', // Email verificado en SendGrid
         replyTo: email,
         subject: `Nueva consulta: ${asunto} | Beristain & Asociados`,
         html: `
@@ -182,23 +161,18 @@ app.post('/api/contacto',
         `
       };
 
-      // Enviar correo al estudio
-      logger.info('Intentando enviar correo:', {
-        from: mailOptions.from,
-        to: mailOptions.to,
-        subject: mailOptions.subject
+      // Log antes de enviar
+      logger.info('Intentando enviar correo con SendGrid:', {
+        to: msg.to,
+        subject: msg.subject
       });
       
-      // Enviar el correo
-      const info = await transporter.sendMail(mailOptions);
+      // Enviar correo con SendGrid
+      await sgMail.send(msg);
       
       // Log después del envío
-      logger.info('Correo enviado exitosamente:', {
-        messageId: info.messageId,
-        response: info.response,
-        envelope: info.envelope
-      });
-      
+      logger.info('Correo enviado exitosamente con SendGrid');
+
       // Responder con éxito
       res.status(200).json({
         success: true,
@@ -207,11 +181,10 @@ app.post('/api/contacto',
 
     } catch (error) {
       // Registro detallado de errores
-      logger.error('Error específico al enviar correo:', {
+      logger.error('Error al enviar correo con SendGrid:', {
         message: error.message,
         code: error.code,
-        command: error.command,
-        responseCode: error.responseCode
+        response: error.response ? error.response.body : null
       });
 
       // Respuesta genérica de error
@@ -222,12 +195,12 @@ app.post('/api/contacto',
     }
 });
 
-// Endpoint para recibir mensajes del chatbot - MOVIDO FUERA DE LA RUTA DE CONTACTO
-app.post('/api/chatbot', (req, res) => {
+// Endpoint para chatbot
+app.post('/api/chatbot', async (req, res) => {
   const { mensaje, usuario, conversacion } = req.body;
   
-  // Loguear la solicitud recibida
-  req.log.info({ 
+  // Loguear la solicitud
+  logger.info({ 
     route: '/api/chatbot', 
     method: 'POST',
     usuario
@@ -235,15 +208,15 @@ app.post('/api/chatbot', (req, res) => {
   
   // Validar la solicitud
   if (!mensaje) {
-    req.log.warn({ body: req.body }, 'Mensaje de chatbot vacío');
+    logger.warn({ body: req.body }, 'Mensaje de chatbot vacío');
     return res.status(400).json({ error: 'El mensaje es requerido' });
   }
   
   try {
-    // Preparar el correo
-    const mailOptions = {
-      from: process.env.EMAIL_USER,
-      to: process.env.ADMIN_EMAIL || 'beristainyasociadosej@gmail.com', // Tu dirección de Gmail
+    // Configurar correo con SendGrid
+    const msg = {
+      to: process.env.ADMIN_EMAIL || 'beristainyasociadosej@gmail.com',
+      from: 'beristainyasociadosej@gmail.com',
       subject: `Nuevo mensaje de chatbot de ${usuario || 'Usuario anónimo'}`,
       html: `
         <h2>Nuevo mensaje del chatbot</h2>
@@ -257,18 +230,19 @@ app.post('/api/chatbot', (req, res) => {
       `
     };
     
-    // Enviar el correo utilizando el mismo transporter que usas para el formulario
-    transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        req.log.error({ err: error, usuario }, 'Error al enviar mensaje de chatbot');
-        return res.status(500).json({ error: 'Error al enviar el mensaje' });
-      }
-      
-      req.log.info({ messageId: info.messageId, usuario }, 'Mensaje de chatbot enviado correctamente');
-      return res.status(200).json({ mensaje: 'Mensaje recibido y enviado correctamente' });
+    // Log antes de enviar
+    logger.info('Intentando enviar mensaje de chatbot con SendGrid:', {
+      to: msg.to,
+      subject: msg.subject
     });
+    
+    // Enviar correo con SendGrid
+    await sgMail.send(msg);
+    
+    logger.info('Mensaje de chatbot enviado correctamente con SendGrid');
+    return res.status(200).json({ mensaje: 'Mensaje recibido y enviado correctamente' });
   } catch (error) {
-    req.log.error({ err: error }, 'Error al procesar mensaje de chatbot');
+    logger.error({ err: error }, 'Error al procesar mensaje de chatbot con SendGrid');
     return res.status(500).json({ error: 'Error interno del servidor' });
   }
 });
