@@ -1,8 +1,3 @@
-/**
- * Módulo para la gestión del formulario de contacto
- * Implementa validación en tiempo real, animaciones,
- * accesibilidad y envío a API backend.
- */
 
 // Configuración global
 const CONFIG = {
