@@ -127,16 +127,16 @@ function setupFormValidation(form) {
     form.addEventListener('keydown', (e) => {
       if (e.key === 'Tab' && document.activeElement) {
         const currentField = document.activeElement;
-        if (fields.contains(currentField)) {
+        if ([...fields].includes(currentField)) {
           setTimeout(() => validateField(currentField, true), 0);
         }
       }
     });
-    
   } catch (error) {
     console.error('Error al configurar validación del formulario:', error);
   }
 }
+
 
 /**
  * Crea un contenedor para mensajes de error si no existe
