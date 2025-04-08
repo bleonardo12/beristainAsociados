@@ -579,56 +579,52 @@ function createSuccessMessage(message = null) {
   `;
 }
 
-/**
- * Muestra un mensaje de error en el formulario
- * @param {HTMLFormElement} form - Formulario donde mostrar el error
- * @param {string} message - Mensaje de error
- */
-function showErrorMessage(form, message) {
-  try {
-    // Verificar si ya existe un mensaje de error
-    let errorAlert = form.querySelector('.alert-danger');
-    
-    if (!errorAlert) {
-      // Crear alerta de error
-      errorAlert = document.createElement('div');
-      errorAlert.className = 'alert alert-danger alert-dismissible fade show mt-3';
-      errorAlert.setAttribute('role', 'alert');
-      errorAlert.setAttribute('aria-live', 'assertive');
-      
-      // Crear botón para cerrar
-      const closeButton = document.createElement('button');
-      closeButton.type = 'button';
-      closeButton.className = 'btn-close';
-      closeButton.setAttribute('data-bs-dismiss', 'alert');
-      closeButton.setAttribute('aria-label', 'Cerrar');
-      
-      errorAlert.appendChild(closeButton);
-      form.prepend(errorAlert);
+const form = document.getElementById('contactForm');
+const campos = form.querySelectorAll('input, textarea');
+const spinner = document.getElementById('spinner');
+const feedback = document.getElementById('formFeedback');
+
+form.addEventListener('submit', function (e) {
+  e.preventDefault();
+
+  let hayErrores = false;
+
+  campos.forEach(campo => {
+    const errorDiv = document.getElementById(`error-${campo.name}`);
+
+    if (!campo.checkValidity()) {
+      hayErrores = true;
+      campo.classList.add('error');
+      errorDiv.textContent = campo.validationMessage;
+      errorDiv.classList.add('visible');
+    } else {
+      campo.classList.remove('error');
+      errorDiv.textContent = '';
+      errorDiv.classList.remove('visible');
     }
-    
-    // Actualizar mensaje
-    errorAlert.innerHTML = `
-      <strong>Error:</strong> ${message}
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
-    `;
-    
-    // Animar entrada
-    errorAlert.style.animation = 'fadeInDown 0.5s forwards';
-    
-    // Enfocar mensaje para lectores de pantalla
-    errorAlert.setAttribute('tabindex', '-1');
-    errorAlert.focus();
-    
-    // Auto-ocultar después de un tiempo
-    setTimeout(() => {
-      if (errorAlert.parentNode) {
-        errorAlert.classList.remove('show');
-        setTimeout(() => errorAlert.remove(), 300);
+  });
+
+  if (!hayErrores) {
+    spinner.classList.remove('hidden');
+    feedback.textContent = '';
+
+    // Simulación de envío
+    fetch('/tu-endpoint', {
+      method: 'POST',
+      body: new FormData(form)
+    })
+    .then(response => {
+      spinner.classList.add('hidden');
+      if (response.ok) {
+        form.reset();
+        feedback.textContent = 'Formulario enviado con éxito.';
+      } else {
+        feedback.textContent = 'Ocurrió un error al enviar el formulario.';
       }
-    }, CONFIG.ERROR_TIMEOUT);
+    })
+    .catch(() => {
+      spinner.classList.add('hidden');
+      feedback.textContent = 'Error de red. Intentalo de nuevo.';
+    });
   }
-  catch (error) {
-    console.error('Error al mostrar mensaje de error:', error);
-  }
-}
+});

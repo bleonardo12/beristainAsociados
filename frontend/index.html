@@ -506,62 +506,25 @@
             </section>
 
             <!-- Formulario de contacto -->
-            <section id="contacto-rapido" class="section-padding bg-light">
-                <div class="container">
-                    <h2 class="section-title animate-on-scroll fade-up">Contáctenos</h2>
-                    <div class="row justify-content-center">
-                        <div class="col-lg-8">
-                            <form id="formulario-contacto" class="contact-form animate-on-scroll fade-up">
-                                <div class="row g-4">
-                                    <div class="col-md-6">
-                                        <div class="form-floating">
-                                            <input type="text" class="form-control" id="nombre" placeholder="Nombre completo" required>
-                                            <label for="nombre">Nombre completo</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-floating">
-                                            <input type="email" class="form-control" id="email" placeholder="Correo electrónico" required>
-                                            <label for="email">Correo electrónico</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-floating">
-                                            <input type="tel" class="form-control" id="telefono" placeholder="Teléfono">
-                                            <label for="telefono">Teléfono</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-floating">
-                                            <select class="form-select" id="asunto" required>
-                                                <option selected disabled value="">Seleccione un área...</option>
-                                                <option value="Derecho Penal">Derecho Penal</option>
-                                                <option value="Derecho Civil">Derecho Civil</option>
-                                                <option value="Derecho de Familia">Derecho de Familia</option>
-                                                <option value="Seguros">Seguros</option>
-                                                <option value="Derecho Laboral">Derecho Laboral</option>
-                                                <option value="Derecho Administrativo">Derecho Administrativo</option>
-                                                <option value="Otro">Otro</option>
-                                            </select>
-                                            <label for="asunto">Área legal</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="form-floating">
-                                            <textarea class="form-control" id="mensaje" placeholder="Mensaje" rows="5" required style="height: 150px"></textarea>
-                                            <label for="mensaje">Mensaje</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 text-center">
-                                        <button type="submit" class="btn btn-primary btn-lg">Enviar consulta</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
+            <form id="contactForm" novalidate>
+                <label for="nombre">Nombre</label>
+                <input type="text" id="nombre" name="nombre" required aria-describedby="error-nombre">
+                <div id="error-nombre" class="error-message" aria-live="polite"></div>
+              
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required aria-describedby="error-email">
+                <div id="error-email" class="error-message" aria-live="polite"></div>
+              
+                <label for="mensaje">Mensaje</label>
+                <textarea id="mensaje" name="mensaje" required aria-describedby="error-mensaje"></textarea>
+                <div id="error-mensaje" class="error-message" aria-live="polite"></div>
+              
+                <button type="submit">Enviar</button>
+              
+                <div id="spinner" class="hidden">Enviando...</div>
+                <div id="formFeedback" aria-live="polite"></div>
+              </form>
+              
             <!-- Chatbot asistente -->
             <div id="chatbot-container" class="chatbot-container">
                 <button id="chatbot-toggle" class="chatbot-toggle" aria-label="Abrir asistente virtual">

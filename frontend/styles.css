@@ -1729,6 +1729,33 @@ body.has-emergency-banner .navbar {
         text-decoration: none !important;
         cursor: pointer !important;
     }
+    .error-message {
+        color: red;
+        font-size: 0.9em;
+        display: none;
+        margin-top: 4px;
+      }
+      .error-message.visible {
+        display: block;
+      }
+      
+      input.error, textarea.error {
+        border: 1px solid red;
+      }
+      
+      #spinner {
+        margin-top: 10px;
+        font-style: italic;
+      }
+      .hidden {
+        display: none;
+      }
+      
+      #formFeedback {
+        margin-top: 15px;
+        font-weight: bold;
+      }
+           
 }
 
 /* ========== FOOTER Y EFECTO DE RESALTE ========== */
