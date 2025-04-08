@@ -1,4 +1,4 @@
-// server.js - Servidor Express para manejar el formulario de contacto
+  // server.js - Servidor Express para manejar el formulario de contacto
 const express = require('express');
 const cors = require('cors');
 const nodemailer = require('nodemailer');
@@ -48,7 +48,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Configurar CORS para permitir solicitudes desde tu dominio
-aapp.use(cors({
+app.use(cors({
   origin: [
     'https://www.beristainyasociados.com.ar',
     'https://beristainyasociados.com.ar'
@@ -59,16 +59,18 @@ aapp.use(cors({
 
 // Configuración de transporte de correo con verificación de conexión
 const transporter = nodemailer.createTransport({
-  service: 'gmail',
+  host: 'smtp.gmail.com',
+  port: 465,
+  secure: true,
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS
   },
-  secure: true,
-  requireTLS: true
+  debug: true, // Para ver logs detallados
+  logger: true  // Habilitar logging
 });
 
-// Verificar configuración de correo
+// Verificar configuración de correo (esto se mantiene pero con la sintaxis correcta)
 transporter.verify((error, success) => {
   if (error) {
     logger.error({ err: error }, 'Error de configuración de correo:', {
@@ -152,7 +154,7 @@ app.post('/api/contacto',
 
       // Configurar correo al estudio
       const mailOptions = {
-        from: `"Formulario Web" <${process.env.EMAIL_USER}>`,
+        from: `"Formulario Web Beristain" <${process.env.EMAIL_USER}>`,
         to: process.env.ADMIN_EMAIL || 'beristainyasociadosej@gmail.com',
         replyTo: email,
         subject: `Nueva consulta: ${asunto} | Beristain & Asociados`,
@@ -181,8 +183,22 @@ app.post('/api/contacto',
       };
 
       // Enviar correo al estudio
-      await transporter.sendMail(mailOptions);
-
+      logger.info('Intentando enviar correo:', {
+        from: mailOptions.from,
+        to: mailOptions.to,
+        subject: mailOptions.subject
+      });
+      
+      // Enviar el correo
+      const info = await transporter.sendMail(mailOptions);
+      
+      // Log después del envío
+      logger.info('Correo enviado exitosamente:', {
+        messageId: info.messageId,
+        response: info.response,
+        envelope: info.envelope
+      });
+      
       // Responder con éxito
       res.status(200).json({
         success: true,
@@ -191,10 +207,11 @@ app.post('/api/contacto',
 
     } catch (error) {
       // Registro detallado de errores
-      logger.error({ err: error }, 'Error al procesar formulario de contacto:', {
+      logger.error('Error específico al enviar correo:', {
         message: error.message,
-        name: error.name,
-        stack: error.stack
+        code: error.code,
+        command: error.command,
+        responseCode: error.responseCode
       });
 
       // Respuesta genérica de error
