@@ -48,8 +48,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Configurar CORS para permitir solicitudes desde tu dominio
-app.use(cors({
-  origin: process.env.FRONTEND_URL || 'https://www.beristainyasociados.com.ar',
+aapp.use(cors({
+  origin: [
+    'https://www.beristainyasociados.com.ar',
+    'https://beristainyasociados.com.ar'
+  ],
   methods: ['POST', 'GET', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
