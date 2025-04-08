@@ -1,0 +1,12 @@
+node_modules/
+<<<<<<< HEAD
+.env
+npm-debug.log
+.DS_Store
+=======
+node_modules/
+
+git rm -r --cached node_modules/
+x
+
+>>>>>>> 0e51fb724bc593e75aafc6a9ee55473678df7b95
