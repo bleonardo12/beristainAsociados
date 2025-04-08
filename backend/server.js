@@ -202,6 +202,57 @@ app.post('/api/contacto',
     }
 });
 
+// Endpoint para recibir mensajes del chatbot - MOVIDO FUERA DE LA RUTA DE CONTACTO
+app.post('/api/chatbot', (req, res) => {
+  const { mensaje, usuario, conversacion } = req.body;
+  
+  // Loguear la solicitud recibida
+  req.log.info({ 
+    route: '/api/chatbot', 
+    method: 'POST',
+    usuario
+  }, 'Mensaje de chatbot recibido');
+  
+  // Validar la solicitud
+  if (!mensaje) {
+    req.log.warn({ body: req.body }, 'Mensaje de chatbot vacío');
+    return res.status(400).json({ error: 'El mensaje es requerido' });
+  }
+  
+  try {
+    // Preparar el correo
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: process.env.ADMIN_EMAIL || 'beristainyasociadosej@gmail.com', // Tu dirección de Gmail
+      subject: `Nuevo mensaje de chatbot de ${usuario || 'Usuario anónimo'}`,
+      html: `
+        <h2>Nuevo mensaje del chatbot</h2>
+        <p><strong>Usuario:</strong> ${usuario || 'Anónimo'}</p>
+        <p><strong>ID de conversación:</strong> ${conversacion || 'N/A'}</p>
+        <p><strong>Mensaje:</strong></p>
+        <div style="background-color: #f4f4f4; padding: 10px; border-left: 3px solid #007bff;">
+          ${mensaje}
+        </div>
+        <p><em>Este mensaje fue enviado desde el chatbot de tu sitio web.</em></p>
+      `
+    };
+    
+    // Enviar el correo utilizando el mismo transporter que usas para el formulario
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        req.log.error({ err: error, usuario }, 'Error al enviar mensaje de chatbot');
+        return res.status(500).json({ error: 'Error al enviar el mensaje' });
+      }
+      
+      req.log.info({ messageId: info.messageId, usuario }, 'Mensaje de chatbot enviado correctamente');
+      return res.status(200).json({ mensaje: 'Mensaje recibido y enviado correctamente' });
+    });
+  } catch (error) {
+    req.log.error({ err: error }, 'Error al procesar mensaje de chatbot');
+    return res.status(500).json({ error: 'Error interno del servidor' });
+  }
+});
+
 // Middleware de manejo de errores 404
 app.use((req, res, next) => {
   res.status(404).json({
@@ -214,8 +265,7 @@ app.use((req, res, next) => {
 const server = app.listen(PORT, '0.0.0.0', () => {
     logger.info(`Servidor para formulario de contacto iniciado en puerto ${PORT}`);
     logger.info(`Ambiente: ${process.env.NODE_ENV || 'development'}`);
-  });
-  module.exports = server;
+});
 
 // Manejar errores no capturados
 process.on('uncaughtException', (error) => {
@@ -228,11 +278,11 @@ process.on('uncaughtException', (error) => {
     server.close(() => {
       process.exit(1);
     });
-  });
+});
 
 // Manejar rechazos de promesas no manejados
 process.on('unhandledRejection', (reason, promise) => {
-  logger.error({ err: error }, 'Rechazo de promesa no manejado:', reason);
+  logger.error('Rechazo de promesa no manejado:', reason);
 });
 
 module.exports = server;
