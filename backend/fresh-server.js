@@ -117,6 +117,11 @@ app.post('/api/contacto',
   contactFormLimiter, 
   validateContactForm, 
   async (req, res) => {
+    // Añadir estos logs detallados
+    console.log('Solicitud de formulario recibida:');
+    console.log('Headers:', JSON.stringify(req.headers));
+    console.log('Body:', JSON.stringify(req.body));
+  
     try {
       // Verificar errores de validación
       const errors = validationResult(req);

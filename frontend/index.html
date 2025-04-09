@@ -504,26 +504,36 @@
                 </div>
             </section>
 
-            <!-- Formulario de contacto -->
-            <form id="contactForm" novalidate>
-                <label for="nombre">Nombre</label>
-                <input type="text" id="nombre" name="nombre" required aria-describedby="error-nombre">
-                <div id="error-nombre" class="error-message" aria-live="polite"></div>
-              
+            <form id="contact-form" novalidate>
+                <label for="name">Nombre</label>
+                <input type="text" id="name" name="name" required aria-describedby="error-name" placeholder="Tu nombre completo" autocomplete="name">
+                <div id="error-name" class="error-message" aria-live="polite"></div>
+                
                 <label for="email">Email</label>
-                <input type="email" id="email" name="email" required aria-describedby="error-email">
+                <input type="email" id="email" name="email" required aria-describedby="error-email" placeholder="ejemplo@email.com" autocomplete="email">
                 <div id="error-email" class="error-message" aria-live="polite"></div>
-              
-                <label for="mensaje">Mensaje</label>
-                <textarea id="mensaje" name="mensaje" required aria-describedby="error-mensaje"></textarea>
-                <div id="error-mensaje" class="error-message" aria-live="polite"></div>
-              
+                
+                <!-- Añade el campo de asunto que tu backend espera -->
+                <label for="asunto">Área Legal</label>
+                <select id="asunto" name="asunto" required aria-describedby="error-asunto">
+                  <option value="">Seleccione un área</option>
+                  <option value="Derecho Civil">Derecho Civil</option>
+                  <option value="Derecho Laboral">Derecho Laboral</option>
+                  <option value="Derecho Comercial">Derecho Comercial</option>
+                  <option value="Derecho de Familia">Derecho de Familia</option>
+                  <option value="Otra consulta">Otra consulta</option>
+                </select>
+                <div id="error-asunto" class="error-message" aria-live="polite"></div>
+                
+                <label for="message">Mensaje</label>
+                <textarea id="message" name="message" required aria-describedby="error-message" placeholder="Contanos en que podemos ayudarte"></textarea>
+                <div id="error-message" class="error-message" aria-live="polite"></div>
+                
                 <button type="submit">Enviar</button>
-              
                 <div id="spinner" class="hidden">Enviando...</div>
-                <div id="formFeedback" aria-live="polite"></div>
+                <div class="form-feedback" aria-live="polite"></div>
               </form>
-              
+
             <!-- Chatbot asistente -->
             <div id="chatbot-container" class="chatbot-container">
                 <button id="chatbot-toggle" class="chatbot-toggle" aria-label="Abrir asistente virtual">

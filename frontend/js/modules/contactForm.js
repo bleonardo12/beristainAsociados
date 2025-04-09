@@ -66,6 +66,11 @@ export function initContactForm() {
     }
 
     function validateForm() {
+            const asunto = form.elements["asunto"];
+      if (!asunto.value) {
+        showFieldError(asunto, "Por favor, selecciona un área legal.");
+        isValid = false;
+      }
       clearErrors();
       let isValid = true;
 
@@ -96,7 +101,7 @@ export function initContactForm() {
     }
 
     async function sendFormData(data) {
-      const endpoint = form.getAttribute("action") || "/contact";
+      const endpoint = form.getAttribute("action") || "/api/contacto";
       const response = await fetch(endpoint, {
         method: "POST",
         headers: {
@@ -104,14 +109,14 @@ export function initContactForm() {
         },
         body: JSON.stringify(data)
       });
-
+    
       if (!response.ok) {
         throw new Error("Error al enviar el formulario.");
       }
-
+    
       return response.json();
     }
-
+    
     form.addEventListener("submit", async function (e) {
       e.preventDefault();
 
@@ -125,9 +130,10 @@ export function initContactForm() {
       submitButton.textContent = "Enviando...";
 
       const formData = {
-        name: form.elements["name"].value.trim(),
+        nombre: form.elements["name"].value.trim(),
         email: form.elements["email"].value.trim(),
-        message: form.elements["message"].value.trim(),
+        asunto: form.elements["asunto"].value,
+        mensaje: form.elements["message"].value.trim(),
       };
 
       try {

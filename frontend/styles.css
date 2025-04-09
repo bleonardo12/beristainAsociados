@@ -1758,6 +1758,17 @@ body.has-emergency-banner .navbar {
            
 }
 
+#successMessage {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 12px 20px;
+    border-left: 5px solid #28a745;
+    margin-top: 15px;
+    border-radius: 5px;
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  
+
 /* ========== FOOTER Y EFECTO DE RESALTE ========== */
 @layer components {
     /* Footer */
