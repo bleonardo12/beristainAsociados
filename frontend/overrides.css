@@ -21,6 +21,88 @@ body .navbar-nav .dropdown-menu {
     margin-top: 0 !important;
 }
 
+/* Banner de emergencia - Corrección para móviles */
+body .emergency-banner {
+    position: relative;
+    background-color: #ffe0e0;
+    color: #d32f2f;
+    padding: 12px 0;
+    text-align: center;
+    z-index: 1050; /* Asegurar que esté por encima de otros elementos */
+}
+
+body .emergency-banner .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+}
+
+body .emergency-banner p {
+    margin: 0;
+    padding-right: 40px; /* Aumentar espacio para el botón de cierre */
+    font-size: 14px;
+    line-height: 1.4;
+    width: 100%; /* Asegurar que ocupe el ancho completo */
+}
+
+body .emergency-banner a {
+    color: #d32f2f;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+body #close-emergency-banner {
+    background: none;
+    border: none;
+    color: #d32f2f;
+    cursor: pointer;
+    font-size: 1.2rem;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    min-width: 30px; /* Asegurar un tamaño mínimo para mejorar la interacción táctil */
+}
+
+/* Media queries refinados para el banner de emergencia */
+@media (max-width: 767px) {
+    body .emergency-banner p {
+        font-size: 13px;
+        padding-right: 45px; /* Aumentar aún más en pantallas medianas */
+        text-align: left;
+    }
+}
+
+@media (max-width: 576px) {
+    body .emergency-banner p {
+        font-size: 12px;
+        padding-right: 50px; /* Aumentar significativamente en móviles */
+        text-align: left;
+    }
+    
+    body .emergency-banner .container {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    
+    body #close-emergency-banner {
+        right: 10px;
+        width: 35px; /* Aumentar área táctil */
+        height: 35px;
+    }
+    
+    /* Hacer el texto del teléfono más pequeño en pantallas muy pequeñas */
+    body .emergency-banner a {
+        font-size: 12px;
+    }
+}
 
 /* Modal mejorado */
 body .modal-content {
@@ -98,6 +180,90 @@ body .modal-footer {
     display: inline-block !important;
     text-decoration: none !important;
     cursor: pointer !important;
+}
+
+/* Formulario de contacto mejorado */
+body #contact-form {
+    background-color: var(--neutral-200) !important;
+    border-radius: var(--border-radius-lg) !important;
+    padding: var(--spacing-lg) !important;
+    max-width: 600px !important;
+    margin: 0 auto var(--spacing-xl) !important;
+    box-shadow: var(--shadow-md) !important;
+}
+
+body #contact-form label {
+    display: block !important;
+    margin-bottom: var(--spacing-xs) !important;
+    font-weight: 500 !important;
+    color: var(--neutral-700) !important;
+}
+
+body #contact-form input,
+body #contact-form textarea,
+body #contact-form select {
+    width: 100% !important;
+    padding: 12px !important;
+    margin-bottom: var(--spacing-md) !important;
+    border: 1px solid var(--neutral-400) !important;
+    border-radius: var(--border-radius-md) !important;
+    background-color: var(--neutral-100) !important;
+    color: var(--neutral-700) !important;
+    font-family: var(--font-secondary) !important;
+    font-size: var(--fs-base) !important;
+    transition: border-color var(--transition-normal), box-shadow var(--transition-normal) !important;
+}
+
+body #contact-form input:focus,
+body #contact-form textarea:focus,
+body #contact-form select:focus {
+    outline: none !important;
+    border-color: var(--primary) !important;
+    box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.2) !important;
+}
+
+body #contact-form textarea {
+    min-height: 150px !important;
+    resize: vertical !important;
+}
+
+body #contact-form button[type="submit"] {
+    background-color: var(--primary) !important;
+    color: var(--neutral-100) !important;
+    border: none !important;
+    border-radius: var(--border-radius-md) !important;
+    padding: 12px 24px !important;
+    font-size: var(--fs-base) !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    transition: all var(--transition-normal) !important;
+    display: block !important;
+    width: 100% !important;
+    margin-top: var(--spacing-sm) !important;
+    min-height: 44px !important; /* Mejorar área táctil */
+}
+
+body #contact-form button[type="submit"]:hover {
+    background-color: var(--primary-dark) !important;
+    transform: translateY(-2px) !important;
+}
+
+/* Ajustes para dispositivos móviles para el formulario */
+@media (max-width: 576px) {
+    body #contact-form {
+        padding: var(--spacing-md) !important;
+    }
+    
+    body #contact-form input,
+    body #contact-form textarea,
+    body #contact-form select {
+        padding: 10px !important;
+        font-size: var(--fs-sm) !important;
+    }
+    
+    body #contact-form button[type="submit"] {
+        padding: 12px 20px !important;
+    }
 }
 
 /* Cards uniformes */
@@ -369,6 +535,25 @@ body .home-text h1:hover {
     cursor: default !important;
 }
 
+body .home-text h1::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 4px;
+    background-color: var(--secondary);
+    bottom: 0px;
+    left: 0;
+    transition: width 0.6s ease;
+}
+
+body .home-text h1:hover::after {
+    width: 80% !important; /* Reemplazado valor fijo por uno relativo */
+    max-width: 350px !important; /* Límite máximo para pantallas grandes */
+    height: 4px !important;
+    border-radius: 0 !important;
+    transform: translateY(0) !important;
+}
+
 body .home-text h3 {
     font-family: var(--font-secondary) !important;
     font-size: clamp(1.2rem, 2.5vw + 0.3rem, 2.2rem) !important; /* Tamaño reducido */
@@ -377,6 +562,10 @@ body .home-text h3 {
     text-shadow: 0 4px 8px rgba(0, 0, 0, 0.8) !important;
     transition: color 0.3s ease !important;
     will-change: color;
+    white-space: normal !important;
+    overflow: visible !important;
+     text-overflow: clip !important;
+    max-width: 100% !important;
 }
 
 body .home-text h3:hover {
@@ -563,9 +752,18 @@ body footer .social-links a:hover {
         margin-bottom: var(--spacing-md) !important;
     }
     
-    body .home-text h3 {
-        font-size: clamp(1rem, 1.8vw + 0.3rem, 1.5rem) !important;
-    }
+    .home-text h3,
+  body .home-text h3 {
+    font-size: clamp(1rem, 1.8vw + 0.3rem, 1.5rem) !important;
+    line-height: 1.3 !important;
+    margin-top: var(--spacing-md) !important;
+  }
+  
+  .home-text,
+  body .home-text {
+    padding: 1.5rem var(--spacing-sm) !important;
+    width: 95% !important; /* Aumentamos ligeramente el ancho */
+  }
     
     /* Botones más compactos */
     body .btn-lg {
