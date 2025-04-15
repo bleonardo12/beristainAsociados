@@ -1,0 +1,25 @@
+name: Deploy al VPS
+
+on:
+  push:
+    branches:
+      - master  # o la rama que estés usando
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@v3
+
+      - name: Configurar clave SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.DEPLOY_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H srv777726.hstgr.cloud >> ~/.ssh/known_hosts
+
+      - name: Hacer git pull en el VPS
+        run: |
+          ssh -i ~/.ssh/id_ed25519 root@srv777726.hstgr.cloud "cd /var/www/beristainAsociados && git pull"
