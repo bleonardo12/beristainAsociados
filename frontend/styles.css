@@ -2065,7 +2065,7 @@ select.error {
     /* Home */
     .home-text {
         width: 90%;
-        padding: 1.5rem var(--spacing-md);
+        padding: 1.6rem var(--spacing-md);
     }
     
     .home-text h1 {
