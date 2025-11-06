@@ -979,6 +979,16 @@ body .emergency-banner {
     z-index: 1050 !important;
     box-shadow: 0 4px 25px rgba(255, 56, 56, 0.4), inset 0 2px 0 rgba(255, 56, 56, 0.2) !important;
     animation: urgent-glow 2s ease-in-out infinite !important;
+    display: none !important;
+    opacity: 0 !important;
+    transform: translateY(-100%) !important;
+    transition: all 0.3s ease !important;
+}
+
+body .emergency-banner.visible {
+    display: block !important;
+    opacity: 1 !important;
+    transform: translateY(0) !important;
 }
 
 @keyframes urgent-glow {
@@ -1005,21 +1015,21 @@ body .emergency-banner .container {
 body .emergency-banner p {
     margin: 0 auto !important;
     padding: 0 70px !important;
-    font-size: 19px !important;
+    font-size: 18px !important;
     line-height: 1.7 !important;
     width: 100% !important;
-    font-weight: 700 !important;
+    font-weight: 500 !important;
     text-align: center !important;
-    letter-spacing: 0.5px !important;
-    color: #ffffff !important;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6) !important;
+    letter-spacing: 0.3px !important;
+    color: #e8e8e8 !important;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5) !important;
 }
 
 body .emergency-banner p strong {
-    color: #ff3838 !important;
-    font-weight: 800 !important;
-    font-size: 1.1em !important;
-    text-shadow: 0 0 20px rgba(255, 56, 56, 0.8), 0 0 40px rgba(255, 56, 56, 0.4) !important;
+    color: #ff4757 !important;
+    font-weight: 700 !important;
+    font-size: 1.05em !important;
+    text-shadow: 0 0 15px rgba(255, 71, 87, 0.6) !important;
 }
 
 body .emergency-banner p i {
@@ -1044,25 +1054,25 @@ body .emergency-banner p i {
 }
 
 body .emergency-banner a {
-    color: #ffd700 !important;
-    font-weight: 900 !important;
+    color: #00d9ff !important;
+    font-weight: 700 !important;
     text-decoration: none !important;
-    border-bottom: 3px solid #ffd700 !important;
-    padding: 4px 10px !important;
-    background: rgba(255, 215, 0, 0.15) !important;
-    border-radius: 6px !important;
+    border-bottom: 2px solid #00d9ff !important;
+    padding: 3px 8px !important;
+    background: rgba(0, 217, 255, 0.1) !important;
+    border-radius: 4px !important;
     transition: all 0.3s ease !important;
     display: inline-block !important;
     font-size: 1.05em !important;
-    text-shadow: 0 0 10px rgba(255, 215, 0, 0.6) !important;
+    text-shadow: 0 0 12px rgba(0, 217, 255, 0.6) !important;
 }
 
 body .emergency-banner a:hover {
-    background: #ffd700 !important;
+    background: #00d9ff !important;
     color: #1a1a2e !important;
     border-bottom-color: transparent !important;
-    transform: scale(1.08) !important;
-    box-shadow: 0 4px 20px rgba(255, 215, 0, 0.6) !important;
+    transform: scale(1.05) !important;
+    box-shadow: 0 4px 16px rgba(0, 217, 255, 0.5) !important;
     text-shadow: none !important;
 }
 
