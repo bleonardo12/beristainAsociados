@@ -582,17 +582,19 @@ body .modal-subtitle {
 }
 
 body .btn-close-modern {
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    opacity: 1;
-    transition: all 0.3s ease;
+    background-color: rgba(255, 255, 255, 0.2) !important; /* background-color en lugar de background */
+    border-radius: 50% !important;
+    width: 40px !important;
+    height: 40px !important;
+    opacity: 1 !important;
+    transition: all 0.3s ease !important;
+    /* Hacer la X blanca para que sea visible en el header oscuro */
+    filter: invert(1) brightness(2) !important;
 }
 
 body .btn-close-modern:hover {
-    background: rgba(255, 255, 255, 0.3);
-    transform: rotate(90deg);
+    background-color: rgba(255, 255, 255, 0.3) !important;
+    transform: rotate(90deg) !important;
 }
 
 /* Body del modal */
