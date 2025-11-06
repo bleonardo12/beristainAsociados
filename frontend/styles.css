@@ -2084,6 +2084,41 @@ select.error {
     .card-body h4 {
         font-size: 1.3rem;
     }
+
+    /* boton flotante whatsapp */
+    .whatsapp-float {
+        position: fixed;
+        width: 60px;
+        height: 60px;
+        bottom: 30px;
+        right: 30px;
+        background-color: #25D366;
+        color: white;
+        border-radius: 50%;
+        text-align: center;
+        font-size: 30px;
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+    }
+    
+    .whatsapp-float:hover {
+        background-color: #20BA5A;
+        transform: scale(1.1);
+        box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.4);
+    }
+    
+    @media (max-width: 768px) {
+        .whatsapp-float {
+            width: 55px;
+            height: 55px;
+            bottom: 20px;
+            right: 20px;
+        }
+    }
     
     /* Modal ajustes */
     .modal-header {
