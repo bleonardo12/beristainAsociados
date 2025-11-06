@@ -120,15 +120,16 @@ function setupLogo() {
           }
         }
         
-        // Aplicar tamaño
+        // Aplicar tamaño DIRECTAMENTE con height (no maxHeight)
         if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
           logo.style.transition = 'none';
         } else {
-          logo.style.transition = `max-height ${currentConfig.animationDuration}ms ease`;
+          logo.style.transition = `height ${currentConfig.animationDuration}ms ease`;
         }
-        
-        logo.style.maxHeight = size;
-        logo.style.height = 'auto';
+
+        logo.style.height = size;
+        logo.style.maxHeight = 'none';
+        logo.style.width = 'auto';
       } catch (err) {
         error('Error en handleResize:', err);
       }
