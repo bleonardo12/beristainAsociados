@@ -23,10 +23,59 @@ body .navbar-nav .dropdown-menu {
 
 /* ========== HEADER MEJORADO ========== */
 
+/* Aumentar altura del navbar para contener logo grande */
+body nav.navbar {
+    height: auto !important;
+    min-height: 220px !important;
+    padding: 10px 0 !important;
+}
+
+body nav.navbar.scrolled {
+    min-height: 120px !important;
+}
+
+/* Responsive: ajustar altura del navbar */
+@media (max-width: 1199.98px) {
+    body nav.navbar {
+        min-height: 200px !important;
+    }
+    body nav.navbar.scrolled {
+        min-height: 110px !important;
+    }
+}
+
+@media (max-width: 991.98px) {
+    body nav.navbar {
+        min-height: 150px !important;
+    }
+    body nav.navbar.scrolled {
+        min-height: 100px !important;
+    }
+}
+
+@media (max-width: 767.98px) {
+    body nav.navbar {
+        min-height: 120px !important;
+    }
+    body nav.navbar.scrolled {
+        min-height: 90px !important;
+    }
+}
+
+/* Asegurar que navbar-brand no limite el logo */
+body .navbar .navbar-brand {
+    height: auto !important;
+    display: flex !important;
+    align-items: center !important;
+    padding: 5px 0 !important;
+}
+
 /* Logo más grande y elegante con fondo transparente */
 body .navbar .logo-principal {
     height: 200px !important;
     width: auto !important;
+    max-height: none !important;
+    max-width: none !important;
     object-fit: contain !important;
     transition: all 0.3s ease !important;
     filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.15)) !important;
