@@ -879,7 +879,7 @@ body .home-text h1 {
     color: #ffffff !important;
     text-transform: uppercase !important;
     line-height: 1.2 !important; /* Más compacto para 3 líneas */
-    font-weight: 700 !important; /* Más impactante (era 200) */
+    font-weight: 600 !important; /* Ajustado de 700 a 600 - más refinado */
     text-shadow: 0 4px 12px rgba(0, 0, 0, 0.9) !important; /* Sombra más fuerte */
     transition: color 0.3s ease !important;
     margin-bottom: var(--spacing-lg) !important;
@@ -899,6 +899,23 @@ body .home-text h1 br + :not(br) {
 body .home-text h1:hover {
     color: var(--secondary) !important;
     cursor: default !important;
+}
+
+/* ========== EQUIPARAR TODOS LOS TÍTULOS H2 Y H3 ========== */
+/* Estilo unificado profesional para todos los títulos de sección */
+body .section-title,
+body h2.section-title,
+body .slider-area h3,
+body .hero-content h3,
+body h3.wrap {
+    font-family: 'Playfair Display', serif !important;
+    font-size: clamp(2.2rem, 4vw, 3rem) !important;
+    font-weight: 600 !important;
+    color: var(--primary) !important;
+    text-align: center !important;
+    margin-bottom: 2rem !important;
+    letter-spacing: 0.02em !important;
+    line-height: 1.3 !important;
 }
 
 body .home-text h1::after {
