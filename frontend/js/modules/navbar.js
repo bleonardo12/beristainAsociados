@@ -409,17 +409,17 @@ function setupLinkNavigation(navLinks) {
               }
               
               // Colapsar navbar en móviles después de clic
-              const navbarToggler = document.querySelector('.navbar-toggler');
               const navbarCollapse = document.querySelector('.navbar-collapse');
 
-              if (navbarCollapse && navbarCollapse.classList.contains('show')) {
+              // Solo cerrar en móvil (< 992px)
+              if (window.innerWidth < 992 && navbarCollapse && navbarCollapse.classList.contains('show')) {
                 // Usar Bootstrap 5 Collapse API
                 const bsCollapse = window.bootstrap?.Collapse?.getInstance(navbarCollapse);
                 if (bsCollapse) {
                   bsCollapse.hide();
-                } else if (navbarToggler) {
-                  // Fallback: click en toggler
-                  navbarToggler.click();
+                } else {
+                  // Fallback: remover clase manualmente
+                  navbarCollapse.classList.remove('show');
                 }
               }
               
@@ -692,40 +692,21 @@ function setupDropdowns() {
           dropdown.classList.remove('dropdown-hover');
         });
 
-        // Bootstrap maneja el toggle del dropdown con data-bs-toggle
-        // Solo necesitamos cerrar el overlay al hacer clic fuera
+        // Permitir que Bootstrap maneje completamente el Collapse
+        // Solo agregar funcionalidad adicional para prevenir scroll
         const navbarCollapse = document.querySelector('.navbar-collapse');
 
         if (navbarCollapse) {
-          // Prevenir scroll del body cuando el menú está abierto
-          const preventBodyScroll = function() {
-            if (navbarCollapse.classList.contains('show')) {
-              document.body.classList.add('mobile-menu-open');
-            } else {
-              document.body.classList.remove('mobile-menu-open');
-            }
-          };
-
-          // Observer para detectar cambios en la clase .show
-          const observer = new MutationObserver(preventBodyScroll);
-          observer.observe(navbarCollapse, {
-            attributes: true,
-            attributeFilter: ['class']
+          // Usar eventos nativos de Bootstrap en lugar de MutationObserver
+          navbarCollapse.addEventListener('show.bs.collapse', function() {
+            document.body.classList.add('mobile-menu-open');
           });
-          registerObserver(observer);
 
-          // Cerrar al hacer clic en el overlay (::before pseudo-elemento)
-          const overlayClickHandler = function(e) {
-            if (e.target === navbarCollapse && navbarCollapse.classList.contains('show')) {
-              const bsCollapse = window.bootstrap?.Collapse?.getInstance(navbarCollapse);
-              if (bsCollapse) {
-                bsCollapse.hide();
-              }
-            }
-          };
+          navbarCollapse.addEventListener('hide.bs.collapse', function() {
+            document.body.classList.remove('mobile-menu-open');
+          });
 
-          navbarCollapse.addEventListener('click', overlayClickHandler);
-          registerListener(navbarCollapse, 'click', overlayClickHandler, 'dropdown');
+          // NO interferir con el overlay - dejar que CSS lo maneje
         }
 
         log('Comportamiento móvil configurado para dropdowns');
@@ -737,48 +718,38 @@ function setupDropdowns() {
     // Configurar cierre automático al hacer clic en enlaces
     function setupMobileMenuClose() {
       try {
-        const navLinks = document.querySelectorAll('.navbar-nav .nav-link:not(.dropdown-toggle)');
-        const dropdownItems = document.querySelectorAll('.dropdown-menu .dropdown-item');
         const navbarCollapse = document.querySelector('.navbar-collapse');
+        if (!navbarCollapse) return;
 
-        // Cerrar menú al hacer clic en enlaces normales
-        navLinks.forEach(link => {
-          const linkClickHandler = function(e) {
-            if (window.innerWidth < currentConfig.largeScreenBreakpoint) {
-              // Dar tiempo para que la navegación comience antes de cerrar
-              setTimeout(() => {
-                if (navbarCollapse && navbarCollapse.classList.contains('show')) {
-                  const bsCollapse = window.bootstrap?.Collapse?.getInstance(navbarCollapse);
-                  if (bsCollapse) {
-                    bsCollapse.hide();
-                  }
-                }
-              }, 150);
+        // Delegación de eventos: un solo listener para todos los enlaces
+        const closeMenuHandler = function(e) {
+          // Solo actuar en móvil
+          if (window.innerWidth >= currentConfig.largeScreenBreakpoint) return;
+
+          // Solo cerrar si se hizo clic en un enlace de navegación
+          const target = e.target.closest('.nav-link, .dropdown-item');
+          if (!target) return;
+
+          // No cerrar si es un dropdown-toggle (debe abrir el dropdown)
+          if (target.classList.contains('dropdown-toggle')) return;
+
+          // Cerrar el menú después de un breve delay
+          setTimeout(() => {
+            if (navbarCollapse.classList.contains('show')) {
+              const bsCollapse = window.bootstrap?.Collapse?.getInstance(navbarCollapse);
+              if (bsCollapse) {
+                bsCollapse.hide();
+              } else {
+                // Fallback si Bootstrap no está disponible
+                navbarCollapse.classList.remove('show');
+              }
             }
-          };
+          }, 100);
+        };
 
-          link.addEventListener('click', linkClickHandler);
-          registerListener(link, 'click', linkClickHandler, 'mobile-close');
-        });
-
-        // Cerrar menú al hacer clic en items del dropdown
-        dropdownItems.forEach(item => {
-          const itemClickHandler = function(e) {
-            if (window.innerWidth < currentConfig.largeScreenBreakpoint) {
-              setTimeout(() => {
-                if (navbarCollapse && navbarCollapse.classList.contains('show')) {
-                  const bsCollapse = window.bootstrap?.Collapse?.getInstance(navbarCollapse);
-                  if (bsCollapse) {
-                    bsCollapse.hide();
-                  }
-                }
-              }, 150);
-            }
-          };
-
-          item.addEventListener('click', itemClickHandler);
-          registerListener(item, 'click', itemClickHandler, 'mobile-close');
-        });
+        // Un solo listener en el navbar-collapse
+        navbarCollapse.addEventListener('click', closeMenuHandler);
+        registerListener(navbarCollapse, 'click', closeMenuHandler, 'mobile-close');
 
         log('Cierre automático del menú móvil configurado');
       } catch (err) {
