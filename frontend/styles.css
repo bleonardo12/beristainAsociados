@@ -624,29 +624,8 @@
     }
     
     /* Dropdown modernizado */
-    nav.navbar .dropdown-menu {
-        background-color: var(--neutral-100);
-        border: none;
-        border-radius: var(--border-radius-md);
-        box-shadow: var(--shadow-md);
-        padding: var(--spacing-xs) 0;
-        margin-top: 0;
-        display: block;
-        opacity: 0;
-        visibility: hidden;
-        transform: translateY(-10px);
-        transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s linear 0.3s;
-    }
-    
-    /* Despliegue automático del menú al pasar el cursor */
-    .navbar-nav .dropdown:hover .dropdown-menu {
-        display: block;
-        margin-top: 0;
-        opacity: 1;
-        visibility: visible;
-        transform: translateY(0);
-        transition: opacity 0.3s ease, transform 0.3s ease;
-    }
+    /* NOTA: Reglas de dropdown movidas a overrides.css con media queries apropiados */
+    /* para evitar conflictos entre desktop (hover) y mobile (overlay) */
     
     nav.navbar .dropdown-item {
         color: var(--neutral-600);
@@ -2185,35 +2164,16 @@ select.error {
     
     .navbar .navbar-collapse {
         margin-left: 0;
-        margin-top: 90px;
+        /* margin-top removido - el overlay mobile manejará el posicionamiento */
     }
-    
+
     /* estilos de seccion */
     .section-title {
         font-size: var(--fs-xl);
     }
-    
-    /* Forzar el dropdown en hover también en móvil */
-    .navbar-nav .dropdown:hover .dropdown-menu {
-        display: block;
-        position: static;
-        float: none;
-        width: auto;
-        margin-top: 0;
-        background-color: transparent;
-        border: 0;
-        box-shadow: none;
-    }
-    
-    .navbar-nav .dropdown-menu .dropdown-item {
-        padding-left: 2rem;
-        color: var(--neutral-600);
-    }
-    
-    .navbar-nav .dropdown-menu .dropdown-item:hover {
-        background-color: transparent;
-        color: var(--primary);
-    }
+
+    /* Dropdown hover DESACTIVADO en móvil - se usa overlay full-screen */
+    /* Las reglas de dropdown mobile están en overrides.css */
     
     /* Ajuste para modal en tablet */
     .modal-title {

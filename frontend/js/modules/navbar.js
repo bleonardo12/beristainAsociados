@@ -578,33 +578,36 @@ function setupDropdowns() {
       warn('No se encontraron dropdowns para configurar');
       return;
     }
-    
+
     // Función para verificar si estamos en pantalla grande
     const isLargeScreen = () => window.innerWidth >= currentConfig.largeScreenBreakpoint;
-    
+
     // Aplicar comportamiento inicial
     applyDropdownBehavior();
-    
+
     // Volver a aplicar comportamiento cuando cambie el tamaño de la ventana
     const resizeHandler = debounce(() => {
       applyDropdownBehavior();
     }, 150);
-    
+
     window.addEventListener('resize', resizeHandler);
     registerListener(window, 'resize', resizeHandler);
-    
+
+    // Configurar cierre del menú móvil al hacer clic en enlaces
+    setupMobileMenuClose();
+
     // Función para aplicar el comportamiento adecuado según tamaño de pantalla
     function applyDropdownBehavior() {
       try {
         // Eliminar comportamientos anteriores
         cleanup('dropdown');
-        
+
         if (isLargeScreen()) {
           // En pantallas grandes: Activar hover
           setupHoverBehavior();
         } else {
-          // En pantallas pequeñas: Activar click
-          setupClickBehavior();
+          // En pantallas pequeñas: Manejar overlay y body scroll
+          setupMobileBehavior();
         }
       } catch (err) {
         error('Error en applyDropdownBehavior:', err);
@@ -681,150 +684,105 @@ function setupDropdowns() {
       }
     }
     
-    // Configurar comportamiento click para pantallas pequeñas
-    function setupClickBehavior() {
+    // Configurar comportamiento móvil simplificado
+    function setupMobileBehavior() {
       try {
         // Eliminar clase hover
         dropdowns.forEach(dropdown => {
           dropdown.classList.remove('dropdown-hover');
         });
 
-        // En móvil, manejar manualmente el toggle del dropdown
-        dropdowns.forEach(dropdown => {
-          const toggle = dropdown.querySelector('.dropdown-toggle');
-          const menu = dropdown.querySelector('.dropdown-menu');
+        // Bootstrap maneja el toggle del dropdown con data-bs-toggle
+        // Solo necesitamos cerrar el overlay al hacer clic fuera
+        const navbarCollapse = document.querySelector('.navbar-collapse');
 
-          if (!toggle || !menu) return;
-
-          const toggleClickHandler = function(e) {
-            try {
-              if (!isLargeScreen()) {
-                // Verificar si tiene href para navegación
-                const href = toggle.getAttribute('href');
-                const hasValidHref = href && href.startsWith('#') && href.length > 1;
-
-                // Si el menú está cerrado
-                if (!menu.classList.contains('show')) {
-                  // Prevenir comportamiento por defecto
-                  e.preventDefault();
-                  e.stopPropagation();
-
-                  // Cerrar otros dropdowns
-                  dropdowns.forEach(d => {
-                    if (d !== dropdown) {
-                      const m = d.querySelector('.dropdown-menu');
-                      const t = d.querySelector('.dropdown-toggle');
-                      if (m) m.classList.remove('show');
-                      if (t) t.setAttribute('aria-expanded', 'false');
-                    }
-                  });
-
-                  // Abrir este dropdown
-                  menu.classList.add('show');
-                  toggle.setAttribute('aria-expanded', 'true');
-                } else {
-                  // El menú está abierto
-                  // Si tiene href, navegar y cerrar
-                  if (hasValidHref) {
-                    e.preventDefault();
-                    menu.classList.remove('show');
-                    toggle.setAttribute('aria-expanded', 'false');
-
-                    const targetElement = document.querySelector(href);
-                    if (targetElement) {
-                      targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-                      // Cerrar navbar collapse
-                      const navbarCollapse = document.querySelector('.navbar-collapse');
-                      if (navbarCollapse && navbarCollapse.classList.contains('show')) {
-                        const bsCollapse = window.bootstrap?.Collapse?.getInstance(navbarCollapse);
-                        if (bsCollapse) {
-                          bsCollapse.hide();
-                        } else {
-                          const navbarToggler = document.querySelector('.navbar-toggler');
-                          if (navbarToggler) navbarToggler.click();
-                        }
-                      }
-                    }
-                  } else {
-                    // Sin href, solo cerrar dropdown
-                    e.preventDefault();
-                    e.stopPropagation();
-                    menu.classList.remove('show');
-                    toggle.setAttribute('aria-expanded', 'false');
-                  }
-                }
-              }
-            } catch (err) {
-              error('Error en toggleClickHandler:', err);
+        if (navbarCollapse) {
+          // Prevenir scroll del body cuando el menú está abierto
+          const preventBodyScroll = function() {
+            if (navbarCollapse.classList.contains('show')) {
+              document.body.classList.add('mobile-menu-open');
+            } else {
+              document.body.classList.remove('mobile-menu-open');
             }
           };
 
-          toggle.addEventListener('click', toggleClickHandler);
-          registerListener(toggle, 'click', toggleClickHandler, 'dropdown');
-        });
+          // Observer para detectar cambios en la clase .show
+          const observer = new MutationObserver(preventBodyScroll);
+          observer.observe(navbarCollapse, {
+            attributes: true,
+            attributeFilter: ['class']
+          });
+          registerObserver(observer);
 
-        // Manejar clic en items del dropdown
+          // Cerrar al hacer clic en el overlay (::before pseudo-elemento)
+          const overlayClickHandler = function(e) {
+            if (e.target === navbarCollapse && navbarCollapse.classList.contains('show')) {
+              const bsCollapse = window.bootstrap?.Collapse?.getInstance(navbarCollapse);
+              if (bsCollapse) {
+                bsCollapse.hide();
+              }
+            }
+          };
+
+          navbarCollapse.addEventListener('click', overlayClickHandler);
+          registerListener(navbarCollapse, 'click', overlayClickHandler, 'dropdown');
+        }
+
+        log('Comportamiento móvil configurado para dropdowns');
+      } catch (err) {
+        error('Error en setupMobileBehavior:', err);
+      }
+    }
+
+    // Configurar cierre automático al hacer clic en enlaces
+    function setupMobileMenuClose() {
+      try {
+        const navLinks = document.querySelectorAll('.navbar-nav .nav-link:not(.dropdown-toggle)');
         const dropdownItems = document.querySelectorAll('.dropdown-menu .dropdown-item');
+        const navbarCollapse = document.querySelector('.navbar-collapse');
 
-        dropdownItems.forEach(item => {
-          const itemClickHandler = function(e) {
-            try {
-              if (!isLargeScreen()) {
-                // Cerrar el dropdown primero
-                const dropdown = item.closest('.dropdown');
-                if (dropdown) {
-                  const menu = dropdown.querySelector('.dropdown-menu');
-                  const toggle = dropdown.querySelector('.dropdown-toggle');
-                  if (menu) menu.classList.remove('show');
-                  if (toggle) toggle.setAttribute('aria-expanded', 'false');
-                }
-
-                // Cerrar el navbar collapse
-                const navbarCollapse = document.querySelector('.navbar-collapse');
+        // Cerrar menú al hacer clic en enlaces normales
+        navLinks.forEach(link => {
+          const linkClickHandler = function(e) {
+            if (window.innerWidth < currentConfig.largeScreenBreakpoint) {
+              // Dar tiempo para que la navegación comience antes de cerrar
+              setTimeout(() => {
                 if (navbarCollapse && navbarCollapse.classList.contains('show')) {
                   const bsCollapse = window.bootstrap?.Collapse?.getInstance(navbarCollapse);
                   if (bsCollapse) {
                     bsCollapse.hide();
-                  } else {
-                    const navbarToggler = document.querySelector('.navbar-toggler');
-                    if (navbarToggler) navbarToggler.click();
                   }
                 }
-              }
-            } catch (err) {
-              error('Error en itemClickHandler:', err);
+              }, 150);
+            }
+          };
+
+          link.addEventListener('click', linkClickHandler);
+          registerListener(link, 'click', linkClickHandler, 'mobile-close');
+        });
+
+        // Cerrar menú al hacer clic en items del dropdown
+        dropdownItems.forEach(item => {
+          const itemClickHandler = function(e) {
+            if (window.innerWidth < currentConfig.largeScreenBreakpoint) {
+              setTimeout(() => {
+                if (navbarCollapse && navbarCollapse.classList.contains('show')) {
+                  const bsCollapse = window.bootstrap?.Collapse?.getInstance(navbarCollapse);
+                  if (bsCollapse) {
+                    bsCollapse.hide();
+                  }
+                }
+              }, 150);
             }
           };
 
           item.addEventListener('click', itemClickHandler);
-          registerListener(item, 'click', itemClickHandler, 'dropdown');
+          registerListener(item, 'click', itemClickHandler, 'mobile-close');
         });
 
-        // Cerrar dropdown al hacer clic fuera
-        const documentClickHandler = function(e) {
-          try {
-            if (!isLargeScreen() && !e.target.closest('.dropdown')) {
-              dropdowns.forEach(dropdown => {
-                const menu = dropdown.querySelector('.dropdown-menu');
-                const toggle = dropdown.querySelector('.dropdown-toggle');
-                if (menu && menu.classList.contains('show')) {
-                  menu.classList.remove('show');
-                  if (toggle) toggle.setAttribute('aria-expanded', 'false');
-                }
-              });
-            }
-          } catch (err) {
-            error('Error en documentClickHandler:', err);
-          }
-        };
-
-        document.addEventListener('click', documentClickHandler);
-        registerListener(document, 'click', documentClickHandler, 'dropdown');
-
-        log('Comportamiento click configurado para dropdowns');
+        log('Cierre automático del menú móvil configurado');
       } catch (err) {
-        error('Error en setupClickBehavior:', err);
+        error('Error en setupMobileMenuClose:', err);
       }
     }
     
