@@ -633,10 +633,9 @@ body .areas-practica-grid {
     grid-template-columns: repeat(2, 1fr) !important; /* Forzar 2 columnas */
     gap: 2rem !important;
     margin-top: 2.5rem !important;
-    max-width: 1000px !important; /* Limitar ancho máximo */
+    max-width: 1200px !important; /* Aumentado para dar más espacio */
     margin-left: auto !important;
     margin-right: auto !important;
-    justify-items: center !important;
 }
 
 /* Responsive: 1 columna en móviles */
@@ -647,6 +646,7 @@ body .areas-practica-grid {
 }
 
 body .card-container {
+    width: 100% !important; /* Asegurar que ocupe todo el espacio */
     height: 100% !important;
 }
 
@@ -1430,36 +1430,65 @@ body #close-emergency-banner:hover {
 }
 
 /* ========== OVERRIDE FINAL: BOTÓN WHATSAPP FLOTANTE ========== */
-/* Asegurar que el botón siempre esté flotante y visible */
+/* Botón rectangular con texto visible dentro */
 body .whatsapp-float,
 html .whatsapp-float,
 .whatsapp-float {
     position: fixed !important;
-    width: 75px !important;  /* Aumentado de 65px a 75px */
-    height: 75px !important;
-    bottom: 100px !important;  /* Más arriba para evitar superposición con theme-toggle */
+    width: auto !important;  /* Ancho automático para el texto */
+    min-width: 220px !important;  /* Ancho mínimo */
+    height: 60px !important;  /* Altura fija */
+    bottom: 100px !important;  /* Más arriba para evitar superposición */
     right: 30px !important;
     background: linear-gradient(135deg, #25D366 0%, #20BA5A 100%) !important;
     color: white !important;
-    border-radius: 50% !important;
+    border-radius: 30px !important;  /* Forma de píldora */
     text-align: center !important;
     box-shadow: 0 4px 16px rgba(37, 211, 102, 0.4), 0 8px 24px rgba(0, 0, 0, 0.2) !important;
     z-index: 999999 !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
+    gap: 12px !important;  /* Espacio entre icono y texto */
+    padding: 0 25px !important;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
     animation: whatsapp-pulse 2.5s ease-in-out infinite !important;
     text-decoration: none !important;
 }
 
-/* Tooltip del WhatsApp */
+/* Icono de WhatsApp dentro del botón */
+body .whatsapp-icon,
+html .whatsapp-icon,
+.whatsapp-icon {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-shrink: 0 !important;
+}
+
+/* Texto visible DENTRO del botón (no tooltip) */
 body .whatsapp-tooltip,
 html .whatsapp-tooltip,
 .whatsapp-tooltip {
-    font-size: 0.95rem !important;
+    position: static !important;  /* No flotante */
+    opacity: 1 !important;  /* Siempre visible */
+    visibility: visible !important;
+    transform: none !important;
+    background: transparent !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    font-size: 1rem !important;
+    font-weight: 600 !important;
     white-space: nowrap !important;
-    padding: 12px 18px !important;
+    color: white !important;
+}
+
+/* Eliminar el ::after del tooltip */
+body .whatsapp-tooltip::after,
+html .whatsapp-tooltip::after,
+.whatsapp-tooltip::after {
+    display: none !important;
 }
 
 @keyframes whatsapp-pulse {
