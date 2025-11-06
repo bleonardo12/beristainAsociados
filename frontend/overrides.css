@@ -25,6 +25,11 @@
 
 /* ========== MENÚ MÓVIL OVERLAY FULL-SCREEN (REESTRUCTURADO) ========== */
 @media (max-width: 991.98px) {
+    /* Prevenir scroll horizontal cuando el menú está cerrado */
+    body {
+        overflow-x: hidden !important;
+    }
+
     /* Navbar base - mantener fixed para sticky */
     body nav.navbar {
         position: fixed !important;
@@ -104,16 +109,18 @@
         overflow-y: auto !important;
         overflow-x: hidden !important;
         box-shadow: -5px 0 25px rgba(0, 0, 0, 0.3) !important;
-        /* Usar transform para mejor performance */
-        transform: translateX(100%) !important;
+        /* Usar transform para mejor performance - moverlo completamente fuera */
+        transform: translateX(calc(100% + 10px)) !important;
         transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
         visibility: hidden !important;
+        pointer-events: none !important; /* No permitir interacción cuando está cerrado */
     }
 
     /* Mostrar cuando tiene clase .show */
     body .navbar-collapse.show {
         transform: translateX(0) !important;
         visibility: visible !important;
+        pointer-events: auto !important; /* Habilitar interacción cuando está abierto */
     }
 
     /* Overlay oscuro de fondo */
@@ -431,9 +438,13 @@ body .navbar-collapse {
     gap: 0 !important;  /* Sin gap entre navbar-nav y botón */
 }
 
-/* Empujar el botón de contacto a la derecha */
-body .navbar-collapse .btn-contact-professional {
-    margin-left: auto !important;  /* Esto empuja el botón a la derecha */
+/* Estilos específicos para desktop (botón fuera del collapse) */
+@media (min-width: 992px) {
+    /* Botón de contacto en desktop - posicionado después del collapse */
+    body .navbar .btn-contact-professional.d-none.d-lg-block {
+        margin-left: 0.5rem !important;
+        flex-shrink: 0 !important;
+    }
 }
 
 /* Logo más grande y elegante con fondo transparente (reducido 12%) */
@@ -1194,26 +1205,6 @@ html.dark-theme .section-padding {
 
 html.dark-theme .bg-light {
     background-color: #16213e !important; /* Ligeramente diferente para secciones alternas */
-}
-
-/* Asegurar que el chatbot se vea correctamente en modo oscuro */
-html.dark-theme .chatbot-panel {
-    background-color: var(--neutral-200) !important;
-}
-
-html.dark-theme .chatbot-header {
-    background-color: var(--primary) !important;
-}
-
-html.dark-theme .message.bot {
-    background-color: var(--neutral-300) !important;
-    color: var(--neutral-700) !important;
-}
-
-html.dark-theme .chat-input input {
-    background-color: var(--neutral-300) !important;
-    border-color: var(--neutral-400) !important;
-    color: var(--neutral-700) !important;
 }
 
 /* ========================================
