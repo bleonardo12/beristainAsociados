@@ -833,78 +833,159 @@
     }
 }
 
-/* ========== EMERGENCY BANNER (Rediseñado) ========== */
+/* ========== BOTÓN CONTACTO INMEDIATO (Profesional) ========== */
+.btn-contact-professional {
+    background: linear-gradient(135deg, #1a365d 0%, #2d4a7c 100%);
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 12px 24px;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(26, 54, 93, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    letter-spacing: 0.3px;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-contact-professional::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.btn-contact-professional:hover::before {
+    left: 100%;
+}
+
+.btn-contact-professional:hover {
+    background: linear-gradient(135deg, #2d4a7c 0%, #3a5c9a 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(26, 54, 93, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.btn-contact-professional:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(26, 54, 93, 0.3);
+    transition: all 0.1s ease;
+}
+
+.btn-contact-professional:focus-visible {
+    outline: 3px solid rgba(45, 74, 124, 0.5);
+    outline-offset: 3px;
+}
+
+.btn-contact-professional i {
+    font-size: 1.1em;
+    animation: ring-pulse 2s ease-in-out infinite;
+}
+
+@keyframes ring-pulse {
+    0%, 100% { transform: rotate(0deg) scale(1); }
+    25% { transform: rotate(-10deg) scale(1.1); }
+    50% { transform: rotate(10deg) scale(1.1); }
+    75% { transform: rotate(-10deg) scale(1.1); }
+}
+
+/* ========== EMERGENCY BANNER (Profesional y Elegante) ========== */
 .emergency-banner {
     position: relative;
-    background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
-    border-left: 4px solid #f39c12;
-    border-bottom: 1px solid rgba(243, 156, 18, 0.2);
-    color: #7d5a00;
-    padding: 14px 0;
+    background: linear-gradient(135deg, #c41e3a 0%, #8b0000 100%);
+    border-top: 3px solid #ff4444;
+    border-bottom: 3px solid #660000;
+    color: #ffffff;
+    padding: 20px 0;
     text-align: center;
     z-index: 1050;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    animation: gentle-pulse 3s ease-in-out infinite;
+    box-shadow: 0 4px 20px rgba(196, 30, 58, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    animation: urgent-glow 2s ease-in-out infinite;
   }
 
-  @keyframes gentle-pulse {
+  @keyframes urgent-glow {
     0%, 100% {
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-      border-left-width: 4px;
+      box-shadow: 0 4px 20px rgba(196, 30, 58, 0.5),
+                  inset 0 1px 0 rgba(255, 255, 255, 0.1);
     }
     50% {
-      box-shadow: 0 2px 12px rgba(243, 156, 18, 0.15);
-      border-left-width: 5px;
+      box-shadow: 0 6px 30px rgba(255, 68, 68, 0.7),
+                  inset 0 1px 0 rgba(255, 255, 255, 0.15);
     }
   }
 
   .emergency-banner .container {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     position: relative;
+    text-align: center;
   }
 
   .emergency-banner p {
     margin: 0;
-    padding-right: 50px;
-    font-size: 14px;
-    line-height: 1.5;
+    padding: 0 60px;
+    font-size: 17px;
+    line-height: 1.6;
     width: 100%;
-    font-weight: 500;
+    font-weight: 600;
+    text-align: center;
+    letter-spacing: 0.3px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   }
 
   .emergency-banner p i {
-    color: #f39c12;
-    margin-right: 8px;
-    animation: pulse-icon 2s ease-in-out infinite;
+    color: #ffeb3b;
+    margin-right: 10px;
+    font-size: 1.2em;
+    animation: pulse-icon 1.5s ease-in-out infinite;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
   }
 
   @keyframes pulse-icon {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.1); }
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.15); opacity: 0.9; }
   }
 
   .emergency-banner a {
-    color: #1a365d;
-    font-weight: 700;
+    color: #ffeb3b;
+    font-weight: 800;
     text-decoration: none;
-    border-bottom: 2px solid transparent;
+    border-bottom: 2px solid #ffeb3b;
+    padding: 2px 6px;
+    background: rgba(255, 235, 59, 0.1);
+    border-radius: 4px;
     transition: all 0.3s ease;
+    display: inline-block;
   }
 
   .emergency-banner a:hover {
-    color: #f39c12;
-    border-bottom-color: #f39c12;
+    background: #ffeb3b;
+    color: #8b0000;
+    border-bottom-color: transparent;
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(255, 235, 59, 0.4);
   }
 
   #close-emergency-banner {
-    background: rgba(125, 90, 0, 0.1);
-    border: 1px solid rgba(125, 90, 0, 0.2);
+    background: rgba(255, 255, 255, 0.15);
+    border: 2px solid rgba(255, 255, 255, 0.3);
     border-radius: 50%;
-    color: #7d5a00;
+    color: #ffffff;
     cursor: pointer;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     padding: 0;
     width: 44px;
     height: 44px;
@@ -918,12 +999,13 @@
     min-width: 44px;
     min-height: 44px;
     transition: all 0.3s ease;
+    backdrop-filter: blur(4px);
   }
 
   #close-emergency-banner:hover {
-    background: rgba(125, 90, 0, 0.2);
-    border-color: rgba(125, 90, 0, 0.4);
-    transform: translateY(-50%) rotate(90deg);
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-50%) rotate(90deg) scale(1.1);
   }
 
   #close-emergency-banner:active {
@@ -933,33 +1015,40 @@
   /* Media queries refinados para dispositivos móviles */
   @media (max-width: 767px) {
     .emergency-banner p {
-      font-size: 13px;
-      padding-right: 45px; /* Aumentar aún más en pantallas medianas */
-      text-align: left;
+      font-size: 15px;
+      padding: 0 50px;
+      text-align: center;
+    }
+
+    .emergency-banner {
+      padding: 18px 0;
     }
   }
-  
+
   @media (max-width: 576px) {
     .emergency-banner p {
-      font-size: 12px;
-      padding-right: 50px; /* Aumentar significativamente en móviles */
-      text-align: left;
+      font-size: 13px;
+      padding: 0 50px;
+      text-align: center;
     }
-    
+
+    .emergency-banner {
+      padding: 15px 0;
+    }
+
     .emergency-banner .container {
       padding-left: 15px;
       padding-right: 15px;
     }
-    
+
     #close-emergency-banner {
       right: 10px;
-      width: 35px; /* Aumentar área táctil */
-      height: 35px;
+      width: 38px;
+      height: 38px;
     }
-    
-    /* Hacer el texto del teléfono más pequeño en pantallas muy pequeñas */
+
     .emergency-banner a {
-      font-size: 12px;
+      font-size: 13px;
     }
   }
   
@@ -1284,12 +1373,13 @@
         text-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
         line-height: 1.4;
         transition: color 0.3s ease;
-        white-space: normal;
+        white-space: nowrap;
         overflow: visible;
         text-overflow: clip;
         position: relative;
         padding-bottom: 15px;
         max-width: 100%;
+        text-align: center;
     }
     
     .home-text h3::after {
@@ -2406,6 +2496,8 @@ select.error {
     font-size: clamp(1rem, 1.8vw + 0.3rem, 1.5rem) !important;
     line-height: 1.3 !important;
     margin-top: var(--spacing-md) !important;
+    white-space: normal !important;
+    text-align: center !important;
   }
   
   .home-text,
