@@ -307,17 +307,19 @@ export class LogoManager {
       } else {
         this.logo.style.transition = 'all 0.3s ease';
       }
-      
-      // Aplicar tamaño
-      this.logo.style.maxHeight = `${size}px`;
-      this.logo.style.height = 'auto';
+
+      // Aplicar tamaño DIRECTAMENTE con height (no maxHeight)
+      this.logo.style.height = `${size}px`;
+      this.logo.style.maxHeight = 'none';
+      this.logo.style.width = 'auto';
     } catch (error) {
       this.logError('Error al aplicar estado de scroll:', error);
-      
-      // Fallback para asegurar que el logo sea visible
+
+      // Fallback para asegurar que el logo sea visible (aumentado a 200px)
       if (this.logo) {
-        this.logo.style.maxHeight = '60px';
-        this.logo.style.height = 'auto';
+        this.logo.style.height = '200px';
+        this.logo.style.maxHeight = 'none';
+        this.logo.style.width = 'auto';
       }
     }
   }
