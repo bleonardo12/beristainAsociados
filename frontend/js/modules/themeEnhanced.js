@@ -13,6 +13,12 @@ const TRANSITION_DURATION = 750; // ms
  */
 export function initThemeSystem() {
   console.log('Inicializando sistema de temas mejorado...');
+
+  // LIMPIEZA: Eliminar tema guardado si está causando problemas
+  // Descomentar las siguientes líneas si el tema sigue en modo oscuro automáticamente:
+  // localStorage.removeItem(STORAGE_KEY);
+  // console.log('[Theme] LocalStorage limpiado - tema reseteado a claro');
+
   setupThemeToggle();
   loadSavedTheme();
 }
