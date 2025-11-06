@@ -68,7 +68,7 @@ body .navbar .navbar-brand {
     display: flex !important;
     align-items: center !important;
     padding: 5px 0 !important;
-    margin-right: 1.5rem !important; /* Reducir espacio después del logo */
+    margin-right: 0.3rem !important; /* Mínimo espacio después del logo */
 }
 
 /* Eliminar el espacio automático entre navegación y botón */
@@ -81,7 +81,8 @@ body .navbar .container-fluid {
     display: flex !important;
     justify-content: space-between !important;
     align-items: center !important;
-    gap: 1rem !important;
+    gap: 0.3rem !important; /* Reducido de 1rem a 0.3rem */
+    padding: 0 0.5rem !important; /* Reducir padding lateral */
 }
 
 /* Asegurar que el collapse ocupe el espacio necesario */
@@ -126,21 +127,28 @@ body .navbar.scrolled .logo-principal {
 body .navbar-nav .nav-link {
     color: #2d3748 !important;
     font-weight: 500 !important;
-    font-size: 1.05rem !important;
+    font-size: 1rem !important; /* Reducido de 1.05rem a 1rem */
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
-    letter-spacing: 0.3px !important;
-    padding: 0.75rem 0.85rem !important;  /* Reducido de 1.25rem a 0.85rem */
+    letter-spacing: 0.2px !important; /* Reducido de 0.3px a 0.2px */
+    padding: 0.75rem 0.5rem !important;  /* Reducido de 0.85rem a 0.5rem */
     position: relative !important;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
     white-space: nowrap !important;
 }
 
+/* Ajustar espacio entre nav items */
+body .navbar-nav .nav-item {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
 /* Botón de contacto más compacto y visible */
 body .btn-contact-professional {
-    padding: 0.6rem 1.2rem !important;
-    font-size: 0.95rem !important;
+    padding: 0.5rem 1rem !important; /* Más compacto */
+    font-size: 0.9rem !important; /* Reducido de 0.95rem */
     white-space: nowrap !important;
     flex-shrink: 0 !important;  /* No permitir que se comprima */
+    margin-left: 0.5rem !important;
 }
 
 body .navbar-nav .nav-link:hover {
