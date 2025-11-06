@@ -25,7 +25,7 @@ body .navbar-nav .dropdown-menu {
 
 /* Logo más grande y elegante con fondo transparente */
 body .navbar .logo-principal {
-    height: 140px !important;
+    height: 200px !important;
     width: auto !important;
     object-fit: contain !important;
     transition: all 0.3s ease !important;
@@ -34,20 +34,20 @@ body .navbar .logo-principal {
 
 /* Logo cuando se hace scroll (versión reducida) */
 body .navbar.scrolled .logo-principal {
-    height: 85px !important;
-    min-height: 75px !important;
+    height: 100px !important;
+    min-height: 90px !important;
 }
 
 /* Responsive logo - tamaños para móviles */
 @media (max-width: 991.98px) {
     body .navbar .logo-principal {
-        height: 100px !important;
+        height: 130px !important;
     }
 }
 
 @media (max-width: 767.98px) {
     body .navbar .logo-principal {
-        height: 80px !important;
+        height: 100px !important;
     }
 }
 
@@ -61,6 +61,7 @@ body .navbar-nav .nav-link {
     padding: 0.75rem 1.25rem !important;
     position: relative !important;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    white-space: nowrap !important;
 }
 
 body .navbar-nav .nav-link:hover {
