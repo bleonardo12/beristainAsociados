@@ -2,23 +2,110 @@
 
 /* ==== AUMENTAR ESPECIFICIDAD PARA SOBRESCRIBIR BOOTSTRAP ==== */
 
-/* Dropdown automático */
-body .navbar-nav .dropdown:hover .dropdown-menu {
-    display: block !important;
-    margin-top: 0 !important;
-    opacity: 1 !important;
-    visibility: visible !important;
-    transform: translateY(0) !important;
-    transition: opacity 0.3s ease, transform 0.3s ease !important;
+/* Dropdown automático - SOLO EN DESKTOP (pantallas grandes) */
+@media (min-width: 992px) {
+    body .navbar-nav .dropdown:hover .dropdown-menu {
+        display: block !important;
+        margin-top: 0 !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: translateY(0) !important;
+        transition: opacity 0.3s ease, transform 0.3s ease !important;
+    }
+
+    body .navbar-nav .dropdown-menu {
+        display: block !important;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px);
+        transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s linear 0.3s !important;
+        margin-top: 0 !important;
+    }
 }
 
-body .navbar-nav .dropdown-menu {
-    display: block !important;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-10px);
-    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s linear 0.3s !important;
-    margin-top: 0 !important;
+/* Dropdown en móvil - SOLO CLICK, sin hover */
+@media (max-width: 991.98px) {
+    /* Ocultar dropdowns por defecto */
+    body .navbar-nav .dropdown-menu {
+        display: none !important;
+        position: static !important;
+        float: none !important;
+        width: 100% !important;
+        margin-top: 0 !important;
+        background-color: transparent !important;
+        border: 0 !important;
+        box-shadow: none !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: none !important;
+    }
+
+    /* Mostrar dropdown solo cuando tiene clase .show */
+    body .navbar-nav .dropdown-menu.show {
+        display: block !important;
+    }
+
+    /* NO activar dropdown en hover en móvil */
+    body .navbar-nav .dropdown:hover .dropdown-menu {
+        display: none !important;
+    }
+
+    /* Ajustar items del dropdown en móvil */
+    body .navbar-nav .dropdown-menu .dropdown-item {
+        padding: 0.75rem 2rem !important;
+        color: var(--neutral-600, #4a5568) !important;
+    }
+
+    body .navbar-nav .dropdown-menu .dropdown-item:hover,
+    body .navbar-nav .dropdown-menu .dropdown-item:focus {
+        background-color: rgba(240, 202, 69, 0.1) !important;
+        color: #1a365d !important;
+    }
+
+    /* Alinear navbar-collapse correctamente en móvil */
+    body .navbar-collapse {
+        position: absolute !important;
+        top: 100% !important;
+        left: 0 !important;
+        right: 0 !important;
+        background-color: white !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+        padding: 1rem !important;
+        z-index: 1000 !important;
+        border-top: 1px solid rgba(0, 0, 0, 0.1) !important;
+    }
+
+    /* Asegurar que el navbar tenga posición relativa para el collapse */
+    body nav.navbar {
+        position: relative !important;
+    }
+
+    /* Centrar el toggler a la derecha */
+    body .navbar-toggler {
+        margin-left: auto !important;
+    }
+
+    /* Stack vertical en móvil */
+    body .navbar-nav {
+        flex-direction: column !important;
+        width: 100% !important;
+    }
+
+    body .navbar-nav .nav-item {
+        width: 100% !important;
+    }
+
+    body .navbar-nav .nav-link {
+        padding: 0.75rem 1rem !important;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+    }
+
+    /* Botón de contacto debajo del menú en móvil */
+    body .navbar-collapse .btn-contact-professional {
+        width: 100% !important;
+        margin: 1rem 0 0 0 !important;
+        text-align: center !important;
+    }
 }
 
 /* ========== HEADER MEJORADO ========== */
@@ -1592,28 +1679,6 @@ body footer .copyright p {
 
 /* LG - Pantallas medianas (hasta 991.98px) */
 @media (max-width: 991.98px) {
-    /* Forzar el dropdown en hover también en móvil */
-    body .navbar-nav .dropdown:hover .dropdown-menu {
-        display: block !important;
-        position: static !important;
-        float: none !important;
-        width: auto !important;
-        margin-top: 0 !important;
-        background-color: transparent !important;
-        border: 0 !important;
-        box-shadow: none !important;
-    }
-    
-    body .navbar-nav .dropdown-menu .dropdown-item {
-        padding-left: 2rem !important;
-        color: var(--neutral-600) !important;
-    }
-    
-    body .navbar-nav .dropdown-menu .dropdown-item:hover {
-        background-color: transparent !important;
-        color: var(--primary) !important;
-    }
-    
     /* Home ajustes */
     body .home-text h1 {
         font-size: clamp(2.2rem, 4vw + 0.5rem, 3.5rem) !important;

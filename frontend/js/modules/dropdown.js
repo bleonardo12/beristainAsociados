@@ -119,36 +119,28 @@ function setupClickBehavior(dropdown, options) {
   try {
     const toggle = dropdown.querySelector('.dropdown-toggle');
     const menu = dropdown.querySelector('.dropdown-menu');
-    
+
     if (!toggle || !menu) return;
-    
-    // Configurar solo para clic
+
+    // Verificar si estamos en móvil
+    const isMobile = () => window.innerWidth < 992;
+
+    // En móvil, dejar que Bootstrap y navbar.js manejen todo
+    // Solo manejar la navegación con href en cualquier tamaño
     toggle.addEventListener('click', (e) => {
-      // Verificar si el toggle tiene un href válido para navegación
+      // En móvil, NO interferir con Bootstrap
+      if (isMobile()) {
+        return;
+      }
+
+      // Solo en desktop: manejar navegación con href
       const href = toggle.getAttribute('href');
       const hasValidHref = href && href.startsWith('#') && href.length > 1;
 
       // Si tiene href válido y el menú está cerrado, NAVEGAR (no abrir dropdown)
       if (hasValidHref && !menu.classList.contains('show')) {
-        // NO prevenir default - permitir navegación natural del navegador
-        // Solo detener propagación para evitar otros handlers
         e.stopPropagation();
 
-        // Navegar con smooth scroll
-        const targetElement = document.querySelector(href);
-        if (targetElement) {
-          e.preventDefault(); // Ahora sí prevenir el salto brusco del navegador
-          targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-        return;
-      }
-
-      // Si el menú ya está abierto, permitir navegación al href
-      if (menu.classList.contains('show') && hasValidHref) {
-        // Permitir navegación natural, solo cerrar el dropdown
-        hideDropdown(dropdown, menu, toggle);
-
-        // Navegar con smooth scroll
         const targetElement = document.querySelector(href);
         if (targetElement) {
           e.preventDefault();
@@ -157,32 +149,22 @@ function setupClickBehavior(dropdown, options) {
         return;
       }
 
-      // Para cualquier otro caso, prevenir comportamiento por defecto
-      e.preventDefault();
-      e.stopPropagation();
-
-      // Alternar estado del dropdown (para enlaces sin href válido)
-      if (menu.classList.contains('show')) {
+      // Si el menú ya está abierto, permitir navegación al href
+      if (menu.classList.contains('show') && hasValidHref) {
         hideDropdown(dropdown, menu, toggle);
-      } else {
-        // Cerrar otros dropdowns abiertos
-        document.querySelectorAll(`${options.selector} .dropdown-menu.show`).forEach(openMenu => {
-          if (openMenu !== menu) {
-            const parentDropdown = openMenu.closest('.dropdown');
-            const parentToggle = parentDropdown?.querySelector('.dropdown-toggle');
-            if (parentDropdown && parentToggle) {
-              hideDropdown(parentDropdown, openMenu, parentToggle);
-            }
-          }
-        });
 
-        showDropdown(dropdown, menu, toggle);
+        const targetElement = document.querySelector(href);
+        if (targetElement) {
+          e.preventDefault();
+          targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        return;
       }
     });
-    
-    // Cerrar al hacer clic fuera
+
+    // Cerrar al hacer clic fuera - SOLO EN DESKTOP
     document.addEventListener('click', (e) => {
-      if (!dropdown.contains(e.target) && menu.classList.contains('show')) {
+      if (!isMobile() && !dropdown.contains(e.target) && menu.classList.contains('show')) {
         hideDropdown(dropdown, menu, toggle);
       }
     });
