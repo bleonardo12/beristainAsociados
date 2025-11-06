@@ -180,7 +180,7 @@
                                 </ul>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#contact-form">Contacto</a>
+                                <a class="nav-link" href="#contact-form-section">Contacto</a>
                             </li>
                         </ul>
                         <!-- Botón de contacto -->
@@ -530,40 +530,47 @@
                 </div>
             </section>
 
-            <form id="contact-form" novalidate>
-                <label for="name">Nombre</label>
-                <input type="text" id="name" name="name" required aria-describedby="error-name" placeholder="Tu nombre completo" autocomplete="name">
-                <div id="error-name" class="error-message" aria-live="polite"></div>
-                
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" required aria-describedby="error-email" placeholder="ejemplo@email.com" autocomplete="email">
-                <div id="error-email" class="error-message" aria-live="polite"></div>
-                
-                <!-- Añade el campo de asunto que tu backend espera -->
-                <label for="asunto">Área Legal</label>
-                <select id="asunto" name="asunto" required aria-describedby="error-asunto">
-                  <option value="">Seleccione un área</option>
-                  <option value="Derecho Penal">Derecho Penal</option>
-                  <option value="Derecho Civil">Derecho Civil</option>
-                  <option value="Derecho de Familia">Derecho de Familia</option>
-                  <option value="Seguros y Accidentes">Seguros y Accidentes</option>
-                  <option value="Otra consulta">Otra consulta</option>
-                </select>
-                <div id="error-asunto" class="error-message" aria-live="polite"></div>
-                
-                <label for="message">Mensaje</label>
-                <textarea id="message" name="message" required aria-describedby="error-message" placeholder="Contanos en que podemos ayudarte"></textarea>
-                <div id="error-message" class="error-message" aria-live="polite"></div>
-                
-                <button type="submit">Enviar</button>
-                <div id="spinner" class="spinner-container hidden" role="status" aria-live="polite">
-                    <div class="spinner-border text-primary" role="status">
-                        <span class="visually-hidden">Enviando formulario de contacto...</span>
-                    </div>
-                    <span class="spinner-text">Enviando tu mensaje...</span>
+            <!-- Sección Formulario de Contacto -->
+            <section id="contact-form-section" class="section-padding">
+                <div class="container">
+                    <h2 class="section-title animate-on-scroll fade-up">Formulario de <span>Contacto</span></h2>
+
+                    <form id="contact-form" novalidate>
+                        <label for="name">Nombre</label>
+                        <input type="text" id="name" name="name" required aria-describedby="error-name" placeholder="Tu nombre completo" autocomplete="name">
+                        <div id="error-name" class="error-message" aria-live="polite"></div>
+
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required aria-describedby="error-email" placeholder="ejemplo@email.com" autocomplete="email">
+                        <div id="error-email" class="error-message" aria-live="polite"></div>
+
+                        <!-- Añade el campo de asunto que tu backend espera -->
+                        <label for="asunto">Área Legal</label>
+                        <select id="asunto" name="asunto" required aria-describedby="error-asunto">
+                          <option value="">Seleccione un área</option>
+                          <option value="Derecho Penal">Derecho Penal</option>
+                          <option value="Derecho Civil">Derecho Civil</option>
+                          <option value="Derecho de Familia">Derecho de Familia</option>
+                          <option value="Seguros y Accidentes">Seguros y Accidentes</option>
+                          <option value="Otra consulta">Otra consulta</option>
+                        </select>
+                        <div id="error-asunto" class="error-message" aria-live="polite"></div>
+
+                        <label for="message">Mensaje</label>
+                        <textarea id="message" name="message" required aria-describedby="error-message" placeholder="Contanos en que podemos ayudarte"></textarea>
+                        <div id="error-message" class="error-message" aria-live="polite"></div>
+
+                        <button type="submit">Enviar</button>
+                        <div id="spinner" class="spinner-container hidden" role="status" aria-live="polite">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Enviando formulario de contacto...</span>
+                            </div>
+                            <span class="spinner-text">Enviando tu mensaje...</span>
+                        </div>
+                        <div class="form-feedback" aria-live="polite"></div>
+                    </form>
                 </div>
-                <div class="form-feedback" aria-live="polite"></div>
-              </form>
+            </section>
 
             <!-- Chatbot asistente -->
             <div id="chatbot-container" class="chatbot-container">
