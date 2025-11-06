@@ -8,7 +8,7 @@ import { initScrollAnimations } from './modules/animations.js';
 import { initCookieConsent } from './modules/cookies.js';
 import { initLazyLoad } from './modules/lazyLoad.js';
 import { initChatbot } from './modules/chatbot.js';
-import { initDropdown } from './modules/dropdown.js'; // Nuevo módulo para el dropdown
+// DESACTIVADO: import { initDropdown } from './modules/dropdown.js'; // CONFLICTO con navbar.js
 import { initModalLinks } from './modules/modalLinks.js';
 import { initEmergencyBanner } from './modules/emergencyBanner.js';
 import LogoManager from './modules/logoModule.js'; // Importar la clase LogoManager
@@ -25,7 +25,7 @@ class App {
       { name: 'navbar', priority: 'critical', init: initNavbar },
       { name: 'smoothScroll', priority: 'critical', init: initSmoothScroll }, // Scroll suave con fallback
       { name: 'theme', priority: 'high', init: initThemeSystem },
-      { name: 'dropdown', priority: 'high', init: initDropdown }, // Nuevo componente
+      // DESACTIVADO: { name: 'dropdown', priority: 'high', init: initDropdown }, // CONFLICTO - navbar.js ya maneja dropdowns
       { name: 'lazyLoad', priority: 'high', init: initLazyLoad },
       { name: 'cookies', priority: 'high', init: initCookieConsent },
       { name: 'sliders', priority: 'medium', init: initSliders, selector: '.slider-area' },
@@ -63,32 +63,68 @@ class App {
     // Registrar tiempo de carga
     document.addEventListener('DOMContentLoaded', () => {
       this.metrics.domContentLoaded = performance.now() - this.metrics.startTime;
-      
-      // Iniciar componentes críticos inmediatamente
-      this.initCriticalComponents();
-      
-      // Iniciar componentes de alta prioridad
-      if ('requestIdleCallback' in window) {
-        requestIdleCallback(() => this.initHighPriorityComponents(), { timeout: 500 });
-      } else {
-        setTimeout(() => this.initHighPriorityComponents(), 50);
-      }
-      
-      // Iniciar componentes basados en visibilidad (bajo el pliegue)
-      this.initVisibilityBasedComponents();
-      
-      // Iniciar componentes de baja prioridad
-      if ('requestIdleCallback' in window) {
-        requestIdleCallback(() => this.initLowPriorityComponents(), { timeout: 2000 });
-      } else {
-        setTimeout(() => this.initLowPriorityComponents(), 1000);
-      }
-      
+
+      // CRÍTICO: Esperar a que Bootstrap esté completamente inicializado
+      this.waitForBootstrap().then(() => {
+        console.log('[App] Bootstrap listo, inicializando componentes...');
+
+        // Iniciar componentes críticos después de Bootstrap
+        this.initCriticalComponents();
+
+        // Iniciar componentes de alta prioridad
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(() => this.initHighPriorityComponents(), { timeout: 500 });
+        } else {
+          setTimeout(() => this.initHighPriorityComponents(), 50);
+        }
+
+        // Iniciar componentes basados en visibilidad (bajo el pliegue)
+        this.initVisibilityBasedComponents();
+
+        // Iniciar componentes de baja prioridad
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(() => this.initLowPriorityComponents(), { timeout: 2000 });
+        } else {
+          setTimeout(() => this.initLowPriorityComponents(), 1000);
+        }
+      });
+
       // Registrar tiempo de carga completa
       window.addEventListener('load', () => {
         this.metrics.windowLoaded = performance.now() - this.metrics.startTime;
         this.logPerformance();
       });
+    });
+  }
+
+  /**
+   * Espera a que Bootstrap esté completamente cargado e inicializado
+   * @returns {Promise} Resuelve cuando Bootstrap está listo
+   */
+  async waitForBootstrap() {
+    return new Promise((resolve) => {
+      // Verificar si Bootstrap ya está disponible
+      if (typeof window.bootstrap !== 'undefined' && window.bootstrap.Collapse) {
+        resolve();
+        return;
+      }
+
+      // Si no, esperar hasta que esté disponible (máximo 5 intentos)
+      let attempts = 0;
+      const maxAttempts = 50; // 50 * 100ms = 5 segundos máximo
+      const checkInterval = setInterval(() => {
+        attempts++;
+
+        if (typeof window.bootstrap !== 'undefined' && window.bootstrap.Collapse) {
+          clearInterval(checkInterval);
+          console.log(`[App] Bootstrap detectado después de ${attempts * 100}ms`);
+          resolve();
+        } else if (attempts >= maxAttempts) {
+          clearInterval(checkInterval);
+          console.warn('[App] Bootstrap no detectado, continuando de todas formas...');
+          resolve();
+        }
+      }, 100);
     });
   }
   

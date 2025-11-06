@@ -235,13 +235,13 @@ function loadSavedTheme() {
   try {
     // Cargar tema guardado si existe
     const savedTheme = localStorage.getItem(STORAGE_KEY);
-    
-    // Obtener preferencia del sistema
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    
-    // Determinar si se debe usar tema oscuro
-    const shouldBeDark = savedTheme === 'dark' || (savedTheme === null && prefersDark);
-    
+
+    // CAMBIADO: Ya NO auto-detectar preferencia del sistema para evitar modo oscuro automático
+    // const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    // Determinar si se debe usar tema oscuro - SOLO si está guardado explícitamente
+    const shouldBeDark = savedTheme === 'dark';
+
     // Aplicar tema inicial sin transición
     if (shouldBeDark) {
       document.documentElement.classList.add(DARK_CLASS);
@@ -250,24 +250,22 @@ function loadSavedTheme() {
       document.documentElement.classList.remove(DARK_CLASS);
       applyThemeToElements(false);
     }
-    
+
     // Actualizar atributos ARIA e iconos
     updateThemeAttributes(shouldBeDark);
     fixThemeIcons();
-    
-    console.log(`Tema inicial cargado: ${shouldBeDark ? 'oscuro' : 'claro'} (guardado: ${savedTheme}, sistema: ${prefersDark ? 'oscuro' : 'claro'})`);
-    
-    // Escuchar cambios en la preferencia del sistema
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    
-    // Usar addEventListener para navegadores modernos o deprecated handler para compatibilidad
-    if (mediaQuery.addEventListener) {
-      mediaQuery.addEventListener('change', handleSystemPreferenceChange);
-    } else if (mediaQuery.addListener) {
-      // Para Safari más antiguo
-      mediaQuery.addListener(handleSystemPreferenceChange);
-    }
-    
+
+    console.log(`Tema inicial cargado: ${shouldBeDark ? 'oscuro' : 'claro'} (guardado: ${savedTheme}, default: claro)`);
+
+    // DESACTIVADO: No escuchar cambios en la preferencia del sistema para evitar cambios automáticos
+    // const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    // if (mediaQuery.addEventListener) {
+    //   mediaQuery.addEventListener('change', handleSystemPreferenceChange);
+    // } else if (mediaQuery.addListener) {
+    //   // Para Safari más antiguo
+    //   mediaQuery.addListener(handleSystemPreferenceChange);
+    // }
+
   } catch (error) {
     console.error('Error al cargar tema guardado:', error);
   }
