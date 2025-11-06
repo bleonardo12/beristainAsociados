@@ -1190,26 +1190,37 @@ body footer::before {
         var(--primary) 100%) !important;
 }
 
-/* Columnas del footer - Centrar todo el contenido horizontalmente, alinear desde arriba verticalmente */
-body footer .col-lg-3,
-body footer .col-md-6 {
-    text-align: center !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: flex-start !important;
-    padding-top: 0 !important;
+/* Container del footer - Asegurar funcionamiento correcto del grid */
+body footer .container {
+    max-width: 100% !important;
 }
 
-/* Asegurar que todas las columnas tengan la misma altura base y alineación desde arriba */
+/* Row del footer - Forzar alineación desde arriba para todas las columnas */
 body footer .row {
+    display: flex !important;
+    flex-wrap: wrap !important;
     align-items: flex-start !important;
 }
 
-/* Asegurar que todos los elementos directos de las columnas tengan el mismo punto de inicio */
-body footer .col-lg-3 > *:first-child,
-body footer .col-md-6 > *:first-child {
+/* Columnas del footer - NO usar display flex, mantener grid de Bootstrap */
+body footer .col-lg-3,
+body footer .col-md-6 {
+    text-align: center !important;
+    padding-top: 0 !important;
     margin-top: 0 !important;
+    vertical-align: top !important;
+}
+
+/* Resetear cualquier margen/padding en clases mb de Bootstrap que pueda desalinear */
+body footer .mb-4,
+body footer .mb-lg-0 {
+    margin-bottom: 0 !important;
+}
+
+/* Asegurar que todos los h4 estén perfectamente alineados */
+body footer h4:first-child {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
 }
 
 /* Títulos del footer - Playfair Display para elegancia */
