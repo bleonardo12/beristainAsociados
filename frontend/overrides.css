@@ -1190,6 +1190,15 @@ body footer::before {
         var(--primary) 100%) !important;
 }
 
+/* Columnas del footer - Centrar todo el contenido */
+body footer .col-lg-3,
+body footer .col-md-6 {
+    text-align: center !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+}
+
 /* Títulos del footer - Playfair Display para elegancia */
 body footer h4 {
     font-family: 'Playfair Display', serif !important;
@@ -1200,21 +1209,24 @@ body footer h4 {
     letter-spacing: 0.02em !important;
     position: relative !important;
     padding-bottom: 0.75rem !important;
+    text-align: center !important;
+    width: 100% !important;
 }
 
-/* Línea decorativa bajo títulos */
+/* Línea decorativa bajo títulos - Centrada */
 body footer h4::after {
     content: '' !important;
     position: absolute !important;
     bottom: 0 !important;
-    left: 0 !important;
-    width: 50px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 60px !important;
     height: 3px !important;
-    background: linear-gradient(90deg, var(--secondary), transparent) !important;
+    background: linear-gradient(90deg, transparent, var(--secondary), transparent) !important;
     border-radius: 2px !important;
 }
 
-/* Párrafos del footer */
+/* Párrafos del footer - Centrados y con estructura uniforme */
 body footer p {
     font-family: 'Inter', sans-serif !important;
     font-size: 0.95rem !important;
@@ -1222,19 +1234,26 @@ body footer p {
     color: #cbd5e1 !important;
     margin-bottom: 0.75rem !important;
     transition: color 0.3s ease !important;
+    text-align: center !important;
+    width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-wrap: wrap !important;
 }
 
-/* Iconos en el footer */
+/* Iconos en el footer - Alineados uniformemente */
 body footer i {
     color: var(--secondary) !important;
     font-size: 1.15rem !important;
-    margin-right: 0.75rem !important;
+    margin-right: 0.5rem !important;
     transition: all 0.3s ease !important;
     vertical-align: middle !important;
+    flex-shrink: 0 !important;
 }
 
 body footer p:hover i {
-    transform: translateX(3px) scale(1.1) !important;
+    transform: scale(1.15) !important;
 }
 
 /* Enlaces del footer */
@@ -1249,11 +1268,13 @@ body footer a:hover {
     text-decoration: none !important;
 }
 
-/* Contenedor de redes sociales */
+/* Contenedor de redes sociales - Centrado */
 body footer .social-links {
     display: flex !important;
     gap: 1rem !important;
     margin-top: 1rem !important;
+    justify-content: center !important;
+    width: 100% !important;
 }
 
 /* Iconos sociales rediseñados - Círculos grandes y elegantes */
@@ -1334,8 +1355,10 @@ body footer .copyright p {
         margin-bottom: 1.25rem !important;
     }
 
-    body footer .col-lg-3 {
+    body footer .col-lg-3,
+    body footer .col-md-6 {
         margin-bottom: 2.5rem !important;
+        text-align: center !important;
     }
 }
 
@@ -1351,8 +1374,18 @@ body footer .copyright p {
         margin-bottom: 1rem !important;
     }
 
+    body footer h4::after {
+        width: 50px !important;
+    }
+
     body footer p {
         font-size: 0.9rem !important;
+    }
+
+    body footer .col-lg-3,
+    body footer .col-md-6 {
+        margin-bottom: 2rem !important;
+        text-align: center !important;
     }
 
     body footer .social-links {
