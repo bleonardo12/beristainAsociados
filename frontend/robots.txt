@@ -1,0 +1,31 @@
+# robots.txt para Beristain & Asociados
+# Generado: 2025-11-06
+
+# Permitir a todos los bots rastreadores
+User-agent: *
+Allow: /
+
+# Bloquear directorios privados y archivos sensibles
+Disallow: /js/
+Disallow: /*.js$
+Disallow: /*.css$
+
+# Permitir acceso a recursos importantes para SEO
+Allow: /img/
+Allow: /favicon.png
+
+# Sitemap
+Sitemap: https://www.beristainyasociados.com.ar/sitemap.xml
+
+# Bots específicos de búsqueda
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+# Tiempo de rastreo (cortesía)
+Crawl-delay: 1

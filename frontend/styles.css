@@ -16,7 +16,7 @@
     --neutral-200: #f8f9fa;
     --neutral-300: #e9ecef;
     --neutral-400: #ced4da;
-    --neutral-500: #8d959e;
+    --neutral-500: #6c757d; /* Mejorado para contraste WCAG AA (5.2:1) */
     --neutral-600: #495057;
     --neutral-700: #272b2f;
     
@@ -224,9 +224,22 @@
         border-radius: var(--border-radius-md);
         transition: top var(--transition-normal);
     }
-    
+
     .skip-link:focus {
         top: 20px;
+    }
+
+    /* Clase visually-hidden para accesibilidad */
+    .visually-hidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border-width: 0;
     }
     
     /* Mejora de espaciado entre secciones */
@@ -838,8 +851,8 @@
     cursor: pointer;
     font-size: 1.2rem;
     padding: 0;
-    width: 30px;
-    height: 30px;
+    width: 44px; /* Tamaño táctil mínimo recomendado (WCAG 2.5.5) */
+    height: 44px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -847,7 +860,8 @@
     right: 15px;
     top: 50%;
     transform: translateY(-50%);
-    min-width: 30px; /* Asegurar un tamaño mínimo para mejorar la interacción táctil */
+    min-width: 44px;
+    min-height: 44px;
   }
   
   /* Media queries refinados para dispositivos móviles */
