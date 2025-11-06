@@ -1190,13 +1190,19 @@ body footer::before {
         var(--primary) 100%) !important;
 }
 
-/* Columnas del footer - Centrar todo el contenido */
+/* Columnas del footer - Centrar todo el contenido horizontalmente, alinear desde arriba verticalmente */
 body footer .col-lg-3,
 body footer .col-md-6 {
     text-align: center !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
+    justify-content: flex-start !important;
+}
+
+/* Asegurar que todas las columnas tengan la misma altura base y alineación desde arriba */
+body footer .row {
+    align-items: flex-start !important;
 }
 
 /* Títulos del footer - Playfair Display para elegancia */
