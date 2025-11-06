@@ -411,10 +411,16 @@ function setupLinkNavigation(navLinks) {
               // Colapsar navbar en móviles después de clic
               const navbarToggler = document.querySelector('.navbar-toggler');
               const navbarCollapse = document.querySelector('.navbar-collapse');
-              
-              if (navbarToggler && !navbarToggler.classList.contains('collapsed') && 
-                  navbarCollapse && navbarCollapse.classList.contains('show')) {
-                navbarToggler.click();
+
+              if (navbarCollapse && navbarCollapse.classList.contains('show')) {
+                // Usar Bootstrap 5 Collapse API
+                const bsCollapse = window.bootstrap?.Collapse?.getInstance(navbarCollapse);
+                if (bsCollapse) {
+                  bsCollapse.hide();
+                } else if (navbarToggler) {
+                  // Fallback: click en toggler
+                  navbarToggler.click();
+                }
               }
               
               // Actualizar URL (opcional, para marcadores)
@@ -682,79 +688,140 @@ function setupDropdowns() {
         dropdowns.forEach(dropdown => {
           dropdown.classList.remove('dropdown-hover');
         });
-        
-        const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
-        
-        // Configurar click toggle
-        dropdownToggles.forEach(toggle => {
-          const clickHandler = function(e) {
+
+        // En móvil, manejar manualmente el toggle del dropdown
+        dropdowns.forEach(dropdown => {
+          const toggle = dropdown.querySelector('.dropdown-toggle');
+          const menu = dropdown.querySelector('.dropdown-menu');
+
+          if (!toggle || !menu) return;
+
+          const toggleClickHandler = function(e) {
             try {
-              // Siempre prevenir comportamiento por defecto en pantallas pequeñas
               if (!isLargeScreen()) {
-                e.preventDefault();
-                e.stopPropagation();
-                
-                const parent = this.parentNode;
-                const menu = parent.querySelector('.dropdown-menu');
-                
-                if (!parent || !menu) return;
-                
-                // Alternar estado del dropdown
-                const wasOpen = parent.classList.contains('show');
-                
-                // Cerrar otros dropdowns
-                document.querySelectorAll('.dropdown.show').forEach(d => {
-                  if (d !== parent) {
-                    d.classList.remove('show');
-                    const m = d.querySelector('.dropdown-menu');
-                    const t = d.querySelector('.dropdown-toggle');
-                    if (m) m.classList.remove('show');
-                    if (t) t.setAttribute('aria-expanded', 'false');
+                // Verificar si tiene href para navegación
+                const href = toggle.getAttribute('href');
+                const hasValidHref = href && href.startsWith('#') && href.length > 1;
+
+                // Si el menú está cerrado
+                if (!menu.classList.contains('show')) {
+                  // Prevenir comportamiento por defecto
+                  e.preventDefault();
+                  e.stopPropagation();
+
+                  // Cerrar otros dropdowns
+                  dropdowns.forEach(d => {
+                    if (d !== dropdown) {
+                      const m = d.querySelector('.dropdown-menu');
+                      const t = d.querySelector('.dropdown-toggle');
+                      if (m) m.classList.remove('show');
+                      if (t) t.setAttribute('aria-expanded', 'false');
+                    }
+                  });
+
+                  // Abrir este dropdown
+                  menu.classList.add('show');
+                  toggle.setAttribute('aria-expanded', 'true');
+                } else {
+                  // El menú está abierto
+                  // Si tiene href, navegar y cerrar
+                  if (hasValidHref) {
+                    e.preventDefault();
+                    menu.classList.remove('show');
+                    toggle.setAttribute('aria-expanded', 'false');
+
+                    const targetElement = document.querySelector(href);
+                    if (targetElement) {
+                      targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+                      // Cerrar navbar collapse
+                      const navbarCollapse = document.querySelector('.navbar-collapse');
+                      if (navbarCollapse && navbarCollapse.classList.contains('show')) {
+                        const bsCollapse = window.bootstrap?.Collapse?.getInstance(navbarCollapse);
+                        if (bsCollapse) {
+                          bsCollapse.hide();
+                        } else {
+                          const navbarToggler = document.querySelector('.navbar-toggler');
+                          if (navbarToggler) navbarToggler.click();
+                        }
+                      }
+                    }
+                  } else {
+                    // Sin href, solo cerrar dropdown
+                    e.preventDefault();
+                    e.stopPropagation();
+                    menu.classList.remove('show');
+                    toggle.setAttribute('aria-expanded', 'false');
                   }
-                });
-                
-                // Alternar este dropdown
-                parent.classList.toggle('show', !wasOpen);
-                menu.classList.toggle('show', !wasOpen);
-                toggle.setAttribute('aria-expanded', !wasOpen ? 'true' : 'false');
-                
-                // Si se abre, enfocar primer elemento
-                if (!wasOpen) {
-                  setTimeout(() => {
-                    const firstItem = menu.querySelector('.dropdown-item');
-                    if (firstItem) firstItem.focus();
-                  }, 100);
                 }
               }
             } catch (err) {
-              error('Error en clickHandler de dropdown:', err);
+              error('Error en toggleClickHandler:', err);
             }
           };
-          
-          toggle.addEventListener('click', clickHandler);
-          registerListener(toggle, 'click', clickHandler, 'dropdown');
+
+          toggle.addEventListener('click', toggleClickHandler);
+          registerListener(toggle, 'click', toggleClickHandler, 'dropdown');
         });
-        
-        // Cerrar dropdowns al tocar fuera
+
+        // Manejar clic en items del dropdown
+        const dropdownItems = document.querySelectorAll('.dropdown-menu .dropdown-item');
+
+        dropdownItems.forEach(item => {
+          const itemClickHandler = function(e) {
+            try {
+              if (!isLargeScreen()) {
+                // Cerrar el dropdown primero
+                const dropdown = item.closest('.dropdown');
+                if (dropdown) {
+                  const menu = dropdown.querySelector('.dropdown-menu');
+                  const toggle = dropdown.querySelector('.dropdown-toggle');
+                  if (menu) menu.classList.remove('show');
+                  if (toggle) toggle.setAttribute('aria-expanded', 'false');
+                }
+
+                // Cerrar el navbar collapse
+                const navbarCollapse = document.querySelector('.navbar-collapse');
+                if (navbarCollapse && navbarCollapse.classList.contains('show')) {
+                  const bsCollapse = window.bootstrap?.Collapse?.getInstance(navbarCollapse);
+                  if (bsCollapse) {
+                    bsCollapse.hide();
+                  } else {
+                    const navbarToggler = document.querySelector('.navbar-toggler');
+                    if (navbarToggler) navbarToggler.click();
+                  }
+                }
+              }
+            } catch (err) {
+              error('Error en itemClickHandler:', err);
+            }
+          };
+
+          item.addEventListener('click', itemClickHandler);
+          registerListener(item, 'click', itemClickHandler, 'dropdown');
+        });
+
+        // Cerrar dropdown al hacer clic fuera
         const documentClickHandler = function(e) {
           try {
             if (!isLargeScreen() && !e.target.closest('.dropdown')) {
-              document.querySelectorAll('.dropdown.show').forEach(d => {
-                d.classList.remove('show');
-                const m = d.querySelector('.dropdown-menu');
-                const t = d.querySelector('.dropdown-toggle');
-                if (m) m.classList.remove('show');
-                if (t) t.setAttribute('aria-expanded', 'false');
+              dropdowns.forEach(dropdown => {
+                const menu = dropdown.querySelector('.dropdown-menu');
+                const toggle = dropdown.querySelector('.dropdown-toggle');
+                if (menu && menu.classList.contains('show')) {
+                  menu.classList.remove('show');
+                  if (toggle) toggle.setAttribute('aria-expanded', 'false');
+                }
               });
             }
           } catch (err) {
             error('Error en documentClickHandler:', err);
           }
         };
-        
+
         document.addEventListener('click', documentClickHandler);
         registerListener(document, 'click', documentClickHandler, 'dropdown');
-        
+
         log('Comportamiento click configurado para dropdowns');
       } catch (err) {
         error('Error en setupClickBehavior:', err);
