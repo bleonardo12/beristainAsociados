@@ -12,6 +12,7 @@ import { initDropdown } from './modules/dropdown.js'; // Nuevo módulo para el d
 import { initModalLinks } from './modules/modalLinks.js';
 import { initEmergencyBanner } from './modules/emergencyBanner.js';
 import LogoManager from './modules/logoModule.js'; // Importar la clase LogoManager
+import { initSmoothScroll } from './modules/smoothScroll.js'; // Scroll suave con fallback Safari
 
 
 /**
@@ -22,6 +23,7 @@ class App {
     // Registro de componentes
     this.components = [
       { name: 'navbar', priority: 'critical', init: initNavbar },
+      { name: 'smoothScroll', priority: 'critical', init: initSmoothScroll }, // Scroll suave con fallback
       { name: 'theme', priority: 'high', init: initThemeSystem },
       { name: 'dropdown', priority: 'high', init: initDropdown }, // Nuevo componente
       { name: 'lazyLoad', priority: 'high', init: initLazyLoad },
@@ -33,12 +35,12 @@ class App {
       { name: 'chatbot', priority: 'low', init: initChatbot, selector: '#chatbot-container' },
       { name: 'emergencyBanner', priority: 'critical', init: initEmergencyBanner },
       { name: 'modalLinks', priority: 'high', init: initModalLinks },
-      { 
-        name: 'logo', 
-        priority: 'high', 
-        init: () => { 
+      {
+        name: 'logo',
+        priority: 'high',
+        init: () => {
           // Inicializar LogoManager con constructor
-          this.logoManager = new LogoManager(); 
+          this.logoManager = new LogoManager();
           return this.logoManager;
         }
       }

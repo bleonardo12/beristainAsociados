@@ -105,82 +105,310 @@ body #close-emergency-banner {
     }
 }
 
-/* Modal mejorado */
-body .modal-content {
+/* ========== MODAL MODERNO (Rediseñado) ========== */
+body .modal-modern {
     border: none !important;
-    border-radius: var(--border-radius-lg) !important;
+    border-radius: 20px !important;
     overflow: hidden !important;
-    box-shadow: var(--shadow-lg) !important;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3) !important;
 }
 
-body .modal-header {
-    background-color: var(--primary) !important;
+/* Header del modal */
+body .modal-header-modern {
+    background: linear-gradient(135deg, #1a365d 0%, #2d4a7c 100%) !important;
     color: var(--neutral-100) !important;
     border: none !important;
-    padding: 1.5rem 2rem !important;
+    padding: 2rem !important;
+    position: relative;
+}
+
+body .modal-title-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+body .modal-icon {
+    font-size: 2rem;
+    color: var(--secondary);
+    animation: pulse-icon-modal 2s ease-in-out infinite;
+}
+
+@keyframes pulse-icon-modal {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
 }
 
 body .modal-title {
     font-family: var(--font-primary) !important;
     font-size: 1.75rem !important;
     color: var(--neutral-100) !important;
-    margin-bottom: 0 !important;
+    margin-bottom: 0.25rem !important;
 }
 
-body .modal-body {
+body .modal-subtitle {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+body .btn-close-modern {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    opacity: 1;
+    transition: all 0.3s ease;
+}
+
+body .btn-close-modern:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: rotate(90deg);
+}
+
+/* Body del modal */
+body .modal-body-modern {
     padding: 2rem !important;
-    background-color: var(--neutral-100) !important;
+    background: linear-gradient(to bottom, #ffffff 0%, #f8f9fa 100%) !important;
 }
 
-body .contact-info {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 1.25rem !important;
+/* Mensaje de bienvenida */
+body .welcome-message {
+    background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+    border-left: 4px solid var(--secondary);
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
 }
 
-body .contact-info p {
-    margin-bottom: 1rem !important;
-    display: flex !important;
-    align-items: center !important;
-    width: 100% !important;
+body .welcome-message p {
+    margin: 0;
+    font-size: 1rem;
+    color: #7d5a00;
+    font-weight: 500;
 }
 
-body .contact-info strong {
-    margin-right: 5px !important; /* Añadir espacio entre strong y el enlace */
-    min-width: 80px !important; /* Dar un ancho mínimo para alinear */
-    display: inline-block !important;
-    color: var(--neutral-700) !important; /* Color más oscuro para el texto */
+body .welcome-message i {
+    margin-right: 0.5rem;
 }
 
-body .contact-info a {
-    color: var(--primary) !important;
-    text-decoration: none !important;
-    transition: color 0.3s ease !important;
+/* Grid de opciones de contacto */
+body .contact-options-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-bottom: 2rem;
 }
 
-body .contact-info a:hover {
-    color: var(--secondary) !important;
-    text-decoration: underline !important;
+body .contact-option {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem;
+    border-radius: 12px;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    border: 2px solid transparent;
 }
 
-body .contact-info i {
-    margin-right: 10px !important;
-    color: var(--secondary) !important;
-    width: 24px !important;
-    text-align: center !important;
+/* Efecto de brillo en hover */
+body .contact-option::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: left 0.5s ease;
 }
 
-body .modal-footer {
-    border-top: 1px solid var(--neutral-300) !important;
-    background-color: var(--neutral-200) !important;
-    padding: 0.75rem 1.5rem !important;
+body .contact-option:hover::before {
+    left: 100%;
 }
 
-/* Asegurar que el botón en el modal se comporte como un enlace */
-.modal-footer a.btn {
-    display: inline-block !important;
-    text-decoration: none !important;
-    cursor: pointer !important;
+/* WhatsApp */
+body .whatsapp-option {
+    background: linear-gradient(135deg, #25D366 0%, #20BA5A 100%);
+    color: white;
+}
+
+body .whatsapp-option:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 24px rgba(37, 211, 102, 0.4);
+    border-color: #20BA5A;
+}
+
+/* Teléfono */
+body .phone-option {
+    background: linear-gradient(135deg, #4a6fa5 0%, #3a5a8f 100%);
+    color: white;
+}
+
+body .phone-option:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 24px rgba(74, 111, 165, 0.4);
+    border-color: #3a5a8f;
+}
+
+/* Email */
+body .email-option {
+    background: linear-gradient(135deg, #c9b037 0%, #b39f30 100%);
+    color: white;
+}
+
+body .email-option:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 24px rgba(201, 176, 55, 0.4);
+    border-color: #b39f30;
+}
+
+/* Formulario */
+body .form-option {
+    background: linear-gradient(135deg, #1a365d 0%, #142a4a 100%);
+    color: white;
+}
+
+body .form-option:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 24px rgba(26, 54, 93, 0.4);
+    border-color: #142a4a;
+}
+
+body .contact-option-icon {
+    font-size: 2rem;
+    flex-shrink: 0;
+}
+
+body .contact-option-content {
+    flex: 1;
+}
+
+body .contact-option-content h6 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+body .contact-option-content p {
+    margin: 0.25rem 0 0.5rem;
+    font-size: 0.85rem;
+    opacity: 0.9;
+}
+
+body .contact-option-detail {
+    font-size: 0.8rem;
+    opacity: 0.8;
+    font-weight: 500;
+}
+
+body .contact-option-arrow {
+    font-size: 1.5rem;
+    transition: transform 0.3s ease;
+}
+
+body .contact-option:hover .contact-option-arrow {
+    transform: translateX(5px);
+}
+
+/* Sección de redes sociales */
+body .social-section {
+    text-align: center;
+    padding-top: 1.5rem;
+    border-top: 2px solid var(--neutral-300);
+}
+
+body .social-title {
+    font-size: 0.9rem;
+    color: var(--neutral-600);
+    margin-bottom: 1rem;
+}
+
+body .social-links-modal {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+body .social-link {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: white;
+    font-size: 1.5rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+body .social-link.instagram {
+    background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
+}
+
+body .social-link.linkedin {
+    background: #0077b5;
+}
+
+body .social-link.tiktok {
+    background: #000000;
+}
+
+body .social-link:hover {
+    transform: translateY(-5px) scale(1.1);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Footer del modal */
+body .modal-footer-modern {
+    border: none !important;
+    background: var(--neutral-200) !important;
+    padding: 1rem 2rem !important;
+    justify-content: center !important;
+}
+
+body .modal-footer-text {
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--neutral-600);
+    text-align: center;
+}
+
+body .modal-footer-text a {
+    color: var(--primary);
+    text-decoration: underline;
+    font-weight: 500;
+}
+
+body .modal-footer-text i {
+    color: var(--secondary);
+    margin-right: 0.5rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    body .contact-options-grid {
+        grid-template-columns: 1fr;
+    }
+
+    body .modal-header-modern {
+        padding: 1.5rem !important;
+    }
+
+    body .modal-body-modern {
+        padding: 1.5rem !important;
+    }
+
+    body .modal-title {
+        font-size: 1.4rem !important;
+    }
+
+    body .contact-option {
+        padding: 1rem;
+    }
 }
 
 /* Formulario de contacto mejorado */
