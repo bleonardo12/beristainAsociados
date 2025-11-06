@@ -3,7 +3,7 @@ name: Deploy al VPS
 on:
   push:
     branches:
-      - master  # o la rama que estés usando
+      - master
 
 jobs:
   deploy:
@@ -20,6 +20,25 @@ jobs:
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan -H srv777726.hstgr.cloud >> ~/.ssh/known_hosts
 
-      - name: Hacer git pull en el VPS
+      - name: Deploy al VPS
         run: |
-          ssh -i ~/.ssh/id_ed25519 root@srv777726.hstgr.cloud "cd /var/www/beristainAsociados && git pull"
+          ssh -i ~/.ssh/id_ed25519 root@srv777726.hstgr.cloud << 'ENDSSH'
+            set -e
+            echo "📦 Iniciando deploy..."
+            cd /var/www/beristainAsociados
+
+            echo "🔄 Fetching cambios de master..."
+            git fetch origin master
+
+            echo "✨ Aplicando cambios..."
+            git reset --hard origin/master
+
+            echo "✅ Último commit desplegado:"
+            git log -1 --oneline
+
+            echo "🎉 Deploy completado exitosamente!"
+          ENDSSH
+
+      - name: Notificar resultado
+        if: success()
+        run: echo "✅ Deploy exitoso a srv777726.hstgr.cloud"
