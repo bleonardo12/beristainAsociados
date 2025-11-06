@@ -161,32 +161,37 @@
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="#home">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#profesionales">Quienes Somos</a>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#areasDePractica" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Áreas de práctica
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li><a class="dropdown-item" href="#dchoPenal">Derecho Penal</a></li>
-                                    <li><a class="dropdown-item" href="#dchoCivil">Derecho Civil y Comercial</a></li>
-                                    <li><a class="dropdown-item" href="#dchoFam">Derecho de Familia y Sucesiones</a></li>
-                                    <li><a class="dropdown-item" href="#dchoSeguros">Seguros y Accidentes de tránsito</a></li>
-                                </ul>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#contact-form-section">Contacto</a>
-                            </li>
-                        </ul>
-                        <!-- Botón de contacto -->
-                        <button type="button" class="btn btn-contact-professional" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                            <i class="bi bi-telephone-fill me-2"></i>Contacto Inmediato
-                        </button>
+                        <!-- Wrapper para mantener todo junto en mobile -->
+                        <div class="navbar-content-wrapper">
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="#home">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#profesionales">Quienes Somos</a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#areasDePractica" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Áreas de práctica
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <li><a class="dropdown-item" href="#dchoPenal">Derecho Penal</a></li>
+                                        <li><a class="dropdown-item" href="#dchoCivil">Derecho Civil y Comercial</a></li>
+                                        <li><a class="dropdown-item" href="#dchoFam">Derecho de Familia y Sucesiones</a></li>
+                                        <li><a class="dropdown-item" href="#dchoSeguros">Seguros y Accidentes de tránsito</a></li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#contact-form-section">Contacto</a>
+                                </li>
+                            </ul>
+                            <!-- Botón de contacto - separado en wrapper -->
+                            <div class="navbar-button-wrapper">
+                                <button type="button" class="btn btn-contact-professional" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                    <i class="bi bi-telephone-fill me-2"></i>Contacto Inmediato
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </nav>

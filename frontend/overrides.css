@@ -23,7 +23,7 @@
     }
 }
 
-/* ========== MENÚ MÓVIL OVERLAY FULL-SCREEN ========== */
+/* ========== MENÚ MÓVIL OVERLAY FULL-SCREEN (REESTRUCTURADO) ========== */
 @media (max-width: 991.98px) {
     /* Navbar base - asegurar posición relativa */
     body nav.navbar {
@@ -135,12 +135,24 @@
         transition: right 0.35s ease !important;
     }
 
+    /* Wrapper de contenido - layout vertical en móvil */
+    body .navbar-content-wrapper {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+        min-height: 100vh !important;
+        padding-top: 100px !important;
+        padding-bottom: 20px !important;
+    }
+
     /* Contenedor de navegación */
     body .navbar-nav {
         flex-direction: column !important;
         width: 100% !important;
-        padding: 100px 0 30px 0 !important;
+        padding: 0 !important;
+        margin: 0 !important;
         gap: 0 !important;
+        flex: 1 !important; /* Ocupa espacio disponible */
     }
 
     /* Items de navegación */
@@ -257,10 +269,16 @@
         padding-left: 3.5rem !important;
     }
 
-    /* Botón de contacto en móvil */
-    body .navbar-collapse .btn-contact-professional {
-        width: calc(100% - 4rem) !important;
-        margin: 2rem 2rem 1rem 2rem !important;
+    /* WRAPPER DEL BOTÓN - queda AL FINAL */
+    body .navbar-button-wrapper {
+        width: 100% !important;
+        padding: 0 2rem 2rem 2rem !important;
+        margin-top: auto !important; /* Empuja el botón al final */
+    }
+
+    /* Botón de contacto en móvil - ahora dentro del wrapper */
+    body .navbar-button-wrapper .btn-contact-professional {
+        width: 100% !important;
         padding: 1rem 1.5rem !important;
         background: linear-gradient(135deg, #f0ca45 0%, #e5b639 100%) !important;
         color: #1a365d !important;
@@ -269,9 +287,10 @@
         font-size: 1.05rem !important;
         box-shadow: 0 4px 15px rgba(240, 202, 69, 0.3) !important;
         transition: all 0.3s ease !important;
+        display: block !important;
     }
 
-    body .navbar-collapse .btn-contact-professional:hover {
+    body .navbar-button-wrapper .btn-contact-professional:hover {
         transform: translateY(-2px) !important;
         box-shadow: 0 6px 20px rgba(240, 202, 69, 0.4) !important;
     }
@@ -291,6 +310,38 @@
     /* Prevenir scroll del body cuando el menú está abierto */
     body.mobile-menu-open {
         overflow: hidden !important;
+    }
+}
+
+/* ========== DESKTOP - Restaurar layout normal ========== */
+@media (min-width: 992px) {
+    /* Wrapper horizontal en desktop */
+    body .navbar-content-wrapper {
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        width: 100% !important;
+    }
+
+    /* Nav toma el espacio que necesita */
+    body .navbar-nav {
+        display: flex !important;
+        flex-direction: row !important;
+        gap: 0.5rem !important;
+        flex: 1 !important;
+    }
+
+    /* Button wrapper alineado a la derecha */
+    body .navbar-button-wrapper {
+        margin-left: auto !important;
+        padding: 0 !important;
+    }
+
+    /* Botón normal en desktop */
+    body .navbar-button-wrapper .btn-contact-professional {
+        padding: 0.5rem 1rem !important;
+        white-space: nowrap !important;
     }
 }
 
