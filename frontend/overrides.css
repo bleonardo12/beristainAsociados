@@ -1163,6 +1163,71 @@ body .btn-lg {
 }
 
 /* ========================================
+   SPINNER DEL FORMULARIO - FEEDBACK VISUAL
+   ======================================== */
+
+/* Contenedor del spinner */
+.spinner-container {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 1rem !important;
+    margin-top: 1.5rem !important;
+    padding: 1rem !important;
+    background: linear-gradient(135deg, rgba(0, 94, 184, 0.05), rgba(255, 136, 0, 0.05)) !important;
+    border-radius: 8px !important;
+    border: 1px solid rgba(0, 94, 184, 0.2) !important;
+}
+
+/* Ocultar spinner por defecto */
+.spinner-container.hidden {
+    display: none !important;
+}
+
+/* Spinner animado de Bootstrap */
+.spinner-border {
+    width: 2rem !important;
+    height: 2rem !important;
+    border-width: 0.25em !important;
+    animation: spinner-border 0.75s linear infinite !important;
+}
+
+/* Color del spinner */
+.spinner-border.text-primary {
+    color: var(--primary) !important;
+}
+
+/* Texto junto al spinner */
+.spinner-text {
+    font-family: 'Inter', sans-serif !important;
+    font-size: 1rem !important;
+    font-weight: 500 !important;
+    color: var(--primary) !important;
+    letter-spacing: 0.01em !important;
+}
+
+/* Animación del spinner (Bootstrap 5 style) */
+@keyframes spinner-border {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Dark mode para spinner */
+html.dark-theme .spinner-container {
+    background: linear-gradient(135deg, rgba(0, 94, 184, 0.15), rgba(255, 136, 0, 0.15)) !important;
+    border-color: rgba(255, 136, 0, 0.3) !important;
+}
+
+html.dark-theme .spinner-text {
+    color: var(--secondary) !important;
+}
+
+html.dark-theme .spinner-border.text-primary {
+    color: var(--secondary) !important;
+}
+
+/* ========================================
    FOOTER - DISEÑO MODERNO Y PROFESIONAL
    ======================================== */
 

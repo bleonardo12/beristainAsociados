@@ -556,9 +556,11 @@
                 <div id="error-message" class="error-message" aria-live="polite"></div>
                 
                 <button type="submit">Enviar</button>
-                <div id="spinner" class="hidden" role="status" aria-live="polite">
-                    <span class="visually-hidden">Enviando formulario de contacto...</span>
-                    Enviando...
+                <div id="spinner" class="spinner-container hidden" role="status" aria-live="polite">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Enviando formulario de contacto...</span>
+                    </div>
+                    <span class="spinner-text">Enviando tu mensaje...</span>
                 </div>
                 <div class="form-feedback" aria-live="polite"></div>
               </form>

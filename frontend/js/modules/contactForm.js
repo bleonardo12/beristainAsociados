@@ -23,6 +23,7 @@ export function initContactForm() {
 
     const submitButton = form.querySelector("button[type=submit]");
     const feedback = form.querySelector(".form-feedback");
+    const spinner = document.getElementById("spinner");
 
     function showFeedback(message, type = "success") {
       feedback.textContent = message;
@@ -126,8 +127,12 @@ export function initContactForm() {
         return;
       }
 
+      // Mostrar spinner y deshabilitar botón
       submitButton.disabled = true;
-      submitButton.textContent = "Enviando...";
+      submitButton.style.opacity = "0.6";
+      if (spinner) {
+        spinner.classList.remove("hidden");
+      }
 
       const formData = {
         nombre: form.elements["name"].value.trim(),
@@ -149,8 +154,12 @@ export function initContactForm() {
         console.error("Error al enviar el formulario:", error);
         showFeedback("Ocurrió un error inesperado. Intentá nuevamente más tarde.", "error");
       } finally {
+        // Ocultar spinner y habilitar botón
         submitButton.disabled = false;
-        submitButton.textContent = "Enviar";
+        submitButton.style.opacity = "1";
+        if (spinner) {
+          spinner.classList.add("hidden");
+        }
       }
     });
   });
