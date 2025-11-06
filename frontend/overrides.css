@@ -25,9 +25,12 @@
 
 /* ========== MENÚ MÓVIL OVERLAY FULL-SCREEN ========== */
 @media (max-width: 991.98px) {
-    /* Navbar base - asegurar posición relativa */
+    /* Navbar base - mantener fixed para sticky */
     body nav.navbar {
-        position: relative !important;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
     }
 
     /* Toggler - posicionar a la derecha */
@@ -36,7 +39,7 @@
         border: none !important;
         padding: 0.5rem !important;
         position: relative !important;
-        z-index: 1050 !important;
+        z-index: 1052 !important;  /* Más alto que el menú para que sea clickeable */
         background: transparent !important;
     }
 
@@ -91,7 +94,7 @@
     body .navbar-collapse {
         position: fixed !important;
         top: 0 !important;
-        right: -100% !important;
+        right: 0 !important;
         width: 85% !important;
         max-width: 400px !important;
         height: 100vh !important;
@@ -100,14 +103,17 @@
         padding: 0 !important;
         overflow-y: auto !important;
         overflow-x: hidden !important;
-        transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
         box-shadow: -5px 0 25px rgba(0, 0, 0, 0.3) !important;
-        display: block !important;
+        /* Usar transform para mejor performance */
+        transform: translateX(100%) !important;
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        visibility: hidden !important;
     }
 
     /* Mostrar cuando tiene clase .show */
     body .navbar-collapse.show {
-        right: 0 !important;
+        transform: translateX(0) !important;
+        visibility: visible !important;
     }
 
     /* Overlay oscuro de fondo */
@@ -120,7 +126,7 @@
         height: 100vh !important;
         background-color: rgba(0, 0, 0, 0) !important;
         z-index: -1 !important;
-        transition: background-color 0.4s ease !important;
+        transition: background-color 0.3s ease !important;
         pointer-events: none !important;
     }
 
@@ -129,10 +135,10 @@
         pointer-events: auto !important;
     }
 
-    /* Animación de entrada */
+    /* Animación de entrada - compatible con Bootstrap Collapse */
     body .navbar-collapse.collapsing {
-        right: -100% !important;
-        transition: right 0.35s ease !important;
+        transition: transform 0.3s ease !important;
+        visibility: visible !important;
     }
 
     /* Contenedor de navegación */
@@ -2022,7 +2028,7 @@ body .emergency-banner {
     color: #ffffff !important;
     padding: 25px 0 !important;
     text-align: center !important;
-    z-index: 1050 !important;
+    z-index: 1051 !important;  /* Encima del navbar */
     box-shadow: 0 4px 25px rgba(255, 56, 56, 0.4), inset 0 2px 0 rgba(255, 56, 56, 0.2) !important;
     animation: urgent-glow 2s ease-in-out infinite !important;
     display: none !important;
@@ -2168,7 +2174,7 @@ html .whatsapp-float,
     border-radius: 30px !important;  /* Forma de píldora */
     text-align: center !important;
     box-shadow: 0 4px 16px rgba(37, 211, 102, 0.4), 0 8px 24px rgba(0, 0, 0, 0.2) !important;
-    z-index: 999999 !important;
+    z-index: 1049 !important;  /* Debajo del navbar y menú móvil */
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
@@ -2236,7 +2242,20 @@ html .whatsapp-float:hover,
     .whatsapp-float {
         width: 65px !important;
         height: 65px !important;
+        min-width: 65px !important;
         bottom: 100px !important;
         right: 20px !important;
+        padding: 0 !important;
+        border-radius: 50% !important;
+    }
+
+    .whatsapp-tooltip {
+        display: none !important;
+    }
+
+    /* Ocultar cuando el menú móvil está abierto */
+    body.mobile-menu-open .whatsapp-float {
+        opacity: 0 !important;
+        pointer-events: none !important;
     }
 }
