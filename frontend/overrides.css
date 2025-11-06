@@ -1198,11 +1198,18 @@ body footer .col-md-6 {
     flex-direction: column !important;
     align-items: center !important;
     justify-content: flex-start !important;
+    padding-top: 0 !important;
 }
 
 /* Asegurar que todas las columnas tengan la misma altura base y alineación desde arriba */
 body footer .row {
     align-items: flex-start !important;
+}
+
+/* Asegurar que todos los elementos directos de las columnas tengan el mismo punto de inicio */
+body footer .col-lg-3 > *:first-child,
+body footer .col-md-6 > *:first-child {
+    margin-top: 0 !important;
 }
 
 /* Títulos del footer - Playfair Display para elegancia */
@@ -1211,12 +1218,14 @@ body footer h4 {
     font-size: 1.5rem !important;
     font-weight: 600 !important;
     color: #ffffff !important;
+    margin-top: 0 !important;
     margin-bottom: 1.5rem !important;
     letter-spacing: 0.02em !important;
     position: relative !important;
     padding-bottom: 0.75rem !important;
     text-align: center !important;
     width: 100% !important;
+    min-height: 60px !important;
 }
 
 /* Línea decorativa bajo títulos - Centrada */
@@ -1238,6 +1247,7 @@ body footer p {
     font-size: 0.95rem !important;
     line-height: 1.8 !important;
     color: #cbd5e1 !important;
+    margin-top: 0 !important;
     margin-bottom: 0.75rem !important;
     transition: color 0.3s ease !important;
     text-align: center !important;
@@ -1246,6 +1256,7 @@ body footer p {
     align-items: center !important;
     justify-content: center !important;
     flex-wrap: wrap !important;
+    min-height: 1.8rem !important;
 }
 
 /* Iconos en el footer - Alineados uniformemente */
@@ -1274,13 +1285,15 @@ body footer a:hover {
     text-decoration: none !important;
 }
 
-/* Contenedor de redes sociales - Centrado */
+/* Contenedor de redes sociales - Centrado y alineado con los párrafos */
 body footer .social-links {
     display: flex !important;
     gap: 1rem !important;
-    margin-top: 1rem !important;
+    margin-top: 0 !important;
+    margin-bottom: 0.75rem !important;
     justify-content: center !important;
     width: 100% !important;
+    min-height: 1.8rem !important;
 }
 
 /* Iconos sociales rediseñados - Círculos grandes y elegantes */
