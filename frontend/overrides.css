@@ -975,7 +975,7 @@ html.dark-theme footer .copyright {
 }
 
 html.dark-theme footer .copyright p {
-    color: #cbd5e1 !important;
+    color: #f1f5f9 !important;
 }
 
 /* Territorio cards en modo oscuro */
@@ -1338,9 +1338,11 @@ body footer .copyright {
 }
 
 body footer .copyright p {
-    font-size: 0.875rem !important;
-    color: #94a3b8 !important;
-    margin: 0 !important;
+    font-size: 1rem !important;
+    color: #e8eaed !important;
+    max-width: 800px !important;
+    margin: 0 auto !important;
+    line-height: 1.7 !important;
     letter-spacing: 0.02em !important;
 }
 
