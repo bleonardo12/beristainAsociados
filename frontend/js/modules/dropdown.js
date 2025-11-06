@@ -124,11 +124,33 @@ function setupClickBehavior(dropdown, options) {
     
     // Configurar solo para clic
     toggle.addEventListener('click', (e) => {
-      // Prevenir comportamiento predeterminado
+      // Verificar si el toggle tiene un href válido para navegación
+      const href = toggle.getAttribute('href');
+      const hasValidHref = href && href.startsWith('#') && href.length > 1;
+
+      // Si el menú ya está abierto, permitir navegación al href
+      if (menu.classList.contains('show') && hasValidHref) {
+        // Permitir navegación natural, solo cerrar el dropdown
+        hideDropdown(dropdown, menu, toggle);
+        // No prevenir default, permitir que el navegador siga el enlace
+        return;
+      }
+
+      // Si el menú está cerrado, abrirlo o navegar según el caso
       e.preventDefault();
       e.stopPropagation();
-      
-      // Alternar estado
+
+      // Si tiene href válido y el menú está cerrado, navegar y no abrir dropdown
+      if (hasValidHref && !menu.classList.contains('show')) {
+        // Navegar a la sección
+        const targetElement = document.querySelector(href);
+        if (targetElement) {
+          targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        return;
+      }
+
+      // Alternar estado del dropdown (para enlaces sin href válido)
       if (menu.classList.contains('show')) {
         hideDropdown(dropdown, menu, toggle);
       } else {
@@ -142,7 +164,7 @@ function setupClickBehavior(dropdown, options) {
             }
           }
         });
-        
+
         showDropdown(dropdown, menu, toggle);
       }
     });
