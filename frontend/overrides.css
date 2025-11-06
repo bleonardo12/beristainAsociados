@@ -76,6 +76,13 @@ body .navbar-nav.me-auto {
     margin-right: 0 !important; /* Eliminar me-auto de Bootstrap */
 }
 
+/* Asegurar que navbar-nav esté pegado al logo */
+body .navbar-nav {
+    margin-left: 0 !important;
+    padding-left: 0 !important;
+    gap: 0 !important;
+}
+
 /* Ajustar contenedor del navbar para distribuir mejor el espacio */
 body .navbar .container-fluid {
     display: flex !important;
@@ -89,37 +96,48 @@ body .navbar .container-fluid {
 body .navbar-collapse {
     flex-grow: 1 !important;
     display: flex !important;
-    justify-content: space-between !important;
+    justify-content: flex-start !important;  /* Cambiar de space-between a flex-start */
     align-items: center !important;
+    gap: 0 !important;  /* Sin gap entre navbar-nav y botón */
+}
+
+/* Empujar el botón de contacto a la derecha */
+body .navbar-collapse .btn-contact-professional {
+    margin-left: auto !important;  /* Esto empuja el botón a la derecha */
 }
 
 /* Logo más grande y elegante con fondo transparente (reducido 12%) */
 body .navbar .logo-principal {
     height: 176px !important;  /* 200px - 12% = 176px */
-    width: auto !important;
+    width: 176px !important;  /* Forzar width igual a height para círculo perfecto */
     max-height: none !important;
     max-width: none !important;
-    object-fit: contain !important;
+    object-fit: cover !important;  /* Cambiar de contain a cover */
     transition: all 0.3s ease !important;
     filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.15)) !important;
+    border-radius: 50% !important;  /* Logo completamente circular */
 }
 
 /* Logo cuando se hace scroll (versión reducida) */
 body .navbar.scrolled .logo-principal {
     height: 88px !important;  /* 100px - 12% = 88px */
+    width: 88px !important;   /* Mantener círculo perfecto */
     min-height: 80px !important;
+    border-radius: 50% !important;
 }
 
 /* Responsive logo - tamaños para móviles */
 @media (max-width: 991.98px) {
     body .navbar .logo-principal {
         height: 115px !important;  /* 130px - 12% = 115px */
+        width: 115px !important;   /* Mantener círculo perfecto */
     }
 }
 
 @media (max-width: 767.98px) {
     body .navbar .logo-principal {
         height: 88px !important;  /* 100px - 12% = 88px */
+        width: 88px !important;   /* Mantener círculo perfecto */
     }
 }
 
