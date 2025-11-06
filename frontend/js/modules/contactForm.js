@@ -1,11 +1,11 @@
 // contactForm.js
 
-// ⚠️ CONFIGURACIÓN DE EMAILJS - REEMPLAZAR CON TUS CREDENCIALES
-// Obtén tus credenciales en: https://www.emailjs.com/
+// ✅ CONFIGURACIÓN DE EMAILJS - CREDENCIALES CONFIGURADAS
+// Dashboard: https://dashboard.emailjs.com/
 window.emailJSConfig = {
-  serviceID: "TU_SERVICE_ID",      // Ejemplo: "service_abc1234"
-  templateID: "TU_TEMPLATE_ID",    // Ejemplo: "template_xyz5678"
-  publicKey: "TU_PUBLIC_KEY"       // Ejemplo: "abc123XYZ"
+  serviceID: "service_fvgq98a",      // Gmail conectado
+  templateID: "template_8jxmper",    // Template: contacto_beristain
+  publicKey: "ysGIjFOIzbT7azpma"     // Public Key de la cuenta
 };
 
 // Configuración global del formulario
