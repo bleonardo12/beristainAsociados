@@ -10,28 +10,47 @@ window.emailJSConfig = {
 
 // Configuración global del formulario
 window.contactFormConfig = {
-  scroll: true,
+  scroll: false,  // Deshabilitado para evitar scroll inesperado
   successDelay: 8000,
   errorDelay: 8000,
 };
 
 export function initContactForm() {
   document.addEventListener("DOMContentLoaded", function () {
+    console.log('🔄 Inicializando formulario de contacto...');
+
     const form = document.getElementById("contact-form");
-    if (!form) return;
+    if (!form) {
+      console.error('❌ Formulario no encontrado');
+      return;
+    }
 
     const submitButton = form.querySelector("button[type=submit]");
     const feedback = form.querySelector(".form-feedback");
     const spinner = document.getElementById("spinner");
 
+    console.log('✅ Elementos del formulario encontrados:', {
+      form: !!form,
+      submitButton: !!submitButton,
+      feedback: !!feedback,
+      spinner: !!spinner
+    });
+
     // Verificar que EmailJS esté cargado
     if (typeof emailjs === 'undefined') {
-      console.error('EmailJS no está cargado. Asegúrate de incluir el script en el HTML.');
+      console.error('❌ EmailJS no está cargado. Asegúrate de incluir el script en el HTML.');
       return;
     }
 
+    console.log('✅ EmailJS detectado, inicializando...');
+
     // Inicializar EmailJS con la Public Key
-    emailjs.init(window.emailJSConfig.publicKey);
+    try {
+      emailjs.init(window.emailJSConfig.publicKey);
+      console.log('✅ EmailJS inicializado correctamente con publicKey:', window.emailJSConfig.publicKey);
+    } catch (error) {
+      console.error('❌ Error al inicializar EmailJS:', error);
+    }
 
     function showFeedback(message, type = "success") {
       feedback.textContent = message;
@@ -126,26 +145,38 @@ export function initContactForm() {
 
     form.addEventListener("submit", async function (e) {
       e.preventDefault();
+      e.stopPropagation(); // Evitar que el evento suba y cause scrolls inesperados
+
+      console.log('📤 Formulario enviado, iniciando validación...');
 
       if (!validateForm()) {
+        console.log('❌ Validación fallida');
         const firstErrorField = form.querySelector(".input-error");
         scrollToElement(firstErrorField);
         return;
       }
 
+      console.log('✅ Validación exitosa');
+
       // Verificar que las credenciales de EmailJS estén configuradas
       if (window.emailJSConfig.serviceID === "TU_SERVICE_ID" ||
           window.emailJSConfig.templateID === "TU_TEMPLATE_ID" ||
           window.emailJSConfig.publicKey === "TU_PUBLIC_KEY") {
+        console.error('❌ Credenciales de EmailJS no configuradas');
         showFeedback("⚠️ Configuración pendiente: Por favor, configura las credenciales de EmailJS en contactForm.js", "error");
         return;
       }
+
+      console.log('📧 Credenciales verificadas, preparando envío...');
 
       // Mostrar spinner y deshabilitar botón
       submitButton.disabled = true;
       submitButton.style.opacity = "0.6";
       if (spinner) {
+        console.log('🔄 Mostrando spinner...');
         spinner.classList.remove("hidden");
+      } else {
+        console.error('❌ Spinner no encontrado');
       }
 
       // Preparar datos para EmailJS (nombres deben coincidir con el template)
@@ -156,27 +187,32 @@ export function initContactForm() {
         mensaje: form.elements["message"].value.trim(),
       };
 
+      console.log('📨 Enviando email con parámetros:', {
+        ...templateParams,
+        serviceID: window.emailJSConfig.serviceID,
+        templateID: window.emailJSConfig.templateID
+      });
+
       try {
-        await sendWithEmailJS(templateParams);
+        const result = await sendWithEmailJS(templateParams);
+        console.log('✅ Email enviado exitosamente:', result);
         showFeedback("¡Mensaje enviado correctamente! Te contactaremos pronto.");
         form.reset();
-
-        // Scroll suave al mensaje de éxito
-        setTimeout(() => {
-          feedback.scrollIntoView({ behavior: "smooth", block: "center" });
-        }, 100);
       } catch (error) {
-        console.error("Error al enviar el formulario:", error);
+        console.error("❌ Error al enviar el formulario:", error);
         let errorMessage = "Ocurrió un error al enviar tu mensaje. ";
 
         if (error.text) {
           errorMessage += `Detalles: ${error.text}`;
+        } else if (error.message) {
+          errorMessage += `Detalles: ${error.message}`;
         } else {
           errorMessage += "Por favor, intentá nuevamente o contactanos directamente por WhatsApp.";
         }
 
         showFeedback(errorMessage, "error");
       } finally {
+        console.log('🔚 Finalizando envío, ocultando spinner...');
         // Ocultar spinner y habilitar botón
         submitButton.disabled = false;
         submitButton.style.opacity = "1";
