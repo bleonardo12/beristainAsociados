@@ -1,20 +1,19 @@
 // contactForm.js
 
-// Configuración global
+// ⚠️ CONFIGURACIÓN DE EMAILJS - REEMPLAZAR CON TUS CREDENCIALES
+// Obtén tus credenciales en: https://www.emailjs.com/
+window.emailJSConfig = {
+  serviceID: "TU_SERVICE_ID",      // Ejemplo: "service_abc1234"
+  templateID: "TU_TEMPLATE_ID",    // Ejemplo: "template_xyz5678"
+  publicKey: "TU_PUBLIC_KEY"       // Ejemplo: "abc123XYZ"
+};
+
+// Configuración global del formulario
 window.contactFormConfig = {
   scroll: true,
   successDelay: 8000,
   errorDelay: 8000,
 };
-
-// Debounce para limitar llamadas (ej: validación en tiempo real)
-function debounce(func, delay) {
-  let timer;
-  return function (...args) {
-    clearTimeout(timer);
-    timer = setTimeout(() => func.apply(this, args), delay);
-  };
-}
 
 export function initContactForm() {
   document.addEventListener("DOMContentLoaded", function () {
@@ -24,6 +23,15 @@ export function initContactForm() {
     const submitButton = form.querySelector("button[type=submit]");
     const feedback = form.querySelector(".form-feedback");
     const spinner = document.getElementById("spinner");
+
+    // Verificar que EmailJS esté cargado
+    if (typeof emailjs === 'undefined') {
+      console.error('EmailJS no está cargado. Asegúrate de incluir el script en el HTML.');
+      return;
+    }
+
+    // Inicializar EmailJS con la Public Key
+    emailjs.init(window.emailJSConfig.publicKey);
 
     function showFeedback(message, type = "success") {
       feedback.textContent = message;
@@ -67,16 +75,12 @@ export function initContactForm() {
     }
 
     function validateForm() {
-            const asunto = form.elements["asunto"];
-      if (!asunto.value) {
-        showFieldError(asunto, "Por favor, selecciona un área legal.");
-        isValid = false;
-      }
       clearErrors();
       let isValid = true;
 
       const name = form.elements["name"];
       const email = form.elements["email"];
+      const asunto = form.elements["asunto"];
       const message = form.elements["message"];
 
       if (!name.value.trim()) {
@@ -93,6 +97,11 @@ export function initContactForm() {
         isValid = false;
       }
 
+      if (!asunto.value) {
+        showFieldError(asunto, "Por favor, selecciona un área legal.");
+        isValid = false;
+      }
+
       if (!message.value.trim()) {
         showFieldError(message, "Por favor, ingresá un mensaje.");
         isValid = false;
@@ -101,29 +110,34 @@ export function initContactForm() {
       return isValid;
     }
 
-    async function sendFormData(data) {
-      const endpoint = form.getAttribute("action") || "/api/contacto";
-      const response = await fetch(endpoint, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(data)
-      });
-    
-      if (!response.ok) {
-        throw new Error("Error al enviar el formulario.");
+    async function sendWithEmailJS(templateParams) {
+      try {
+        const response = await emailjs.send(
+          window.emailJSConfig.serviceID,
+          window.emailJSConfig.templateID,
+          templateParams
+        );
+        return { success: true, response };
+      } catch (error) {
+        console.error('EmailJS Error:', error);
+        throw error;
       }
-    
-      return response.json();
     }
-    
+
     form.addEventListener("submit", async function (e) {
       e.preventDefault();
 
       if (!validateForm()) {
         const firstErrorField = form.querySelector(".input-error");
         scrollToElement(firstErrorField);
+        return;
+      }
+
+      // Verificar que las credenciales de EmailJS estén configuradas
+      if (window.emailJSConfig.serviceID === "TU_SERVICE_ID" ||
+          window.emailJSConfig.templateID === "TU_TEMPLATE_ID" ||
+          window.emailJSConfig.publicKey === "TU_PUBLIC_KEY") {
+        showFeedback("⚠️ Configuración pendiente: Por favor, configura las credenciales de EmailJS en contactForm.js", "error");
         return;
       }
 
@@ -134,7 +148,8 @@ export function initContactForm() {
         spinner.classList.remove("hidden");
       }
 
-      const formData = {
+      // Preparar datos para EmailJS (nombres deben coincidir con el template)
+      const templateParams = {
         nombre: form.elements["name"].value.trim(),
         email: form.elements["email"].value.trim(),
         asunto: form.elements["asunto"].value,
@@ -142,17 +157,25 @@ export function initContactForm() {
       };
 
       try {
-        const result = await sendFormData(formData);
+        await sendWithEmailJS(templateParams);
+        showFeedback("¡Mensaje enviado correctamente! Te contactaremos pronto.");
+        form.reset();
 
-        if (result.success) {
-          showFeedback("¡Mensaje enviado correctamente!");
-          form.reset();
-        } else {
-          showFeedback(result.error || "Hubo un problema al enviar tu mensaje.", "error");
-        }
+        // Scroll suave al mensaje de éxito
+        setTimeout(() => {
+          feedback.scrollIntoView({ behavior: "smooth", block: "center" });
+        }, 100);
       } catch (error) {
         console.error("Error al enviar el formulario:", error);
-        showFeedback("Ocurrió un error inesperado. Intentá nuevamente más tarde.", "error");
+        let errorMessage = "Ocurrió un error al enviar tu mensaje. ";
+
+        if (error.text) {
+          errorMessage += `Detalles: ${error.text}`;
+        } else {
+          errorMessage += "Por favor, intentá nuevamente o contactanos directamente por WhatsApp.";
+        }
+
+        showFeedback(errorMessage, "error");
       } finally {
         // Ocultar spinner y habilitar botón
         submitButton.disabled = false;
@@ -164,3 +187,4 @@ export function initContactForm() {
     });
   });
 }
+
