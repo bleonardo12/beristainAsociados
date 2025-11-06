@@ -23,88 +23,274 @@
     }
 }
 
-/* Dropdown en móvil - SOLO CLICK, sin hover */
+/* ========== MENÚ MÓVIL OVERLAY FULL-SCREEN ========== */
 @media (max-width: 991.98px) {
-    /* Ocultar dropdowns por defecto */
-    body .navbar-nav .dropdown-menu {
-        display: none !important;
-        position: static !important;
-        float: none !important;
-        width: 100% !important;
-        margin-top: 0 !important;
-        background-color: transparent !important;
-        border: 0 !important;
-        box-shadow: none !important;
-        opacity: 1 !important;
-        visibility: visible !important;
-        transform: none !important;
-    }
-
-    /* Mostrar dropdown solo cuando tiene clase .show */
-    body .navbar-nav .dropdown-menu.show {
-        display: block !important;
-    }
-
-    /* NO activar dropdown en hover en móvil */
-    body .navbar-nav .dropdown:hover .dropdown-menu {
-        display: none !important;
-    }
-
-    /* Ajustar items del dropdown en móvil */
-    body .navbar-nav .dropdown-menu .dropdown-item {
-        padding: 0.75rem 2rem !important;
-        color: var(--neutral-600, #4a5568) !important;
-    }
-
-    body .navbar-nav .dropdown-menu .dropdown-item:hover,
-    body .navbar-nav .dropdown-menu .dropdown-item:focus {
-        background-color: rgba(240, 202, 69, 0.1) !important;
-        color: #1a365d !important;
-    }
-
-    /* Alinear navbar-collapse correctamente en móvil */
-    body .navbar-collapse {
-        position: absolute !important;
-        top: 100% !important;
-        left: 0 !important;
-        right: 0 !important;
-        background-color: white !important;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
-        padding: 1rem !important;
-        z-index: 1000 !important;
-        border-top: 1px solid rgba(0, 0, 0, 0.1) !important;
-    }
-
-    /* Asegurar que el navbar tenga posición relativa para el collapse */
+    /* Navbar base - asegurar posición relativa */
     body nav.navbar {
         position: relative !important;
     }
 
-    /* Centrar el toggler a la derecha */
+    /* Toggler - posicionar a la derecha */
     body .navbar-toggler {
         margin-left: auto !important;
+        border: none !important;
+        padding: 0.5rem !important;
+        position: relative !important;
+        z-index: 1050 !important;
+        background: transparent !important;
     }
 
-    /* Stack vertical en móvil */
+    /* Icono hamburguesa - transformación a X */
+    body .navbar-toggler-icon {
+        background-image: none !important;
+        position: relative !important;
+        display: block !important;
+        width: 26px !important;
+        height: 2px !important;
+        background-color: #2d3748 !important;
+        transition: all 0.3s ease !important;
+    }
+
+    body .navbar-toggler-icon::before,
+    body .navbar-toggler-icon::after {
+        content: '' !important;
+        position: absolute !important;
+        width: 26px !important;
+        height: 2px !important;
+        background-color: #2d3748 !important;
+        left: 0 !important;
+        transition: all 0.3s ease !important;
+    }
+
+    body .navbar-toggler-icon::before {
+        top: -8px !important;
+    }
+
+    body .navbar-toggler-icon::after {
+        top: 8px !important;
+    }
+
+    /* Transformación a X cuando está abierto */
+    body .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
+        background-color: transparent !important;
+    }
+
+    body .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::before {
+        top: 0 !important;
+        transform: rotate(45deg) !important;
+        background-color: white !important;
+    }
+
+    body .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::after {
+        top: 0 !important;
+        transform: rotate(-45deg) !important;
+        background-color: white !important;
+    }
+
+    /* Ocultar navbar-collapse por defecto */
+    body .navbar-collapse {
+        position: fixed !important;
+        top: 0 !important;
+        right: -100% !important;
+        width: 85% !important;
+        max-width: 400px !important;
+        height: 100vh !important;
+        background: linear-gradient(135deg, #1a365d 0%, #2d4a7c 100%) !important;
+        z-index: 1045 !important;
+        padding: 0 !important;
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        box-shadow: -5px 0 25px rgba(0, 0, 0, 0.3) !important;
+        display: block !important;
+    }
+
+    /* Mostrar cuando tiene clase .show */
+    body .navbar-collapse.show {
+        right: 0 !important;
+    }
+
+    /* Overlay oscuro de fondo */
+    body .navbar-collapse::before {
+        content: '' !important;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        background-color: rgba(0, 0, 0, 0) !important;
+        z-index: -1 !important;
+        transition: background-color 0.4s ease !important;
+        pointer-events: none !important;
+    }
+
+    body .navbar-collapse.show::before {
+        background-color: rgba(0, 0, 0, 0.7) !important;
+        pointer-events: auto !important;
+    }
+
+    /* Animación de entrada */
+    body .navbar-collapse.collapsing {
+        right: -100% !important;
+        transition: right 0.35s ease !important;
+    }
+
+    /* Contenedor de navegación */
     body .navbar-nav {
         flex-direction: column !important;
         width: 100% !important;
+        padding: 100px 0 30px 0 !important;
+        gap: 0 !important;
     }
 
+    /* Items de navegación */
     body .navbar-nav .nav-item {
         width: 100% !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
     }
 
     body .navbar-nav .nav-link {
-        padding: 0.75rem 1rem !important;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+        color: white !important;
+        padding: 1.2rem 2rem !important;
+        font-size: 1.1rem !important;
+        font-weight: 500 !important;
+        transition: all 0.3s ease !important;
+        position: relative !important;
+        display: block !important;
     }
 
-    /* Botón de contacto debajo del menú en móvil */
-    body .navbar-collapse .btn-contact-professional {
+    body .navbar-nav .nav-link::after {
+        display: none !important;
+    }
+
+    body .navbar-nav .nav-link:hover,
+    body .navbar-nav .nav-link:focus {
+        background-color: rgba(255, 255, 255, 0.1) !important;
+        color: #f0ca45 !important;
+        padding-left: 2.5rem !important;
+    }
+
+    body .navbar-nav .nav-link.active {
+        background-color: rgba(240, 202, 69, 0.15) !important;
+        color: #f0ca45 !important;
+    }
+
+    /* Dropdown en móvil - estilo accordion */
+    body .navbar-nav .dropdown {
         width: 100% !important;
-        margin: 1rem 0 0 0 !important;
-        text-align: center !important;
+    }
+
+    body .navbar-nav .dropdown-toggle {
+        color: white !important;
+        padding: 1.2rem 2rem !important;
+        font-size: 1.1rem !important;
+        font-weight: 500 !important;
+        position: relative !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+    }
+
+    /* Indicador de dropdown (flecha) */
+    body .navbar-nav .dropdown-toggle::after {
+        border: none !important;
+        content: '\25BC' !important;
+        font-size: 0.7rem !important;
+        margin-left: auto !important;
+        transition: transform 0.3s ease !important;
+        width: auto !important;
+        height: auto !important;
+        color: rgba(255, 255, 255, 0.7) !important;
+    }
+
+    body .navbar-nav .dropdown-toggle[aria-expanded="true"]::after {
+        transform: rotate(180deg) !important;
+        color: #f0ca45 !important;
+    }
+
+    /* Menú dropdown */
+    body .navbar-nav .dropdown-menu {
+        position: static !important;
+        float: none !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background-color: rgba(0, 0, 0, 0.2) !important;
+        border: none !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        display: none !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: none !important;
+        transition: none !important;
+    }
+
+    body .navbar-nav .dropdown-menu.show {
+        display: block !important;
+        animation: slideDown 0.3s ease !important;
+    }
+
+    /* NO activar con hover */
+    body .navbar-nav .dropdown:hover .dropdown-menu {
+        display: none !important;
+    }
+
+    /* Items del dropdown */
+    body .navbar-nav .dropdown-menu .dropdown-item {
+        color: rgba(255, 255, 255, 0.9) !important;
+        padding: 1rem 2rem 1rem 3rem !important;
+        font-size: 1rem !important;
+        background-color: transparent !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+        transition: all 0.3s ease !important;
+    }
+
+    body .navbar-nav .dropdown-menu .dropdown-item:last-child {
+        border-bottom: none !important;
+    }
+
+    body .navbar-nav .dropdown-menu .dropdown-item:hover,
+    body .navbar-nav .dropdown-menu .dropdown-item:focus {
+        background-color: rgba(255, 255, 255, 0.1) !important;
+        color: #f0ca45 !important;
+        padding-left: 3.5rem !important;
+    }
+
+    /* Botón de contacto en móvil */
+    body .navbar-collapse .btn-contact-professional {
+        width: calc(100% - 4rem) !important;
+        margin: 2rem 2rem 1rem 2rem !important;
+        padding: 1rem 1.5rem !important;
+        background: linear-gradient(135deg, #f0ca45 0%, #e5b639 100%) !important;
+        color: #1a365d !important;
+        border: none !important;
+        font-weight: 600 !important;
+        font-size: 1.05rem !important;
+        box-shadow: 0 4px 15px rgba(240, 202, 69, 0.3) !important;
+        transition: all 0.3s ease !important;
+    }
+
+    body .navbar-collapse .btn-contact-professional:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 6px 20px rgba(240, 202, 69, 0.4) !important;
+    }
+
+    /* Animación slideDown */
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            max-height: 0;
+        }
+        to {
+            opacity: 1;
+            max-height: 500px;
+        }
+    }
+
+    /* Prevenir scroll del body cuando el menú está abierto */
+    body.mobile-menu-open {
+        overflow: hidden !important;
     }
 }
 
