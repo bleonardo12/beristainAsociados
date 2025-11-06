@@ -499,21 +499,23 @@ function initializeAnalyticsServices() {
  */
 function initializeMarketingServices() {
   try {
-    // Google ads y marketing
+    // Google Ads y marketing (actualizado para cumplir con Google Consent Mode v2)
     if (typeof gtag === 'function') {
       gtag('consent', 'update', {
         'ad_storage': 'granted',
+        'ad_user_data': 'granted',
+        'ad_personalization': 'granted',
         'personalization_storage': 'granted'
       });
-      log('Servicios de ads inicializados (gtag)');
+      log('Servicios de Google Ads inicializados (gtag)');
     }
-    
+
     // Facebook Pixel
     if (typeof fbq === 'function') {
       fbq('consent', 'grant');
       log('Facebook Pixel inicializado');
     }
-    
+
     log('Servicios de marketing inicializados');
   } catch (err) {
     error('Error al inicializar servicios de marketing:', err);
