@@ -82,12 +82,12 @@ function setupLogo() {
       return;
     }
     
-    // Definir tamaños según viewport (aumentados significativamente)
+    // Definir tamaños según viewport (reducidos 12%)
     const sizes = {
-      xs: { normal: '100px', scrolled: '70px' },  // <= 575.98px (aumentado de 40px/35px)
-      sm: { normal: '130px', scrolled: '80px' },  // <= 767.98px (aumentado de 45px/40px)
-      md: { normal: '180px', scrolled: '90px' },  // <= 991.98px (aumentado de 55px/45px)
-      lg: { normal: '200px', scrolled: '100px' }  // > 991.98px (aumentado de 60px/50px)
+      xs: { normal: '88px', scrolled: '62px' },   // <= 575.98px (reducido 12%)
+      sm: { normal: '115px', scrolled: '70px' },  // <= 767.98px (reducido 12%)
+      md: { normal: '158px', scrolled: '79px' },  // <= 991.98px (reducido 12%)
+      lg: { normal: '176px', scrolled: '88px' }   // > 991.98px (reducido 12%)
     };
     
     // Función para ajustar el tamaño según el viewport

@@ -26,39 +26,39 @@ body .navbar-nav .dropdown-menu {
 /* Aumentar altura del navbar para contener logo grande */
 body nav.navbar {
     height: auto !important;
-    min-height: 220px !important;
+    min-height: 200px !important;
     padding: 10px 0 !important;
 }
 
 body nav.navbar.scrolled {
-    min-height: 120px !important;
+    min-height: 110px !important;
 }
 
 /* Responsive: ajustar altura del navbar */
 @media (max-width: 1199.98px) {
     body nav.navbar {
-        min-height: 200px !important;
-    }
-    body nav.navbar.scrolled {
-        min-height: 110px !important;
-    }
-}
-
-@media (max-width: 991.98px) {
-    body nav.navbar {
-        min-height: 150px !important;
+        min-height: 180px !important;
     }
     body nav.navbar.scrolled {
         min-height: 100px !important;
     }
 }
 
-@media (max-width: 767.98px) {
+@media (max-width: 991.98px) {
     body nav.navbar {
-        min-height: 120px !important;
+        min-height: 140px !important;
     }
     body nav.navbar.scrolled {
         min-height: 90px !important;
+    }
+}
+
+@media (max-width: 767.98px) {
+    body nav.navbar {
+        min-height: 110px !important;
+    }
+    body nav.navbar.scrolled {
+        min-height: 85px !important;
     }
 }
 
@@ -68,11 +68,33 @@ body .navbar .navbar-brand {
     display: flex !important;
     align-items: center !important;
     padding: 5px 0 !important;
+    margin-right: 1.5rem !important; /* Reducir espacio después del logo */
 }
 
-/* Logo más grande y elegante con fondo transparente */
+/* Eliminar el espacio automático entre navegación y botón */
+body .navbar-nav.me-auto {
+    margin-right: 0 !important; /* Eliminar me-auto de Bootstrap */
+}
+
+/* Ajustar contenedor del navbar para distribuir mejor el espacio */
+body .navbar .container-fluid {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    gap: 1rem !important;
+}
+
+/* Asegurar que el collapse ocupe el espacio necesario */
+body .navbar-collapse {
+    flex-grow: 1 !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+}
+
+/* Logo más grande y elegante con fondo transparente (reducido 12%) */
 body .navbar .logo-principal {
-    height: 200px !important;
+    height: 176px !important;  /* 200px - 12% = 176px */
     width: auto !important;
     max-height: none !important;
     max-width: none !important;
@@ -83,20 +105,20 @@ body .navbar .logo-principal {
 
 /* Logo cuando se hace scroll (versión reducida) */
 body .navbar.scrolled .logo-principal {
-    height: 100px !important;
-    min-height: 90px !important;
+    height: 88px !important;  /* 100px - 12% = 88px */
+    min-height: 80px !important;
 }
 
 /* Responsive logo - tamaños para móviles */
 @media (max-width: 991.98px) {
     body .navbar .logo-principal {
-        height: 130px !important;
+        height: 115px !important;  /* 130px - 12% = 115px */
     }
 }
 
 @media (max-width: 767.98px) {
     body .navbar .logo-principal {
-        height: 100px !important;
+        height: 88px !important;  /* 100px - 12% = 88px */
     }
 }
 
@@ -107,10 +129,18 @@ body .navbar-nav .nav-link {
     font-size: 1.05rem !important;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
     letter-spacing: 0.3px !important;
-    padding: 0.75rem 1.25rem !important;
+    padding: 0.75rem 0.85rem !important;  /* Reducido de 1.25rem a 0.85rem */
     position: relative !important;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
     white-space: nowrap !important;
+}
+
+/* Botón de contacto más compacto y visible */
+body .btn-contact-professional {
+    padding: 0.6rem 1.2rem !important;
+    font-size: 0.95rem !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;  /* No permitir que se comprima */
 }
 
 body .navbar-nav .nav-link:hover {
