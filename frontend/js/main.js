@@ -7,7 +7,6 @@ import { initContactForm } from './modules/contactForm.js';
 import { initScrollAnimations } from './modules/animations.js';
 import { initCookieConsent } from './modules/cookies.js';
 import { initLazyLoad } from './modules/lazyLoad.js';
-import { initChatbot } from './modules/chatbot.js';
 // DESACTIVADO: import { initDropdown } from './modules/dropdown.js'; // CONFLICTO con navbar.js
 import { initModalLinks } from './modules/modalLinks.js';
 import { initEmergencyBanner } from './modules/emergencyBanner.js';
@@ -32,7 +31,6 @@ class App {
       { name: 'testimonials', priority: 'medium', init: initTestimonials, selector: '#comentarios-clientes' },
       { name: 'contactForm', priority: 'medium', init: initContactForm, selector: '#contacto-rapido' },
       { name: 'animations', priority: 'low', init: initScrollAnimations },
-      { name: 'chatbot', priority: 'low', init: initChatbot, selector: '#chatbot-container' },
       { name: 'emergencyBanner', priority: 'critical', init: initEmergencyBanner },
       { name: 'modalLinks', priority: 'high', init: initModalLinks },
       {

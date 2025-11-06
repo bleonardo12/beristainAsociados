@@ -161,38 +161,37 @@
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <!-- Wrapper para mantener todo junto en mobile -->
-                        <div class="navbar-content-wrapper">
-                            <ul class="navbar-nav">
-                                <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="#home">Home</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#profesionales">Quienes Somos</a>
-                                </li>
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#areasDePractica" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Áreas de práctica
-                                    </a>
-                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <li><a class="dropdown-item" href="#dchoPenal">Derecho Penal</a></li>
-                                        <li><a class="dropdown-item" href="#dchoCivil">Derecho Civil y Comercial</a></li>
-                                        <li><a class="dropdown-item" href="#dchoFam">Derecho de Familia y Sucesiones</a></li>
-                                        <li><a class="dropdown-item" href="#dchoSeguros">Seguros y Accidentes de tránsito</a></li>
-                                    </ul>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#contact-form-section">Contacto</a>
-                                </li>
-                            </ul>
-                            <!-- Botón de contacto - separado en wrapper -->
-                            <div class="navbar-button-wrapper">
-                                <button type="button" class="btn btn-contact-professional" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                                    <i class="bi bi-telephone-fill me-2"></i>Contacto Inmediato
-                                </button>
-                            </div>
-                        </div>
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="#home">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#profesionales">Quienes Somos</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#areasDePractica" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Áreas de práctica
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li><a class="dropdown-item" href="#dchoPenal">Derecho Penal</a></li>
+                                    <li><a class="dropdown-item" href="#dchoCivil">Derecho Civil y Comercial</a></li>
+                                    <li><a class="dropdown-item" href="#dchoFam">Derecho de Familia y Sucesiones</a></li>
+                                    <li><a class="dropdown-item" href="#dchoSeguros">Seguros y Accidentes de tránsito</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#contact-form-section">Contacto</a>
+                            </li>
+                        </ul>
+                        <!-- Botón de contacto para MÓVIL SOLAMENTE - dentro del menú hamburguesa -->
+                        <button type="button" class="btn btn-contact-professional d-lg-none" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                            <i class="bi bi-telephone-fill me-2"></i>Contacto Inmediato
+                        </button>
                     </div>
+                    <!-- Botón de contacto para DESKTOP - visible siempre fuera del collapse -->
+                    <button type="button" class="btn btn-contact-professional d-none d-lg-block" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                        <i class="bi bi-telephone-fill me-2"></i>Contacto Inmediato
+                    </button>
                 </div>
             </nav>
         </header>
@@ -578,35 +577,6 @@
             </section>
 
             <!-- Chatbot asistente -->
-            <div id="chatbot-container" class="chatbot-container">
-                <button id="chatbot-toggle" class="chatbot-toggle" aria-label="Abrir asistente virtual">
-                    <i class="bi bi-chat-dots-fill"></i>
-                </button>
-                
-                <div id="chatbot-panel" class="chatbot-panel">
-                    <div class="chatbot-header">
-                        <h3>Asistente Virtual</h3>
-                        <button id="close-chatbot" aria-label="Cerrar chat">
-                            <i class="bi bi-x-lg"></i>
-                        </button>
-                    </div>
-                    
-                    <div id="chat-messages" class="chat-messages">
-                        <div class="message bot">
-                            <p>¡Hola! Soy el asistente virtual de Beristain & Asociados. ¿En qué puedo ayudarte hoy?</p>
-                        </div>
-                    </div>
-                    
-                    <div class="chat-input">
-                        <label for="user-message" class="visually-hidden">Escribe tu consulta</label>
-                        <input type="text" id="user-message" placeholder="Escribe tu consulta..." aria-label="Escribe tu mensaje de consulta al asistente virtual">
-                        <button id="send-message" aria-label="Enviar mensaje">
-                            <i class="bi bi-send-fill"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
         </main>
 
         <!-- Botón flotante de WhatsApp -->

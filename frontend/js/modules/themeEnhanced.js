@@ -123,8 +123,6 @@ function applyThemeToElements(isDark) {
       '.slider-area',
       '.comentarios-section',
       '.contact-form',
-      '.chatbot-panel',
-      '.chatbot-container',
       'footer'
     ];
     
