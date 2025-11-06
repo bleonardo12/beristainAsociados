@@ -128,27 +128,38 @@ function setupClickBehavior(dropdown, options) {
       const href = toggle.getAttribute('href');
       const hasValidHref = href && href.startsWith('#') && href.length > 1;
 
-      // Si el menú ya está abierto, permitir navegación al href
-      if (menu.classList.contains('show') && hasValidHref) {
-        // Permitir navegación natural, solo cerrar el dropdown
-        hideDropdown(dropdown, menu, toggle);
-        // No prevenir default, permitir que el navegador siga el enlace
-        return;
-      }
-
-      // Si el menú está cerrado, abrirlo o navegar según el caso
-      e.preventDefault();
-      e.stopPropagation();
-
-      // Si tiene href válido y el menú está cerrado, navegar y no abrir dropdown
+      // Si tiene href válido y el menú está cerrado, NAVEGAR (no abrir dropdown)
       if (hasValidHref && !menu.classList.contains('show')) {
-        // Navegar a la sección
+        // NO prevenir default - permitir navegación natural del navegador
+        // Solo detener propagación para evitar otros handlers
+        e.stopPropagation();
+
+        // Navegar con smooth scroll
         const targetElement = document.querySelector(href);
         if (targetElement) {
+          e.preventDefault(); // Ahora sí prevenir el salto brusco del navegador
           targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
         return;
       }
+
+      // Si el menú ya está abierto, permitir navegación al href
+      if (menu.classList.contains('show') && hasValidHref) {
+        // Permitir navegación natural, solo cerrar el dropdown
+        hideDropdown(dropdown, menu, toggle);
+
+        // Navegar con smooth scroll
+        const targetElement = document.querySelector(href);
+        if (targetElement) {
+          e.preventDefault();
+          targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        return;
+      }
+
+      // Para cualquier otro caso, prevenir comportamiento por defecto
+      e.preventDefault();
+      e.stopPropagation();
 
       // Alternar estado del dropdown (para enlaces sin href válido)
       if (menu.classList.contains('show')) {
