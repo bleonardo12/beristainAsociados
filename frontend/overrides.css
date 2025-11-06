@@ -107,7 +107,9 @@ body .navbar-collapse .btn-contact-professional {
 }
 
 /* Logo más grande y elegante con fondo transparente (reducido 12%) */
-body .navbar .logo-principal {
+html body .navbar .logo-principal,
+html body .navbar-brand .logo-principal,
+html body img.logo-principal {
     height: 176px !important;  /* 200px - 12% = 176px */
     width: 176px !important;  /* Forzar width igual a height para círculo perfecto */
     max-height: none !important;
@@ -116,28 +118,42 @@ body .navbar .logo-principal {
     transition: all 0.3s ease !important;
     filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.15)) !important;
     border-radius: 50% !important;  /* Logo completamente circular */
+    -webkit-border-radius: 50% !important;  /* Safari */
+    -moz-border-radius: 50% !important;  /* Firefox */
+    overflow: hidden !important;  /* Asegurar que la imagen no salga del círculo */
 }
 
 /* Logo cuando se hace scroll (versión reducida) */
-body .navbar.scrolled .logo-principal {
+html body .navbar.scrolled .logo-principal,
+html body .navbar.scrolled img.logo-principal {
     height: 88px !important;  /* 100px - 12% = 88px */
     width: 88px !important;   /* Mantener círculo perfecto */
     min-height: 80px !important;
     border-radius: 50% !important;
+    -webkit-border-radius: 50% !important;
+    -moz-border-radius: 50% !important;
 }
 
 /* Responsive logo - tamaños para móviles */
 @media (max-width: 991.98px) {
-    body .navbar .logo-principal {
+    html body .navbar .logo-principal,
+    html body img.logo-principal {
         height: 115px !important;  /* 130px - 12% = 115px */
         width: 115px !important;   /* Mantener círculo perfecto */
+        border-radius: 50% !important;
+        -webkit-border-radius: 50% !important;
+        -moz-border-radius: 50% !important;
     }
 }
 
 @media (max-width: 767.98px) {
-    body .navbar .logo-principal {
+    html body .navbar .logo-principal,
+    html body img.logo-principal {
         height: 88px !important;  /* 100px - 12% = 88px */
         width: 88px !important;   /* Mantener círculo perfecto */
+        border-radius: 50% !important;
+        -webkit-border-radius: 50% !important;
+        -moz-border-radius: 50% !important;
     }
 }
 
