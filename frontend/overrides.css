@@ -105,10 +105,48 @@
         background-color: #f0ca45 !important;
     }
 
+    /* Dark mode - mantener dorado en hover/focus cuando está cerrado */
+    body.dark-mode .navbar-toggler:hover .navbar-toggler-icon,
+    body.dark-mode .navbar-toggler:focus .navbar-toggler-icon,
+    body.dark-mode .navbar-toggler:active .navbar-toggler-icon {
+        background-color: #f0ca45 !important;
+    }
+
+    body.dark-mode .navbar-toggler:hover .navbar-toggler-icon::before,
+    body.dark-mode .navbar-toggler:hover .navbar-toggler-icon::after,
+    body.dark-mode .navbar-toggler:focus .navbar-toggler-icon::before,
+    body.dark-mode .navbar-toggler:focus .navbar-toggler-icon::after,
+    body.dark-mode .navbar-toggler:active .navbar-toggler-icon::before,
+    body.dark-mode .navbar-toggler:active .navbar-toggler-icon::after {
+        background-color: #f0ca45 !important;
+    }
+
     /* Dark mode - X blanca cuando está abierto */
+    body.dark-mode .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
+        background-color: transparent !important;
+    }
+
     body.dark-mode .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::before,
     body.dark-mode .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::after {
         background-color: white !important;
+    }
+
+    /* Dark mode - X blanca incluso en hover/focus/active cuando está abierto */
+    body.dark-mode .navbar-toggler[aria-expanded="true"]:hover .navbar-toggler-icon::before,
+    body.dark-mode .navbar-toggler[aria-expanded="true"]:hover .navbar-toggler-icon::after,
+    body.dark-mode .navbar-toggler[aria-expanded="true"]:focus .navbar-toggler-icon::before,
+    body.dark-mode .navbar-toggler[aria-expanded="true"]:focus .navbar-toggler-icon::after,
+    body.dark-mode .navbar-toggler[aria-expanded="true"]:active .navbar-toggler-icon::before,
+    body.dark-mode .navbar-toggler[aria-expanded="true"]:active .navbar-toggler-icon::after {
+        background-color: white !important;
+    }
+
+    /* Eliminar fondo azul de Bootstrap en focus */
+    body.dark-mode .navbar-toggler:focus,
+    body.dark-mode .navbar-toggler:active {
+        background-color: transparent !important;
+        box-shadow: none !important;
+        border: none !important;
     }
 
     /* Ocultar navbar-collapse por defecto */
@@ -184,7 +222,8 @@
         border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
     }
 
-    body .navbar-nav .nav-link {
+    body .navbar-nav .nav-link,
+    body.dark-mode .navbar-nav .nav-link {
         color: white !important;
         padding: 1.2rem 2rem !important;
         font-size: 1.1rem !important;
@@ -193,6 +232,8 @@
         position: relative !important;
         display: block !important;
         text-shadow: none !important; /* Sin sombra para texto nítido */
+        -webkit-font-smoothing: antialiased !important;
+        -moz-osx-font-smoothing: grayscale !important;
     }
 
     body .navbar-nav .nav-link::after {
@@ -216,7 +257,8 @@
         width: 100% !important;
     }
 
-    body .navbar-nav .dropdown-toggle {
+    body .navbar-nav .dropdown-toggle,
+    body.dark-mode .navbar-nav .dropdown-toggle {
         color: white !important;
         padding: 1.2rem 2rem !important;
         font-size: 1.1rem !important;
@@ -226,6 +268,8 @@
         justify-content: space-between !important;
         align-items: center !important;
         text-shadow: none !important; /* Sin sombra para texto nítido */
+        -webkit-font-smoothing: antialiased !important;
+        -moz-osx-font-smoothing: grayscale !important;
     }
 
     /* Indicador de dropdown (flecha) */
@@ -274,7 +318,8 @@
     }
 
     /* Items del dropdown */
-    body .navbar-nav .dropdown-menu .dropdown-item {
+    body .navbar-nav .dropdown-menu .dropdown-item,
+    body.dark-mode .navbar-nav .dropdown-menu .dropdown-item {
         color: rgba(255, 255, 255, 0.9) !important;
         padding: 1rem 2rem 1rem 3rem !important;
         font-size: 1rem !important;
@@ -282,6 +327,8 @@
         border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
         transition: all 0.3s ease !important;
         text-shadow: none !important; /* Sin sombra para texto nítido */
+        -webkit-font-smoothing: antialiased !important;
+        -moz-osx-font-smoothing: grayscale !important;
     }
 
     body .navbar-nav .dropdown-menu .dropdown-item:last-child {
