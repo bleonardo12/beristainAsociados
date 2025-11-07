@@ -1,5 +1,8 @@
 // contactForm.js
 
+// Importar funciones de analytics
+import { trackFormInteraction, trackFormAbandonment, trackFormError, trackEvent, trackConversion } from './analytics.js';
+
 // ✅ CONFIGURACIÓN DE EMAILJS - CREDENCIALES CONFIGURADAS
 // Dashboard: https://dashboard.emailjs.com/
 window.emailJSConfig = {
@@ -33,6 +36,37 @@ export function initContactForm() {
     submitButton: !!submitButton,
     feedback: !!feedback,
     spinner: !!spinner
+  });
+
+  // 📊 ANALYTICS: Trackear interacciones con campos del formulario
+  let lastInteractedField = null;
+  const formFields = form.querySelectorAll('input, textarea, select');
+
+  formFields.forEach(field => {
+    // Track focus en campos
+    field.addEventListener('focus', () => {
+      lastInteractedField = field.name || field.id;
+      trackFormInteraction(lastInteractedField, 'focus');
+    });
+
+    // Track cuando el usuario empieza a escribir
+    field.addEventListener('input', () => {
+      trackFormInteraction(field.name || field.id, 'input');
+    }, { once: true }); // Solo trackear la primera vez
+  });
+
+  // Track abandono del formulario (usuario sale sin enviar)
+  let formStarted = false;
+  formFields.forEach(field => {
+    field.addEventListener('input', () => {
+      formStarted = true;
+    }, { once: true });
+  });
+
+  window.addEventListener('beforeunload', () => {
+    if (formStarted && !form.classList.contains('submitted')) {
+      trackFormAbandonment(lastInteractedField || 'unknown');
+    }
   });
 
   // Función para esperar a que EmailJS esté disponible
@@ -108,6 +142,13 @@ export function initContactForm() {
       const errorContainer = prepareErrorContainer(input);
       errorContainer.textContent = message;
       errorContainer.setAttribute("role", "alert");
+
+      // 📊 ANALYTICS: Trackear error de validación
+      const fieldName = input.name || input.id;
+      const errorType = message.includes('válido') ? 'invalid_format' :
+                        message.includes('ingresá') ? 'required' :
+                        message.includes('selecciona') ? 'required' : 'validation_error';
+      trackFormError(fieldName, errorType);
     }
 
     function validateForm() {
@@ -214,6 +255,65 @@ export function initContactForm() {
         const result = await sendWithEmailJS(templateParams);
         console.log('✅ Email enviado exitosamente:', result);
         console.log('📧 Respuesta completa:', JSON.stringify(result, null, 2));
+
+        // 📊 GOOGLE ADS: Trackear conversión (IMPORTANTE para campañas)
+        // NOTA: El conversion_label debe configurarse en Google Ads Dashboard
+        // Ver INSTRUCCIONES_GOOGLE_ADS.md para obtener el label correcto
+        if (typeof gtag !== 'undefined') {
+          // Conversión principal de Google Ads
+          // REEMPLAZAR 'XXXXXXXXXX' con el conversion label de Google Ads
+          // Ejemplo: 'AbCdEf123456' (se obtiene del dashboard de Google Ads)
+          gtag('event', 'conversion', {
+            'send_to': 'AW-11107730225/XXXXXXXXXX', // ← CONFIGURAR CONVERSION_LABEL
+            'value': 1.0,
+            'currency': 'ARS',
+            'transaction_id': Date.now().toString()
+          });
+          console.log('📊 Google Ads conversion tracked');
+
+          // Evento de Google Analytics para seguimiento adicional
+          gtag('event', 'form_submission', {
+            'event_category': 'Contact',
+            'event_label': templateParams.asunto,
+            'event_action': 'submit',
+            'value': 1
+          });
+          console.log('📊 Google Analytics event tracked');
+
+          // Evento personalizado para Analytics
+          trackEvent('contact_form_success', {
+            'event_category': 'Form',
+            'event_label': templateParams.asunto,
+            'value': 1
+          });
+        } else {
+          console.warn('⚠️ gtag no disponible - conversión no trackeada');
+        }
+
+        // ✅ OPCIONAL: Enviar respuesta automática al cliente
+        // DESCOMENTAR Y CONFIGURAR según CONFIGURAR_EMAILJS_AUTORESPUESTA.md
+        /*
+        try {
+          console.log('📧 Enviando respuesta automática al cliente...');
+          const autoResponse = await emailjs.send(
+            window.emailJSConfig.serviceID,
+            'template_XXXXXXXX', // ← REEMPLAZAR con Template ID de autorespuesta
+            {
+              nombre: templateParams.nombre,
+              email: templateParams.email,
+              asunto: templateParams.asunto,
+              mensaje: templateParams.mensaje
+            }
+          );
+          console.log('✅ Respuesta automática enviada:', autoResponse);
+        } catch (autoError) {
+          console.warn('⚠️ No se pudo enviar respuesta automática (no afecta el envío principal):', autoError);
+        }
+        */
+
+        // Marcar formulario como enviado (para analytics de abandono)
+        form.classList.add('submitted');
+
         showFeedback("¡Mensaje enviado correctamente! Te contactaremos pronto.");
         form.reset();
       } catch (error) {
@@ -221,6 +321,13 @@ export function initContactForm() {
         console.error('📋 Error completo:', JSON.stringify(error, null, 2));
         console.error('📋 Error text:', error.text);
         console.error('📋 Error status:', error.status);
+
+        // 📊 ANALYTICS: Trackear error de envío
+        trackEvent('contact_form_error', {
+          'event_category': 'Form',
+          'event_label': `Error ${error.status || 'unknown'}`,
+          'value': 0
+        });
 
         let errorMessage = "Ocurrió un error al enviar tu mensaje. ";
 
