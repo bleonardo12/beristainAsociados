@@ -128,17 +128,18 @@ function setupAnchorScrolling() {
         if (modalParent && dismissesModal) {
           // El enlace cierra un modal, esperar a que termine la animación
           // Bootstrap modal tarda ~300ms en cerrarse (transición CSS)
+          // Además remueve padding-right del body, causando reflow
 
           // Esperar a que el modal se cierre completamente antes de scrollear
           modalParent.addEventListener('hidden.bs.modal', function handleModalHidden() {
-            // Ejecutar scroll después de que el modal se cierre
-            setTimeout(() => {
-              if (document.readyState === 'complete') {
-                scrollToTarget();
-              } else {
-                setTimeout(scrollToTarget, 100);
-              }
-            }, 150); // 150ms extra después del cierre para que el DOM se estabilice
+            // Usar requestAnimationFrame doble para asegurar que el DOM esté estable
+            // Esto fuerza 2 frames de render antes de calcular posiciones
+            requestAnimationFrame(() => {
+              requestAnimationFrame(() => {
+                // Esperar 400ms adicionales para que Bootstrap termine todos los cambios
+                setTimeout(scrollToTarget, 400);
+              });
+            });
 
             // Remover el listener para no ejecutar múltiples veces
             modalParent.removeEventListener('hidden.bs.modal', handleModalHidden);
