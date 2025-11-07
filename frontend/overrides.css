@@ -78,7 +78,7 @@
         top: 8px !important;
     }
 
-    /* Transformación a X cuando está abierto */
+    /* Transformación a X cuando está abierto - MODO CLARO */
     body .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
         background-color: transparent !important;
     }
@@ -86,16 +86,16 @@
     body .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::before {
         top: 0 !important;
         transform: rotate(45deg) !important;
-        background-color: white !important;
+        background-color: #2d3748 !important; /* Oscuro para modo claro */
     }
 
     body .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::after {
         top: 0 !important;
         transform: rotate(-45deg) !important;
-        background-color: white !important;
+        background-color: #2d3748 !important; /* Oscuro para modo claro */
     }
 
-    /* Dark mode - hacer visible el hamburger icon */
+    /* Dark mode - hacer visible el hamburger icon cerrado */
     body.dark-mode .navbar-toggler-icon {
         background-color: #f0ca45 !important; /* Amarillo dorado visible en dark */
     }
@@ -105,7 +105,7 @@
         background-color: #f0ca45 !important;
     }
 
-    /* Cuando está abierto en dark mode, mantener blanco */
+    /* Dark mode - X blanca cuando está abierto */
     body.dark-mode .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::before,
     body.dark-mode .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::after {
         background-color: white !important;
@@ -192,6 +192,7 @@
         transition: all 0.3s ease !important;
         position: relative !important;
         display: block !important;
+        text-shadow: none !important; /* Sin sombra para texto nítido */
     }
 
     body .navbar-nav .nav-link::after {
@@ -224,6 +225,7 @@
         display: flex !important;
         justify-content: space-between !important;
         align-items: center !important;
+        text-shadow: none !important; /* Sin sombra para texto nítido */
     }
 
     /* Indicador de dropdown (flecha) */
@@ -279,6 +281,7 @@
         background-color: transparent !important;
         border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
         transition: all 0.3s ease !important;
+        text-shadow: none !important; /* Sin sombra para texto nítido */
     }
 
     body .navbar-nav .dropdown-menu .dropdown-item:last-child {
