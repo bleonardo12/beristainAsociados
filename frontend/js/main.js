@@ -7,7 +7,6 @@ import { initContactForm } from './modules/contactForm.js';
 import { initScrollAnimations } from './modules/animations.js';
 import { initCookieConsent } from './modules/cookies.js';
 import { initLazyLoad } from './modules/lazyLoad.js';
-// DESACTIVADO: import { initDropdown } from './modules/dropdown.js'; // CONFLICTO con navbar.js
 import { initModalLinks } from './modules/modalLinks.js';
 import { initEmergencyBanner } from './modules/emergencyBanner.js';
 import LogoManager from './modules/logoModule.js'; // Importar la clase LogoManager
@@ -25,7 +24,6 @@ class App {
       { name: 'smoothScroll', priority: 'critical', init: initSmoothScroll }, // Scroll suave con fallback
       { name: 'contactForm', priority: 'critical', init: initContactForm }, // CRÍTICO: debe estar listo antes de cualquier interacción
       { name: 'theme', priority: 'high', init: initThemeSystem },
-      // DESACTIVADO: { name: 'dropdown', priority: 'high', init: initDropdown }, // CONFLICTO - navbar.js ya maneja dropdowns
       { name: 'lazyLoad', priority: 'high', init: initLazyLoad },
       { name: 'cookies', priority: 'high', init: initCookieConsent },
       { name: 'sliders', priority: 'medium', init: initSliders, selector: '.slider-area' },
