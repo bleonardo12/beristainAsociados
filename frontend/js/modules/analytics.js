@@ -211,13 +211,13 @@ function trackPhoneClicks() {
     link.addEventListener('click', () => {
       const phoneNumber = link.href.replace('tel:', '');
 
-      // 📊 GOOGLE ADS: Conversión de llamada telefónica (CONFIGURAR EN GOOGLE ADS)
-      // NOTA: Crear una acción de conversión separada para llamadas
-      // Ver OPTIMIZACION_AVANZADA_GOOGLE_ADS.md para configurar
+      // 📊 GOOGLE ADS: Conversión de llamada telefónica
+      // Conversión configurada: "Llamada - Click to Call"
+      // Label obtenido de Google Ads: MjxGCJ-v6bsbELGGyrAp
       if (typeof gtag !== 'undefined') {
         gtag('event', 'conversion', {
-          'send_to': 'AW-11107730225/ZZZZZZZZZZ', // ← CONFIGURAR PHONE_CONVERSION_LABEL
-          'value': 1.0,
+          'send_to': 'AW-11107730225/MjxGCJ-v6bsbELGGyrAp', // ✅ CONFIGURADO
+          'value': 100.0, // Valor máximo - contacto inmediato
           'currency': 'ARS',
           'transaction_id': Date.now().toString()
         });
