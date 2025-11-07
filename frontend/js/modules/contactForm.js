@@ -36,21 +36,39 @@ export function initContactForm() {
       spinner: !!spinner
     });
 
-    // Verificar que EmailJS esté cargado
-    if (typeof emailjs === 'undefined') {
-      console.error('❌ EmailJS no está cargado. Asegúrate de incluir el script en el HTML.');
-      return;
+    // Función para esperar a que EmailJS esté disponible
+    function waitForEmailJS(callback, maxAttempts = 50) {
+      let attempts = 0;
+      const checkInterval = setInterval(() => {
+        attempts++;
+        if (typeof emailjs !== 'undefined') {
+          clearInterval(checkInterval);
+          console.log(`✅ EmailJS detectado después de ${attempts} intentos`);
+          callback();
+        } else if (attempts >= maxAttempts) {
+          clearInterval(checkInterval);
+          console.error('❌ EmailJS no se cargó después de esperar. Verifica que el script esté en el HTML.');
+        }
+      }, 100); // Revisar cada 100ms
     }
 
-    console.log('✅ EmailJS detectado, inicializando...');
+    // Esperar a que EmailJS esté disponible antes de inicializar
+    waitForEmailJS(() => {
+      console.log('✅ EmailJS disponible, inicializando...');
 
-    // Inicializar EmailJS con la Public Key
-    try {
-      emailjs.init(window.emailJSConfig.publicKey);
-      console.log('✅ EmailJS inicializado correctamente con publicKey:', window.emailJSConfig.publicKey);
-    } catch (error) {
-      console.error('❌ Error al inicializar EmailJS:', error);
-    }
+      // Inicializar EmailJS con la Public Key
+      try {
+        emailjs.init(window.emailJSConfig.publicKey);
+        console.log('✅ EmailJS inicializado correctamente');
+        console.log('📋 Configuración:', {
+          serviceID: window.emailJSConfig.serviceID,
+          templateID: window.emailJSConfig.templateID,
+          publicKey: window.emailJSConfig.publicKey.substring(0, 8) + '...'
+        });
+      } catch (error) {
+        console.error('❌ Error al inicializar EmailJS:', error);
+      }
+    });
 
     function showFeedback(message, type = "success") {
       feedback.textContent = message;
@@ -196,13 +214,25 @@ export function initContactForm() {
       try {
         const result = await sendWithEmailJS(templateParams);
         console.log('✅ Email enviado exitosamente:', result);
+        console.log('📧 Respuesta completa:', JSON.stringify(result, null, 2));
         showFeedback("¡Mensaje enviado correctamente! Te contactaremos pronto.");
         form.reset();
       } catch (error) {
         console.error("❌ Error al enviar el formulario:", error);
+        console.error('📋 Error completo:', JSON.stringify(error, null, 2));
+        console.error('📋 Error text:', error.text);
+        console.error('📋 Error status:', error.status);
+
         let errorMessage = "Ocurrió un error al enviar tu mensaje. ";
 
-        if (error.text) {
+        // Mensajes de error más específicos
+        if (error.status === 412) {
+          errorMessage = "⚠️ Error de configuración: La plantilla de EmailJS no está configurada correctamente.";
+        } else if (error.status === 400) {
+          errorMessage = "⚠️ Error: Los datos del formulario no son válidos.";
+        } else if (error.status === 403) {
+          errorMessage = "⚠️ Error de autenticación: Verifica las credenciales de EmailJS.";
+        } else if (error.text) {
           errorMessage += `Detalles: ${error.text}`;
         } else if (error.message) {
           errorMessage += `Detalles: ${error.message}`;

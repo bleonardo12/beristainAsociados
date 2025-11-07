@@ -928,17 +928,31 @@ body #contact-form button[type="submit"]:hover {
 @media (max-width: 576px) {
     body #contact-form {
         padding: var(--spacing-md) !important;
+        margin: 0 1rem var(--spacing-xl) 1rem !important; /* Más margen lateral */
     }
-    
+
     body #contact-form input,
     body #contact-form textarea,
     body #contact-form select {
-        padding: 10px !important;
-        font-size: var(--fs-sm) !important;
+        padding: 14px !important; /* Aumentado de 10px a 14px */
+        font-size: 16px !important; /* Fijo 16px para evitar zoom en iOS */
+        min-height: 48px !important; /* Área táctil más grande */
+        margin-bottom: 1rem !important;
     }
-    
+
+    body #contact-form textarea {
+        min-height: 120px !important;
+    }
+
     body #contact-form button[type="submit"] {
-        padding: 12px 20px !important;
+        padding: 16px 20px !important; /* Botón más grande */
+        font-size: 16px !important;
+        min-height: 52px !important; /* Mejor área táctil */
+    }
+
+    body #contact-form label {
+        font-size: 15px !important;
+        margin-bottom: 0.5rem !important;
     }
 }
 
