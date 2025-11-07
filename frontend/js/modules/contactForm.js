@@ -16,27 +16,26 @@ window.contactFormConfig = {
 };
 
 export function initContactForm() {
-  document.addEventListener("DOMContentLoaded", function () {
-    console.log('🔄 Inicializando formulario de contacto...');
+  console.log('🔄 Inicializando formulario de contacto...');
 
-    const form = document.getElementById("contact-form");
-    if (!form) {
-      console.error('❌ Formulario no encontrado');
-      return;
-    }
+  const form = document.getElementById("contact-form");
+  if (!form) {
+    console.error('❌ Formulario no encontrado');
+    return;
+  }
 
-    const submitButton = form.querySelector("button[type=submit]");
-    const feedback = form.querySelector(".form-feedback");
-    const spinner = document.getElementById("spinner");
+  const submitButton = form.querySelector("button[type=submit]");
+  const feedback = form.querySelector(".form-feedback");
+  const spinner = document.getElementById("spinner");
 
-    console.log('✅ Elementos del formulario encontrados:', {
-      form: !!form,
-      submitButton: !!submitButton,
-      feedback: !!feedback,
-      spinner: !!spinner
-    });
+  console.log('✅ Elementos del formulario encontrados:', {
+    form: !!form,
+    submitButton: !!submitButton,
+    feedback: !!feedback,
+    spinner: !!spinner
+  });
 
-    // Función para esperar a que EmailJS esté disponible
+  // Función para esperar a que EmailJS esté disponible
     function waitForEmailJS(callback, maxAttempts = 50) {
       let attempts = 0;
       const checkInterval = setInterval(() => {
@@ -251,6 +250,5 @@ export function initContactForm() {
         }
       }
     });
-  });
 }
 
