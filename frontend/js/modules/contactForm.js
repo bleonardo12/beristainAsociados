@@ -257,19 +257,17 @@ export function initContactForm() {
         console.log('📧 Respuesta completa:', JSON.stringify(result, null, 2));
 
         // 📊 GOOGLE ADS: Trackear conversión (IMPORTANTE para campañas)
-        // NOTA: El conversion_label debe configurarse en Google Ads Dashboard
-        // Ver INSTRUCCIONES_GOOGLE_ADS.md para obtener el label correcto
+        // Conversión configurada: "Formulario - Consulta Legal"
+        // Label obtenido de Google Ads: 1LBbCOr-37sbELGGyrAp
         if (typeof gtag !== 'undefined') {
           // Conversión principal de Google Ads
-          // REEMPLAZAR 'XXXXXXXXXX' con el conversion label de Google Ads
-          // Ejemplo: 'AbCdEf123456' (se obtiene del dashboard de Google Ads)
           gtag('event', 'conversion', {
-            'send_to': 'AW-11107730225/XXXXXXXXXX', // ← CONFIGURAR CONVERSION_LABEL
+            'send_to': 'AW-11107730225/1LBbCOr-37sbELGGyrAp', // ✅ CONFIGURADO
             'value': 1.0,
             'currency': 'ARS',
             'transaction_id': Date.now().toString()
           });
-          console.log('📊 Google Ads conversion tracked');
+          console.log('📊 Google Ads conversion tracked: Formulario');
 
           // Evento de Google Analytics para seguimiento adicional
           gtag('event', 'form_submission', {
