@@ -1,5 +1,5 @@
 // main.js - Archivo principal moderno usando ES Modules
-import { initNavbar } from './modules/navbar.js';
+// DESACTIVADO: import { initNavbar } from './modules/navbar.js'; // CONFLICTO TOTAL - Bootstrap maneja navbar
 import { initThemeSystem } from './modules/themeEnhanced.js'; // Usa la versión mejorada
 import { initSliders } from './modules/sliders.js';
 import { initTestimonials } from './modules/testimonials.js';
@@ -22,7 +22,7 @@ class App {
   constructor() {
     // Registro de componentes
     this.components = [
-      { name: 'navbar', priority: 'critical', init: initNavbar },
+      // DESACTIVADO: { name: 'navbar', priority: 'critical', init: initNavbar }, // Bootstrap maneja navbar automáticamente
       { name: 'smoothScroll', priority: 'critical', init: initSmoothScroll }, // Scroll suave con fallback
       { name: 'theme', priority: 'high', init: initThemeSystem },
       // DESACTIVADO: { name: 'dropdown', priority: 'high', init: initDropdown }, // CONFLICTO - navbar.js ya maneja dropdowns
