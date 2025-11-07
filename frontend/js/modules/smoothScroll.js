@@ -117,11 +117,36 @@ function setupAnchorScrolling() {
             history.pushState(null, null, targetId);
           }
 
-          // Enfocar el elemento para accesibilidad
-          setTimeout(() => {
-            targetElement.focus({ preventScroll: true });
-          }, 800);
+          // NO hacer focus para evitar scroll adicional
+          // targetElement.focus({ preventScroll: true });
         };
+
+        // IMPORTANTE: Detectar si el enlace está dentro de un modal de Bootstrap
+        const modalParent = link.closest('.modal');
+        const dismissesModal = link.hasAttribute('data-bs-dismiss');
+
+        if (modalParent && dismissesModal) {
+          // El enlace cierra un modal, esperar a que termine la animación
+          // Bootstrap modal tarda ~300ms en cerrarse (transición CSS)
+
+          // Esperar a que el modal se cierre completamente antes de scrollear
+          modalParent.addEventListener('hidden.bs.modal', function handleModalHidden() {
+            // Ejecutar scroll después de que el modal se cierre
+            setTimeout(() => {
+              if (document.readyState === 'complete') {
+                scrollToTarget();
+              } else {
+                setTimeout(scrollToTarget, 100);
+              }
+            }, 150); // 150ms extra después del cierre para que el DOM se estabilice
+
+            // Remover el listener para no ejecutar múltiples veces
+            modalParent.removeEventListener('hidden.bs.modal', handleModalHidden);
+          }, { once: true });
+
+          // No hacer scroll ahora, esperar al evento hidden.bs.modal
+          return;
+        }
 
         // Si hay imágenes cargando, esperar un poco para recalcular
         // Esto evita problemas cuando lazy-load cambia las posiciones
