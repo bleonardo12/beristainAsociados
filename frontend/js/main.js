@@ -23,13 +23,13 @@ class App {
     this.components = [
       { name: 'navbar', priority: 'critical', init: initNavbar },
       { name: 'smoothScroll', priority: 'critical', init: initSmoothScroll }, // Scroll suave con fallback
+      { name: 'contactForm', priority: 'critical', init: initContactForm }, // CRÍTICO: debe estar listo antes de cualquier interacción
       { name: 'theme', priority: 'high', init: initThemeSystem },
       // DESACTIVADO: { name: 'dropdown', priority: 'high', init: initDropdown }, // CONFLICTO - navbar.js ya maneja dropdowns
       { name: 'lazyLoad', priority: 'high', init: initLazyLoad },
       { name: 'cookies', priority: 'high', init: initCookieConsent },
       { name: 'sliders', priority: 'medium', init: initSliders, selector: '.slider-area' },
       { name: 'testimonials', priority: 'medium', init: initTestimonials, selector: '#comentarios-clientes' },
-      { name: 'contactForm', priority: 'high', init: initContactForm }, // Sin selector - inicializar siempre
       { name: 'animations', priority: 'low', init: initScrollAnimations },
       { name: 'emergencyBanner', priority: 'critical', init: initEmergencyBanner },
       { name: 'modalLinks', priority: 'high', init: initModalLinks },
