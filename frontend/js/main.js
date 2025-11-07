@@ -29,7 +29,7 @@ class App {
       { name: 'cookies', priority: 'high', init: initCookieConsent },
       { name: 'sliders', priority: 'medium', init: initSliders, selector: '.slider-area' },
       { name: 'testimonials', priority: 'medium', init: initTestimonials, selector: '#comentarios-clientes' },
-      { name: 'contactForm', priority: 'medium', init: initContactForm, selector: '#contact-form' },
+      { name: 'contactForm', priority: 'high', init: initContactForm }, // Sin selector - inicializar siempre
       { name: 'animations', priority: 'low', init: initScrollAnimations },
       { name: 'emergencyBanner', priority: 'critical', init: initEmergencyBanner },
       { name: 'modalLinks', priority: 'high', init: initModalLinks },
