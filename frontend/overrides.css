@@ -95,6 +95,22 @@
         background-color: white !important;
     }
 
+    /* Dark mode - hacer visible el hamburger icon */
+    body.dark-mode .navbar-toggler-icon {
+        background-color: #f0ca45 !important; /* Amarillo dorado visible en dark */
+    }
+
+    body.dark-mode .navbar-toggler-icon::before,
+    body.dark-mode .navbar-toggler-icon::after {
+        background-color: #f0ca45 !important;
+    }
+
+    /* Cuando está abierto en dark mode, mantener blanco */
+    body.dark-mode .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::before,
+    body.dark-mode .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::after {
+        background-color: white !important;
+    }
+
     /* Ocultar navbar-collapse por defecto */
     body .navbar-collapse {
         position: fixed !important;
@@ -276,10 +292,10 @@
         padding-left: 3.5rem !important;
     }
 
-    /* Botón de contacto en móvil - al final del menú */
+    /* Botón de contacto en móvil - debajo de los items del menú */
     body .navbar-collapse .btn-contact-professional {
         width: calc(100% - 4rem) !important;
-        margin: auto 2rem 2rem 2rem !important; /* margin-top: auto empuja al final */
+        margin: 1.5rem 2rem 2rem 2rem !important; /* Próximo a los items, no al final */
         padding: 1rem 1.5rem !important;
         background: linear-gradient(135deg, #f0ca45 0%, #e5b639 100%) !important;
         color: #1a365d !important;
