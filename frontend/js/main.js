@@ -11,6 +11,7 @@ import { initModalLinks } from './modules/modalLinks.js';
 import { initEmergencyBanner } from './modules/emergencyBanner.js';
 import LogoManager from './modules/logoModule.js'; // Importar la clase LogoManager
 import { initSmoothScroll } from './modules/smoothScroll.js'; // Scroll suave con fallback Safari
+import { initAnalytics } from './modules/analytics.js'; // Analytics y tracking de Google Ads
 
 
 /**
@@ -24,6 +25,7 @@ class App {
       { name: 'smoothScroll', priority: 'critical', init: initSmoothScroll }, // Scroll suave con fallback
       { name: 'contactForm', priority: 'critical', init: initContactForm }, // CRÍTICO: debe estar listo antes de cualquier interacción
       { name: 'theme', priority: 'high', init: initThemeSystem },
+      { name: 'analytics', priority: 'high', init: initAnalytics }, // Analytics y conversiones de Google Ads
       { name: 'lazyLoad', priority: 'high', init: initLazyLoad },
       { name: 'cookies', priority: 'high', init: initCookieConsent },
       { name: 'sliders', priority: 'medium', init: initSliders, selector: '.slider-area' },
