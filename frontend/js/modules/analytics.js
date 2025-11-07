@@ -168,12 +168,30 @@ function trackSocialClicks() {
 
 /**
  * Trackear clicks en WhatsApp
+ * IMPORTANTE: WhatsApp es una conversión valiosa (contacto directo)
  */
 function trackWhatsAppClicks() {
   const whatsappLinks = document.querySelectorAll('a[href*="wa.me"], a[href*="whatsapp"]');
 
   whatsappLinks.forEach(link => {
     link.addEventListener('click', () => {
+      // 📊 GOOGLE ADS: Conversión de WhatsApp (CONFIGURAR EN GOOGLE ADS)
+      // NOTA: Crear una acción de conversión separada para WhatsApp
+      // Ver OPTIMIZACION_AVANZADA_GOOGLE_ADS.md para configurar el conversion_label
+      if (typeof gtag !== 'undefined') {
+        // Conversión de Google Ads para WhatsApp
+        // REEMPLAZAR 'YYYYYYYYYY' con el conversion label de WhatsApp
+        // (diferente al del formulario - crear acción separada en Google Ads)
+        gtag('event', 'conversion', {
+          'send_to': 'AW-11107730225/YYYYYYYYYY', // ← CONFIGURAR WHATSAPP_CONVERSION_LABEL
+          'value': 1.0,
+          'currency': 'ARS',
+          'transaction_id': Date.now().toString()
+        });
+        console.log('📊 Google Ads WhatsApp conversion tracked');
+      }
+
+      // Evento de Analytics
       gtag('event', 'whatsapp_click', {
         'event_category': 'Contact',
         'event_label': 'WhatsApp',
@@ -186,6 +204,7 @@ function trackWhatsAppClicks() {
 
 /**
  * Trackear clicks en teléfono
+ * IMPORTANTE: Llamadas telefónicas son conversiones de alto valor
  */
 function trackPhoneClicks() {
   const phoneLinks = document.querySelectorAll('a[href^="tel:"]');
@@ -193,6 +212,21 @@ function trackPhoneClicks() {
   phoneLinks.forEach(link => {
     link.addEventListener('click', () => {
       const phoneNumber = link.href.replace('tel:', '');
+
+      // 📊 GOOGLE ADS: Conversión de llamada telefónica (CONFIGURAR EN GOOGLE ADS)
+      // NOTA: Crear una acción de conversión separada para llamadas
+      // Ver OPTIMIZACION_AVANZADA_GOOGLE_ADS.md para configurar
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'conversion', {
+          'send_to': 'AW-11107730225/ZZZZZZZZZZ', // ← CONFIGURAR PHONE_CONVERSION_LABEL
+          'value': 1.0,
+          'currency': 'ARS',
+          'transaction_id': Date.now().toString()
+        });
+        console.log('📊 Google Ads Phone conversion tracked');
+      }
+
+      // Evento de Analytics
       gtag('event', 'phone_click', {
         'event_category': 'Contact',
         'event_label': phoneNumber,
