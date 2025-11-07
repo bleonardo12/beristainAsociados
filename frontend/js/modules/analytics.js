@@ -175,16 +175,14 @@ function trackWhatsAppClicks() {
 
   whatsappLinks.forEach(link => {
     link.addEventListener('click', () => {
-      // 📊 GOOGLE ADS: Conversión de WhatsApp (CONFIGURAR EN GOOGLE ADS)
-      // NOTA: Crear una acción de conversión separada para WhatsApp
-      // Ver OPTIMIZACION_AVANZADA_GOOGLE_ADS.md para configurar el conversion_label
+      // 📊 GOOGLE ADS: Conversión de WhatsApp
+      // Conversión configurada: "WhatsApp - Contacto Directo"
+      // Label obtenido de Google Ads: Yg24CK6u4LsbELGGyrAp
       if (typeof gtag !== 'undefined') {
         // Conversión de Google Ads para WhatsApp
-        // REEMPLAZAR 'YYYYYYYYYY' con el conversion label de WhatsApp
-        // (diferente al del formulario - crear acción separada en Google Ads)
         gtag('event', 'conversion', {
-          'send_to': 'AW-11107730225/YYYYYYYYYY', // ← CONFIGURAR WHATSAPP_CONVERSION_LABEL
-          'value': 1.0,
+          'send_to': 'AW-11107730225/Yg24CK6u4LsbELGGyrAp', // ✅ CONFIGURADO
+          'value': 75.0, // Valor mayor porque es contacto más directo
           'currency': 'ARS',
           'transaction_id': Date.now().toString()
         });
