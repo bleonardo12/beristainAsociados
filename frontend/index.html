@@ -103,7 +103,7 @@
               },
               "telephone": "+541135913161",
               "email": "beristainyasociadosej@gmail.com",
-              "openingHours": "Mo-Fr 07:00-20:00",
+              "openingHours": "Mo-Fr 09:00-18:00",
               "description": "Estudio Jurídico especializado en Derecho Penal, Civil, Familia y Seguros.",
               "priceRange": "$$",
               "serviceType": ["Derecho Penal", "Derecho Civil", "Derecho de Familia", "Seguros y Accidentes"],
@@ -307,16 +307,32 @@
                         ASOCIADOS
                     </h1>
                     <h3>Defendemos tu presente, aseguramos tu <span>futuro.</span></h3>
-                </div>
-            </section>
-            
-            <!-- Sección "Sobre Nosotros" -->
-            <section id="profesionales" class="section-padding">
-                <div class="container">
-                    <h2 class="section-title animate-on-scroll fade-up">Sobre Nosotros</h2>
-                    <p class="section-text animate-on-scroll fade-up">Somos un grupo de profesionales del derecho, orgullosos de ofrecerte un completo plan de asesoramiento jurídico, pensado y analizado pura y exclusivamente para vos, asegurándonos que tus intereses sean representados de manera total e íntegra. <br> <br>
-                        Nuestro estudio jurídico cuenta con profesionales altamente capacitados, especialistas en derecho público y en derecho privado, que abarca una amplia gama de áreas legales con el firme propósito de hacer valer los derechos de nuestros clientes y satisfacer sus necesidades.
+                    <p class="hero-subtitle" style="font-size: 1.2rem; margin-top: 1.5rem; margin-bottom: 0.5rem; color: var(--neutral-300);">
+                        Abogados especializados en Derecho Penal, Civil y Familia
                     </p>
+                    <p class="hero-availability" style="font-size: 1rem; margin-bottom: 2rem; color: var(--secondary); font-weight: 600;">
+                        <i class="bi bi-clock-history"></i> Urgencias Penales 24/7 | Primera Consulta Gratuita
+                    </p>
+
+                    <!-- CTAs Hero -->
+                    <div class="hero-ctas" style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin-top: 2rem;">
+                        <a href="https://wa.me/5491135913161?text=Hola,%20necesito%20asesoramiento%20legal"
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           class="btn-hero btn-whatsapp"
+                           style="background: #25D366; color: white; padding: 1rem 2rem; border-radius: 50px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem; transition: transform 0.3s, box-shadow 0.3s; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);">
+                            <i class="bi bi-whatsapp" style="font-size: 1.5rem;"></i>
+                            Consultar por WhatsApp
+                        </a>
+                        <button type="button"
+                                data-bs-toggle="modal"
+                                data-bs-target="#contactoInmediatoModal"
+                                class="btn-hero btn-contacto"
+                                style="background: var(--primary); color: white; padding: 1rem 2rem; border-radius: 50px; border: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer; transition: transform 0.3s, box-shadow 0.3s; box-shadow: 0 4px 15px rgba(26, 54, 93, 0.3);">
+                            <i class="bi bi-telephone-fill" style="font-size: 1.3rem;"></i>
+                            Contacto Inmediato
+                        </button>
+                    </div>
                 </div>
             </section>
 
@@ -399,6 +415,64 @@
                             <div class="stat-label text-muted">Formación Académica</div>
                         </div>
                     </div>
+                </div>
+            </section>
+
+            <!--Sección comentarios de clientes-->
+            <section id="comentarios-clientes" class="comentarios-section">
+                <div class="container">
+                    <h2 class="section-title animate-on-scroll fade-up">Lo que dicen nuestros clientes</h2>
+
+                    <div class="row justify-content-center">
+                        <!-- Testimonio 1: Martin Zarate -->
+                        <div class="col-md-4 mb-4">
+                            <div class="comentario-card animate-on-scroll fade-up" data-delay="100">
+                                <div class="comentario-header">
+                                    <img src="img/1x/martin zarate.jpg" alt="Fotografía de Martin Zarate, cliente satisfecho" class="cliente-foto" width="60" height="60" loading="lazy">
+                                    <h4>Martin Zarate</h4>
+                                </div>
+                                <div class="comentario-body">
+                                    <p>"Excelente atención por parte del equipo de abogados. Resolvieron mi caso de manera rápida y profesional. ¡Totalmente recomendados!"</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Testimonio 2: Liliana Serrano -->
+                        <div class="col-md-4 mb-4">
+                            <div class="comentario-card animate-on-scroll fade-up" data-delay="200">
+                                <div class="comentario-header">
+                                    <img src="img/1x/liliana serrano.jpg" alt="Fotografía de Liliana Serrano, cliente satisfecha" class="cliente-foto" width="60" height="60" loading="lazy">
+                                    <h4>Liliana Serrano</h4>
+                                </div>
+                                <div class="comentario-body">
+                                    <p>"Gracias a Beristain & Asociados, pude resolver un problema legal complicado. Siempre estuvieron disponibles para asesorarme."</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Testimonio 3: Evelyn -->
+                        <div class="col-md-4 mb-4">
+                            <div class="comentario-card animate-on-scroll fade-up" data-delay="300">
+                                <div class="comentario-header">
+                                    <img src="img/1x/evelyn.jpg" alt="Fotografía de Evelyn, cliente satisfecha" class="cliente-foto" width="60" height="60" loading="lazy">
+                                    <h4>Evelyn</h4>
+                                </div>
+                                <div class="comentario-body">
+                                    <p>"Muy profesionales y comprometidos. Me sentí acompañada en todo momento. Definitivamente los elegiría nuevamente."</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sección "Sobre Nosotros" -->
+            <section id="profesionales" class="section-padding">
+                <div class="container">
+                    <h2 class="section-title animate-on-scroll fade-up">Sobre Nosotros</h2>
+                    <p class="section-text animate-on-scroll fade-up">Somos un grupo de profesionales del derecho, orgullosos de ofrecerte un completo plan de asesoramiento jurídico, pensado y analizado pura y exclusivamente para vos, asegurándonos que tus intereses sean representados de manera total e íntegra. <br> <br>
+                        Nuestro estudio jurídico cuenta con profesionales altamente capacitados, especialistas en derecho público y en derecho privado, que abarca una amplia gama de áreas legales con el firme propósito de hacer valer los derechos de nuestros clientes y satisfacer sus necesidades.
+                    </p>
                 </div>
             </section>
 
@@ -561,54 +635,6 @@
                                 <div class="territorio-content">
                                     <h3>Fuero Federal</h3>
                                     <p>Con matrícula federal, representamos clientes en <strong>delitos federales</strong> en todo el país: narcotráfico, contrabando, delitos económicos y financieros de competencia nacional.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!--Sección comentarios de clientes-->
-            <section id="comentarios-clientes" class="comentarios-section">
-                <div class="container">
-                    <h2 class="section-title animate-on-scroll fade-up">Lo que dicen nuestros clientes</h2>
-
-                    <div class="row justify-content-center">
-                        <!-- Testimonio 1: Martin Zarate -->
-                        <div class="col-md-4 mb-4">
-                            <div class="comentario-card animate-on-scroll fade-up" data-delay="100">
-                                <div class="comentario-header">
-                                    <img src="img/1x/martin zarate.jpg" alt="Fotografía de Martin Zarate, cliente satisfecho" class="cliente-foto" width="60" height="60" loading="lazy">
-                                    <h4>Martin Zarate</h4>
-                                </div>
-                                <div class="comentario-body">
-                                    <p>"Excelente atención por parte del equipo de abogados. Resolvieron mi caso de manera rápida y profesional. ¡Totalmente recomendados!"</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Testimonio 2: Liliana Serrano -->
-                        <div class="col-md-4 mb-4">
-                            <div class="comentario-card animate-on-scroll fade-up" data-delay="200">
-                                <div class="comentario-header">
-                                    <img src="img/1x/liliana serrano.jpg" alt="Fotografía de Liliana Serrano, cliente satisfecha" class="cliente-foto" width="60" height="60" loading="lazy">
-                                    <h4>Liliana Serrano</h4>
-                                </div>
-                                <div class="comentario-body">
-                                    <p>"Gracias a Beristain & Asociados, pude resolver un problema legal complicado. Siempre estuvieron disponibles para asesorarme."</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Testimonio 3: Evelyn -->
-                        <div class="col-md-4 mb-4">
-                            <div class="comentario-card animate-on-scroll fade-up" data-delay="300">
-                                <div class="comentario-header">
-                                    <img src="img/1x/evelyn.jpg" alt="Fotografía de Evelyn, cliente satisfecha" class="cliente-foto" width="60" height="60" loading="lazy">
-                                    <h4>Evelyn</h4>
-                                </div>
-                                <div class="comentario-body">
-                                    <p>"Muy profesionales y comprometidos. Me sentí acompañada en todo momento. Definitivamente los elegiría nuevamente."</p>
                                 </div>
                             </div>
                         </div>
@@ -836,7 +862,8 @@
                     </div>
                     <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
                         <h4>Horario</h4>
-                        <p><i class="bi bi-clock-fill"></i> Lunes a viernes de 07.00 a 20.00hs</p>
+                        <p><i class="bi bi-clock-fill"></i> Lunes a viernes de 9:00 a 18:00hs</p>
+                        <p style="font-size: 0.9rem; margin-top: 0.5rem;"><i class="bi bi-shield-exclamation"></i> <strong>Urgencias penales: 24/7</strong></p>
                     </div>
                     <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
                         <h4>Redes Sociales</h4>

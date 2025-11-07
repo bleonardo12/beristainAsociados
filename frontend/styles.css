@@ -1289,9 +1289,9 @@
         transform: scale(1.05);
     }
     
-    /* Secciones generales */
+    /* Secciones generales - Aumentado para mejor respiración visual */
     .section-padding {
-        padding: calc(var(--spacing-xl) * 1.5) 0;
+        padding: calc(var(--spacing-xl) * 2) 0;
     }
     
     .bg-light {
@@ -2497,4 +2497,85 @@ select.error {
         padding: 12px 20px;
         min-height: 44px;
     }
+}
+
+/* ========== HERO CTAs - BOTONES DE ACCIÓN ========== */
+
+/* Efectos hover para botones Hero */
+.btn-hero:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15) !important;
+}
+
+.btn-hero:active {
+    transform: translateY(-1px);
+}
+
+.btn-whatsapp:hover {
+    background: #20BA5A !important;
+}
+
+.btn-contacto:hover {
+    background: var(--primary-dark) !important;
+}
+
+/* Responsive Hero CTAs */
+@media (max-width: 768px) {
+    .hero-ctas {
+        flex-direction: column !important;
+        align-items: stretch !important;
+    }
+
+    .btn-hero {
+        width: 100% !important;
+        justify-content: center !important;
+        padding: 1.2rem 1.5rem !important;
+        font-size: 1.1rem !important;
+    }
+
+    .hero-subtitle {
+        font-size: 1.1rem !important;
+        text-align: center;
+    }
+
+    .hero-availability {
+        font-size: 0.95rem !important;
+        text-align: center;
+    }
+}
+
+/* ========== MODAL RESPONSIVE ========== */
+
+/* Mobile optimization para modal Contacto Inmediato */
+@media (max-width: 768px) {
+    .modal-dialog.modal-lg {
+        max-width: 95vw !important;
+        margin: 1rem auto !important;
+    }
+
+    .modal-content {
+        padding: 1rem !important;
+    }
+
+    .modal-body-modern {
+        padding: 1rem !important;
+    }
+
+    .contact-options-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1rem !important;
+    }
+
+    .contact-option {
+        padding: 1.5rem 1rem !important;
+    }
+
+    .modal-title {
+        font-size: 1.3rem !important;
+    }
+
+    .modal-subtitle {
+        font-size: 0.9rem !important;
+    }
+}
 }

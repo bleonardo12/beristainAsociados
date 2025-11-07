@@ -382,42 +382,42 @@
 
 /* ========== HEADER MEJORADO ========== */
 
-/* Aumentar altura del navbar para contener logo grande */
+/* Navbar optimizado para mejor jerarquía visual */
 body nav.navbar {
     height: auto !important;
-    min-height: 200px !important;
+    min-height: 120px !important;
     padding: 10px 0 !important;
 }
 
 body nav.navbar.scrolled {
-    min-height: 110px !important;
+    min-height: 90px !important;
 }
 
 /* Responsive: ajustar altura del navbar */
 @media (max-width: 1199.98px) {
     body nav.navbar {
-        min-height: 180px !important;
+        min-height: 115px !important;
     }
     body nav.navbar.scrolled {
-        min-height: 100px !important;
+        min-height: 85px !important;
     }
 }
 
 @media (max-width: 991.98px) {
     body nav.navbar {
-        min-height: 140px !important;
+        min-height: 110px !important;
     }
     body nav.navbar.scrolled {
-        min-height: 90px !important;
+        min-height: 80px !important;
     }
 }
 
 @media (max-width: 767.98px) {
     body nav.navbar {
-        min-height: 110px !important;
+        min-height: 95px !important;
     }
     body nav.navbar.scrolled {
-        min-height: 85px !important;
+        min-height: 75px !important;
     }
 }
 
@@ -469,12 +469,12 @@ body .navbar-collapse {
     }
 }
 
-/* Logo más grande y elegante con fondo transparente (reducido 12%) */
+/* Logo optimizado para mejor jerarquía visual */
 html body .navbar .logo-principal,
 html body .navbar-brand .logo-principal,
 html body img.logo-principal {
-    height: 176px !important;  /* 200px - 12% = 176px */
-    width: 176px !important;  /* Forzar width igual a height para círculo perfecto */
+    height: 100px !important;  /* Reducido de 176px a 100px */
+    width: 100px !important;  /* Forzar width igual a height para círculo perfecto */
     max-height: none !important;
     max-width: none !important;
     object-fit: cover !important;  /* Cambiar de contain a cover */
@@ -489,9 +489,9 @@ html body img.logo-principal {
 /* Logo cuando se hace scroll (versión reducida) */
 html body .navbar.scrolled .logo-principal,
 html body .navbar.scrolled img.logo-principal {
-    height: 88px !important;  /* 100px - 12% = 88px */
-    width: 88px !important;   /* Mantener círculo perfecto */
-    min-height: 80px !important;
+    height: 75px !important;  /* Reducido de 88px a 75px */
+    width: 75px !important;   /* Mantener círculo perfecto */
+    min-height: 70px !important;
     border-radius: 50% !important;
     -webkit-border-radius: 50% !important;
     -moz-border-radius: 50% !important;
