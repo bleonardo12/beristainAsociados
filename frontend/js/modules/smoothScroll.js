@@ -86,29 +86,52 @@ function setupAnchorScrolling() {
       if (targetElement) {
         e.preventDefault();
 
-        // Calcular posición con offset para navbar fijo
-        const navbarHeight = document.querySelector('.navbar')?.offsetHeight || 100;
-        const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
+        // Función para calcular posición correctamente
+        const scrollToTarget = () => {
+          // Calcular posición con offset para navbar fijo
+          const navbarHeight = document.querySelector('.navbar')?.offsetHeight || 100;
 
-        // Usar scroll nativo o polyfill según disponibilidad
-        if (typeof window.smoothScrollTo === 'function') {
-          window.smoothScrollTo(targetPosition);
+          // Usar offsetTop para cálculo más confiable (no afectado por scroll actual)
+          let element = targetElement;
+          let offsetTop = 0;
+
+          while (element) {
+            offsetTop += element.offsetTop;
+            element = element.offsetParent;
+          }
+
+          const targetPosition = offsetTop - navbarHeight - 20; // 20px extra de padding
+
+          // Usar scroll nativo o polyfill según disponibilidad
+          if (typeof window.smoothScrollTo === 'function') {
+            window.smoothScrollTo(targetPosition);
+          } else {
+            window.scrollTo({
+              top: targetPosition,
+              behavior: 'smooth'
+            });
+          }
+
+          // Actualizar la URL sin hacer scroll adicional
+          if (history.pushState) {
+            history.pushState(null, null, targetId);
+          }
+
+          // Enfocar el elemento para accesibilidad
+          setTimeout(() => {
+            targetElement.focus({ preventScroll: true });
+          }, 800);
+        };
+
+        // Si hay imágenes cargando, esperar un poco para recalcular
+        // Esto evita problemas cuando lazy-load cambia las posiciones
+        if (document.readyState === 'complete') {
+          // Página ya cargada completamente
+          scrollToTarget();
         } else {
-          window.scrollTo({
-            top: targetPosition,
-            behavior: 'smooth'
-          });
+          // Página todavía cargando, esperar 100ms para que imágenes se posicionen
+          setTimeout(scrollToTarget, 100);
         }
-
-        // Actualizar la URL sin hacer scroll adicional
-        if (history.pushState) {
-          history.pushState(null, null, targetId);
-        }
-
-        // Enfocar el elemento para accesibilidad
-        setTimeout(() => {
-          targetElement.focus({ preventScroll: true });
-        }, 800);
       }
     });
   });
