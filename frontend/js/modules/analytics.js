@@ -211,17 +211,17 @@ function trackPhoneClicks() {
     link.addEventListener('click', () => {
       const phoneNumber = link.href.replace('tel:', '');
 
-      // 📊 GOOGLE ADS: Conversión de llamada telefónica
-      // Conversión configurada: "Llamada - Click to Call"
-      // Label obtenido de Google Ads: MjxGCJ-v6bsbELGGyrAp
+      // 📊 GOOGLE ADS: Conversión de clic en llamada
+      // Conversión configurada: "Clic de llamada"
+      // Label obtenido de Google Ads: 7dcGCM7ztrwbELGGyrAp
       if (typeof gtag !== 'undefined') {
         gtag('event', 'conversion', {
-          'send_to': 'AW-11107730225/MjxGCJ-v6bsbELGGyrAp', // ✅ CONFIGURADO
-          'value': 100.0, // Valor máximo - contacto inmediato
+          'send_to': 'AW-11107730225/7dcGCM7ztrwbELGGyrAp', // ✅ ACTUALIZADO
+          'value': 1.0,
           'currency': 'ARS',
           'transaction_id': Date.now().toString()
         });
-        console.log('📊 Google Ads Phone conversion tracked');
+        console.log('📊 Google Ads: Clic de llamada tracked -', phoneNumber);
       }
 
       // Evento de Analytics
