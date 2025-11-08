@@ -256,18 +256,27 @@ export function initContactForm() {
         console.log('✅ Email enviado exitosamente:', result);
         console.log('📧 Respuesta completa:', JSON.stringify(result, null, 2));
 
-        // 📊 GOOGLE ADS: Trackear conversión (IMPORTANTE para campañas)
+        // 📊 GOOGLE ADS: Trackear conversión con Enhanced Conversions
         // Conversión configurada: "Formulario - Consulta Legal"
         // Label obtenido de Google Ads: 1LBbCOr-37sbELGGyrAp
         if (typeof gtag !== 'undefined') {
-          // Conversión principal de Google Ads
+          // Preparar datos para Enhanced Conversions (hasheo con SHA-256)
+          const enhancedConversionData = {
+            'email': templateParams.email,
+            'phone_number': templateParams.telefono || '',
+            'first_name': templateParams.name ? templateParams.name.split(' ')[0] : '',
+            'last_name': templateParams.name ? templateParams.name.split(' ').slice(1).join(' ') : ''
+          };
+
+          // Conversión principal de Google Ads con Enhanced Conversions
           gtag('event', 'conversion', {
             'send_to': 'AW-11107730225/1LBbCOr-37sbELGGyrAp', // ✅ CONFIGURADO
             'value': 1.0,
             'currency': 'ARS',
-            'transaction_id': Date.now().toString()
+            'transaction_id': Date.now().toString(),
+            'enhanced_conversion_data': enhancedConversionData // ✅ Enhanced Conversions
           });
-          console.log('📊 Google Ads conversion tracked: Formulario');
+          console.log('📊 Google Ads Enhanced Conversion tracked: Formulario', enhancedConversionData);
 
           // Evento de Google Analytics para seguimiento adicional
           gtag('event', 'form_submission', {

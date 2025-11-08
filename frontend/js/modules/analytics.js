@@ -321,3 +321,134 @@ export function trackFormError(fieldName, errorType) {
 
   console.log(`📊 Tracked form error: ${fieldName} - ${errorType}`);
 }
+
+// ========== GOOGLE ADS REMARKETING ==========
+
+/**
+ * Inicializar remarketing avanzado
+ * Crea audiencias personalizadas para campañas de retargeting
+ */
+export function initRemarketing() {
+  if (typeof gtag === 'undefined') {
+    console.warn('⚠️ gtag no disponible - Remarketing deshabilitado');
+    return;
+  }
+
+  console.log('🎯 Inicializando Google Ads Remarketing...');
+
+  // Track página vista con valor para remarketing
+  trackRemarketingPageView();
+
+  // Track visualización de servicios específicos
+  trackServiceViews();
+
+  // Track engagement (usuarios altamente interesados)
+  trackHighEngagement();
+
+  console.log('✅ Remarketing inicializado correctamente');
+}
+
+/**
+ * Trackear página vista para remarketing
+ */
+function trackRemarketingPageView() {
+  gtag('event', 'page_view', {
+    'send_to': 'AW-11107730225',
+    'value': 1.0,
+    'currency': 'ARS'
+  });
+
+  console.log('🎯 Remarketing: Page view tracked');
+}
+
+/**
+ * Trackear visualización de servicios específicos
+ * Permite crear audiencias por área de interés
+ */
+function trackServiceViews() {
+  // Observar cuando usuario ve secciones de servicios
+  const servicesSections = document.querySelectorAll('[id*="practica"], [id*="servicios"]');
+
+  if (servicesSections.length === 0) return;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const sectionId = entry.target.id || 'unknown';
+
+        gtag('event', 'view_item', {
+          'send_to': 'AW-11107730225',
+          'items': [{
+            'id': sectionId,
+            'name': entry.target.querySelector('h2, h3')?.textContent || sectionId,
+            'category': 'Servicios Legales'
+          }],
+          'value': 1.0,
+          'currency': 'ARS'
+        });
+
+        console.log(`🎯 Remarketing: Servicio visto - ${sectionId}`);
+
+        // Dejar de observar después de trackear
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  servicesSections.forEach(section => observer.observe(section));
+}
+
+/**
+ * Trackear alto engagement (usuarios muy interesados)
+ * Crea audiencia premium para remarketing
+ */
+function trackHighEngagement() {
+  let engagementScore = 0;
+  let tracked = false;
+
+  // +1 por cada 30 segundos en el sitio
+  setInterval(() => {
+    engagementScore += 1;
+
+    // Si pasa 90 segundos (engagement score 3+) y no lo trackeamos aún
+    if (engagementScore >= 3 && !tracked) {
+      gtag('event', 'high_engagement', {
+        'send_to': 'AW-11107730225',
+        'event_category': 'Engagement',
+        'event_label': 'Usuario altamente interesado',
+        'value': 5.0,
+        'currency': 'ARS'
+      });
+
+      console.log('🎯 Remarketing: High engagement tracked (90+ segundos)');
+      tracked = true;
+    }
+  }, 30000); // Cada 30 segundos
+
+  // +1 por scroll profundo (más de 75%)
+  window.addEventListener('scroll', () => {
+    const scrollPercent = (window.scrollY + window.innerHeight) / document.documentElement.scrollHeight * 100;
+
+    if (scrollPercent > 75 && engagementScore < 10) {
+      engagementScore += 2;
+    }
+  }, { passive: true });
+
+  // +2 por abrir modal de contacto
+  const modalButtons = document.querySelectorAll('[data-bs-toggle="modal"]');
+  modalButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      engagementScore += 2;
+
+      gtag('event', 'contact_intent', {
+        'send_to': 'AW-11107730225',
+        'event_category': 'Engagement',
+        'event_label': 'Abrió modal de contacto',
+        'value': 3.0,
+        'currency': 'ARS'
+      });
+
+      console.log('🎯 Remarketing: Contact intent tracked');
+    });
+  });
+}
