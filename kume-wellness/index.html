@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- Metadatos básicos -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Küme - Espacio Wellness. Centro de belleza y bienestar en Buenos Aires. Masajes, fototerapia, hilos de colágeno, dermapen. Reservá tu turno online.">
+    <meta name="keywords" content="spa buenos aires, masajes, fototerapia, hilos colágeno, dermapen, wellness, belleza, bienestar">
+    <meta name="author" content="Küme - Espacio Wellness">
+    <meta name="robots" content="index, follow">
+
+    <!-- Etiqueta canónica -->
+    <link rel="canonical" href="https://www.kumewellness.com.ar/">
+
+    <!-- Metadatos Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Küme - Espacio Wellness | Centro de Belleza y Bienestar">
+    <meta property="og:description" content="Tu espacio de bienestar en Buenos Aires. Masajes, fototerapia, hilos de colágeno y más.">
+    <meta property="og:url" content="https://www.kumewellness.com.ar/">
+    <meta property="og:locale" content="es_AR">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Küme - Espacio Wellness | Centro de Belleza y Bienestar">
+    <meta name="twitter:description" content="Tu espacio de bienestar en Buenos Aires.">
+
+    <!-- Metadatos para dispositivos móviles y PWA -->
+    <meta name="theme-color" content="#8B9A7B">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <!-- Precargar recursos críticos -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <title>Küme - Espacio Wellness | Centro de Belleza y Bienestar en Buenos Aires</title>
+
+    <!-- Fuentes optimizadas -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+
+    <!-- CSS personalizado -->
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+
+    <!-- FullCalendar CSS para el calendario de reservas -->
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.css' rel='stylesheet' />
+
+    <!-- Google Analytics (opcional - agregar tu ID) -->
+    <!-- <script async defer src="https://www.googletagmanager.com/gtag/js?id=TU-ID-AQUI"></script> -->
+
+    <!-- Schema.org para centro de belleza -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BeautySalon",
+      "name": "Küme - Espacio Wellness",
+      "url": "https://www.kumewellness.com.ar/",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Buenos Aires",
+        "addressRegion": "CABA",
+        "addressCountry": "Argentina"
+      },
+      "telephone": "+5491112345678",
+      "openingHours": "Mo-Sa 09:00-20:00",
+      "description": "Centro de belleza y bienestar especializado en masajes, fototerapia, hilos de colágeno y dermapen.",
+      "priceRange": "$$",
+      "sameAs": [
+        "https://www.instagram.com/kume.wellness"
+      ]
+    }
+    </script>
+</head>
+<body>
+    <!-- Skip link para accesibilidad -->
+    <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
+
+    <header>
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg sticky-top">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="index.html" title="Küme - Espacio Wellness">
+                    <h1 class="logo-text">KÜME</h1>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#home">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#about">Sobre Nosotros</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#servicios">Servicios</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#reservas">Reservar Turno</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#contacto">Contacto</a>
+                        </li>
+                    </ul>
+                    <!-- Botón de reserva para MÓVIL -->
+                    <a href="#reservas" class="btn btn-primary-wellness d-lg-none">
+                        <i class="bi bi-calendar-check me-2"></i>Reservar Turno
+                    </a>
+                </div>
+                <!-- Botón de reserva para DESKTOP -->
+                <a href="#reservas" class="btn btn-primary-wellness d-none d-lg-block">
+                    <i class="bi bi-calendar-check me-2"></i>Reservar Turno
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <main id="main-content">
+        <!-- Sección Hero -->
+        <section class="hero" id="home">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <h2 class="hero-title animate-fade-in">KÜME</h2>
+                <p class="hero-subtitle animate-fade-in-delay">Espacio Wellness</p>
+                <p class="hero-description">Tu refugio de bienestar y belleza en Buenos Aires</p>
+                <div class="hero-buttons">
+                    <a href="#reservas" class="btn btn-hero-primary">
+                        <i class="bi bi-calendar-heart me-2"></i>Reservar Turno
+                    </a>
+                    <a href="#servicios" class="btn btn-hero-secondary">
+                        <i class="bi bi-heart me-2"></i>Ver Servicios
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección Sobre Nosotros -->
+        <section id="about" class="section-padding">
+            <div class="container">
+                <h2 class="section-title text-center">Sobre Küme</h2>
+                <div class="row align-items-center">
+                    <div class="col-lg-6">
+                        <div class="about-content">
+                            <p class="lead">
+                                Somos un espacio dedicado a tu bienestar integral, donde la belleza y la salud se encuentran en armonía.
+                            </p>
+                            <p>
+                                En Küme creemos que el cuidado personal es fundamental para una vida plena. Nuestros tratamientos están diseñados para brindarte momentos de paz, renovación y belleza natural.
+                            </p>
+                            <p>
+                                Con profesionales capacitados y un ambiente cálido, te ofrecemos experiencias personalizadas que respetan tu ritmo y tus necesidades únicas.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="about-image">
+                            <div class="placeholder-image">
+                                <i class="bi bi-spa"></i>
+                                <p>Tu espacio de bienestar</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección Servicios -->
+        <section id="servicios" class="section-padding bg-light">
+            <div class="container">
+                <h2 class="section-title text-center">Nuestros Servicios</h2>
+                <p class="section-subtitle text-center">Tratamientos diseñados para tu bienestar</p>
+
+                <div class="row g-4 mt-4">
+                    <!-- Servicio 1: Masajes -->
+                    <div class="col-md-6 col-lg-3">
+                        <div class="service-card">
+                            <div class="service-icon">
+                                <i class="bi bi-hand-index-thumb"></i>
+                            </div>
+                            <h3>Masajes</h3>
+                            <p>Masajes terapéuticos y relajantes para aliviar tensiones y renovar tu energía.</p>
+                            <ul class="service-list">
+                                <li>Masaje relajante</li>
+                                <li>Masaje descontracturante</li>
+                                <li>Masaje con piedras calientes</li>
+                                <li>Reflexología</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Servicio 2: Fototerapia -->
+                    <div class="col-md-6 col-lg-3">
+                        <div class="service-card">
+                            <div class="service-icon">
+                                <i class="bi bi-lightbulb"></i>
+                            </div>
+                            <h3>Fototerapia</h3>
+                            <p>Tratamientos con luz LED para rejuvenecimiento y mejora de la piel.</p>
+                            <ul class="service-list">
+                                <li>Luz roja antiedad</li>
+                                <li>Luz azul anti-acné</li>
+                                <li>Luz verde calmante</li>
+                                <li>Tratamiento combinado</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Servicio 3: Hilos de Colágeno -->
+                    <div class="col-md-6 col-lg-3">
+                        <div class="service-card">
+                            <div class="service-icon">
+                                <i class="bi bi-stars"></i>
+                            </div>
+                            <h3>Hilos de Colágeno</h3>
+                            <p>Lifting facial no quirúrgico para un rostro más firme y joven.</p>
+                            <ul class="service-list">
+                                <li>Rejuvenecimiento facial</li>
+                                <li>Tensado de piel</li>
+                                <li>Estimulación de colágeno</li>
+                                <li>Resultados duraderos</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Servicio 4: Dermapen -->
+                    <div class="col-md-6 col-lg-3">
+                        <div class="service-card">
+                            <div class="service-icon">
+                                <i class="bi bi-heart-pulse"></i>
+                            </div>
+                            <h3>Dermapen</h3>
+                            <p>Microagujas para regeneración de la piel y tratamiento de cicatrices.</p>
+                            <ul class="service-list">
+                                <li>Reducción de arrugas</li>
+                                <li>Mejora de textura</li>
+                                <li>Tratamiento de cicatrices</li>
+                                <li>Revitalización cutánea</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección Por Qué Elegirnos -->
+        <section id="beneficios" class="section-padding">
+            <div class="container">
+                <h2 class="section-title text-center">¿Por Qué Elegirnos?</h2>
+                <div class="row g-4 mt-4">
+                    <div class="col-md-4">
+                        <div class="benefit-card">
+                            <i class="bi bi-award-fill benefit-icon"></i>
+                            <h4>Profesionales Certificados</h4>
+                            <p>Equipo altamente capacitado con años de experiencia en bienestar</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="benefit-card">
+                            <i class="bi bi-heart-fill benefit-icon"></i>
+                            <h4>Atención Personalizada</h4>
+                            <p>Cada tratamiento se adapta a tus necesidades específicas</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="benefit-card">
+                            <i class="bi bi-shield-check benefit-icon"></i>
+                            <h4>Productos de Calidad</h4>
+                            <p>Utilizamos productos premium y tecnología de vanguardia</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección Reservas -->
+        <section id="reservas" class="section-padding bg-light">
+            <div class="container">
+                <h2 class="section-title text-center">Reservá tu Turno</h2>
+                <p class="section-subtitle text-center">Elegí el día, horario y servicio que prefieras</p>
+
+                <div class="row mt-5">
+                    <div class="col-lg-8 mx-auto">
+                        <div class="reservation-card">
+                            <form id="reservation-form" novalidate>
+                                <!-- Nombre -->
+                                <div class="mb-3">
+                                    <label for="nombre" class="form-label">Nombre completo *</label>
+                                    <input type="text" class="form-control" id="nombre" name="nombre" required>
+                                    <div class="invalid-feedback">Por favor ingresá tu nombre completo.</div>
+                                </div>
+
+                                <!-- Email -->
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Email *</label>
+                                    <input type="email" class="form-control" id="email" name="email" required>
+                                    <div class="invalid-feedback">Por favor ingresá un email válido.</div>
+                                </div>
+
+                                <!-- Teléfono -->
+                                <div class="mb-3">
+                                    <label for="telefono" class="form-label">Teléfono *</label>
+                                    <input type="tel" class="form-control" id="telefono" name="telefono" required>
+                                    <div class="invalid-feedback">Por favor ingresá tu teléfono.</div>
+                                </div>
+
+                                <!-- Servicio -->
+                                <div class="mb-3">
+                                    <label for="servicio" class="form-label">Servicio *</label>
+                                    <select class="form-select" id="servicio" name="servicio" required>
+                                        <option value="">Seleccioná un servicio</option>
+                                        <option value="masajes">Masajes</option>
+                                        <option value="fototerapia">Fototerapia</option>
+                                        <option value="hilos-colageno">Hilos de Colágeno</option>
+                                        <option value="dermapen">Dermapen</option>
+                                    </select>
+                                    <div class="invalid-feedback">Por favor seleccioná un servicio.</div>
+                                </div>
+
+                                <!-- Fecha -->
+                                <div class="mb-3">
+                                    <label for="fecha" class="form-label">Fecha *</label>
+                                    <input type="date" class="form-control" id="fecha" name="fecha" required>
+                                    <div class="invalid-feedback">Por favor seleccioná una fecha.</div>
+                                </div>
+
+                                <!-- Horario -->
+                                <div class="mb-3">
+                                    <label for="horario" class="form-label">Horario *</label>
+                                    <select class="form-select" id="horario" name="horario" required>
+                                        <option value="">Seleccioná un horario</option>
+                                        <option value="09:00">09:00</option>
+                                        <option value="10:00">10:00</option>
+                                        <option value="11:00">11:00</option>
+                                        <option value="12:00">12:00</option>
+                                        <option value="13:00">13:00</option>
+                                        <option value="14:00">14:00</option>
+                                        <option value="15:00">15:00</option>
+                                        <option value="16:00">16:00</option>
+                                        <option value="17:00">17:00</option>
+                                        <option value="18:00">18:00</option>
+                                        <option value="19:00">19:00</option>
+                                        <option value="20:00">20:00</option>
+                                    </select>
+                                    <div class="invalid-feedback">Por favor seleccioná un horario.</div>
+                                </div>
+
+                                <!-- Comentarios adicionales -->
+                                <div class="mb-3">
+                                    <label for="comentarios" class="form-label">Comentarios adicionales</label>
+                                    <textarea class="form-control" id="comentarios" name="comentarios" rows="3" placeholder="¿Tenés alguna consulta o necesidad especial?"></textarea>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary-wellness btn-lg w-100">
+                                    <i class="bi bi-check-circle me-2"></i>Confirmar Reserva
+                                </button>
+
+                                <!-- Spinner de carga -->
+                                <div id="spinner" class="spinner-container hidden">
+                                    <div class="spinner-border text-primary" role="status">
+                                        <span class="visually-hidden">Procesando reserva...</span>
+                                    </div>
+                                    <span class="spinner-text">Enviando tu reserva...</span>
+                                </div>
+
+                                <!-- Mensajes de feedback -->
+                                <div id="form-feedback" class="form-feedback mt-3"></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección Contacto -->
+        <section id="contacto" class="section-padding">
+            <div class="container">
+                <h2 class="section-title text-center">Contacto</h2>
+                <div class="row g-4 mt-4">
+                    <div class="col-md-4 text-center">
+                        <div class="contact-item">
+                            <i class="bi bi-geo-alt-fill"></i>
+                            <h5>Ubicación</h5>
+                            <p>Buenos Aires, Argentina</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <div class="contact-item">
+                            <i class="bi bi-whatsapp"></i>
+                            <h5>WhatsApp</h5>
+                            <p><a href="https://wa.me/5491112345678">+54 9 11 1234-5678</a></p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <div class="contact-item">
+                            <i class="bi bi-instagram"></i>
+                            <h5>Instagram</h5>
+                            <p><a href="https://www.instagram.com/kume.wellness" target="_blank" rel="noopener noreferrer">@kume.wellness</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Botón flotante de WhatsApp -->
+    <a href="https://wa.me/5491112345678?text=Hola!%20Quiero%20consultar%20sobre%20los%20servicios%20de%20Küme%20Wellness"
+       class="whatsapp-float"
+       target="_blank"
+       rel="noopener noreferrer"
+       aria-label="Contactar por WhatsApp con Küme Wellness"
+       title="¡Hablemos por WhatsApp!">
+        <div class="whatsapp-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="28" height="28">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+            </svg>
+        </div>
+        <span class="whatsapp-tooltip">¡Chatea con nosotros!</span>
+    </a>
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h4>Küme Wellness</h4>
+                    <p>Tu espacio de bienestar y belleza en Buenos Aires.</p>
+                </div>
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h4>Horarios</h4>
+                    <p><i class="bi bi-clock-fill"></i> Lunes a Sábado: 9:00 - 20:00hs</p>
+                    <p><i class="bi bi-calendar-x"></i> Domingos: Cerrado</p>
+                </div>
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h4>Seguinos</h4>
+                    <div class="social-links">
+                        <a href="https://www.instagram.com/kume.wellness" target="_blank" rel="noopener noreferrer" aria-label="Instagram Küme Wellness">
+                            <i class="bi bi-instagram"></i>
+                        </a>
+                        <a href="https://www.facebook.com/kumewellness" target="_blank" rel="noopener noreferrer" aria-label="Facebook Küme Wellness">
+                            <i class="bi bi-facebook"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <p>Derechos de autor © Küme - Espacio Wellness <span id="current-year">2025</span>. Buenos Aires, Argentina.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- EmailJS para formulario de reservas -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- FullCalendar JS -->
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
+
+    <!-- JS personalizado -->
+    <script src="js/main.js"></script>
+</body>
+</html>
