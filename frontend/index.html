@@ -182,19 +182,23 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="#contact-form-section">Contacto</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="login.html">
-                                    <i class="bi bi-shield-lock-fill"></i> Socios
-                                </a>
-                            </li>
                         </ul>
+                        <!-- Botón Socios para MÓVIL - dentro del menú hamburguesa -->
+                        <a href="login.html" class="btn btn-socios-mobile d-lg-none">
+                            <i class="bi bi-shield-lock-fill me-2"></i>Área Socios
+                        </a>
                         <!-- Botón de contacto para MÓVIL SOLAMENTE - dentro del menú hamburguesa -->
                         <button type="button" class="btn btn-contact-professional d-lg-none" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                             <i class="bi bi-telephone-fill me-2"></i>Contacto Inmediato
                         </button>
                     </div>
-                    <!-- Botón de contacto para DESKTOP - visible siempre fuera del collapse -->
-                    <button type="button" class="btn btn-contact-professional d-none d-lg-block" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+
+                    <!-- Botones para DESKTOP - visible siempre fuera del collapse -->
+                    <div class="d-none d-lg-flex gap-2">
+                        <a href="login.html" class="btn btn-socios-desktop" title="Acceso Socios">
+                            <i class="bi bi-shield-lock-fill"></i>
+                        </a>
+                        <button type="button" class="btn btn-contact-professional" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                         <i class="bi bi-telephone-fill me-2"></i>Contacto Inmediato
                     </button>
                 </div>
