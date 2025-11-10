@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Presupuestos - Beristain & Asociados</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+
+    <!-- jsPDF Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="../index.html">
+                <i class="bi bi-arrow-left me-2"></i>
+                Beristain & Asociados
+            </a>
+            <span class="navbar-text text-light">
+                <i class="bi bi-file-earmark-text me-2"></i>Generador de Presupuestos
+            </span>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+
+                <!-- Header -->
+                <div class="text-center mb-5">
+                    <h1 class="display-5 fw-bold text-primary">
+                        <i class="bi bi-file-earmark-plus me-3"></i>
+                        Generador de Presupuestos
+                    </h1>
+                    <p class="lead text-muted">Complete los datos y genere un presupuesto profesional en PDF</p>
+                </div>
+
+                <!-- Alert -->
+                <div id="alert-container"></div>
+
+                <!-- Formulario -->
+                <div class="card shadow-lg">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0"><i class="bi bi-pencil-square me-2"></i>Datos del Presupuesto</h5>
+                    </div>
+                    <div class="card-body p-4">
+                        <form id="presupuestoForm">
+
+                            <!-- SECCIÓN 1: Datos del Cliente -->
+                            <h5 class="border-bottom pb-2 mb-4 text-primary">
+                                <i class="bi bi-person-fill me-2"></i>Datos del Cliente
+                            </h5>
+
+                            <div class="row g-3 mb-4">
+                                <div class="col-md-6">
+                                    <label for="clienteNombre" class="form-label fw-bold">Nombre Completo *</label>
+                                    <input type="text" class="form-control" id="clienteNombre" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="clienteDNI" class="form-label fw-bold">DNI *</label>
+                                    <input type="text" class="form-control" id="clienteDNI" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="clienteEmail" class="form-label fw-bold">Email</label>
+                                    <input type="email" class="form-control" id="clienteEmail">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="clienteTelefono" class="form-label fw-bold">Teléfono</label>
+                                    <input type="tel" class="form-control" id="clienteTelefono">
+                                </div>
+                            </div>
+
+                            <!-- SECCIÓN 2: Servicio -->
+                            <h5 class="border-bottom pb-2 mb-4 text-primary">
+                                <i class="bi bi-briefcase-fill me-2"></i>Servicio Jurídico
+                            </h5>
+
+                            <div class="row g-3 mb-4">
+                                <div class="col-md-12">
+                                    <label for="servicio" class="form-label fw-bold">Área/Servicio *</label>
+                                    <select class="form-select" id="servicio" required>
+                                        <option value="">Seleccione un servicio...</option>
+                                        <option value="Derecho Laboral - Despido Injustificado">Derecho Laboral - Despido Injustificado</option>
+                                        <option value="Derecho Laboral - Accidente Laboral">Derecho Laboral - Accidente Laboral</option>
+                                        <option value="Derecho Laboral - Enfermedad Profesional">Derecho Laboral - Enfermedad Profesional</option>
+                                        <option value="Derecho Laboral - Diferencias Salariales">Derecho Laboral - Diferencias Salariales</option>
+                                        <option value="Derecho Penal - Defensa">Derecho Penal - Defensa</option>
+                                        <option value="Derecho Penal - Querella">Derecho Penal - Querella</option>
+                                        <option value="Derecho Penal - Violencia de Género">Derecho Penal - Violencia de Género</option>
+                                        <option value="Derecho de Familia - Divorcio">Derecho de Familia - Divorcio</option>
+                                        <option value="Derecho de Familia - Cuota Alimentaria">Derecho de Familia - Cuota Alimentaria</option>
+                                        <option value="Derecho de Familia - Régimen de Visitas">Derecho de Familia - Régimen de Visitas</option>
+                                        <option value="Derecho Civil - Daños y Perjuicios">Derecho Civil - Daños y Perjuicios</option>
+                                        <option value="Derecho Civil - Contratos">Derecho Civil - Contratos</option>
+                                        <option value="Derecho del Consumidor">Derecho del Consumidor</option>
+                                        <option value="Sucesiones">Sucesiones</option>
+                                        <option value="Jubilaciones y Pensiones">Jubilaciones y Pensiones</option>
+                                        <option value="Accidentes de Tránsito">Accidentes de Tránsito</option>
+                                        <option value="Mala Praxis Médica">Mala Praxis Médica</option>
+                                        <option value="Otro">Otro (especificar en descripción)</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-12">
+                                    <label for="descripcion" class="form-label fw-bold">Descripción Detallada del Caso *</label>
+                                    <textarea class="form-control" id="descripcion" rows="4" required
+                                        placeholder="Describa brevemente la situación del cliente y las gestiones a realizar..."></textarea>
+                                </div>
+                            </div>
+
+                            <!-- SECCIÓN 3: Honorarios -->
+                            <h5 class="border-bottom pb-2 mb-4 text-primary">
+                                <i class="bi bi-cash-coin me-2"></i>Honorarios y Gastos
+                            </h5>
+
+                            <div class="row g-3 mb-4">
+                                <div class="col-md-6">
+                                    <label for="honorarios" class="form-label fw-bold">Honorarios Profesionales ($) *</label>
+                                    <input type="number" class="form-control" id="honorarios" required min="0" step="0.01">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="gastos" class="form-label fw-bold">Gastos Administrativos ($)</label>
+                                    <input type="number" class="form-control" id="gastos" value="0" min="0" step="0.01">
+                                    <small class="text-muted">Tasas, certificados, traslados, etc.</small>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="iva" class="form-label fw-bold">IVA (%)</label>
+                                    <select class="form-select" id="iva">
+                                        <option value="0">Sin IVA (Exento)</option>
+                                        <option value="21">21% IVA</option>
+                                        <option value="10.5">10.5% IVA</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">Total Estimado</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-success text-white fw-bold">$</span>
+                                        <input type="text" class="form-control fw-bold fs-5 text-success" id="totalEstimado" readonly>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- SECCIÓN 4: Condiciones -->
+                            <h5 class="border-bottom pb-2 mb-4 text-primary">
+                                <i class="bi bi-card-checklist me-2"></i>Condiciones Comerciales
+                            </h5>
+
+                            <div class="row g-3 mb-4">
+                                <div class="col-md-6">
+                                    <label for="formaPago" class="form-label fw-bold">Forma de Pago</label>
+                                    <select class="form-select" id="formaPago">
+                                        <option value="Pago único al inicio">Pago único al inicio</option>
+                                        <option value="50% adelanto + 50% al finalizar">50% adelanto + 50% al finalizar</option>
+                                        <option value="30% adelanto + 70% al finalizar">30% adelanto + 70% al finalizar</option>
+                                        <option value="Pago en cuotas (a coordinar)">Pago en cuotas (a coordinar)</option>
+                                        <option value="A éxito (% sobre lo obtenido)">A éxito (% sobre lo obtenido)</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="vigencia" class="form-label fw-bold">Vigencia del Presupuesto</label>
+                                    <select class="form-select" id="vigencia">
+                                        <option value="15">15 días</option>
+                                        <option value="30" selected>30 días</option>
+                                        <option value="45">45 días</option>
+                                        <option value="60">60 días</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-12">
+                                    <label for="observaciones" class="form-label fw-bold">Observaciones/Aclaraciones</label>
+                                    <textarea class="form-control" id="observaciones" rows="3"
+                                        placeholder="Información adicional, condiciones especiales, etc."></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Botones -->
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                                <button type="reset" class="btn btn-secondary btn-lg">
+                                    <i class="bi bi-x-circle me-2"></i>Limpiar
+                                </button>
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="bi bi-file-pdf me-2"></i>Generar PDF
+                                </button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Info Footer -->
+                <div class="alert alert-info mt-4" role="alert">
+                    <i class="bi bi-info-circle-fill me-2"></i>
+                    <strong>Importante:</strong> El PDF se descargará automáticamente cuando haga clic en "Generar PDF".
+                    Funciona en PC, tablet y celular sin necesidad de conexión a internet.
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-3 mt-5">
+        <p class="mb-0">&copy; 2024 Beristain & Asociados - Generador de Presupuestos</p>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom JS -->
+    <script src="js/generador.js"></script>
+</body>
+</html>
