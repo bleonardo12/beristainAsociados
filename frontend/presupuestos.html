@@ -940,17 +940,7 @@
             }
         });
 
-        // Calculadoras automáticas
-        document.getElementById('valorUMA').addEventListener('input', calcularTotalUMA);
-        document.getElementById('cantidadUMA').addEventListener('input', calcularTotalUMA);
-        document.getElementById('btnAplicarUMA').addEventListener('click', aplicarUMAaHonorarios);
-        document.getElementById('servicio').addEventListener('change', autoCompletarUMA);
-
-        document.getElementById('honorarios').addEventListener('input', calcularTotal);
-        document.getElementById('gastosAdmin').addEventListener('input', calcularTotal);
-        document.getElementById('iva').addEventListener('change', calcularTotal);
-        document.getElementById('anticipo').addEventListener('input', calcularSaldo);
-
+        // Funciones de calculadoras (definidas primero)
         function calcularTotalUMA() {
             const valorUMA = parseFloat(document.getElementById('valorUMA').value) || 0;
             const cantidadUMA = parseFloat(document.getElementById('cantidadUMA').value) || 0;
@@ -1603,6 +1593,16 @@
         // Inicializar
         const manager = new PresupuestosManager();
         window.manager = manager;
+
+        // Event listeners para calculadoras
+        document.getElementById('valorUMA').addEventListener('input', calcularTotalUMA);
+        document.getElementById('cantidadUMA').addEventListener('input', calcularTotalUMA);
+        document.getElementById('btnAplicarUMA').addEventListener('click', aplicarUMAaHonorarios);
+        document.getElementById('servicio').addEventListener('change', autoCompletarUMA);
+        document.getElementById('honorarios').addEventListener('input', calcularTotal);
+        document.getElementById('gastosAdmin').addEventListener('input', calcularTotal);
+        document.getElementById('iva').addEventListener('change', calcularTotal);
+        document.getElementById('anticipo').addEventListener('input', calcularSaldo);
 
         // Cerrar modal
         function closeModal() {
