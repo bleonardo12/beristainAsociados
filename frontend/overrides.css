@@ -2,6 +2,29 @@
 
 /* ==== AUMENTAR ESPECIFICIDAD PARA SOBRESCRIBIR BOOTSTRAP ==== */
 
+/* ==== AJUSTES NAVBAR PARA EVITAR BOTÓN CORTADO ==== */
+/* Reducir espacio entre items del navbar en pantallas medianas/grandes */
+@media (min-width: 992px) and (max-width: 1199px) {
+    body .navbar-nav .nav-link {
+        padding-left: 0.6rem !important;
+        padding-right: 0.6rem !important;
+        font-size: 0.9rem !important;
+    }
+
+    body .btn-contact-professional {
+        padding: 0.4rem 0.8rem !important;
+        font-size: 0.85rem !important;
+    }
+}
+
+/* Pantallas muy grandes - espaciado normal */
+@media (min-width: 1200px) {
+    body .navbar-nav .nav-link {
+        padding-left: 0.75rem !important;
+        padding-right: 0.75rem !important;
+    }
+}
+
 /* Dropdown automático - SOLO EN DESKTOP (pantallas grandes) */
 @media (min-width: 992px) {
     body .navbar-nav .dropdown:hover .dropdown-menu {

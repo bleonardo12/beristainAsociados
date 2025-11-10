@@ -20,6 +20,9 @@
     <!-- CSS personalizado -->
     <link rel="stylesheet" type="text/css" href="styles.css">
 
+    <!-- jsPDF para exportar PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
     <style>
         :root {
             --primary-color: #1a365d;
@@ -56,7 +59,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 0 2rem;
         }
@@ -112,7 +115,7 @@
 
         /* Container principal */
         .main-container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 3rem auto;
             padding: 0 2rem;
         }
@@ -200,6 +203,7 @@
             gap: 0.5rem;
             transition: all 0.3s ease;
             font-weight: 600;
+            cursor: pointer;
         }
 
         .btn-primary-custom:hover {
@@ -229,6 +233,7 @@
             font-weight: 600;
             color: var(--text-dark);
             border-bottom: 2px solid var(--border-color);
+            white-space: nowrap;
         }
 
         td {
@@ -267,6 +272,11 @@
             color: #991b1b;
         }
 
+        .status-enviado {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
         .btn-action {
             padding: 0.375rem 0.75rem;
             border: none;
@@ -276,6 +286,7 @@
             cursor: pointer;
             transition: all 0.2s ease;
             font-size: 0.875rem;
+            margin-right: 0.25rem;
         }
 
         .btn-action:hover {
@@ -283,7 +294,23 @@
             transform: translateY(-2px);
         }
 
-        /* Formulario de nuevo presupuesto */
+        .btn-action.btn-edit {
+            background: #0891b2;
+        }
+
+        .btn-action.btn-view {
+            background: #6366f1;
+        }
+
+        .btn-action.btn-pdf {
+            background: #dc2626;
+        }
+
+        .btn-action.btn-delete {
+            background: #991b1b;
+        }
+
+        /* Formulario de presupuesto */
         .form-presupuesto {
             display: none;
             background: var(--bg-light);
@@ -294,6 +321,12 @@
 
         .form-presupuesto.active {
             display: block;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
         }
 
         .form-group {
@@ -358,6 +391,87 @@
             color: #3b82f6;
         }
 
+        /* Modal detalles */
+        .modal-backdrop {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-backdrop.active {
+            display: flex;
+        }
+
+        .modal-content-custom {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header-custom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .modal-header-custom h3 {
+            color: var(--primary-color);
+            font-family: 'Playfair Display', serif;
+        }
+
+        .btn-close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-light);
+        }
+
+        .detail-row {
+            display: grid;
+            grid-template-columns: 150px 1fr;
+            gap: 1rem;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .detail-value {
+            color: var(--text-light);
+        }
+
+        /* Dropdown estado */
+        .estado-selector {
+            display: inline-flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .estado-selector select {
+            padding: 0.375rem 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 0.875rem;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .header-content {
@@ -382,6 +496,11 @@
 
             th, td {
                 padding: 0.5rem;
+            }
+
+            .detail-row {
+                grid-template-columns: 1fr;
+                gap: 0.25rem;
             }
         }
     </style>
@@ -435,6 +554,13 @@
                 <h3>Aprobados</h3>
                 <div class="value" id="totalAprobados">0</div>
             </div>
+            <div class="info-card">
+                <div class="info-card-icon">
+                    <i class="bi bi-currency-dollar"></i>
+                </div>
+                <h3>Monto Total</h3>
+                <div class="value" id="montoTotal">$0</div>
+            </div>
         </div>
 
         <!-- Alerta informativa -->
@@ -455,30 +581,79 @@
                 </button>
             </div>
 
-            <!-- Formulario de nuevo presupuesto -->
+            <!-- Formulario de presupuesto -->
             <div id="formPresupuesto" class="form-presupuesto">
-                <h3 style="margin-bottom: 1.5rem;">Crear Nuevo Presupuesto</h3>
+                <h3 style="margin-bottom: 1.5rem;" id="formTitle">Crear Nuevo Presupuesto</h3>
                 <form id="presupuestoForm">
-                    <div class="form-group">
-                        <label for="cliente">Cliente *</label>
-                        <input type="text" id="cliente" class="form-control" required placeholder="Nombre del cliente">
+                    <input type="hidden" id="presupuestoId">
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="cliente">Cliente *</label>
+                            <input type="text" id="cliente" class="form-control" required placeholder="Nombre del cliente">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" class="form-control" placeholder="email@ejemplo.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="telefono">Teléfono</label>
+                            <input type="tel" id="telefono" class="form-control" placeholder="+54 11 1234-5678">
+                        </div>
                     </div>
+
                     <div class="form-group">
-                        <label for="descripcion">Descripción *</label>
-                        <textarea id="descripcion" class="form-control" required placeholder="Descripción del servicio legal"></textarea>
+                        <label for="descripcion">Descripción del Servicio *</label>
+                        <textarea id="descripcion" class="form-control" required placeholder="Descripción detallada del servicio legal"></textarea>
                     </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="monto">Monto Total (ARS) *</label>
+                            <input type="number" id="monto" class="form-control" required placeholder="0.00" step="0.01">
+                        </div>
+                        <div class="form-group">
+                            <label for="anticipo">Anticipo (ARS)</label>
+                            <input type="number" id="anticipo" class="form-control" placeholder="0.00" step="0.01">
+                        </div>
+                        <div class="form-group">
+                            <label for="saldo">Saldo (ARS)</label>
+                            <input type="number" id="saldo" class="form-control" placeholder="0.00" step="0.01" readonly>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="formaPago">Forma de Pago *</label>
+                            <select id="formaPago" class="form-control" required>
+                                <option value="">Seleccionar...</option>
+                                <option value="efectivo">Efectivo</option>
+                                <option value="transferencia">Transferencia bancaria</option>
+                                <option value="cheque">Cheque</option>
+                                <option value="tarjeta">Tarjeta de crédito/débito</option>
+                                <option value="cuotas">En cuotas</option>
+                                <option value="mixto">Mixto</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="cuotas">Cantidad de Cuotas</label>
+                            <input type="number" id="cuotas" class="form-control" placeholder="1" min="1">
+                        </div>
+                        <div class="form-group">
+                            <label for="vencimiento">Fecha de Vencimiento</label>
+                            <input type="date" id="vencimiento" class="form-control">
+                        </div>
+                    </div>
+
                     <div class="form-group">
-                        <label for="monto">Monto (ARS) *</label>
-                        <input type="number" id="monto" class="form-control" required placeholder="0.00" step="0.01">
+                        <label for="notas">Notas Adicionales</label>
+                        <textarea id="notas" class="form-control" placeholder="Información adicional, condiciones especiales, etc."></textarea>
                     </div>
-                    <div class="form-group">
-                        <label for="notas">Notas adicionales</label>
-                        <textarea id="notas" class="form-control" placeholder="Información adicional"></textarea>
-                    </div>
+
                     <div class="form-actions">
                         <button type="submit" class="btn-primary-custom">
                             <i class="bi bi-save"></i>
-                            Guardar Presupuesto
+                            <span id="btnSubmitText">Guardar Presupuesto</span>
                         </button>
                         <button type="button" id="btnCancelar" class="btn-primary-custom btn-cancel">
                             <i class="bi bi-x-circle"></i>
@@ -498,13 +673,14 @@
                             <th>Cliente</th>
                             <th>Descripción</th>
                             <th>Monto</th>
+                            <th>Forma de Pago</th>
                             <th>Estado</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody id="presupuestosTableBody">
                         <tr>
-                            <td colspan="7" style="text-align: center; padding: 3rem; color: var(--text-light);">
+                            <td colspan="8" style="text-align: center; padding: 3rem; color: var(--text-light);">
                                 <i class="bi bi-inbox" style="font-size: 3rem; display: block; margin-bottom: 1rem;"></i>
                                 No hay presupuestos registrados. Haga clic en "Nuevo Presupuesto" para comenzar.
                             </td>
@@ -515,6 +691,21 @@
         </div>
     </div>
 
+    <!-- Modal de detalles -->
+    <div id="modalDetalles" class="modal-backdrop">
+        <div class="modal-content-custom">
+            <div class="modal-header-custom">
+                <h3>Detalles del Presupuesto</h3>
+                <button class="btn-close-modal" onclick="closeModal()">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+            </div>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         // Verificar autenticación
         if (sessionStorage.getItem('authenticated') !== 'true') {
@@ -530,10 +721,22 @@
             }
         });
 
+        // Calcular saldo automáticamente
+        document.getElementById('monto').addEventListener('input', calcularSaldo);
+        document.getElementById('anticipo').addEventListener('input', calcularSaldo);
+
+        function calcularSaldo() {
+            const monto = parseFloat(document.getElementById('monto').value) || 0;
+            const anticipo = parseFloat(document.getElementById('anticipo').value) || 0;
+            const saldo = monto - anticipo;
+            document.getElementById('saldo').value = saldo.toFixed(2);
+        }
+
         // Gestión de presupuestos
         class PresupuestosManager {
             constructor() {
                 this.presupuestos = this.loadPresupuestos();
+                this.editingId = null;
                 this.init();
             }
 
@@ -553,13 +756,41 @@
                     id: Date.now(),
                     fecha: new Date().toLocaleDateString('es-AR'),
                     cliente: data.cliente,
+                    email: data.email,
+                    telefono: data.telefono,
                     descripcion: data.descripcion,
                     monto: parseFloat(data.monto),
+                    anticipo: parseFloat(data.anticipo) || 0,
+                    saldo: parseFloat(data.saldo) || parseFloat(data.monto),
+                    formaPago: data.formaPago,
+                    cuotas: parseInt(data.cuotas) || 1,
+                    vencimiento: data.vencimiento,
                     notas: data.notas,
                     estado: 'pendiente'
                 };
                 this.presupuestos.unshift(presupuesto);
                 this.savePresupuestos();
+            }
+
+            updatePresupuesto(id, data) {
+                const index = this.presupuestos.findIndex(p => p.id === id);
+                if (index !== -1) {
+                    this.presupuestos[index] = {
+                        ...this.presupuestos[index],
+                        cliente: data.cliente,
+                        email: data.email,
+                        telefono: data.telefono,
+                        descripcion: data.descripcion,
+                        monto: parseFloat(data.monto),
+                        anticipo: parseFloat(data.anticipo) || 0,
+                        saldo: parseFloat(data.saldo) || parseFloat(data.monto),
+                        formaPago: data.formaPago,
+                        cuotas: parseInt(data.cuotas) || 1,
+                        vencimiento: data.vencimiento,
+                        notas: data.notas
+                    };
+                    this.savePresupuestos();
+                }
             }
 
             deletePresupuesto(id) {
@@ -577,12 +808,231 @@
                 }
             }
 
+            editPresupuesto(id) {
+                const presupuesto = this.presupuestos.find(p => p.id === id);
+                if (presupuesto) {
+                    this.editingId = id;
+                    document.getElementById('formTitle').textContent = 'Editar Presupuesto';
+                    document.getElementById('btnSubmitText').textContent = 'Actualizar Presupuesto';
+                    document.getElementById('presupuestoId').value = id;
+                    document.getElementById('cliente').value = presupuesto.cliente;
+                    document.getElementById('email').value = presupuesto.email || '';
+                    document.getElementById('telefono').value = presupuesto.telefono || '';
+                    document.getElementById('descripcion').value = presupuesto.descripcion;
+                    document.getElementById('monto').value = presupuesto.monto;
+                    document.getElementById('anticipo').value = presupuesto.anticipo || 0;
+                    document.getElementById('saldo').value = presupuesto.saldo || presupuesto.monto;
+                    document.getElementById('formaPago').value = presupuesto.formaPago;
+                    document.getElementById('cuotas').value = presupuesto.cuotas || 1;
+                    document.getElementById('vencimiento').value = presupuesto.vencimiento || '';
+                    document.getElementById('notas').value = presupuesto.notas || '';
+                    document.getElementById('formPresupuesto').classList.add('active');
+                    document.getElementById('formPresupuesto').scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+
+            viewDetails(id) {
+                const presupuesto = this.presupuestos.find(p => p.id === id);
+                if (presupuesto) {
+                    const modalBody = document.getElementById('modalBody');
+                    modalBody.innerHTML = `
+                        <div class="detail-row">
+                            <div class="detail-label">ID:</div>
+                            <div class="detail-value">#${presupuesto.id}</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Fecha:</div>
+                            <div class="detail-value">${presupuesto.fecha}</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Cliente:</div>
+                            <div class="detail-value"><strong>${presupuesto.cliente}</strong></div>
+                        </div>
+                        ${presupuesto.email ? `
+                        <div class="detail-row">
+                            <div class="detail-label">Email:</div>
+                            <div class="detail-value">${presupuesto.email}</div>
+                        </div>` : ''}
+                        ${presupuesto.telefono ? `
+                        <div class="detail-row">
+                            <div class="detail-label">Teléfono:</div>
+                            <div class="detail-value">${presupuesto.telefono}</div>
+                        </div>` : ''}
+                        <div class="detail-row">
+                            <div class="detail-label">Descripción:</div>
+                            <div class="detail-value">${presupuesto.descripcion}</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Monto Total:</div>
+                            <div class="detail-value"><strong>$${presupuesto.monto.toLocaleString('es-AR', { minimumFractionDigits: 2 })}</strong></div>
+                        </div>
+                        ${presupuesto.anticipo > 0 ? `
+                        <div class="detail-row">
+                            <div class="detail-label">Anticipo:</div>
+                            <div class="detail-value">$${presupuesto.anticipo.toLocaleString('es-AR', { minimumFractionDigits: 2 })}</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Saldo:</div>
+                            <div class="detail-value">$${presupuesto.saldo.toLocaleString('es-AR', { minimumFractionDigits: 2 })}</div>
+                        </div>` : ''}
+                        <div class="detail-row">
+                            <div class="detail-label">Forma de Pago:</div>
+                            <div class="detail-value">${presupuesto.formaPago}</div>
+                        </div>
+                        ${presupuesto.cuotas > 1 ? `
+                        <div class="detail-row">
+                            <div class="detail-label">Cuotas:</div>
+                            <div class="detail-value">${presupuesto.cuotas} cuotas</div>
+                        </div>` : ''}
+                        ${presupuesto.vencimiento ? `
+                        <div class="detail-row">
+                            <div class="detail-label">Vencimiento:</div>
+                            <div class="detail-value">${new Date(presupuesto.vencimiento).toLocaleDateString('es-AR')}</div>
+                        </div>` : ''}
+                        <div class="detail-row">
+                            <div class="detail-label">Estado:</div>
+                            <div class="detail-value">
+                                <span class="status-badge status-${presupuesto.estado}">
+                                    ${presupuesto.estado.charAt(0).toUpperCase() + presupuesto.estado.slice(1)}
+                                </span>
+                            </div>
+                        </div>
+                        ${presupuesto.notas ? `
+                        <div class="detail-row">
+                            <div class="detail-label">Notas:</div>
+                            <div class="detail-value">${presupuesto.notas}</div>
+                        </div>` : ''}
+                    `;
+                    document.getElementById('modalDetalles').classList.add('active');
+                }
+            }
+
+            exportToPDF(id) {
+                const presupuesto = this.presupuestos.find(p => p.id === id);
+                if (!presupuesto) return;
+
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF();
+
+                // Título
+                doc.setFontSize(20);
+                doc.setTextColor(26, 54, 93);
+                doc.text('BERISTAIN & ASOCIADOS', 105, 20, { align: 'center' });
+
+                doc.setFontSize(16);
+                doc.text('PRESUPUESTO', 105, 30, { align: 'center' });
+
+                // Línea separadora
+                doc.setDrawColor(201, 169, 97);
+                doc.setLineWidth(0.5);
+                doc.line(20, 35, 190, 35);
+
+                // Información del presupuesto
+                doc.setFontSize(11);
+                doc.setTextColor(0, 0, 0);
+
+                let y = 45;
+                doc.text(`Presupuesto N°: #${presupuesto.id}`, 20, y);
+                doc.text(`Fecha: ${presupuesto.fecha}`, 150, y);
+
+                y += 10;
+                doc.text(`Cliente: ${presupuesto.cliente}`, 20, y);
+
+                if (presupuesto.email) {
+                    y += 7;
+                    doc.text(`Email: ${presupuesto.email}`, 20, y);
+                }
+
+                if (presupuesto.telefono) {
+                    y += 7;
+                    doc.text(`Teléfono: ${presupuesto.telefono}`, 20, y);
+                }
+
+                y += 15;
+                doc.setFontSize(12);
+                doc.setFont(undefined, 'bold');
+                doc.text('DESCRIPCIÓN DEL SERVICIO:', 20, y);
+
+                y += 7;
+                doc.setFontSize(11);
+                doc.setFont(undefined, 'normal');
+                const descripcionLines = doc.splitTextToSize(presupuesto.descripcion, 170);
+                doc.text(descripcionLines, 20, y);
+
+                y += (descripcionLines.length * 7) + 10;
+
+                // Tabla de montos
+                doc.setFontSize(12);
+                doc.setFont(undefined, 'bold');
+                doc.text('DETALLE ECONÓMICO:', 20, y);
+
+                y += 10;
+                doc.setFontSize(11);
+                doc.setFont(undefined, 'normal');
+
+                doc.text('Monto Total:', 20, y);
+                doc.text(`$${presupuesto.monto.toLocaleString('es-AR', { minimumFractionDigits: 2 })}`, 150, y, { align: 'right' });
+
+                if (presupuesto.anticipo > 0) {
+                    y += 7;
+                    doc.text('Anticipo:', 20, y);
+                    doc.text(`$${presupuesto.anticipo.toLocaleString('es-AR', { minimumFractionDigits: 2 })}`, 150, y, { align: 'right' });
+
+                    y += 7;
+                    doc.text('Saldo:', 20, y);
+                    doc.text(`$${presupuesto.saldo.toLocaleString('es-AR', { minimumFractionDigits: 2 })}`, 150, y, { align: 'right' });
+                }
+
+                y += 10;
+                doc.text('Forma de Pago:', 20, y);
+                doc.text(presupuesto.formaPago, 150, y, { align: 'right' });
+
+                if (presupuesto.cuotas > 1) {
+                    y += 7;
+                    doc.text('Cantidad de Cuotas:', 20, y);
+                    doc.text(`${presupuesto.cuotas} cuotas`, 150, y, { align: 'right' });
+                }
+
+                if (presupuesto.vencimiento) {
+                    y += 7;
+                    doc.text('Vencimiento:', 20, y);
+                    doc.text(new Date(presupuesto.vencimiento).toLocaleDateString('es-AR'), 150, y, { align: 'right' });
+                }
+
+                if (presupuesto.notas) {
+                    y += 15;
+                    doc.setFontSize(12);
+                    doc.setFont(undefined, 'bold');
+                    doc.text('NOTAS:', 20, y);
+
+                    y += 7;
+                    doc.setFontSize(11);
+                    doc.setFont(undefined, 'normal');
+                    const notasLines = doc.splitTextToSize(presupuesto.notas, 170);
+                    doc.text(notasLines, 20, y);
+                }
+
+                // Footer
+                y = 270;
+                doc.setFontSize(9);
+                doc.setTextColor(100, 100, 100);
+                doc.text('BERISTAIN & ASOCIADOS | Estudio Jurídico', 105, y, { align: 'center' });
+                doc.text('Email: beristainyasociadosej@gmail.com | Tel: (+54) 11 3591-3161', 105, y + 5, { align: 'center' });
+
+                // Guardar PDF
+                doc.save(`presupuesto_${presupuesto.id}_${presupuesto.cliente.replace(/\s+/g, '_')}.pdf`);
+            }
+
             updateStats() {
                 document.getElementById('totalPresupuestos').textContent = this.presupuestos.length;
                 document.getElementById('totalPendientes').textContent =
                     this.presupuestos.filter(p => p.estado === 'pendiente').length;
                 document.getElementById('totalAprobados').textContent =
                     this.presupuestos.filter(p => p.estado === 'aprobado').length;
+
+                const montoTotal = this.presupuestos.reduce((sum, p) => sum + p.monto, 0);
+                document.getElementById('montoTotal').textContent =
+                    `$${montoTotal.toLocaleString('es-AR', { minimumFractionDigits: 0 })}`;
             }
 
             render() {
@@ -591,7 +1041,7 @@
                 if (this.presupuestos.length === 0) {
                     tbody.innerHTML = `
                         <tr>
-                            <td colspan="7" style="text-align: center; padding: 3rem; color: var(--text-light);">
+                            <td colspan="8" style="text-align: center; padding: 3rem; color: var(--text-light);">
                                 <i class="bi bi-inbox" style="font-size: 3rem; display: block; margin-bottom: 1rem;"></i>
                                 No hay presupuestos registrados. Haga clic en "Nuevo Presupuesto" para comenzar.
                             </td>
@@ -605,20 +1055,43 @@
                         <td>#${p.id}</td>
                         <td>${p.fecha}</td>
                         <td><strong>${p.cliente}</strong></td>
-                        <td>${p.descripcion}</td>
+                        <td>${p.descripcion.substring(0, 50)}${p.descripcion.length > 50 ? '...' : ''}</td>
                         <td><strong>$${p.monto.toLocaleString('es-AR', { minimumFractionDigits: 2 })}</strong></td>
+                        <td>${p.formaPago}</td>
                         <td>
-                            <span class="status-badge status-${p.estado}">
-                                ${p.estado.charAt(0).toUpperCase() + p.estado.slice(1)}
-                            </span>
+                            <div class="estado-selector">
+                                <select onchange="manager.updateEstado(${p.id}, this.value)" class="form-control">
+                                    <option value="pendiente" ${p.estado === 'pendiente' ? 'selected' : ''}>Pendiente</option>
+                                    <option value="enviado" ${p.estado === 'enviado' ? 'selected' : ''}>Enviado</option>
+                                    <option value="aprobado" ${p.estado === 'aprobado' ? 'selected' : ''}>Aprobado</option>
+                                    <option value="rechazado" ${p.estado === 'rechazado' ? 'selected' : ''}>Rechazado</option>
+                                </select>
+                            </div>
                         </td>
-                        <td>
-                            <button class="btn-action" onclick="manager.deletePresupuesto(${p.id})" title="Eliminar">
+                        <td style="white-space: nowrap;">
+                            <button class="btn-action btn-view" onclick="manager.viewDetails(${p.id})" title="Ver detalles">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                            <button class="btn-action btn-edit" onclick="manager.editPresupuesto(${p.id})" title="Editar">
+                                <i class="bi bi-pencil"></i>
+                            </button>
+                            <button class="btn-action btn-pdf" onclick="manager.exportToPDF(${p.id})" title="Exportar PDF">
+                                <i class="bi bi-file-pdf"></i>
+                            </button>
+                            <button class="btn-action btn-delete" onclick="manager.deletePresupuesto(${p.id})" title="Eliminar">
                                 <i class="bi bi-trash"></i>
                             </button>
                         </td>
                     </tr>
                 `).join('');
+            }
+
+            resetForm() {
+                document.getElementById('presupuestoForm').reset();
+                document.getElementById('presupuestoId').value = '';
+                document.getElementById('formTitle').textContent = 'Crear Nuevo Presupuesto';
+                document.getElementById('btnSubmitText').textContent = 'Guardar Presupuesto';
+                this.editingId = null;
             }
 
             init() {
@@ -627,12 +1100,14 @@
 
                 // Toggle formulario
                 document.getElementById('btnNuevoPresupuesto').addEventListener('click', () => {
+                    this.resetForm();
                     document.getElementById('formPresupuesto').classList.add('active');
+                    document.getElementById('formPresupuesto').scrollIntoView({ behavior: 'smooth' });
                 });
 
                 document.getElementById('btnCancelar').addEventListener('click', () => {
                     document.getElementById('formPresupuesto').classList.remove('active');
-                    document.getElementById('presupuestoForm').reset();
+                    this.resetForm();
                 });
 
                 // Submit formulario
@@ -641,24 +1116,46 @@
 
                     const formData = {
                         cliente: document.getElementById('cliente').value,
+                        email: document.getElementById('email').value,
+                        telefono: document.getElementById('telefono').value,
                         descripcion: document.getElementById('descripcion').value,
                         monto: document.getElementById('monto').value,
+                        anticipo: document.getElementById('anticipo').value,
+                        saldo: document.getElementById('saldo').value,
+                        formaPago: document.getElementById('formaPago').value,
+                        cuotas: document.getElementById('cuotas').value,
+                        vencimiento: document.getElementById('vencimiento').value,
                         notas: document.getElementById('notas').value
                     };
 
-                    this.addPresupuesto(formData);
+                    const editingId = document.getElementById('presupuestoId').value;
+                    if (editingId) {
+                        this.updatePresupuesto(parseInt(editingId), formData);
+                    } else {
+                        this.addPresupuesto(formData);
+                    }
 
                     document.getElementById('formPresupuesto').classList.remove('active');
-                    document.getElementById('presupuestoForm').reset();
+                    this.resetForm();
                 });
             }
         }
 
         // Inicializar
         const manager = new PresupuestosManager();
-
-        // Exponer para uso en onclick
         window.manager = manager;
+
+        // Cerrar modal
+        function closeModal() {
+            document.getElementById('modalDetalles').classList.remove('active');
+        }
+
+        // Cerrar modal al hacer clic fuera
+        document.getElementById('modalDetalles').addEventListener('click', (e) => {
+            if (e.target.id === 'modalDetalles') {
+                closeModal();
+            }
+        });
     </script>
 </body>
 </html>
