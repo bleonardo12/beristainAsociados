@@ -88,25 +88,50 @@
                                     <label for="servicio" class="form-label fw-bold">Área/Servicio *</label>
                                     <select class="form-select" id="servicio" required>
                                         <option value="">Seleccione un servicio...</option>
-                                        <option value="Derecho Laboral - Despido Injustificado">Derecho Laboral - Despido Injustificado</option>
-                                        <option value="Derecho Laboral - Accidente Laboral">Derecho Laboral - Accidente Laboral</option>
-                                        <option value="Derecho Laboral - Enfermedad Profesional">Derecho Laboral - Enfermedad Profesional</option>
-                                        <option value="Derecho Laboral - Diferencias Salariales">Derecho Laboral - Diferencias Salariales</option>
-                                        <option value="Derecho Penal - Defensa">Derecho Penal - Defensa</option>
-                                        <option value="Derecho Penal - Querella">Derecho Penal - Querella</option>
-                                        <option value="Derecho Penal - Violencia de Género">Derecho Penal - Violencia de Género</option>
-                                        <option value="Derecho de Familia - Divorcio">Derecho de Familia - Divorcio</option>
-                                        <option value="Derecho de Familia - Cuota Alimentaria">Derecho de Familia - Cuota Alimentaria</option>
-                                        <option value="Derecho de Familia - Régimen de Visitas">Derecho de Familia - Régimen de Visitas</option>
-                                        <option value="Derecho Civil - Daños y Perjuicios">Derecho Civil - Daños y Perjuicios</option>
-                                        <option value="Derecho Civil - Contratos">Derecho Civil - Contratos</option>
-                                        <option value="Derecho del Consumidor">Derecho del Consumidor</option>
-                                        <option value="Sucesiones">Sucesiones</option>
-                                        <option value="Jubilaciones y Pensiones">Jubilaciones y Pensiones</option>
-                                        <option value="Accidentes de Tránsito">Accidentes de Tránsito</option>
-                                        <option value="Mala Praxis Médica">Mala Praxis Médica</option>
-                                        <option value="Otro">Otro (especificar en descripción)</option>
+
+                                        <optgroup label="RAMA PENAL">
+                                            <option value="Penal - Incidente de excarcelación y/o exención de prisión">Incidente de excarcelación y/o exención de prisión</option>
+                                            <option value="Penal - Pedido y audiencia de suspensión de juicio a prueba">Pedido y audiencia de suspensión de juicio a prueba</option>
+                                            <option value="Penal - Acta de juicio abreviado">Acta de juicio abreviado</option>
+                                            <option value="Penal - Actuación hasta la clausura de la instrucción">Actuación hasta la clausura de la instrucción</option>
+                                            <option value="Penal - Actuación desde la clausura de la instrucción hasta la sentencia">Actuación desde la clausura de la instrucción hasta la sentencia</option>
+                                            <option value="Penal - Parte Querellante">Parte Querellante</option>
+                                            <option value="Penal - Redacción de denuncia penal (sin firma letrado)" data-uma="3">Redacción de denuncia penal - 3 UMA</option>
+                                        </optgroup>
+
+                                        <optgroup label="RAMA CIVIL">
+                                            <option value="Civil - Sucesiones">Sucesiones</option>
+                                            <option value="Civil - Declaración de insania">Declaración de insania</option>
+                                            <option value="Civil - Consulta verbal" data-uma="0.5">Consulta verbal - 0.5 UMA</option>
+                                            <option value="Civil - Consulta con informe" data-uma="1">Consulta con informe - 1 UMA</option>
+                                            <option value="Civil - Redacción de carta documento" data-uma="1">Redacción de carta documento - 1 UMA</option>
+                                            <option value="Civil - Estudio o información de actuaciones judiciales/administrativas" data-uma="2">Estudio o información de actuaciones - 2 UMA</option>
+                                            <option value="Civil - Trámites administrativos ante autoridad de aplicación" data-uma="3">Trámites administrativos - 3 UMA</option>
+                                            <option value="Civil - Trámites ante IGJ u organismos similares CABA" data-uma="5">Trámites ante IGJ (CABA) - 5 UMA</option>
+                                            <option value="Civil - Asistencia y asesoramiento en actos jurídicos" data-uma="3">Asistencia y asesoramiento en actos jurídicos - 3 UMA</option>
+                                            <option value="Civil - Redacción contrato de locación" data-uma="2">Redacción contrato de locación - Mín. 2 UMA (1-5% valor)</option>
+                                            <option value="Civil - Redacción boleto compra venta" data-uma="3">Redacción boleto compra venta - Mín. 3 UMA (1-5% valor)</option>
+                                            <option value="Civil - Redacción contratos/estatutos sociedades" data-uma="8">Redacción contratos/estatutos sociedades - Mín. 8 UMA (1-3% capital)</option>
+                                            <option value="Civil - Redacción otros contratos" data-uma="3">Redacción otros contratos - Mín. 3 UMA (1-5% valor)</option>
+                                            <option value="Civil - Gastos administrativos iniciación juicios" data-uma="1">Gastos administrativos iniciación juicios - 1 UMA</option>
+                                        </optgroup>
+
+                                        <optgroup label="RAMA COMERCIAL">
+                                            <option value="Comercial - Juicio ejecutivo contra bancos">Juicio ejecutivo contra bancos</option>
+                                            <option value="Comercial - Juicio ordinario contra bancos">Juicio ordinario contra bancos</option>
+                                        </optgroup>
+
+                                        <optgroup label="ACCIDENTES DE TRÁNSITO">
+                                            <option value="Accidentes - Reclamo administrativo">Reclamo administrativo</option>
+                                            <option value="Accidentes - Daños y perjuicios">Daños y perjuicios</option>
+                                            <option value="Accidentes - Reclamo completo (administrativo + judicial)">Reclamo completo (desde administrativo hasta daños y perjuicios)</option>
+                                        </optgroup>
+
+                                        <optgroup label="OTROS">
+                                            <option value="Otro servicio">Otro servicio (especificar en descripción)</option>
+                                        </optgroup>
                                     </select>
+                                    <small class="text-muted">Servicios marcados con UMA tienen honorarios mínimos establecidos</small>
                                 </div>
                                 <div class="col-md-12">
                                     <label for="descripcion" class="form-label fw-bold">Descripción Detallada del Caso *</label>
@@ -121,9 +146,45 @@
                             </h5>
 
                             <div class="row g-3 mb-4">
+                                <!-- Calculadora UMA -->
+                                <div class="col-md-12">
+                                    <div class="card bg-light">
+                                        <div class="card-body">
+                                            <h6 class="card-title mb-3">
+                                                <i class="bi bi-calculator me-2"></i>Calculadora UMA (Unidad Mínima Arancelaria)
+                                            </h6>
+                                            <div class="row g-3">
+                                                <div class="col-md-4">
+                                                    <label for="valorUMA" class="form-label fw-bold">Valor actual de 1 UMA ($)</label>
+                                                    <input type="number" class="form-control" id="valorUMA" value="0" min="0" step="0.01"
+                                                        placeholder="Ej: 28000">
+                                                    <small class="text-muted">Actualizado según Colegio de Abogados</small>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label for="cantidadUMA" class="form-label fw-bold">Cantidad de UMA</label>
+                                                    <input type="number" class="form-control" id="cantidadUMA" value="0" min="0" step="0.5"
+                                                        placeholder="Ej: 3">
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label class="form-label fw-bold">Total en UMA</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-text">$</span>
+                                                        <input type="text" class="form-control fw-bold" id="totalUMA" readonly>
+                                                    </div>
+                                                    <button type="button" class="btn btn-sm btn-outline-primary mt-2 w-100" id="btnAplicarUMA">
+                                                        <i class="bi bi-arrow-down me-1"></i>Aplicar a Honorarios
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Honorarios -->
                                 <div class="col-md-6">
                                     <label for="honorarios" class="form-label fw-bold">Honorarios Profesionales ($) *</label>
                                     <input type="number" class="form-control" id="honorarios" required min="0" step="0.01">
+                                    <small class="text-muted">Ingrese monto directo o use calculadora UMA arriba</small>
                                 </div>
                                 <div class="col-md-6">
                                     <label for="gastos" class="form-label fw-bold">Gastos Administrativos ($)</label>

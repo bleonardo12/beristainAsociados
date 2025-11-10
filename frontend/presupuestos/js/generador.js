@@ -7,10 +7,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Elementos del formulario
     const form = document.getElementById('presupuestoForm');
+    const servicioSelect = document.getElementById('servicio');
     const honorariosInput = document.getElementById('honorarios');
     const gastosInput = document.getElementById('gastos');
     const ivaSelect = document.getElementById('iva');
     const totalEstimadoInput = document.getElementById('totalEstimado');
+
+    // Elementos de calculadora UMA
+    const valorUMAInput = document.getElementById('valorUMA');
+    const cantidadUMAInput = document.getElementById('cantidadUMA');
+    const totalUMAInput = document.getElementById('totalUMA');
+    const btnAplicarUMA = document.getElementById('btnAplicarUMA');
 
     // Calcular total automáticamente
     function calcularTotal() {
@@ -28,10 +35,63 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Calcular total en UMA
+    function calcularTotalUMA() {
+        const valorUMA = parseFloat(valorUMAInput.value) || 0;
+        const cantidadUMA = parseFloat(cantidadUMAInput.value) || 0;
+        const total = valorUMA * cantidadUMA;
+
+        totalUMAInput.value = total.toLocaleString('es-AR', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
+    }
+
+    // Aplicar total UMA a honorarios
+    function aplicarUMAaHonorarios() {
+        const valorUMA = parseFloat(valorUMAInput.value) || 0;
+        const cantidadUMA = parseFloat(cantidadUMAInput.value) || 0;
+        const total = valorUMA * cantidadUMA;
+
+        if (total > 0) {
+            honorariosInput.value = total.toFixed(2);
+            calcularTotal();
+            mostrarAlerta('Honorarios actualizados con el cálculo de UMA', 'success');
+        } else {
+            mostrarAlerta('Ingrese el valor de UMA y la cantidad primero', 'warning');
+        }
+    }
+
+    // Auto-completar UMA cuando se selecciona un servicio con UMA predefinida
+    function autoCompletarUMA() {
+        const selectedOption = servicioSelect.options[servicioSelect.selectedIndex];
+        const umaValue = selectedOption.getAttribute('data-uma');
+
+        if (umaValue) {
+            cantidadUMAInput.value = umaValue;
+            calcularTotalUMA();
+
+            // Highlight calculadora UMA
+            const calculadoraCard = cantidadUMAInput.closest('.card');
+            calculadoraCard.classList.add('border-primary', 'border-2');
+            setTimeout(() => {
+                calculadoraCard.classList.remove('border-primary', 'border-2');
+            }, 2000);
+        }
+    }
+
     // Event listeners para cálculo automático
     honorariosInput.addEventListener('input', calcularTotal);
     gastosInput.addEventListener('input', calcularTotal);
     ivaSelect.addEventListener('change', calcularTotal);
+
+    // Event listeners para calculadora UMA
+    valorUMAInput.addEventListener('input', calcularTotalUMA);
+    cantidadUMAInput.addEventListener('input', calcularTotalUMA);
+    btnAplicarUMA.addEventListener('click', aplicarUMAaHonorarios);
+
+    // Event listener para auto-completar UMA
+    servicioSelect.addEventListener('change', autoCompletarUMA);
 
     // Calcular al cargar la página
     calcularTotal();
