@@ -1050,8 +1050,12 @@
             updatePresupuesto(id, data) {
                 const index = this.presupuestos.findIndex(p => p.id === id);
                 if (index !== -1) {
+                    // Si el presupuesto antiguo no tiene número, generarle uno
+                    const numeroPresupuesto = this.presupuestos[index].numero || this.generateNumeroPresupuesto();
+
                     this.presupuestos[index] = {
                         ...this.presupuestos[index],
+                        numero: numeroPresupuesto,
                         cliente: data.cliente,
                         dni: data.dni,
                         email: data.email,
@@ -1402,17 +1406,31 @@
 
                 if (p.notas) {
                     yPos += 10;
+                    // Verificar espacio para observaciones
+                    if (yPos > 230) {
+                        doc.addPage();
+                        yPos = 20;
+                    }
                     doc.setFont('helvetica', 'bold');
                     doc.text('Observaciones:', 20, yPos);
                     yPos += 5;
                     doc.setFont('helvetica', 'normal');
                     const notasLines = doc.splitTextToSize(p.notas, 170);
+                    // Verificar si las notas caben en la página actual
+                    if (yPos + (notasLines.length * 5) > 230) {
+                        doc.addPage();
+                        yPos = 20;
+                        doc.setFont('helvetica', 'bold');
+                        doc.text('Observaciones (continuación):', 20, yPos);
+                        yPos += 5;
+                        doc.setFont('helvetica', 'normal');
+                    }
                     doc.text(notasLines, 20, yPos);
                     yPos += (notasLines.length * 5) + 5;
                 }
 
                 if (p.detalleAdicional) {
-                    if (yPos > 240) {
+                    if (yPos > 230) {
                         doc.addPage();
                         yPos = 20;
                     }
@@ -1422,11 +1440,24 @@
                     yPos += 5;
                     doc.setFont('helvetica', 'normal');
                     const detalleLines = doc.splitTextToSize(p.detalleAdicional, 170);
+                    // Verificar si el detalle cabe en la página actual
+                    if (yPos + (detalleLines.length * 5) > 230) {
+                        doc.addPage();
+                        yPos = 20;
+                        doc.setFont('helvetica', 'bold');
+                        doc.text('Detalle Adicional (continuación):', 20, yPos);
+                        yPos += 5;
+                        doc.setFont('helvetica', 'normal');
+                    }
                     doc.text(detalleLines, 20, yPos);
                     yPos += (detalleLines.length * 5) + 5;
                 }
 
                 // NOTA IMPORTANTE
+                if (yPos > 220) {
+                    doc.addPage();
+                    yPos = 20;
+                }
                 yPos += 5;
                 doc.setFontSize(9);
                 doc.setFont('helvetica', 'italic');
@@ -1434,6 +1465,19 @@
                 const nota = 'NOTA: Los honorarios indicados son estimativos y podrán variar según la complejidad del caso y las gestiones necesarias. No incluyen tasas judiciales ni gastos extraordinarios que pudieran surgir durante la tramitación.';
                 const notaLines = doc.splitTextToSize(nota, 170);
                 doc.text(notaLines, 20, yPos);
+                yPos += (notaLines.length * 5) + 8;
+
+                // LEYENDA LEGAL
+                if (yPos > 220) {
+                    doc.addPage();
+                    yPos = 20;
+                }
+                doc.setFontSize(10);
+                doc.setFont('helvetica', 'bold');
+                doc.setTextColor(...primaryColor);
+                const leyendaLegal = 'IMPORTANTE: Este presupuesto no es vinculante legalmente. En caso de contratación, se firmará un pacto de cuota litis según corresponda al tipo de servicio y acuerdo entre las partes.';
+                const leyendaLines = doc.splitTextToSize(leyendaLegal, 170);
+                doc.text(leyendaLines, 20, yPos);
 
                 // PIE DE PÁGINA
                 const pageCount = doc.internal.getNumberOfPages();
