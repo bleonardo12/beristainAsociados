@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- Metadatos básicos -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Acceso Socios | Beristain & Asociados</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/favicon.png">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+    <!-- CSS personalizado -->
+    <link rel="stylesheet" type="text/css" href="styles.css">
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #1a365d 0%, #2d5a8a 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .login-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 3rem;
+            max-width: 450px;
+            width: 90%;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .login-header img {
+            max-width: 150px;
+            margin-bottom: 1rem;
+        }
+
+        .login-header h2 {
+            color: #1a365d;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .login-header p {
+            color: #64748b;
+            font-size: 0.95rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            color: #334155;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .password-wrapper {
+            position: relative;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #1a365d;
+            box-shadow: 0 0 0 3px rgba(26, 54, 93, 0.1);
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #64748b;
+            cursor: pointer;
+            padding: 0.25rem;
+            font-size: 1.2rem;
+            transition: color 0.3s ease;
+        }
+
+        .toggle-password:hover {
+            color: #1a365d;
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 1rem;
+            background: #1a365d;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-login:hover {
+            background: #2d5a8a;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(26, 54, 93, 0.2);
+        }
+
+        .btn-login:active {
+            transform: translateY(0);
+        }
+
+        .btn-login:disabled {
+            background: #94a3b8;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .error-message {
+            background: #fee2e2;
+            color: #991b1b;
+            padding: 0.875rem 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            display: none;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            animation: shake 0.5s ease;
+        }
+
+        .error-message.show {
+            display: flex;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .back-home {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+
+        .back-home a {
+            color: #1a365d;
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .back-home a:hover {
+            color: #2d5a8a;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 1rem;
+            height: 1rem;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .security-note {
+            background: #f1f5f9;
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            margin-top: 1.5rem;
+            font-size: 0.85rem;
+            color: #64748b;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .security-note i {
+            color: #1a365d;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <img src="img/logonuevoB.jpg" alt="Beristain & Asociados">
+            <h2>Acceso Socios</h2>
+            <p>Ingrese la contraseña para continuar</p>
+        </div>
+
+        <form id="loginForm">
+            <div id="errorMessage" class="error-message">
+                <i class="bi bi-exclamation-circle-fill"></i>
+                <span id="errorText">Contraseña incorrecta. Por favor, inténtelo de nuevo.</span>
+            </div>
+
+            <div class="form-group">
+                <label for="password">
+                    <i class="bi bi-shield-lock-fill"></i> Contraseña
+                </label>
+                <div class="password-wrapper">
+                    <input
+                        type="password"
+                        id="password"
+                        class="form-control"
+                        placeholder="Ingrese su contraseña"
+                        autocomplete="current-password"
+                        required
+                    >
+                    <button type="button" class="toggle-password" id="togglePassword" aria-label="Mostrar contraseña">
+                        <i class="bi bi-eye-fill"></i>
+                    </button>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-login" id="loginButton">
+                <i class="bi bi-box-arrow-in-right"></i>
+                <span id="buttonText">Ingresar</span>
+            </button>
+
+            <div class="security-note">
+                <i class="bi bi-shield-check"></i>
+                <span>Acceso protegido para socios del estudio</span>
+            </div>
+        </form>
+
+        <div class="back-home">
+            <a href="index.html">
+                <i class="bi bi-arrow-left"></i>
+                Volver al inicio
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Configuración - IMPORTANTE: Cambiar esta contraseña en producción
+        const CORRECT_PASSWORD = 'BeristainSocios2025';
+        const MAX_ATTEMPTS = 5;
+        const LOCKOUT_TIME = 5 * 60 * 1000; // 5 minutos en milisegundos
+
+        // Estado
+        let attempts = parseInt(localStorage.getItem('loginAttempts') || '0');
+        let lockoutUntil = parseInt(localStorage.getItem('lockoutUntil') || '0');
+
+        // Elementos DOM
+        const form = document.getElementById('loginForm');
+        const passwordInput = document.getElementById('password');
+        const togglePassword = document.getElementById('togglePassword');
+        const errorMessage = document.getElementById('errorMessage');
+        const errorText = document.getElementById('errorText');
+        const loginButton = document.getElementById('loginButton');
+        const buttonText = document.getElementById('buttonText');
+
+        // Verificar si está autenticado al cargar la página
+        if (sessionStorage.getItem('authenticated') === 'true') {
+            window.location.href = 'presupuestos.html';
+        }
+
+        // Verificar si está bloqueado
+        function checkLockout() {
+            const now = Date.now();
+            if (lockoutUntil > now) {
+                const remainingTime = Math.ceil((lockoutUntil - now) / 1000 / 60);
+                errorText.textContent = `Demasiados intentos fallidos. Inténtelo de nuevo en ${remainingTime} minutos.`;
+                errorMessage.classList.add('show');
+                passwordInput.disabled = true;
+                loginButton.disabled = true;
+
+                // Programar reactivación
+                setTimeout(() => {
+                    resetLockout();
+                }, lockoutUntil - now);
+
+                return true;
+            }
+            return false;
+        }
+
+        // Resetear bloqueo
+        function resetLockout() {
+            attempts = 0;
+            lockoutUntil = 0;
+            localStorage.setItem('loginAttempts', '0');
+            localStorage.setItem('lockoutUntil', '0');
+            passwordInput.disabled = false;
+            loginButton.disabled = false;
+            errorMessage.classList.remove('show');
+        }
+
+        // Toggle mostrar/ocultar contraseña
+        togglePassword.addEventListener('click', () => {
+            const type = passwordInput.type === 'password' ? 'text' : 'password';
+            passwordInput.type = type;
+
+            const icon = togglePassword.querySelector('i');
+            if (type === 'password') {
+                icon.classList.remove('bi-eye-slash-fill');
+                icon.classList.add('bi-eye-fill');
+            } else {
+                icon.classList.remove('bi-eye-fill');
+                icon.classList.add('bi-eye-slash-fill');
+            }
+        });
+
+        // Manejo del formulario
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            // Verificar bloqueo
+            if (checkLockout()) {
+                return;
+            }
+
+            const password = passwordInput.value;
+
+            // Deshabilitar botón y mostrar loading
+            loginButton.disabled = true;
+            buttonText.innerHTML = '<span class="spinner"></span> Verificando...';
+
+            // Simular verificación (añadir pequeño delay para UX)
+            setTimeout(() => {
+                if (password === CORRECT_PASSWORD) {
+                    // Login exitoso
+                    sessionStorage.setItem('authenticated', 'true');
+                    sessionStorage.setItem('loginTime', Date.now().toString());
+
+                    // Resetear intentos
+                    resetLockout();
+
+                    // Mensaje de éxito
+                    errorMessage.classList.remove('show');
+                    buttonText.textContent = '¡Acceso concedido!';
+                    loginButton.style.background = '#10b981';
+
+                    // Redireccionar
+                    setTimeout(() => {
+                        window.location.href = 'presupuestos.html';
+                    }, 500);
+                } else {
+                    // Login fallido
+                    attempts++;
+                    localStorage.setItem('loginAttempts', attempts.toString());
+
+                    if (attempts >= MAX_ATTEMPTS) {
+                        // Bloquear
+                        lockoutUntil = Date.now() + LOCKOUT_TIME;
+                        localStorage.setItem('lockoutUntil', lockoutUntil.toString());
+                        checkLockout();
+                    } else {
+                        // Mostrar error
+                        const remainingAttempts = MAX_ATTEMPTS - attempts;
+                        errorText.textContent = `Contraseña incorrecta. Le quedan ${remainingAttempts} intentos.`;
+                        errorMessage.classList.add('show');
+
+                        // Limpiar campo
+                        passwordInput.value = '';
+                        passwordInput.focus();
+                    }
+
+                    // Restaurar botón
+                    loginButton.disabled = false;
+                    buttonText.innerHTML = '<i class="bi bi-box-arrow-in-right"></i> Ingresar';
+                }
+            }, 800);
+        });
+
+        // Verificar bloqueo al cargar
+        checkLockout();
+
+        // Focus automático en el campo de contraseña
+        passwordInput.focus();
+
+        // Limpiar error al escribir
+        passwordInput.addEventListener('input', () => {
+            if (errorMessage.classList.contains('show')) {
+                errorMessage.classList.remove('show');
+            }
+        });
+    </script>
+</body>
+</html>
