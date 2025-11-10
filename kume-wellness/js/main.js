@@ -243,10 +243,16 @@ function initReservationForm() {
 // Helper function para obtener nombre del servicio formateado
 function getServiceName(servicioValue) {
     const servicios = {
-        'masajes': 'Masajes',
-        'fototerapia': 'Fototerapia',
+        'sesion-holly': 'Sesión Holly (Amor Propio) - $55.000',
+        'sesion-crabapple': 'Sesión Crabapple (Anti-acné) - $60.000',
+        'dermapen': 'Dermapen',
         'hilos-colageno': 'Hilos de Colágeno',
-        'dermapen': 'Dermapen'
+        'fototerapia': 'Fototerapia',
+        'limpiezas': 'Limpiezas Faciales',
+        'dermaplaning': 'Dermaplaning',
+        'masajes': 'Masajes Holísticos',
+        'podoestetica': 'Podoestética',
+        'depilacion-laser': 'Jornadas de Depilación Láser'
     };
     return servicios[servicioValue] || servicioValue;
 }

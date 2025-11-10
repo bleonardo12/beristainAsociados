@@ -1,28 +1,30 @@
 /* ========== VARIABLES GLOBALES KÜME WELLNESS ========== */
 
 :root {
-    /* Paleta de colores wellness */
-    --primary: #8B9A7B; /* Verde salvia */
-    --primary-light: #A8B89A;
-    --primary-dark: #6B7A5B;
-    --secondary: #D4C5B0; /* Beige/arena */
-    --secondary-light: #E8DFD3;
-    --secondary-dark: #B8A68E;
-    --accent: #C19A7B; /* Terracota suave */
-    --accent-light: #D9B89F;
+    /* Paleta de colores Küme real */
+    --primary: #688662; /* Verde */
+    --primary-light: #7a9974;
+    --primary-dark: #567050;
+    --secondary: #ebddd7; /* Rosa claro */
+    --secondary-light: #f5f3f5; /* Rosa muy claro */
+    --secondary-dark: #d5c5bf;
+    --accent: #fcc0c5; /* Rosa intenso */
+    --accent-light: #fdd5d9;
+    --tertiary: #d5b690; /* Beige/dorado */
 
     /* Neutrales */
     --neutral-100: #FFFFFF;
-    --neutral-200: #F8F6F4;
-    --neutral-300: #E8E4DF;
-    --neutral-400: #C5BFB8;
-    --neutral-500: #8A867F;
-    --neutral-600: #5C5955;
+    --neutral-200: #f5f3f5; /* Rosa muy claro */
+    --neutral-300: #ebddd7; /* Rosa claro */
+    --neutral-400: #d5b690; /* Beige */
+    --neutral-500: #7a6200; /* Dorado oscuro */
+    --neutral-600: #3d3100; /* Marrón oscuro */
     --neutral-700: #2C2A28;
 
     /* Para cálculos de rgba */
-    --primary-rgb: 139, 154, 123;
-    --secondary-rgb: 212, 197, 176;
+    --primary-rgb: 104, 134, 98; /* #688662 */
+    --secondary-rgb: 235, 221, 215; /* #ebddd7 */
+    --accent-rgb: 252, 192, 197; /* #fcc0c5 */
 
     /* Espaciado */
     --spacing-xs: 0.5rem;
@@ -227,7 +229,7 @@ nav.navbar.scrolled {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #D4C5B0 0%, #8B9A7B 100%);
+    background: linear-gradient(135deg, #ebddd7 0%, #688662 50%, #d5b690 100%);
     overflow: hidden;
 }
 
