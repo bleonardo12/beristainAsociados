@@ -374,6 +374,53 @@
             background: #cbd5e1;
         }
 
+        /* Calculadora UMA */
+        .uma-calculator {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border: 2px solid #0ea5e9;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .uma-calculator h6 {
+            color: var(--primary-color);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-aplicar-uma {
+            background: #0ea5e9;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-aplicar-uma:hover {
+            background: #0284c7;
+            transform: translateY(-2px);
+        }
+
+        /* Section dividers */
+        .section-divider {
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+            margin: 2rem 0 1.5rem 0;
+            color: var(--primary-color);
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
         /* Alertas */
         .alert-info {
             background: #dbeafe;
@@ -502,6 +549,10 @@
                 grid-template-columns: 1fr;
                 gap: 0.25rem;
             }
+
+            .form-actions {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
@@ -513,7 +564,7 @@
                 <img src="img/logonuevoB.jpg" alt="Beristain & Asociados">
                 <div class="header-title">
                     <h1>Área de Socios</h1>
-                    <p>Gestión de Presupuestos</p>
+                    <p>Sistema Profesional de Presupuestos</p>
                 </div>
             </div>
             <div class="user-info">
@@ -567,7 +618,7 @@
         <div class="alert-info">
             <i class="bi bi-info-circle-fill"></i>
             <div>
-                <strong>Área Privada</strong> - Esta sección es exclusiva para socios del estudio. Los presupuestos se almacenan localmente en su navegador.
+                <strong>Área Privada</strong> - Sistema profesional exclusivo para socios del estudio. Los presupuestos se almacenan localmente en su navegador. Utilice la calculadora UMA para honorarios profesionales según normativa del Colegio de Abogados.
             </div>
         </div>
 
@@ -583,15 +634,30 @@
 
             <!-- Formulario de presupuesto -->
             <div id="formPresupuesto" class="form-presupuesto">
-                <h3 style="margin-bottom: 1.5rem;" id="formTitle">Crear Nuevo Presupuesto</h3>
+                <h3 style="margin-bottom: 1.5rem; color: var(--primary-color);" id="formTitle">
+                    <i class="bi bi-file-earmark-plus me-2"></i>Crear Nuevo Presupuesto
+                </h3>
                 <form id="presupuestoForm">
                     <input type="hidden" id="presupuestoId">
 
+                    <!-- DATOS DEL CLIENTE -->
+                    <div class="section-divider">
+                        <i class="bi bi-person-fill"></i>
+                        DATOS DEL CLIENTE
+                    </div>
+
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="cliente">Cliente *</label>
+                            <label for="cliente">Nombre Completo *</label>
                             <input type="text" id="cliente" class="form-control" required placeholder="Nombre del cliente">
                         </div>
+                        <div class="form-group">
+                            <label for="dni">DNI *</label>
+                            <input type="text" id="dni" class="form-control" required placeholder="12345678">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
                         <div class="form-group">
                             <label for="email">Email</label>
                             <input type="email" id="email" class="form-control" placeholder="email@ejemplo.com">
@@ -602,16 +668,112 @@
                         </div>
                     </div>
 
+                    <!-- SERVICIO JURÍDICO -->
+                    <div class="section-divider">
+                        <i class="bi bi-briefcase-fill"></i>
+                        SERVICIO JURÍDICO
+                    </div>
+
                     <div class="form-group">
-                        <label for="descripcion">Descripción del Servicio *</label>
-                        <textarea id="descripcion" class="form-control" required placeholder="Descripción detallada del servicio legal"></textarea>
+                        <label for="servicio">Área/Servicio *</label>
+                        <select id="servicio" class="form-control" required>
+                            <option value="">Seleccione un servicio...</option>
+                            <optgroup label="RAMA PENAL">
+                                <option value="Penal - Incidente de excarcelación y/o exención de prisión">Incidente de excarcelación y/o exención de prisión</option>
+                                <option value="Penal - Pedido y audiencia de suspensión de juicio a prueba">Pedido y audiencia de suspensión de juicio a prueba</option>
+                                <option value="Penal - Acta de juicio abreviado">Acta de juicio abreviado</option>
+                                <option value="Penal - Actuación hasta la clausura de la instrucción">Actuación hasta la clausura de la instrucción</option>
+                                <option value="Penal - Actuación desde la clausura hasta sentencia">Actuación desde la clausura de la instrucción hasta la sentencia</option>
+                                <option value="Penal - Parte Querellante">Parte Querellante</option>
+                                <option value="Penal - Redacción de denuncia penal" data-uma="3">Redacción de denuncia penal (3 UMA)</option>
+                            </optgroup>
+                            <optgroup label="RAMA CIVIL">
+                                <option value="Civil - Sucesiones">Sucesiones</option>
+                                <option value="Civil - Declaración de insania">Declaración de insania</option>
+                                <option value="Civil - Consulta verbal" data-uma="0.5">Consulta verbal (0.5 UMA)</option>
+                                <option value="Civil - Consulta con informe" data-uma="1">Consulta con informe (1 UMA)</option>
+                                <option value="Civil - Redacción de carta documento" data-uma="1">Redacción de carta documento (1 UMA)</option>
+                                <option value="Civil - Estudio de actuaciones" data-uma="2">Estudio o información de actuaciones (2 UMA)</option>
+                                <option value="Civil - Trámites administrativos" data-uma="3">Trámites administrativos (3 UMA)</option>
+                                <option value="Civil - Trámites ante IGJ" data-uma="5">Trámites ante IGJ (CABA) (5 UMA)</option>
+                                <option value="Civil - Redacción contrato de locación" data-uma="2">Redacción contrato de locación (Mín. 2 UMA)</option>
+                                <option value="Civil - Redacción boleto compra venta" data-uma="3">Redacción boleto compra venta (Mín. 3 UMA)</option>
+                            </optgroup>
+                            <optgroup label="RAMA COMERCIAL">
+                                <option value="Comercial - Juicio ejecutivo contra bancos">Juicio ejecutivo contra bancos</option>
+                                <option value="Comercial - Juicio ordinario contra bancos">Juicio ordinario contra bancos</option>
+                            </optgroup>
+                            <optgroup label="ACCIDENTES DE TRÁNSITO">
+                                <option value="Accidentes - Reclamo administrativo">Reclamo administrativo</option>
+                                <option value="Accidentes - Daños y perjuicios">Daños y perjuicios</option>
+                                <option value="Accidentes - Reclamo completo">Reclamo completo (administrativo + judicial)</option>
+                            </optgroup>
+                            <optgroup label="OTROS">
+                                <option value="Otro servicio">Otro servicio (especificar en descripción)</option>
+                            </optgroup>
+                        </select>
+                        <small class="text-muted">Servicios marcados con UMA tienen honorarios mínimos establecidos</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="descripcion">Descripción Detallada del Caso *</label>
+                        <textarea id="descripcion" class="form-control" required placeholder="Describa brevemente la situación del cliente y las gestiones a realizar..."></textarea>
+                    </div>
+
+                    <!-- HONORARIOS Y GASTOS -->
+                    <div class="section-divider">
+                        <i class="bi bi-cash-coin"></i>
+                        HONORARIOS Y GASTOS
+                    </div>
+
+                    <!-- Calculadora UMA -->
+                    <div class="uma-calculator">
+                        <h6><i class="bi bi-calculator me-2"></i>Calculadora UMA (Unidad Mínima Arancelaria)</h6>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="valorUMA">Valor actual de 1 UMA ($)</label>
+                                <input type="number" id="valorUMA" class="form-control" value="0" min="0" step="0.01" placeholder="Ej: 28000">
+                                <small class="text-muted">Según Colegio de Abogados</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="cantidadUMA">Cantidad de UMA</label>
+                                <input type="number" id="cantidadUMA" class="form-control" value="0" min="0" step="0.5" placeholder="Ej: 3">
+                            </div>
+                            <div class="form-group">
+                                <label>Total en UMA</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">$</span>
+                                    <input type="text" id="totalUMA" class="form-control" readonly>
+                                </div>
+                                <button type="button" class="btn-aplicar-uma" id="btnAplicarUMA">
+                                    <i class="bi bi-arrow-down me-1"></i>Aplicar a Honorarios
+                                </button>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="monto">Monto Total (ARS) *</label>
-                            <input type="number" id="monto" class="form-control" required placeholder="0.00" step="0.01">
+                            <label for="honorarios">Honorarios Profesionales ($) *</label>
+                            <input type="number" id="honorarios" class="form-control" required min="0" step="0.01" placeholder="0.00">
+                            <small class="text-muted">Ingrese monto directo o use calculadora UMA arriba</small>
                         </div>
+                        <div class="form-group">
+                            <label for="gastosAdmin">Gastos Administrativos ($)</label>
+                            <input type="number" id="gastosAdmin" class="form-control" value="0" min="0" step="0.01" placeholder="0.00">
+                            <small class="text-muted">Tasas, certificados, traslados, etc.</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="iva">IVA (%)</label>
+                            <select id="iva" class="form-control">
+                                <option value="0">Sin IVA (Exento)</option>
+                                <option value="21">21% IVA</option>
+                                <option value="10.5">10.5% IVA</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
                         <div class="form-group">
                             <label for="anticipo">Anticipo (ARS)</label>
                             <input type="number" id="anticipo" class="form-control" placeholder="0.00" step="0.01">
@@ -620,19 +782,60 @@
                             <label for="saldo">Saldo (ARS)</label>
                             <input type="number" id="saldo" class="form-control" placeholder="0.00" step="0.01" readonly>
                         </div>
+                        <div class="form-group">
+                            <label>Total Estimado</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-success text-white fw-bold">$</span>
+                                <input type="text" id="totalEstimado" class="form-control fw-bold fs-5 text-success" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CONDICIONES COMERCIALES -->
+                    <div class="section-divider">
+                        <i class="bi bi-card-checklist"></i>
+                        CONDICIONES COMERCIALES
                     </div>
 
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="formaPago">Forma de Pago *</label>
-                            <select id="formaPago" class="form-control" required>
-                                <option value="">Seleccionar...</option>
-                                <option value="efectivo">Efectivo</option>
-                                <option value="transferencia">Transferencia bancaria</option>
-                                <option value="cheque">Cheque</option>
-                                <option value="tarjeta">Tarjeta de crédito/débito</option>
-                                <option value="cuotas">En cuotas</option>
-                                <option value="mixto">Mixto</option>
+                            <label for="formaPago">Forma de Pago</label>
+                            <select id="formaPago" class="form-control">
+                                <optgroup label="PAGO ÚNICO">
+                                    <option value="Pago único al inicio">Pago único al inicio</option>
+                                    <option value="Pago único al finalizar">Pago único al finalizar el trámite</option>
+                                    <option value="Pago único antes de sentencia">Pago único antes de la sentencia</option>
+                                </optgroup>
+                                <optgroup label="PAGO EN ETAPAS (DOS PAGOS)">
+                                    <option value="50% adelanto + 50% al finalizar">50% adelanto + 50% al finalizar</option>
+                                    <option value="50% al inicio + 50% antes de sentencia">50% al inicio + 50% antes de sentencia</option>
+                                    <option value="40% adelanto + 60% al finalizar">40% adelanto + 60% al finalizar</option>
+                                    <option value="30% adelanto + 70% al finalizar">30% adelanto + 70% al finalizar</option>
+                                    <option value="20% adelanto + 80% al finalizar">20% adelanto + 80% al finalizar</option>
+                                </optgroup>
+                                <optgroup label="PAGO EN ETAPAS (TRES PAGOS)">
+                                    <option value="33% al inicio + 33% a mitad + 34% al finalizar">33% al inicio + 33% a mitad del proceso + 34% al finalizar</option>
+                                    <option value="30% al inicio + 30% a mitad + 40% al finalizar">30% al inicio + 30% a mitad + 40% al finalizar</option>
+                                    <option value="25% al inicio + 25% a mitad + 50% al finalizar">25% al inicio + 25% a mitad + 50% al finalizar</option>
+                                </optgroup>
+                                <optgroup label="CUOTAS">
+                                    <option value="Pago en 2 cuotas mensuales">Pago en 2 cuotas mensuales</option>
+                                    <option value="Pago en 3 cuotas mensuales">Pago en 3 cuotas mensuales</option>
+                                    <option value="Pago en 4 cuotas mensuales">Pago en 4 cuotas mensuales</option>
+                                    <option value="Pago en 6 cuotas mensuales">Pago en 6 cuotas mensuales</option>
+                                </optgroup>
+                                <optgroup label="HONORARIOS A RESULTADO">
+                                    <option value="A éxito - 25% sobre lo obtenido">A éxito - 25% sobre lo obtenido</option>
+                                    <option value="A éxito - 30% sobre lo obtenido">A éxito - 30% sobre lo obtenido</option>
+                                    <option value="A éxito - 35% sobre lo obtenido">A éxito - 35% sobre lo obtenido</option>
+                                    <option value="Mínimo garantizado + % sobre excedente">Mínimo garantizado + % sobre excedente</option>
+                                </optgroup>
+                                <optgroup label="OTRAS MODALIDADES">
+                                    <option value="Transferencia bancaria">Transferencia bancaria</option>
+                                    <option value="Efectivo">Efectivo</option>
+                                    <option value="Tarjeta de crédito/débito">Tarjeta de crédito/débito</option>
+                                    <option value="Mixto">Mixto (especificar en observaciones)</option>
+                                </optgroup>
                             </select>
                         </div>
                         <div class="form-group">
@@ -640,14 +843,30 @@
                             <input type="number" id="cuotas" class="form-control" placeholder="1" min="1">
                         </div>
                         <div class="form-group">
-                            <label for="vencimiento">Fecha de Vencimiento</label>
-                            <input type="date" id="vencimiento" class="form-control">
+                            <label for="vigencia">Vigencia del Presupuesto</label>
+                            <select id="vigencia" class="form-control">
+                                <option value="15">15 días</option>
+                                <option value="30" selected>30 días</option>
+                                <option value="45">45 días</option>
+                                <option value="60">60 días</option>
+                            </select>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="notas">Notas Adicionales</label>
+                        <label for="vencimiento">Fecha de Vencimiento del Pago</label>
+                        <input type="date" id="vencimiento" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="notas">Observaciones/Aclaraciones</label>
                         <textarea id="notas" class="form-control" placeholder="Información adicional, condiciones especiales, etc."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="detalleAdicional">Detalle Adicional (Opcional)</label>
+                        <textarea id="detalleAdicional" class="form-control" rows="4" placeholder="Documentación requerida, plazos específicos, aclaraciones sobre el proceso, etc."></textarea>
+                        <small class="text-muted">Este campo aparecerá en el PDF si se completa</small>
                     </div>
 
                     <div class="form-actions">
@@ -668,12 +887,12 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>Número</th>
                             <th>Fecha</th>
                             <th>Cliente</th>
-                            <th>Descripción</th>
+                            <th>DNI</th>
+                            <th>Servicio</th>
                             <th>Monto</th>
-                            <th>Forma de Pago</th>
                             <th>Estado</th>
                             <th>Acciones</th>
                         </tr>
@@ -721,14 +940,61 @@
             }
         });
 
-        // Calcular saldo automáticamente
-        document.getElementById('monto').addEventListener('input', calcularSaldo);
+        // Calculadoras automáticas
+        document.getElementById('valorUMA').addEventListener('input', calcularTotalUMA);
+        document.getElementById('cantidadUMA').addEventListener('input', calcularTotalUMA);
+        document.getElementById('btnAplicarUMA').addEventListener('click', aplicarUMAaHonorarios);
+        document.getElementById('servicio').addEventListener('change', autoCompletarUMA);
+
+        document.getElementById('honorarios').addEventListener('input', calcularTotal);
+        document.getElementById('gastosAdmin').addEventListener('input', calcularTotal);
+        document.getElementById('iva').addEventListener('change', calcularTotal);
         document.getElementById('anticipo').addEventListener('input', calcularSaldo);
 
+        function calcularTotalUMA() {
+            const valorUMA = parseFloat(document.getElementById('valorUMA').value) || 0;
+            const cantidadUMA = parseFloat(document.getElementById('cantidadUMA').value) || 0;
+            const total = valorUMA * cantidadUMA;
+            document.getElementById('totalUMA').value = total.toLocaleString('es-AR', { minimumFractionDigits: 2 });
+        }
+
+        function aplicarUMAaHonorarios() {
+            const valorUMA = parseFloat(document.getElementById('valorUMA').value) || 0;
+            const cantidadUMA = parseFloat(document.getElementById('cantidadUMA').value) || 0;
+            const total = valorUMA * cantidadUMA;
+            if (total > 0) {
+                document.getElementById('honorarios').value = total.toFixed(2);
+                calcularTotal();
+            }
+        }
+
+        function autoCompletarUMA() {
+            const selectedOption = document.getElementById('servicio').selectedOptions[0];
+            const umaValue = selectedOption.getAttribute('data-uma');
+            if (umaValue) {
+                document.getElementById('cantidadUMA').value = umaValue;
+                calcularTotalUMA();
+            }
+        }
+
+        function calcularTotal() {
+            const honorarios = parseFloat(document.getElementById('honorarios').value) || 0;
+            const gastosAdmin = parseFloat(document.getElementById('gastosAdmin').value) || 0;
+            const ivaPercentage = parseFloat(document.getElementById('iva').value) || 0;
+
+            const subtotal = honorarios + gastosAdmin;
+            const ivaAmount = (subtotal * ivaPercentage) / 100;
+            const total = subtotal + ivaAmount;
+
+            document.getElementById('totalEstimado').value = total.toLocaleString('es-AR', { minimumFractionDigits: 2 });
+            calcularSaldo();
+        }
+
         function calcularSaldo() {
-            const monto = parseFloat(document.getElementById('monto').value) || 0;
+            const totalText = document.getElementById('totalEstimado').value.replace(/\./g, '').replace(',', '.');
+            const total = parseFloat(totalText) || 0;
             const anticipo = parseFloat(document.getElementById('anticipo').value) || 0;
-            const saldo = monto - anticipo;
+            const saldo = total - anticipo;
             document.getElementById('saldo').value = saldo.toFixed(2);
         }
 
@@ -751,21 +1017,40 @@
                 this.render();
             }
 
+            generateNumeroPresupuesto() {
+                const hoy = new Date();
+                return 'PPTO-' + hoy.getFullYear() +
+                    String(hoy.getMonth() + 1).padStart(2, '0') +
+                    String(hoy.getDate()).padStart(2, '0') + '-' +
+                    String(hoy.getHours()).padStart(2, '0') +
+                    String(hoy.getMinutes()).padStart(2, '0');
+            }
+
             addPresupuesto(data) {
                 const presupuesto = {
                     id: Date.now(),
+                    numero: this.generateNumeroPresupuesto(),
                     fecha: new Date().toLocaleDateString('es-AR'),
                     cliente: data.cliente,
+                    dni: data.dni,
                     email: data.email,
                     telefono: data.telefono,
+                    servicio: data.servicio,
                     descripcion: data.descripcion,
-                    monto: parseFloat(data.monto),
+                    valorUMA: parseFloat(data.valorUMA) || 0,
+                    cantidadUMA: parseFloat(data.cantidadUMA) || 0,
+                    honorarios: parseFloat(data.honorarios),
+                    gastosAdmin: parseFloat(data.gastosAdmin) || 0,
+                    iva: parseFloat(data.iva) || 0,
                     anticipo: parseFloat(data.anticipo) || 0,
-                    saldo: parseFloat(data.saldo) || parseFloat(data.monto),
+                    saldo: parseFloat(data.saldo) || 0,
+                    total: parseFloat(data.total),
                     formaPago: data.formaPago,
                     cuotas: parseInt(data.cuotas) || 1,
+                    vigencia: data.vigencia,
                     vencimiento: data.vencimiento,
                     notas: data.notas,
+                    detalleAdicional: data.detalleAdicional,
                     estado: 'pendiente'
                 };
                 this.presupuestos.unshift(presupuesto);
@@ -778,16 +1063,25 @@
                     this.presupuestos[index] = {
                         ...this.presupuestos[index],
                         cliente: data.cliente,
+                        dni: data.dni,
                         email: data.email,
                         telefono: data.telefono,
+                        servicio: data.servicio,
                         descripcion: data.descripcion,
-                        monto: parseFloat(data.monto),
+                        valorUMA: parseFloat(data.valorUMA) || 0,
+                        cantidadUMA: parseFloat(data.cantidadUMA) || 0,
+                        honorarios: parseFloat(data.honorarios),
+                        gastosAdmin: parseFloat(data.gastosAdmin) || 0,
+                        iva: parseFloat(data.iva) || 0,
                         anticipo: parseFloat(data.anticipo) || 0,
-                        saldo: parseFloat(data.saldo) || parseFloat(data.monto),
+                        saldo: parseFloat(data.saldo) || 0,
+                        total: parseFloat(data.total),
                         formaPago: data.formaPago,
                         cuotas: parseInt(data.cuotas) || 1,
+                        vigencia: data.vigencia,
                         vencimiento: data.vencimiento,
-                        notas: data.notas
+                        notas: data.notas,
+                        detalleAdicional: data.detalleAdicional
                     };
                     this.savePresupuestos();
                 }
@@ -809,218 +1103,372 @@
             }
 
             editPresupuesto(id) {
-                const presupuesto = this.presupuestos.find(p => p.id === id);
-                if (presupuesto) {
+                const p = this.presupuestos.find(pres => pres.id === id);
+                if (p) {
                     this.editingId = id;
-                    document.getElementById('formTitle').textContent = 'Editar Presupuesto';
+                    document.getElementById('formTitle').innerHTML = '<i class="bi bi-pencil me-2"></i>Editar Presupuesto';
                     document.getElementById('btnSubmitText').textContent = 'Actualizar Presupuesto';
                     document.getElementById('presupuestoId').value = id;
-                    document.getElementById('cliente').value = presupuesto.cliente;
-                    document.getElementById('email').value = presupuesto.email || '';
-                    document.getElementById('telefono').value = presupuesto.telefono || '';
-                    document.getElementById('descripcion').value = presupuesto.descripcion;
-                    document.getElementById('monto').value = presupuesto.monto;
-                    document.getElementById('anticipo').value = presupuesto.anticipo || 0;
-                    document.getElementById('saldo').value = presupuesto.saldo || presupuesto.monto;
-                    document.getElementById('formaPago').value = presupuesto.formaPago;
-                    document.getElementById('cuotas').value = presupuesto.cuotas || 1;
-                    document.getElementById('vencimiento').value = presupuesto.vencimiento || '';
-                    document.getElementById('notas').value = presupuesto.notas || '';
+                    document.getElementById('cliente').value = p.cliente;
+                    document.getElementById('dni').value = p.dni || '';
+                    document.getElementById('email').value = p.email || '';
+                    document.getElementById('telefono').value = p.telefono || '';
+                    document.getElementById('servicio').value = p.servicio;
+                    document.getElementById('descripcion').value = p.descripcion;
+                    document.getElementById('valorUMA').value = p.valorUMA || 0;
+                    document.getElementById('cantidadUMA').value = p.cantidadUMA || 0;
+                    document.getElementById('honorarios').value = p.honorarios;
+                    document.getElementById('gastosAdmin').value = p.gastosAdmin || 0;
+                    document.getElementById('iva').value = p.iva || 0;
+                    document.getElementById('anticipo').value = p.anticipo || 0;
+                    document.getElementById('formaPago').value = p.formaPago;
+                    document.getElementById('cuotas').value = p.cuotas || 1;
+                    document.getElementById('vigencia').value = p.vigencia || 30;
+                    document.getElementById('vencimiento').value = p.vencimiento || '';
+                    document.getElementById('notas').value = p.notas || '';
+                    document.getElementById('detalleAdicional').value = p.detalleAdicional || '';
+
+                    calcularTotalUMA();
+                    calcularTotal();
+
                     document.getElementById('formPresupuesto').classList.add('active');
                     document.getElementById('formPresupuesto').scrollIntoView({ behavior: 'smooth' });
                 }
             }
 
             viewDetails(id) {
-                const presupuesto = this.presupuestos.find(p => p.id === id);
-                if (presupuesto) {
-                    const modalBody = document.getElementById('modalBody');
-                    modalBody.innerHTML = `
-                        <div class="detail-row">
-                            <div class="detail-label">ID:</div>
-                            <div class="detail-value">#${presupuesto.id}</div>
+                const p = this.presupuestos.find(pres => pres.id === id);
+                if (!p) return;
+
+                const modalBody = document.getElementById('modalBody');
+                const subtotal = p.honorarios + p.gastosAdmin;
+                const ivaAmount = (subtotal * p.iva) / 100;
+
+                modalBody.innerHTML = `
+                    <div class="detail-row">
+                        <div class="detail-label">Número:</div>
+                        <div class="detail-value"><strong>${p.numero || 'N/A'}</strong></div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Fecha:</div>
+                        <div class="detail-value">${p.fecha}</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Cliente:</div>
+                        <div class="detail-value"><strong>${p.cliente}</strong></div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">DNI:</div>
+                        <div class="detail-value">${p.dni || 'N/A'}</div>
+                    </div>
+                    ${p.email ? `<div class="detail-row"><div class="detail-label">Email:</div><div class="detail-value">${p.email}</div></div>` : ''}
+                    ${p.telefono ? `<div class="detail-row"><div class="detail-label">Teléfono:</div><div class="detail-value">${p.telefono}</div></div>` : ''}
+                    <div class="detail-row">
+                        <div class="detail-label">Servicio:</div>
+                        <div class="detail-value">${p.servicio}</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Descripción:</div>
+                        <div class="detail-value">${p.descripcion}</div>
+                    </div>
+                    ${p.valorUMA > 0 ? `<div class="detail-row"><div class="detail-label">UMA:</div><div class="detail-value">${p.cantidadUMA} UMA × $${p.valorUMA.toLocaleString('es-AR')}</div></div>` : ''}
+                    <div class="detail-row">
+                        <div class="detail-label">Honorarios:</div>
+                        <div class="detail-value"><strong>$${p.honorarios.toLocaleString('es-AR', { minimumFractionDigits: 2 })}</strong></div>
+                    </div>
+                    ${p.gastosAdmin > 0 ? `<div class="detail-row"><div class="detail-label">Gastos Admin:</div><div class="detail-value">$${p.gastosAdmin.toLocaleString('es-AR', { minimumFractionDigits: 2 })}</div></div>` : ''}
+                    <div class="detail-row">
+                        <div class="detail-label">Subtotal:</div>
+                        <div class="detail-value">$${subtotal.toLocaleString('es-AR', { minimumFractionDigits: 2 })}</div>
+                    </div>
+                    ${p.iva > 0 ? `<div class="detail-row"><div class="detail-label">IVA (${p.iva}%):</div><div class="detail-value">$${ivaAmount.toLocaleString('es-AR', { minimumFractionDigits: 2 })}</div></div>` : ''}
+                    <div class="detail-row">
+                        <div class="detail-label">TOTAL:</div>
+                        <div class="detail-value"><strong style="color: var(--primary-color); font-size: 1.2rem;">$${p.total.toLocaleString('es-AR', { minimumFractionDigits: 2 })}</strong></div>
+                    </div>
+                    ${p.anticipo > 0 ? `
+                        <div class="detail-row"><div class="detail-label">Anticipo:</div><div class="detail-value">$${p.anticipo.toLocaleString('es-AR', { minimumFractionDigits: 2 })}</div></div>
+                        <div class="detail-row"><div class="detail-label">Saldo:</div><div class="detail-value">$${p.saldo.toLocaleString('es-AR', { minimumFractionDigits: 2 })}</div></div>
+                    ` : ''}
+                    <div class="detail-row">
+                        <div class="detail-label">Forma de Pago:</div>
+                        <div class="detail-value">${p.formaPago}</div>
+                    </div>
+                    ${p.cuotas > 1 ? `<div class="detail-row"><div class="detail-label">Cuotas:</div><div class="detail-value">${p.cuotas} cuotas</div></div>` : ''}
+                    <div class="detail-row">
+                        <div class="detail-label">Vigencia:</div>
+                        <div class="detail-value">${p.vigencia} días</div>
+                    </div>
+                    ${p.vencimiento ? `<div class="detail-row"><div class="detail-label">Vencimiento:</div><div class="detail-value">${new Date(p.vencimiento).toLocaleDateString('es-AR')}</div></div>` : ''}
+                    <div class="detail-row">
+                        <div class="detail-label">Estado:</div>
+                        <div class="detail-value">
+                            <span class="status-badge status-${p.estado}">
+                                ${p.estado.charAt(0).toUpperCase() + p.estado.slice(1)}
+                            </span>
                         </div>
-                        <div class="detail-row">
-                            <div class="detail-label">Fecha:</div>
-                            <div class="detail-value">${presupuesto.fecha}</div>
-                        </div>
-                        <div class="detail-row">
-                            <div class="detail-label">Cliente:</div>
-                            <div class="detail-value"><strong>${presupuesto.cliente}</strong></div>
-                        </div>
-                        ${presupuesto.email ? `
-                        <div class="detail-row">
-                            <div class="detail-label">Email:</div>
-                            <div class="detail-value">${presupuesto.email}</div>
-                        </div>` : ''}
-                        ${presupuesto.telefono ? `
-                        <div class="detail-row">
-                            <div class="detail-label">Teléfono:</div>
-                            <div class="detail-value">${presupuesto.telefono}</div>
-                        </div>` : ''}
-                        <div class="detail-row">
-                            <div class="detail-label">Descripción:</div>
-                            <div class="detail-value">${presupuesto.descripcion}</div>
-                        </div>
-                        <div class="detail-row">
-                            <div class="detail-label">Monto Total:</div>
-                            <div class="detail-value"><strong>$${presupuesto.monto.toLocaleString('es-AR', { minimumFractionDigits: 2 })}</strong></div>
-                        </div>
-                        ${presupuesto.anticipo > 0 ? `
-                        <div class="detail-row">
-                            <div class="detail-label">Anticipo:</div>
-                            <div class="detail-value">$${presupuesto.anticipo.toLocaleString('es-AR', { minimumFractionDigits: 2 })}</div>
-                        </div>
-                        <div class="detail-row">
-                            <div class="detail-label">Saldo:</div>
-                            <div class="detail-value">$${presupuesto.saldo.toLocaleString('es-AR', { minimumFractionDigits: 2 })}</div>
-                        </div>` : ''}
-                        <div class="detail-row">
-                            <div class="detail-label">Forma de Pago:</div>
-                            <div class="detail-value">${presupuesto.formaPago}</div>
-                        </div>
-                        ${presupuesto.cuotas > 1 ? `
-                        <div class="detail-row">
-                            <div class="detail-label">Cuotas:</div>
-                            <div class="detail-value">${presupuesto.cuotas} cuotas</div>
-                        </div>` : ''}
-                        ${presupuesto.vencimiento ? `
-                        <div class="detail-row">
-                            <div class="detail-label">Vencimiento:</div>
-                            <div class="detail-value">${new Date(presupuesto.vencimiento).toLocaleDateString('es-AR')}</div>
-                        </div>` : ''}
-                        <div class="detail-row">
-                            <div class="detail-label">Estado:</div>
-                            <div class="detail-value">
-                                <span class="status-badge status-${presupuesto.estado}">
-                                    ${presupuesto.estado.charAt(0).toUpperCase() + presupuesto.estado.slice(1)}
-                                </span>
-                            </div>
-                        </div>
-                        ${presupuesto.notas ? `
-                        <div class="detail-row">
-                            <div class="detail-label">Notas:</div>
-                            <div class="detail-value">${presupuesto.notas}</div>
-                        </div>` : ''}
-                    `;
-                    document.getElementById('modalDetalles').classList.add('active');
-                }
+                    </div>
+                    ${p.notas ? `<div class="detail-row"><div class="detail-label">Observaciones:</div><div class="detail-value">${p.notas}</div></div>` : ''}
+                    ${p.detalleAdicional ? `<div class="detail-row"><div class="detail-label">Detalle Adicional:</div><div class="detail-value">${p.detalleAdicional}</div></div>` : ''}
+                `;
+                document.getElementById('modalDetalles').classList.add('active');
             }
 
             exportToPDF(id) {
-                const presupuesto = this.presupuestos.find(p => p.id === id);
-                if (!presupuesto) return;
+                const p = this.presupuestos.find(pres => pres.id === id);
+                if (!p) return;
 
                 const { jsPDF } = window.jspdf;
                 const doc = new jsPDF();
 
-                // Título
-                doc.setFontSize(20);
-                doc.setTextColor(26, 54, 93);
-                doc.text('BERISTAIN & ASOCIADOS', 105, 20, { align: 'center' });
+                // Colores
+                const primaryColor = [26, 54, 93];
+                const accentColor = [201, 169, 97];
+                const grayColor = [100, 100, 100];
+                const lightGray = [200, 200, 200];
 
-                doc.setFontSize(16);
-                doc.text('PRESUPUESTO', 105, 30, { align: 'center' });
+                let yPos = 20;
 
-                // Línea separadora
-                doc.setDrawColor(201, 169, 97);
+                // ENCABEZADO
+                doc.setFillColor(...primaryColor);
+                doc.rect(0, 0, 210, 40, 'F');
+
+                doc.setTextColor(255, 255, 255);
+                doc.setFontSize(24);
+                doc.setFont('helvetica', 'bold');
+                doc.text('BERISTAIN & ASOCIADOS', 105, 18, { align: 'center' });
+
+                doc.setFontSize(12);
+                doc.setFont('helvetica', 'normal');
+                doc.text('Estudio Jurídico', 105, 26, { align: 'center' });
+
+                doc.setFontSize(10);
+                doc.text('Araujo 319 - CABA', 105, 32, { align: 'center' });
+
+                yPos = 50;
+
+                // INFORMACIÓN DEL PRESUPUESTO
+                doc.setTextColor(...grayColor);
+                doc.setFontSize(11);
+                doc.setFont('helvetica', 'bold');
+                doc.text('PRESUPUESTO', 20, yPos);
+                doc.setFont('helvetica', 'normal');
+                doc.text(p.numero || 'N/A', 70, yPos);
+
+                yPos += 6;
+                doc.setFont('helvetica', 'bold');
+                doc.text('Fecha:', 20, yPos);
+                doc.setFont('helvetica', 'normal');
+                doc.text(p.fecha, 70, yPos);
+
+                yPos += 6;
+                doc.setFont('helvetica', 'bold');
+                doc.text('Vigencia:', 20, yPos);
+                doc.setFont('helvetica', 'normal');
+                doc.text(p.vigencia + ' días desde la fecha de emisión', 70, yPos);
+
+                yPos += 15;
+
+                // DATOS DEL CLIENTE
+                doc.setFillColor(...primaryColor);
+                doc.rect(20, yPos - 5, 170, 8, 'F');
+                doc.setTextColor(255, 255, 255);
+                doc.setFontSize(12);
+                doc.setFont('helvetica', 'bold');
+                doc.text('DATOS DEL CLIENTE', 22, yPos);
+
+                yPos += 10;
+                doc.setTextColor(...grayColor);
+                doc.setFontSize(11);
+
+                doc.setFont('helvetica', 'bold');
+                doc.text('Nombre:', 20, yPos);
+                doc.setFont('helvetica', 'normal');
+                doc.text(p.cliente, 50, yPos);
+
+                yPos += 6;
+                doc.setFont('helvetica', 'bold');
+                doc.text('DNI:', 20, yPos);
+                doc.setFont('helvetica', 'normal');
+                doc.text(p.dni || 'N/A', 50, yPos);
+
+                if (p.email) {
+                    yPos += 6;
+                    doc.setFont('helvetica', 'bold');
+                    doc.text('Email:', 20, yPos);
+                    doc.setFont('helvetica', 'normal');
+                    doc.text(p.email, 50, yPos);
+                }
+
+                if (p.telefono) {
+                    yPos += 6;
+                    doc.setFont('helvetica', 'bold');
+                    doc.text('Teléfono:', 20, yPos);
+                    doc.setFont('helvetica', 'normal');
+                    doc.text(p.telefono, 50, yPos);
+                }
+
+                yPos += 15;
+
+                // SERVICIO
+                doc.setFillColor(...primaryColor);
+                doc.rect(20, yPos - 5, 170, 8, 'F');
+                doc.setTextColor(255, 255, 255);
+                doc.setFontSize(12);
+                doc.setFont('helvetica', 'bold');
+                doc.text('SERVICIO JURÍDICO', 22, yPos);
+
+                yPos += 10;
+                doc.setTextColor(...grayColor);
+                doc.setFontSize(11);
+
+                doc.setFont('helvetica', 'bold');
+                doc.text('Área/Servicio:', 20, yPos);
+                yPos += 6;
+                doc.setFont('helvetica', 'normal');
+                doc.text(p.servicio, 20, yPos);
+
+                yPos += 10;
+                doc.setFont('helvetica', 'bold');
+                doc.text('Descripción:', 20, yPos);
+                yPos += 6;
+                doc.setFont('helvetica', 'normal');
+                const descripcionLines = doc.splitTextToSize(p.descripcion, 170);
+                doc.text(descripcionLines, 20, yPos);
+                yPos += (descripcionLines.length * 6) + 10;
+
+                // TABLA DE HONORARIOS
+                doc.setFillColor(...primaryColor);
+                doc.rect(20, yPos - 5, 170, 8, 'F');
+                doc.setTextColor(255, 255, 255);
+                doc.setFontSize(12);
+                doc.setFont('helvetica', 'bold');
+                doc.text('DETALLE DE HONORARIOS', 22, yPos);
+
+                yPos += 12;
+
+                const subtotal = p.honorarios + p.gastosAdmin;
+                const ivaAmount = (subtotal * p.iva) / 100;
+
+                doc.setTextColor(...grayColor);
+                doc.setFontSize(10);
+                doc.setFont('helvetica', 'normal');
+
+                doc.text('Honorarios Profesionales', 22, yPos);
+                doc.text('$ ' + p.honorarios.toLocaleString('es-AR', { minimumFractionDigits: 2 }), 188, yPos, { align: 'right' });
+
+                yPos += 6;
+                doc.text('Gastos Administrativos', 22, yPos);
+                doc.text('$ ' + p.gastosAdmin.toLocaleString('es-AR', { minimumFractionDigits: 2 }), 188, yPos, { align: 'right' });
+
+                yPos += 6;
+                doc.setDrawColor(...lightGray);
+                doc.line(20, yPos, 190, yPos);
+
+                yPos += 6;
+                doc.setFont('helvetica', 'bold');
+                doc.text('Subtotal', 22, yPos);
+                doc.text('$ ' + subtotal.toLocaleString('es-AR', { minimumFractionDigits: 2 }), 188, yPos, { align: 'right' });
+
+                yPos += 6;
+                doc.setFont('helvetica', 'normal');
+                doc.text('IVA (' + p.iva + '%)', 22, yPos);
+                doc.text('$ ' + ivaAmount.toLocaleString('es-AR', { minimumFractionDigits: 2 }), 188, yPos, { align: 'right' });
+
+                yPos += 6;
                 doc.setLineWidth(0.5);
-                doc.line(20, 35, 190, 35);
+                doc.line(20, yPos, 190, yPos);
 
-                // Información del presupuesto
-                doc.setFontSize(11);
-                doc.setTextColor(0, 0, 0);
-
-                let y = 45;
-                doc.text(`Presupuesto N°: #${presupuesto.id}`, 20, y);
-                doc.text(`Fecha: ${presupuesto.fecha}`, 150, y);
-
-                y += 10;
-                doc.text(`Cliente: ${presupuesto.cliente}`, 20, y);
-
-                if (presupuesto.email) {
-                    y += 7;
-                    doc.text(`Email: ${presupuesto.email}`, 20, y);
-                }
-
-                if (presupuesto.telefono) {
-                    y += 7;
-                    doc.text(`Teléfono: ${presupuesto.telefono}`, 20, y);
-                }
-
-                y += 15;
+                yPos += 8;
                 doc.setFontSize(12);
-                doc.setFont(undefined, 'bold');
-                doc.text('DESCRIPCIÓN DEL SERVICIO:', 20, y);
+                doc.setFont('helvetica', 'bold');
+                doc.setTextColor(...primaryColor);
+                doc.text('TOTAL', 22, yPos);
+                doc.text('$ ' + p.total.toLocaleString('es-AR', { minimumFractionDigits: 2 }), 188, yPos, { align: 'right' });
 
-                y += 7;
-                doc.setFontSize(11);
-                doc.setFont(undefined, 'normal');
-                const descripcionLines = doc.splitTextToSize(presupuesto.descripcion, 170);
-                doc.text(descripcionLines, 20, y);
+                yPos += 15;
 
-                y += (descripcionLines.length * 7) + 10;
+                // CONDICIONES
+                if (yPos > 240) {
+                    doc.addPage();
+                    yPos = 20;
+                }
 
-                // Tabla de montos
+                doc.setFillColor(...primaryColor);
+                doc.rect(20, yPos - 5, 170, 8, 'F');
+                doc.setTextColor(255, 255, 255);
                 doc.setFontSize(12);
-                doc.setFont(undefined, 'bold');
-                doc.text('DETALLE ECONÓMICO:', 20, y);
+                doc.setFont('helvetica', 'bold');
+                doc.text('CONDICIONES COMERCIALES', 22, yPos);
 
-                y += 10;
-                doc.setFontSize(11);
-                doc.setFont(undefined, 'normal');
+                yPos += 10;
+                doc.setTextColor(...grayColor);
+                doc.setFontSize(10);
+                doc.setFont('helvetica', 'bold');
+                doc.text('Forma de Pago:', 20, yPos);
+                yPos += 5;
+                doc.setFont('helvetica', 'normal');
+                doc.text(p.formaPago, 20, yPos);
 
-                doc.text('Monto Total:', 20, y);
-                doc.text(`$${presupuesto.monto.toLocaleString('es-AR', { minimumFractionDigits: 2 })}`, 150, y, { align: 'right' });
-
-                if (presupuesto.anticipo > 0) {
-                    y += 7;
-                    doc.text('Anticipo:', 20, y);
-                    doc.text(`$${presupuesto.anticipo.toLocaleString('es-AR', { minimumFractionDigits: 2 })}`, 150, y, { align: 'right' });
-
-                    y += 7;
-                    doc.text('Saldo:', 20, y);
-                    doc.text(`$${presupuesto.saldo.toLocaleString('es-AR', { minimumFractionDigits: 2 })}`, 150, y, { align: 'right' });
+                if (p.notas) {
+                    yPos += 10;
+                    doc.setFont('helvetica', 'bold');
+                    doc.text('Observaciones:', 20, yPos);
+                    yPos += 5;
+                    doc.setFont('helvetica', 'normal');
+                    const notasLines = doc.splitTextToSize(p.notas, 170);
+                    doc.text(notasLines, 20, yPos);
+                    yPos += (notasLines.length * 5) + 5;
                 }
 
-                y += 10;
-                doc.text('Forma de Pago:', 20, y);
-                doc.text(presupuesto.formaPago, 150, y, { align: 'right' });
-
-                if (presupuesto.cuotas > 1) {
-                    y += 7;
-                    doc.text('Cantidad de Cuotas:', 20, y);
-                    doc.text(`${presupuesto.cuotas} cuotas`, 150, y, { align: 'right' });
+                if (p.detalleAdicional) {
+                    if (yPos > 240) {
+                        doc.addPage();
+                        yPos = 20;
+                    }
+                    yPos += 5;
+                    doc.setFont('helvetica', 'bold');
+                    doc.text('Detalle Adicional:', 20, yPos);
+                    yPos += 5;
+                    doc.setFont('helvetica', 'normal');
+                    const detalleLines = doc.splitTextToSize(p.detalleAdicional, 170);
+                    doc.text(detalleLines, 20, yPos);
+                    yPos += (detalleLines.length * 5) + 5;
                 }
 
-                if (presupuesto.vencimiento) {
-                    y += 7;
-                    doc.text('Vencimiento:', 20, y);
-                    doc.text(new Date(presupuesto.vencimiento).toLocaleDateString('es-AR'), 150, y, { align: 'right' });
-                }
-
-                if (presupuesto.notas) {
-                    y += 15;
-                    doc.setFontSize(12);
-                    doc.setFont(undefined, 'bold');
-                    doc.text('NOTAS:', 20, y);
-
-                    y += 7;
-                    doc.setFontSize(11);
-                    doc.setFont(undefined, 'normal');
-                    const notasLines = doc.splitTextToSize(presupuesto.notas, 170);
-                    doc.text(notasLines, 20, y);
-                }
-
-                // Footer
-                y = 270;
+                // NOTA IMPORTANTE
+                yPos += 5;
                 doc.setFontSize(9);
+                doc.setFont('helvetica', 'italic');
                 doc.setTextColor(100, 100, 100);
-                doc.text('BERISTAIN & ASOCIADOS | Estudio Jurídico', 105, y, { align: 'center' });
-                doc.text('Email: beristainyasociadosej@gmail.com | Tel: (+54) 11 3591-3161', 105, y + 5, { align: 'center' });
+                const nota = 'NOTA: Los honorarios indicados son estimativos y podrán variar según la complejidad del caso y las gestiones necesarias. No incluyen tasas judiciales ni gastos extraordinarios que pudieran surgir durante la tramitación.';
+                const notaLines = doc.splitTextToSize(nota, 170);
+                doc.text(notaLines, 20, yPos);
 
-                // Guardar PDF
-                doc.save(`presupuesto_${presupuesto.id}_${presupuesto.cliente.replace(/\s+/g, '_')}.pdf`);
+                // PIE DE PÁGINA
+                const pageCount = doc.internal.getNumberOfPages();
+                for (let i = 1; i <= pageCount; i++) {
+                    doc.setPage(i);
+
+                    doc.setDrawColor(...lightGray);
+                    doc.setLineWidth(0.5);
+                    doc.line(20, 280, 190, 280);
+
+                    doc.setFontSize(9);
+                    doc.setFont('helvetica', 'normal');
+                    doc.setTextColor(...grayColor);
+                    doc.text('Beristain & Asociados - Estudio Jurídico', 105, 283, { align: 'center' });
+                    doc.text('Dr. Leonardo Beristain - CUIT: 20-37992116-8', 105, 288, { align: 'center' });
+                    doc.setFontSize(8);
+                    doc.text('CPACF T146 F648 | CALM TXII F289 | CFALP T204 F114', 105, 292, { align: 'center' });
+                    doc.setFontSize(9);
+                    doc.text('Araujo 319 - CABA | Tel: +54 11 3591-3161', 105, 296, { align: 'center' });
+                    doc.text('Email: beristainyasociadosej@gmail.com', 105, 300, { align: 'center' });
+                }
+
+                // GUARDAR
+                const nombreArchivo = 'Presupuesto_' + (p.numero || p.id) + '_' + p.cliente.replace(/\s+/g, '_') + '.pdf';
+                doc.save(nombreArchivo);
             }
 
             updateStats() {
@@ -1030,7 +1478,7 @@
                 document.getElementById('totalAprobados').textContent =
                     this.presupuestos.filter(p => p.estado === 'aprobado').length;
 
-                const montoTotal = this.presupuestos.reduce((sum, p) => sum + p.monto, 0);
+                const montoTotal = this.presupuestos.reduce((sum, p) => sum + (p.total || 0), 0);
                 document.getElementById('montoTotal').textContent =
                     `$${montoTotal.toLocaleString('es-AR', { minimumFractionDigits: 0 })}`;
             }
@@ -1052,12 +1500,12 @@
 
                 tbody.innerHTML = this.presupuestos.map(p => `
                     <tr>
-                        <td>#${p.id}</td>
+                        <td><strong>${p.numero || 'N/A'}</strong></td>
                         <td>${p.fecha}</td>
                         <td><strong>${p.cliente}</strong></td>
-                        <td>${p.descripcion.substring(0, 50)}${p.descripcion.length > 50 ? '...' : ''}</td>
-                        <td><strong>$${p.monto.toLocaleString('es-AR', { minimumFractionDigits: 2 })}</strong></td>
-                        <td>${p.formaPago}</td>
+                        <td>${p.dni || 'N/A'}</td>
+                        <td>${p.servicio.substring(0, 40)}${p.servicio.length > 40 ? '...' : ''}</td>
+                        <td><strong>$${(p.total || 0).toLocaleString('es-AR', { minimumFractionDigits: 2 })}</strong></td>
                         <td>
                             <div class="estado-selector">
                                 <select onchange="manager.updateEstado(${p.id}, this.value)" class="form-control">
@@ -1089,16 +1537,16 @@
             resetForm() {
                 document.getElementById('presupuestoForm').reset();
                 document.getElementById('presupuestoId').value = '';
-                document.getElementById('formTitle').textContent = 'Crear Nuevo Presupuesto';
+                document.getElementById('formTitle').innerHTML = '<i class="bi bi-file-earmark-plus me-2"></i>Crear Nuevo Presupuesto';
                 document.getElementById('btnSubmitText').textContent = 'Guardar Presupuesto';
                 this.editingId = null;
+                calcularTotal();
             }
 
             init() {
                 this.updateStats();
                 this.render();
 
-                // Toggle formulario
                 document.getElementById('btnNuevoPresupuesto').addEventListener('click', () => {
                     this.resetForm();
                     document.getElementById('formPresupuesto').classList.add('active');
@@ -1110,22 +1558,33 @@
                     this.resetForm();
                 });
 
-                // Submit formulario
                 document.getElementById('presupuestoForm').addEventListener('submit', (e) => {
                     e.preventDefault();
 
+                    const totalText = document.getElementById('totalEstimado').value.replace(/\./g, '').replace(',', '.');
+                    const saldoVal = document.getElementById('saldo').value;
+
                     const formData = {
                         cliente: document.getElementById('cliente').value,
+                        dni: document.getElementById('dni').value,
                         email: document.getElementById('email').value,
                         telefono: document.getElementById('telefono').value,
+                        servicio: document.getElementById('servicio').value,
                         descripcion: document.getElementById('descripcion').value,
-                        monto: document.getElementById('monto').value,
+                        valorUMA: document.getElementById('valorUMA').value,
+                        cantidadUMA: document.getElementById('cantidadUMA').value,
+                        honorarios: document.getElementById('honorarios').value,
+                        gastosAdmin: document.getElementById('gastosAdmin').value,
+                        iva: document.getElementById('iva').value,
                         anticipo: document.getElementById('anticipo').value,
-                        saldo: document.getElementById('saldo').value,
+                        saldo: saldoVal,
+                        total: totalText,
                         formaPago: document.getElementById('formaPago').value,
                         cuotas: document.getElementById('cuotas').value,
+                        vigencia: document.getElementById('vigencia').value,
                         vencimiento: document.getElementById('vencimiento').value,
-                        notas: document.getElementById('notas').value
+                        notas: document.getElementById('notas').value,
+                        detalleAdicional: document.getElementById('detalleAdicional').value
                     };
 
                     const editingId = document.getElementById('presupuestoId').value;
@@ -1150,7 +1609,6 @@
             document.getElementById('modalDetalles').classList.remove('active');
         }
 
-        // Cerrar modal al hacer clic fuera
         document.getElementById('modalDetalles').addEventListener('click', (e) => {
             if (e.target.id === 'modalDetalles') {
                 closeModal();
