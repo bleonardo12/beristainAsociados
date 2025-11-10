@@ -2,7 +2,7 @@
 
 ## 📋 Descripción
 
-Sistema de acceso protegido para socios del estudio jurídico, que permite gestionar presupuestos de manera privada y segura.
+Sistema profesional de acceso protegido para socios del estudio jurídico, que permite gestionar presupuestos de manera privada y segura. Incluye calculadora UMA, servicios predefinidos, exportación a PDF profesional y gestión completa de honorarios.
 
 ## 🔐 Características de Seguridad
 
@@ -48,12 +48,15 @@ Sistema de acceso protegido para socios del estudio jurídico, que permite gesti
 - Diseño responsive y profesional
 
 **Campos del presupuesto:**
-- Cliente (nombre)
-- Descripción del servicio
-- Monto en pesos argentinos
-- Notas adicionales
-- Fecha de creación (automática)
-- Estado (pendiente por defecto)
+- **Datos del Cliente:** Nombre completo, DNI, email, teléfono
+- **Servicio:** Área/servicio jurídico predefinido con UMA automático
+- **Descripción** detallada del caso
+- **Calculadora UMA:** Valor UMA × Cantidad = Total automático
+- **Honorarios:** Profesionales, gastos administrativos, IVA (0%, 10.5%, 21%)
+- **Pagos:** Anticipo, saldo calculado automáticamente, total estimado
+- **Condiciones:** Forma de pago profesional, cuotas, vigencia (15/30/45/60 días)
+- **Extras:** Fecha vencimiento pago, observaciones, detalle adicional
+- **Metadatos:** Número único (PPTO-YYYYMMDD-HHMM), fecha creación, estado
 
 ## 🔧 Configuración
 
