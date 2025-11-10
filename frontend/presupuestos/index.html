@@ -217,11 +217,51 @@
                                 <div class="col-md-6">
                                     <label for="formaPago" class="form-label fw-bold">Forma de Pago</label>
                                     <select class="form-select" id="formaPago">
-                                        <option value="Pago único al inicio">Pago único al inicio</option>
-                                        <option value="50% adelanto + 50% al finalizar">50% adelanto + 50% al finalizar</option>
-                                        <option value="30% adelanto + 70% al finalizar">30% adelanto + 70% al finalizar</option>
-                                        <option value="Pago en cuotas (a coordinar)">Pago en cuotas (a coordinar)</option>
-                                        <option value="A éxito (% sobre lo obtenido)">A éxito (% sobre lo obtenido)</option>
+                                        <optgroup label="PAGO ÚNICO">
+                                            <option value="Pago único al inicio">Pago único al inicio</option>
+                                            <option value="Pago único al finalizar el trámite">Pago único al finalizar el trámite</option>
+                                            <option value="Pago único antes de la sentencia">Pago único antes de la sentencia</option>
+                                        </optgroup>
+
+                                        <optgroup label="PAGO EN ETAPAS (DOS PAGOS)">
+                                            <option value="50% adelanto + 50% al finalizar">50% adelanto + 50% al finalizar</option>
+                                            <option value="50% al inicio + 50% antes de sentencia">50% al inicio + 50% antes de sentencia</option>
+                                            <option value="40% adelanto + 60% al finalizar">40% adelanto + 60% al finalizar</option>
+                                            <option value="30% adelanto + 70% al finalizar">30% adelanto + 70% al finalizar</option>
+                                            <option value="20% adelanto + 80% al finalizar">20% adelanto + 80% al finalizar</option>
+                                        </optgroup>
+
+                                        <optgroup label="PAGO EN ETAPAS (TRES PAGOS)">
+                                            <option value="33% al inicio + 33% mitad del proceso + 34% al finalizar">33% al inicio + 33% a mitad del proceso + 34% al finalizar</option>
+                                            <option value="30% al inicio + 30% mitad + 40% al finalizar">30% al inicio + 30% a mitad + 40% al finalizar</option>
+                                            <option value="25% al inicio + 25% mitad + 50% al finalizar">25% al inicio + 25% a mitad + 50% al finalizar</option>
+                                        </optgroup>
+
+                                        <optgroup label="CUOTAS">
+                                            <option value="Pago en 2 cuotas mensuales">Pago en 2 cuotas mensuales</option>
+                                            <option value="Pago en 3 cuotas mensuales">Pago en 3 cuotas mensuales</option>
+                                            <option value="Pago en 4 cuotas mensuales">Pago en 4 cuotas mensuales</option>
+                                            <option value="Pago en 6 cuotas mensuales">Pago en 6 cuotas mensuales</option>
+                                            <option value="Pago en cuotas (a coordinar)">Pago en cuotas (a coordinar)</option>
+                                        </optgroup>
+
+                                        <optgroup label="HONORARIOS A RESULTADO">
+                                            <option value="A éxito - Porcentaje sobre lo obtenido">A éxito - Porcentaje sobre lo obtenido</option>
+                                            <option value="A éxito - 25% sobre lo obtenido">A éxito - 25% sobre lo obtenido</option>
+                                            <option value="A éxito - 30% sobre lo obtenido">A éxito - 30% sobre lo obtenido</option>
+                                            <option value="A éxito - 35% sobre lo obtenido">A éxito - 35% sobre lo obtenido</option>
+                                            <option value="Mínimo garantizado + % sobre excedente">Mínimo garantizado + % sobre excedente</option>
+                                        </optgroup>
+
+                                        <optgroup label="OTRAS MODALIDADES">
+                                            <option value="Según etapas procesales">Según etapas procesales (especificar en observaciones)</option>
+                                            <option value="Por audiencia/presentación">Por audiencia o presentación judicial</option>
+                                            <option value="Abono mensual">Abono mensual</option>
+                                            <option value="Tarjeta de crédito/débito">Tarjeta de crédito/débito</option>
+                                            <option value="Transferencia bancaria">Transferencia bancaria</option>
+                                            <option value="Efectivo">Efectivo</option>
+                                            <option value="Mixto (especificar)">Mixto (especificar en observaciones)</option>
+                                        </optgroup>
                                     </select>
                                 </div>
                                 <div class="col-md-6">
@@ -237,6 +277,12 @@
                                     <label for="observaciones" class="form-label fw-bold">Observaciones/Aclaraciones</label>
                                     <textarea class="form-control" id="observaciones" rows="3"
                                         placeholder="Información adicional, condiciones especiales, etc."></textarea>
+                                </div>
+                                <div class="col-md-12">
+                                    <label for="detalleAdicional" class="form-label fw-bold">Detalle Adicional (Opcional)</label>
+                                    <textarea class="form-control" id="detalleAdicional" rows="4"
+                                        placeholder="Espacio libre para incluir cualquier información complementaria que desee agregar al presupuesto (documentación requerida, plazos específicos, aclaraciones sobre el proceso, etc.)"></textarea>
+                                    <small class="text-muted">Este campo aparecerá en el PDF si se completa</small>
                                 </div>
                             </div>
 

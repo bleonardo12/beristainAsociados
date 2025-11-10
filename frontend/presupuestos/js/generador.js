@@ -152,6 +152,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const formaPago = document.getElementById('formaPago').value;
         const vigencia = document.getElementById('vigencia').value;
         const observaciones = document.getElementById('observaciones').value;
+        const detalleAdicional = document.getElementById('detalleAdicional').value;
 
         // Cálculos
         const subtotal = honorarios + gastos;
@@ -184,7 +185,7 @@ document.addEventListener('DOMContentLoaded', function() {
         doc.text('Estudio Jurídico', 105, 26, { align: 'center' });
 
         doc.setFontSize(10);
-        doc.text('Av. Scalabrini Ortiz 319, 3° "B" - CABA', 105, 32, { align: 'center' });
+        doc.text('Araujo 319 - CABA', 105, 32, { align: 'center' });
 
         yPos = 50;
 
@@ -368,6 +369,25 @@ document.addEventListener('DOMContentLoaded', function() {
             yPos += (observacionesLines.length * 5) + 5;
         }
 
+        // Detalle Adicional
+        if (detalleAdicional) {
+            // Verificar si necesitamos una nueva página
+            if (yPos > 240) {
+                doc.addPage();
+                yPos = 20;
+            }
+
+            yPos += 5;
+            doc.setFont('helvetica', 'bold');
+            doc.setFontSize(10);
+            doc.text('Detalle Adicional:', 20, yPos);
+            yPos += 5;
+            doc.setFont('helvetica', 'normal');
+            const detalleLines = doc.splitTextToSize(detalleAdicional, 170);
+            doc.text(detalleLines, 20, yPos);
+            yPos += (detalleLines.length * 5) + 5;
+        }
+
         // ===== NOTA IMPORTANTE =====
         yPos += 5;
         doc.setFontSize(9);
@@ -394,9 +414,13 @@ document.addEventListener('DOMContentLoaded', function() {
             doc.setFontSize(9);
             doc.setFont('helvetica', 'normal');
             doc.setTextColor(...grayColor);
-            doc.text('Beristain & Asociados - Estudio Jurídico', 105, 285, { align: 'center' });
-            doc.text('Tel: +54 11 3591-3161 / +54 11 3352-8174', 105, 290, { align: 'center' });
-            doc.text('Email: beristainasociados@gmail.com', 105, 295, { align: 'center' });
+            doc.text('Beristain & Asociados - Estudio Jurídico', 105, 283, { align: 'center' });
+            doc.text('Dr. Leonardo Beristain - CUIT: 20-37992116-8', 105, 288, { align: 'center' });
+            doc.setFontSize(8);
+            doc.text('CPACF T146 F648 | CALM TXII F289 | CFALP T204 F114', 105, 292, { align: 'center' });
+            doc.setFontSize(9);
+            doc.text('Araujo 319 - CABA | Tel: +54 11 3591-3161', 105, 296, { align: 'center' });
+            doc.text('Email: beristainyasociadosej@gmail.com', 105, 300, { align: 'center' });
         }
 
         // ===== GUARDAR PDF =====
