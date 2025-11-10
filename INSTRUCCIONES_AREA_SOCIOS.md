@@ -8,7 +8,7 @@ Sistema de acceso protegido para socios del estudio jurídico, que permite gesti
 
 ### Autenticación
 - Página de login protegida con contraseña (`login.html`)
-- Contraseña por defecto: `BeristainSocios2025`
+- Contraseña: `123leo123$`
 - Protección contra fuerza bruta: máximo 5 intentos fallidos
 - Bloqueo temporal de 5 minutos después de exceder los intentos
 - Sesión almacenada en `sessionStorage` (se cierra al cerrar el navegador)
@@ -173,8 +173,8 @@ const LOCKOUT_TIME = 5 * 60 * 1000;  // Tiempo de bloqueo en milisegundos
 - Recomiende no limpiar el caché o implementar respaldo en servidor
 
 ### "La contraseña no funciona"
-- Contraseña por defecto: `BeristainSocios2025`
-- Verifica mayúsculas/minúsculas
+- Contraseña: `123leo123$`
+- Verifica mayúsculas/minúsculas (es case-sensitive)
 - Si cambió la contraseña en el código, use la nueva
 
 ## 📧 Contacto
