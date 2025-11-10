@@ -1155,11 +1155,11 @@
                     ${p.telefono ? `<div class="detail-row"><div class="detail-label">Teléfono:</div><div class="detail-value">${p.telefono}</div></div>` : ''}
                     <div class="detail-row">
                         <div class="detail-label">Servicio:</div>
-                        <div class="detail-value">${p.servicio}</div>
+                        <div class="detail-value">${p.servicio || 'Sin especificar'}</div>
                     </div>
                     <div class="detail-row">
                         <div class="detail-label">Descripción:</div>
-                        <div class="detail-value">${p.descripcion}</div>
+                        <div class="detail-value">${p.descripcion || 'Sin descripción'}</div>
                     </div>
                     ${p.valorUMA > 0 ? `<div class="detail-row"><div class="detail-label">UMA:</div><div class="detail-value">${p.cantidadUMA} UMA × $${p.valorUMA.toLocaleString('es-AR')}</div></div>` : ''}
                     <div class="detail-row">
@@ -1316,14 +1316,14 @@
                 doc.text('Área/Servicio:', 20, yPos);
                 yPos += 6;
                 doc.setFont('helvetica', 'normal');
-                doc.text(p.servicio, 20, yPos);
+                doc.text(p.servicio || 'Sin especificar', 20, yPos);
 
                 yPos += 10;
                 doc.setFont('helvetica', 'bold');
                 doc.text('Descripción:', 20, yPos);
                 yPos += 6;
                 doc.setFont('helvetica', 'normal');
-                const descripcionLines = doc.splitTextToSize(p.descripcion, 170);
+                const descripcionLines = doc.splitTextToSize(p.descripcion || 'Sin descripción', 170);
                 doc.text(descripcionLines, 20, yPos);
                 yPos += (descripcionLines.length * 6) + 10;
 
@@ -1488,13 +1488,16 @@
                     return;
                 }
 
-                tbody.innerHTML = this.presupuestos.map(p => `
+                tbody.innerHTML = this.presupuestos.map(p => {
+                    const servicio = p.servicio || 'Sin especificar';
+                    const servicioCorto = servicio.length > 40 ? servicio.substring(0, 40) + '...' : servicio;
+                    return `
                     <tr>
                         <td><strong>${p.numero || 'N/A'}</strong></td>
-                        <td>${p.fecha}</td>
-                        <td><strong>${p.cliente}</strong></td>
+                        <td>${p.fecha || 'N/A'}</td>
+                        <td><strong>${p.cliente || 'N/A'}</strong></td>
                         <td>${p.dni || 'N/A'}</td>
-                        <td>${p.servicio.substring(0, 40)}${p.servicio.length > 40 ? '...' : ''}</td>
+                        <td>${servicioCorto}</td>
                         <td><strong>$${(p.total || 0).toLocaleString('es-AR', { minimumFractionDigits: 2 })}</strong></td>
                         <td>
                             <div class="estado-selector">
@@ -1521,7 +1524,8 @@
                             </button>
                         </td>
                     </tr>
-                `).join('');
+                `;
+                }).join('');
             }
 
             resetForm() {
