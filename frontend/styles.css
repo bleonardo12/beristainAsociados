@@ -2,29 +2,29 @@
 
 :root {
     /* Color palette - Paleta moderna y suave inspirada en diseño contemporáneo */
-    --primary: #5A7FA5;              /* Azul suave y profesional */
-    --primary-light: #8FA9C4;        /* Azul pastel claro */
-    --primary-dark: #3D5A7A;         /* Azul oscuro suave */
-    --secondary: #D4B896;            /* Dorado pastel cálido */
-    --secondary-light: #E5D4B8;      /* Dorado muy suave */
-    --secondary-dark: #B8954D;       /* Dorado profundo */
-    --accent: #9BB5D1;               /* Azul grisáceo suave */
-    --accent-light: #C4D6E8;         /* Azul cielo pastel */
+    --primary: #2C3E50;              /* Azul suave y profesional */
+    --primary-light: #5D6D7E;        /* Azul pastel claro */
+    --primary-dark: #1A252F;         /* Azul oscuro suave */
+    --secondary: #E8D5B7;            /* Dorado pastel cálido */
+    --secondary-light: #F5EBD9;      /* Dorado muy suave */
+    --secondary-dark: #C9B896;       /* Dorado profundo */
+    --accent: #D4AF77;               /* Azul grisáceo suave */
+    --accent-light: #E9D7B8;         /* Azul cielo pastel */
     
     /* Neutrales con escala refinada */
     --neutral-100: #ffffff;
-    --neutral-200: #f8f9fa;
-    --neutral-300: #e9ecef;
-    --neutral-400: #ced4da;
+    --neutral-200: #F8F6F3;
+    --neutral-300: #E8E6E3;
+    --neutral-400: #D1CEC9;
     --neutral-500: #6c757d; /* Mejorado para contraste WCAG AA (5.2:1) */
     --neutral-600: #495057;
-    --neutral-700: #272b2f;
+    --neutral-700: #2C2C2C;
     
     /* Para cálculos de rgba - Actualizado con nueva paleta */
     --neutral-100-rgb: 255, 255, 255;
     --neutral-700-rgb: 39, 43, 47;
-    --primary-rgb: 90, 127, 165;        /* #5A7FA5 */
-    --secondary-rgb: 212, 184, 150;     /* #D4B896 */
+    --primary-rgb: 90, 127, 165;        /* #2C3E50 */
+    --secondary-rgb: 212, 184, 150;     /* #E8D5B7 */
     
     /* Sistema de espaciado moderno - Más generoso */
     --spacing-xs: clamp(0.75rem, 0.75rem + 0.15vw, 1rem);
