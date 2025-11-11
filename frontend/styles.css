@@ -1,15 +1,15 @@
-/* ========== VARIABLES GLOBALES MEJORADAS 2025 ========== */
+/* ========== VARIABLES GLOBALES MODERNIZADAS 2025 ========== */
 
 :root {
-    /* Color palette - Sistema refinado con color-mix */
-    --primary: #1a365d;
-    --primary-light: color-mix(in srgb, var(--primary) 70%, white);
-    --primary-dark: color-mix(in srgb, var(--primary) 80%, black);
-    --secondary: #c9b037;
-    --secondary-light: color-mix(in srgb, var(--secondary) 70%, white);
-    --secondary-dark: color-mix(in srgb, var(--secondary) 70%, black);
-    --accent: #4a6fa5;
-    --accent-light: color-mix(in srgb, var(--accent) 70%, white);
+    /* Color palette - Paleta moderna y suave inspirada en diseño contemporáneo */
+    --primary: #5A7FA5;              /* Azul suave y profesional */
+    --primary-light: #8FA9C4;        /* Azul pastel claro */
+    --primary-dark: #3D5A7A;         /* Azul oscuro suave */
+    --secondary: #D4B896;            /* Dorado pastel cálido */
+    --secondary-light: #E5D4B8;      /* Dorado muy suave */
+    --secondary-dark: #B8954D;       /* Dorado profundo */
+    --accent: #9BB5D1;               /* Azul grisáceo suave */
+    --accent-light: #C4D6E8;         /* Azul cielo pastel */
     
     /* Neutrales con escala refinada */
     --neutral-100: #ffffff;
@@ -20,18 +20,18 @@
     --neutral-600: #495057;
     --neutral-700: #272b2f;
     
-    /* Para cálculos de rgba */
+    /* Para cálculos de rgba - Actualizado con nueva paleta */
     --neutral-100-rgb: 255, 255, 255;
     --neutral-700-rgb: 39, 43, 47;
-    --primary-rgb: 26, 54, 93;
-    --secondary-rgb: 201, 176, 55;
+    --primary-rgb: 90, 127, 165;        /* #5A7FA5 */
+    --secondary-rgb: 212, 184, 150;     /* #D4B896 */
     
-    /* Sistema de espaciado coherente */
-    --spacing-xs: clamp(0.5rem, 0.5rem + 0.1vw, 0.625rem);
-    --spacing-sm: clamp(0.75rem, 0.75rem + 0.25vw, 1rem);
-    --spacing-md: clamp(1.25rem, 1.25rem + 0.25vw, 1.5rem);
-    --spacing-lg: clamp(2rem, 2rem + 0.5vw, 2.5rem);
-    --spacing-xl: clamp(3rem, 3rem + 1vw, 4rem);
+    /* Sistema de espaciado moderno - Más generoso */
+    --spacing-xs: clamp(0.75rem, 0.75rem + 0.15vw, 1rem);
+    --spacing-sm: clamp(1rem, 1rem + 0.25vw, 1.5rem);
+    --spacing-md: clamp(1.5rem, 1.5rem + 0.5vw, 2rem);
+    --spacing-lg: clamp(2.5rem, 2.5rem + 0.75vw, 3.5rem);
+    --spacing-xl: clamp(4rem, 4rem + 1.5vw, 5.5rem);
     
     /* Sistema tipográfico fluido */
     --fs-xs: clamp(0.75rem, 0.75rem + 0.1vw, 0.875rem);
@@ -44,18 +44,18 @@
     --fs-3xl: clamp(2.5rem, 2.5rem + 1.5vw, 3.5rem);
     --fs-4xl: clamp(3rem, 3rem + 2vw, 4.5rem);
     
-    /* Tipografía y líneas */
-    --font-primary: 'DM Serif Display', serif;
-    --font-secondary: 'Inter', sans-serif;
+    /* Tipografía modernizada */
+    --font-primary: 'Playfair Display', serif;     /* Títulos elegantes */
+    --font-secondary: 'Montserrat', sans-serif;    /* Texto moderno y legible */
     --line-height-tight: clamp(1.1, 1.1 + 0.1vw, 1.2);
     --line-height-normal: clamp(1.5, 1.5 + 0.1vw, 1.6);
     --line-height-relaxed: clamp(1.6, 1.6 + 0.1vw, 1.8);
     
-    /* Radios, bordes y sombras */
-    --border-radius-sm: 4px;
-    --border-radius-md: 8px;
-    --border-radius-lg: 12px;
-    --border-radius-xl: 16px;
+    /* Radios modernos - Más generosos y suaves */
+    --border-radius-sm: 8px;
+    --border-radius-md: 12px;
+    --border-radius-lg: 16px;
+    --border-radius-xl: 20px;
     --border-radius-full: 9999px;
     
     --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
