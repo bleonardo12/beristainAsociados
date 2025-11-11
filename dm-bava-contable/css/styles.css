@@ -548,6 +548,100 @@ section {
     font-weight: 500;
 }
 
+/* Experiencia Laboral */
+.experience-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--dark);
+    border-bottom: 3px solid var(--primary);
+    padding-bottom: 0.75rem;
+}
+
+.experience-item {
+    background: var(--light);
+    border-left: 4px solid var(--primary);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.experience-item:hover {
+    box-shadow: 0 8px 25px rgba(212, 145, 159, 0.2);
+    transform: translateX(5px);
+}
+
+.experience-period {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: var(--white);
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    letter-spacing: 0.5px;
+}
+
+.experience-details {
+    margin-top: 1rem;
+}
+
+.experience-company {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 0.5rem;
+}
+
+.experience-role {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 0.25rem;
+}
+
+.experience-location {
+    font-size: 0.9rem;
+    color: var(--text);
+    opacity: 0.8;
+    margin-bottom: 0.75rem;
+}
+
+.experience-desc {
+    font-size: 0.95rem;
+    color: var(--text);
+    line-height: 1.7;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 8px;
+}
+
+.experience-tasks {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.experience-tasks li {
+    padding: 0.5rem 0 0.5rem 1.5rem;
+    position: relative;
+    font-size: 0.9rem;
+    color: var(--text);
+    line-height: 1.6;
+}
+
+.experience-tasks li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--primary);
+    font-weight: bold;
+    font-size: 1rem;
+}
+
 /* ========== CONTACT SECTION ========== */
 .contact-section {
     background: linear-gradient(135deg, #FFF5F9 0%, var(--white) 100%);
