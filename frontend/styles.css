@@ -1,37 +1,37 @@
 /* ========== VARIABLES GLOBALES MODERNIZADAS 2025 ========== */
 
 :root {
-    /* Color palette - Paleta moderna y suave inspirada en diseño contemporáneo */
-    --primary: #5A7FA5;              /* Azul suave y profesional */
-    --primary-light: #8FA9C4;        /* Azul pastel claro */
-    --primary-dark: #3D5A7A;         /* Azul oscuro suave */
-    --secondary: #D4B896;            /* Dorado pastel cálido */
-    --secondary-light: #E5D4B8;      /* Dorado muy suave */
-    --secondary-dark: #B8954D;       /* Dorado profundo */
-    --accent: #9BB5D1;               /* Azul grisáceo suave */
-    --accent-light: #C4D6E8;         /* Azul cielo pastel */
-    
+    /* Paleta de colores pasteles elegantes - Gama dorada suave */
+    --primary: #2C3E50;              /* Azul marino elegante */
+    --primary-light: #5D6D7E;        /* Azul grisáceo suave */
+    --primary-dark: #1A252F;         /* Azul oscuro profundo */
+    --secondary: #E8D5B7;            /* Dorado pastel muy suave */
+    --secondary-light: #F5EBD9;      /* Crema dorado claro */
+    --secondary-dark: #C9B896;       /* Dorado arena */
+    --accent: #D4AF77;               /* Dorado medio cálido */
+    --accent-light: #E9D7B8;         /* Dorado pastel luminoso */
+
     /* Neutrales con escala refinada */
     --neutral-100: #ffffff;
-    --neutral-200: #f8f9fa;
-    --neutral-300: #e9ecef;
-    --neutral-400: #ced4da;
-    --neutral-500: #6c757d; /* Mejorado para contraste WCAG AA (5.2:1) */
+    --neutral-200: #F8F6F3;          /* Crema muy claro */
+    --neutral-300: #E8E6E3;          /* Gris cálido claro */
+    --neutral-400: #D1CEC9;          /* Gris cálido medio */
+    --neutral-500: #6c757d;
     --neutral-600: #495057;
-    --neutral-700: #272b2f;
-    
+    --neutral-700: #2C2C2C;          /* Negro cálido */
+
     /* Para cálculos de rgba - Actualizado con nueva paleta */
     --neutral-100-rgb: 255, 255, 255;
-    --neutral-700-rgb: 39, 43, 47;
-    --primary-rgb: 90, 127, 165;        /* #5A7FA5 */
-    --secondary-rgb: 212, 184, 150;     /* #D4B896 */
+    --neutral-700-rgb: 44, 44, 44;
+    --primary-rgb: 44, 62, 80;          /* #2C3E50 */
+    --secondary-rgb: 232, 213, 183;     /* #E8D5B7 */
     
-    /* Sistema de espaciado moderno - Más generoso */
-    --spacing-xs: clamp(0.75rem, 0.75rem + 0.15vw, 1rem);
-    --spacing-sm: clamp(1rem, 1rem + 0.25vw, 1.5rem);
-    --spacing-md: clamp(1.5rem, 1.5rem + 0.5vw, 2rem);
-    --spacing-lg: clamp(2.5rem, 2.5rem + 0.75vw, 3.5rem);
-    --spacing-xl: clamp(4rem, 4rem + 1.5vw, 5.5rem);
+    /* Sistema de espaciado generoso - Diseño limpio y respirable */
+    --spacing-xs: clamp(1rem, 1rem + 0.2vw, 1.25rem);
+    --spacing-sm: clamp(1.5rem, 1.5rem + 0.35vw, 2rem);
+    --spacing-md: clamp(2rem, 2rem + 0.75vw, 3rem);
+    --spacing-lg: clamp(3rem, 3rem + 1vw, 4.5rem);
+    --spacing-xl: clamp(5rem, 5rem + 2vw, 7rem);
     
     /* Sistema tipográfico fluido */
     --fs-xs: clamp(0.75rem, 0.75rem + 0.1vw, 0.875rem);
