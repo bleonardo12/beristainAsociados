@@ -113,17 +113,19 @@ p {
     padding: 0;
 }
 
-/* Logo con bordes redondeados */
+/* Logo totalmente redondo */
 .logo-principal {
     height: 60px;
-    width: auto;
+    width: 60px;
     transition: var(--transition);
-    border-radius: 12px;
+    border-radius: 50%;
     box-shadow: var(--shadow-sm);
+    object-fit: cover;
 }
 
 .navbar.scrolled .logo-principal {
     height: 50px;
+    width: 50px;
 }
 
 /* Navegación */
@@ -375,29 +377,267 @@ section {
     background-color: var(--secondary);
 }
 
-/* ========== MODAL ========== */
-.modal-content {
+/* ========== MODAL MODERNO ========== */
+.modal-content.modal-modern {
     border: none;
     border-radius: var(--radius-lg);
     overflow: hidden;
-    box-shadow: var(--shadow-lg);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
 }
 
-.modal-header {
-    background-color: var(--primary);
+.modal-header.modal-header-modern {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
     color: var(--neutral-white);
     border: none;
     padding: var(--spacing-lg);
+}
+
+.modal-title-wrapper {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.modal-icon {
+    font-size: 2rem;
+    color: var(--secondary);
 }
 
 .modal-title {
     font-family: var(--font-primary);
     font-size: 1.75rem;
     color: var(--neutral-white);
+    margin-bottom: 0.25rem;
 }
 
-.modal-body {
-    padding: var(--spacing-lg);
+.modal-subtitle {
+    color: var(--neutral-200);
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+.btn-close.btn-close-modern {
+    filter: invert(1);
+    opacity: 0.8;
+}
+
+.btn-close.btn-close-modern:hover {
+    opacity: 1;
+}
+
+.modal-body.modal-body-modern {
+    padding: var(--spacing-xl) var(--spacing-lg);
+    background-color: var(--neutral-100);
+}
+
+/* Welcome Message */
+.welcome-message {
+    background-color: var(--neutral-white);
+    border-left: 4px solid #28a745;
+    padding: var(--spacing-md);
+    border-radius: var(--radius-sm);
+    margin-bottom: var(--spacing-xl);
+    box-shadow: var(--shadow-sm);
+}
+
+.welcome-message p {
+    margin: 0;
+    color: var(--neutral-700);
+    font-weight: 500;
+}
+
+.welcome-message .text-success {
+    color: #28a745;
+    margin-right: var(--spacing-xs);
+}
+
+/* Contact Options Grid */
+.contact-options-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+@media (min-width: 576px) {
+    .contact-options-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Contact Option Card */
+.contact-option {
+    background-color: var(--neutral-white);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    transition: var(--transition);
+    box-shadow: var(--shadow-sm);
+    position: relative;
+    overflow: hidden;
+}
+
+.contact-option:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+}
+
+.contact-option::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--primary);
+    transition: var(--transition);
+}
+
+.contact-option.whatsapp-option::before {
+    background: #25D366;
+}
+
+.contact-option.phone-option::before {
+    background: #2196F3;
+}
+
+.contact-option.email-option::before {
+    background: #F44336;
+}
+
+.contact-option.form-option::before {
+    background: var(--accent);
+}
+
+.contact-option:hover::before {
+    width: 6px;
+}
+
+/* Contact Option Icon */
+.contact-option-icon {
+    flex-shrink: 0;
+    width: 50px;
+    height: 50px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    transition: var(--transition);
+}
+
+.whatsapp-option .contact-option-icon {
+    background: rgba(37, 211, 102, 0.1);
+    color: #25D366;
+}
+
+.phone-option .contact-option-icon {
+    background: rgba(33, 150, 243, 0.1);
+    color: #2196F3;
+}
+
+.email-option .contact-option-icon {
+    background: rgba(244, 67, 54, 0.1);
+    color: #F44336;
+}
+
+.form-option .contact-option-icon {
+    background: rgba(212, 175, 119, 0.1);
+    color: var(--accent);
+}
+
+.contact-option:hover .contact-option-icon {
+    transform: scale(1.1);
+}
+
+/* Contact Option Content */
+.contact-option-content {
+    flex: 1;
+}
+
+.contact-option-content h6 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--neutral-700);
+    margin-bottom: 0.25rem;
+}
+
+.contact-option-content p {
+    font-size: 0.85rem;
+    color: var(--neutral-600);
+    margin-bottom: 0.25rem;
+}
+
+.contact-option-detail {
+    font-size: 0.8rem;
+    color: var(--primary);
+    font-weight: 500;
+}
+
+/* Contact Option Arrow */
+.contact-option-arrow {
+    flex-shrink: 0;
+    font-size: 1.2rem;
+    color: var(--neutral-400);
+    transition: var(--transition);
+}
+
+.contact-option:hover .contact-option-arrow {
+    color: var(--primary);
+    transform: translateX(5px);
+}
+
+/* Social Section */
+.social-section {
+    text-align: center;
+    padding-top: var(--spacing-lg);
+    border-top: 1px solid var(--neutral-300);
+}
+
+.social-title {
+    font-size: 0.9rem;
+    color: var(--neutral-600);
+    margin-bottom: var(--spacing-md);
+}
+
+.social-links-modal {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-md);
+}
+
+.social-link {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    transition: var(--transition);
+    box-shadow: var(--shadow-sm);
+}
+
+.social-link.instagram {
+    background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
+    color: var(--neutral-white);
+}
+
+.social-link.linkedin {
+    background: #0077b5;
+    color: var(--neutral-white);
+}
+
+.social-link.tiktok {
+    background: #000000;
+    color: var(--neutral-white);
+}
+
+.social-link:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: var(--shadow-md);
 }
 
 /* ========== FORMULARIO ========== */
@@ -562,7 +802,7 @@ footer a:hover {
     border-top: 3px solid #ff3838;
     border-bottom: 3px solid #ff3838;
     color: var(--neutral-white);
-    padding: var(--spacing-md) var(--spacing-sm);
+    padding: var(--spacing-md) 60px var(--spacing-md) var(--spacing-sm);
     text-align: center;
     position: relative;
     z-index: 1040;
@@ -572,7 +812,7 @@ footer a:hover {
     margin: 0;
     font-weight: 700;
     font-size: clamp(0.875rem, 1.5vw, 1.125rem);
-    padding-right: 50px;
+    pointer-events: none;
 }
 
 .emergency-banner strong {
@@ -581,7 +821,7 @@ footer a:hover {
 
 #close-emergency-banner {
     position: absolute;
-    right: var(--spacing-sm);
+    right: 10px;
     top: 50%;
     transform: translateY(-50%);
     background: rgba(255, 56, 56, 0.2);
@@ -595,9 +835,9 @@ footer a:hover {
     justify-content: center;
     cursor: pointer;
     transition: var(--transition);
-    border: none;
-    outline: none;
-    z-index: 10;
+    font-size: 1.2rem;
+    z-index: 1050;
+    pointer-events: all;
 }
 
 #close-emergency-banner:hover {
