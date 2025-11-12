@@ -525,12 +525,14 @@ footer a:hover {
     padding: var(--spacing-md) var(--spacing-sm);
     text-align: center;
     position: relative;
+    z-index: 1040;
 }
 
 .emergency-banner p {
     margin: 0;
     font-weight: 700;
     font-size: clamp(0.875rem, 1.5vw, 1.125rem);
+    padding-right: 50px;
 }
 
 .emergency-banner strong {
@@ -553,11 +555,261 @@ footer a:hover {
     justify-content: center;
     cursor: pointer;
     transition: var(--transition);
+    border: none;
+    outline: none;
+    z-index: 10;
 }
 
 #close-emergency-banner:hover {
     background: rgba(255, 56, 56, 0.4);
     transform: translateY(-50%) scale(1.1);
+}
+
+#close-emergency-banner:active {
+    transform: translateY(-50%) scale(0.95);
+}
+
+/* ========== COOKIE BANNER ========== */
+.cookie-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--neutral-700);
+    color: var(--neutral-white);
+    padding: var(--spacing-md);
+    z-index: 1050;
+    box-shadow: var(--shadow-lg);
+    display: none;
+}
+
+.cookie-banner.visible {
+    display: block;
+}
+
+.cookie-banner .container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.cookie-banner p {
+    margin: 0;
+    flex: 1;
+    min-width: 280px;
+}
+
+.cookie-banner a {
+    color: var(--secondary);
+    text-decoration: underline;
+}
+
+.cookie-banner .buttons {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+.cookie-banner button {
+    cursor: pointer;
+    z-index: 10;
+}
+
+/* ========== SPINNER FORMULARIO ========== */
+.spinner-container {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-md);
+}
+
+.spinner-container.hidden {
+    display: none !important;
+}
+
+.spinner-container:not(.hidden) {
+    display: flex;
+}
+
+.spinner-border {
+    width: 2rem;
+    height: 2rem;
+    border: 0.25em solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: spinner-border 0.75s linear infinite;
+}
+
+.spinner-border.text-primary {
+    color: var(--primary);
+}
+
+.spinner-text {
+    font-size: 0.95rem;
+    color: var(--neutral-600);
+}
+
+@keyframes spinner-border {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ========== TERRITORIO / MAPAS ========== */
+.territorio-grid {
+    margin-top: var(--spacing-lg);
+}
+
+.territorio-card {
+    background-color: var(--neutral-white);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.territorio-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+}
+
+.territorio-img {
+    padding: var(--spacing-md);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--neutral-100);
+    min-height: 200px;
+}
+
+.territorio-mapa {
+    max-height: 180px;
+    width: auto;
+    object-fit: contain;
+    transition: var(--transition);
+}
+
+.territorio-card:hover .territorio-mapa {
+    transform: scale(1.05);
+}
+
+.territorio-content {
+    padding: var(--spacing-md);
+    flex: 1;
+}
+
+.territorio-content h3 {
+    color: var(--primary);
+    font-size: clamp(1.125rem, 2vw, 1.25rem);
+    margin-bottom: var(--spacing-sm);
+    text-align: center;
+}
+
+.territorio-content p {
+    color: var(--neutral-600);
+    font-size: clamp(0.875rem, 1.5vw, 1rem);
+    text-align: center;
+}
+
+/* ========== COMENTARIOS/TESTIMONIOS ========== */
+.comentarios-section {
+    padding: var(--spacing-xl) var(--spacing-md);
+    background-color: var(--neutral-white);
+}
+
+.comentarios-section h2 {
+    text-align: center;
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    color: var(--primary);
+    margin-bottom: var(--spacing-xl);
+}
+
+.comentarios-wrapper {
+    position: relative;
+    margin-top: var(--spacing-lg);
+}
+
+.comentarios-group {
+    display: none;
+}
+
+.comentarios-group.active {
+    display: block;
+}
+
+.comentario-card {
+    background-color: var(--neutral-100);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+    margin-bottom: var(--spacing-md);
+}
+
+.comentario-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+}
+
+.comentario-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+}
+
+.cliente-foto {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--secondary);
+    box-shadow: var(--shadow-sm);
+}
+
+.comentario-header h4 {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    color: var(--primary);
+    margin-bottom: 0;
+}
+
+.comentario-body p {
+    font-size: clamp(0.875rem, 1.5vw, 1rem);
+    color: var(--neutral-600);
+    line-height: 1.6;
+    font-style: italic;
+}
+
+.comentarios-controls {
+    margin-top: var(--spacing-lg);
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-sm);
+}
+
+.comentario-control {
+    background-color: var(--neutral-300);
+    color: var(--primary);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.comentario-control:hover {
+    background-color: var(--secondary);
+    color: var(--neutral-white);
+    transform: scale(1.1);
 }
 
 /* ========== RESPONSIVE - TABLET ========== */
