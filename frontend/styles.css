@@ -229,6 +229,11 @@ p {
     margin-bottom: var(--spacing-sm);
 }
 
+/* Botón contacto profesional móvil */
+.btn-contact-professional.d-lg-none {
+    width: 100%;
+}
+
 /* ========== HOME / HERO ========== */
 .home {
     background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
