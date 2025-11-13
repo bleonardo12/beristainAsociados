@@ -445,6 +445,118 @@
             transform: translateY(-2px);
         }
 
+        /* Lista de servicios agregados */
+        .servicios-agregados {
+            background: #f8fafc;
+            border: 2px dashed #cbd5e1;
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            min-height: 100px;
+        }
+
+        .servicio-item {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-left: 4px solid var(--accent-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.2s ease;
+        }
+
+        .servicio-item:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .servicio-info {
+            flex: 1;
+        }
+
+        .servicio-nombre {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.25rem;
+        }
+
+        .servicio-detalles {
+            font-size: 0.875rem;
+            color: var(--text-light);
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .servicio-total {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+
+        .btn-remove-servicio {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 0.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-remove-servicio:hover {
+            background: #dc2626;
+            transform: scale(1.1);
+        }
+
+        .servicios-empty {
+            text-align: center;
+            color: var(--text-light);
+            padding: 2rem 1rem;
+        }
+
+        .btn-add-servicio {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-add-servicio:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(26, 54, 93, 0.3);
+        }
+
+        .servicios-total-general {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-top: 1rem;
+        }
+
         /* Section dividers */
         .section-divider {
             border-bottom: 2px solid var(--primary-color);
@@ -718,55 +830,91 @@
                         </div>
                     </div>
 
-                    <!-- SERVICIO JURÍDICO -->
+                    <!-- SERVICIOS JURÍDICOS -->
                     <div class="section-divider">
                         <i class="bi bi-briefcase-fill"></i>
-                        SERVICIO JURÍDICO
+                        SERVICIOS JURÍDICOS
+                    </div>
+
+                    <!-- Calculadora para agregar servicios -->
+                    <div class="uma-calculator" style="background: linear-gradient(135deg, #fef3c7 0%, #fef9e3 100%); border-color: var(--accent-color);">
+                        <h6><i class="bi bi-plus-circle me-2"></i>Agregar Servicio</h6>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="servicioSelect">Servicio Predefinido</label>
+                                <select id="servicioSelect" class="form-control">
+                                    <option value="">Seleccione un servicio...</option>
+                                    <optgroup label="RAMA PENAL">
+                                        <option value="Penal - Incidente de excarcelación y/o exención de prisión">Incidente de excarcelación y/o exención de prisión</option>
+                                        <option value="Penal - Pedido y audiencia de suspensión de juicio a prueba">Pedido y audiencia de suspensión de juicio a prueba</option>
+                                        <option value="Penal - Acta de juicio abreviado">Acta de juicio abreviado</option>
+                                        <option value="Penal - Actuación hasta la clausura de la instrucción">Actuación hasta la clausura de la instrucción</option>
+                                        <option value="Penal - Actuación desde la clausura hasta sentencia">Actuación desde la clausura de la instrucción hasta la sentencia</option>
+                                        <option value="Penal - Parte Querellante">Parte Querellante</option>
+                                        <option value="Penal - Redacción de denuncia penal" data-uma="3">Redacción de denuncia penal</option>
+                                    </optgroup>
+                                    <optgroup label="RAMA CIVIL">
+                                        <option value="Civil - Sucesiones">Sucesiones</option>
+                                        <option value="Civil - Declaración de insania">Declaración de insania</option>
+                                        <option value="Civil - Consulta verbal" data-uma="0.5">Consulta verbal</option>
+                                        <option value="Civil - Consulta con informe" data-uma="1">Consulta con informe</option>
+                                        <option value="Civil - Redacción de carta documento" data-uma="1">Redacción de carta documento</option>
+                                        <option value="Civil - Estudio de actuaciones" data-uma="2">Estudio o información de actuaciones</option>
+                                        <option value="Civil - Trámites administrativos" data-uma="3">Trámites administrativos</option>
+                                        <option value="Civil - Trámites ante IGJ" data-uma="5">Trámites ante IGJ (CABA)</option>
+                                        <option value="Civil - Redacción contrato de locación" data-uma="2">Redacción contrato de locación</option>
+                                        <option value="Civil - Redacción boleto compra venta" data-uma="3">Redacción boleto compra venta</option>
+                                    </optgroup>
+                                    <optgroup label="RAMA COMERCIAL">
+                                        <option value="Comercial - Juicio ejecutivo contra bancos">Juicio ejecutivo contra bancos</option>
+                                        <option value="Comercial - Juicio ordinario contra bancos">Juicio ordinario contra bancos</option>
+                                    </optgroup>
+                                    <optgroup label="ACCIDENTES DE TRÁNSITO">
+                                        <option value="Accidentes - Reclamo administrativo">Reclamo administrativo</option>
+                                        <option value="Accidentes - Daños y perjuicios">Daños y perjuicios</option>
+                                        <option value="Accidentes - Reclamo completo">Reclamo completo (administrativo + judicial)</option>
+                                    </optgroup>
+                                </select>
+                                <small class="text-muted">O ingrese uno personalizado abajo</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="servicioPersonalizado">Servicio Personalizado</label>
+                                <input type="text" id="servicioPersonalizado" class="form-control" placeholder="Ej: Vista de causa">
+                                <small class="text-muted">Si no está en la lista</small>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="valorUMAServicio">Valor UMA ($)</label>
+                                <input type="number" id="valorUMAServicio" class="form-control" value="45000" min="0" step="0.01" placeholder="45000">
+                            </div>
+                            <div class="form-group">
+                                <label for="cantidadUMAServicio">Cantidad UMA</label>
+                                <input type="number" id="cantidadUMAServicio" class="form-control" value="1" min="0" step="0.5" placeholder="3">
+                            </div>
+                            <div class="form-group">
+                                <label>Total del Servicio</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">$</span>
+                                    <input type="text" id="totalServicio" class="form-control fw-bold" readonly>
+                                </div>
+                                <button type="button" class="btn-add-servicio" id="btnAgregarServicio" style="width: 100%; margin-top: 0.5rem;">
+                                    <i class="bi bi-plus-lg"></i> Agregar Servicio
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Lista de servicios agregados -->
+                    <div class="servicios-agregados" id="serviciosAgregados">
+                        <div class="servicios-empty" id="serviciosEmpty">
+                            <i class="bi bi-inbox" style="font-size: 2rem; opacity: 0.3;"></i>
+                            <p>No hay servicios agregados. Use el formulario arriba para agregar servicios.</p>
+                        </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="servicio">Área/Servicio *</label>
-                        <select id="servicio" class="form-control" required>
-                            <option value="">Seleccione un servicio...</option>
-                            <optgroup label="RAMA PENAL">
-                                <option value="Penal - Incidente de excarcelación y/o exención de prisión">Incidente de excarcelación y/o exención de prisión</option>
-                                <option value="Penal - Pedido y audiencia de suspensión de juicio a prueba">Pedido y audiencia de suspensión de juicio a prueba</option>
-                                <option value="Penal - Acta de juicio abreviado">Acta de juicio abreviado</option>
-                                <option value="Penal - Actuación hasta la clausura de la instrucción">Actuación hasta la clausura de la instrucción</option>
-                                <option value="Penal - Actuación desde la clausura hasta sentencia">Actuación desde la clausura de la instrucción hasta la sentencia</option>
-                                <option value="Penal - Parte Querellante">Parte Querellante</option>
-                                <option value="Penal - Redacción de denuncia penal" data-uma="3">Redacción de denuncia penal (3 UMA)</option>
-                            </optgroup>
-                            <optgroup label="RAMA CIVIL">
-                                <option value="Civil - Sucesiones">Sucesiones</option>
-                                <option value="Civil - Declaración de insania">Declaración de insania</option>
-                                <option value="Civil - Consulta verbal" data-uma="0.5">Consulta verbal (0.5 UMA)</option>
-                                <option value="Civil - Consulta con informe" data-uma="1">Consulta con informe (1 UMA)</option>
-                                <option value="Civil - Redacción de carta documento" data-uma="1">Redacción de carta documento (1 UMA)</option>
-                                <option value="Civil - Estudio de actuaciones" data-uma="2">Estudio o información de actuaciones (2 UMA)</option>
-                                <option value="Civil - Trámites administrativos" data-uma="3">Trámites administrativos (3 UMA)</option>
-                                <option value="Civil - Trámites ante IGJ" data-uma="5">Trámites ante IGJ (CABA) (5 UMA)</option>
-                                <option value="Civil - Redacción contrato de locación" data-uma="2">Redacción contrato de locación (Mín. 2 UMA)</option>
-                                <option value="Civil - Redacción boleto compra venta" data-uma="3">Redacción boleto compra venta (Mín. 3 UMA)</option>
-                            </optgroup>
-                            <optgroup label="RAMA COMERCIAL">
-                                <option value="Comercial - Juicio ejecutivo contra bancos">Juicio ejecutivo contra bancos</option>
-                                <option value="Comercial - Juicio ordinario contra bancos">Juicio ordinario contra bancos</option>
-                            </optgroup>
-                            <optgroup label="ACCIDENTES DE TRÁNSITO">
-                                <option value="Accidentes - Reclamo administrativo">Reclamo administrativo</option>
-                                <option value="Accidentes - Daños y perjuicios">Daños y perjuicios</option>
-                                <option value="Accidentes - Reclamo completo">Reclamo completo (administrativo + judicial)</option>
-                            </optgroup>
-                            <optgroup label="OTROS">
-                                <option value="Otro servicio">Otro servicio (especificar en descripción)</option>
-                            </optgroup>
-                        </select>
-                        <small class="text-muted">Servicios marcados con UMA tienen honorarios mínimos establecidos</small>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="descripcion">Descripción Detallada del Caso *</label>
+                        <label for="descripcion">Descripción General del Caso *</label>
                         <textarea id="descripcion" class="form-control" required placeholder="Describa brevemente la situación del cliente y las gestiones a realizar..."></textarea>
                     </div>
 
@@ -776,37 +924,11 @@
                         HONORARIOS Y GASTOS
                     </div>
 
-                    <!-- Calculadora UMA -->
-                    <div class="uma-calculator">
-                        <h6><i class="bi bi-calculator me-2"></i>Calculadora UMA (Unidad Mínima Arancelaria)</h6>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="valorUMA">Valor actual de 1 UMA ($)</label>
-                                <input type="number" id="valorUMA" class="form-control" value="0" min="0" step="0.01" placeholder="Ej: 28000">
-                                <small class="text-muted">Según Colegio de Abogados</small>
-                            </div>
-                            <div class="form-group">
-                                <label for="cantidadUMA">Cantidad de UMA</label>
-                                <input type="number" id="cantidadUMA" class="form-control" value="0" min="0" step="0.5" placeholder="Ej: 3">
-                            </div>
-                            <div class="form-group">
-                                <label>Total en UMA</label>
-                                <div class="input-group">
-                                    <span class="input-group-text">$</span>
-                                    <input type="text" id="totalUMA" class="form-control" readonly>
-                                </div>
-                                <button type="button" class="btn-aplicar-uma" id="btnAplicarUMA">
-                                    <i class="bi bi-arrow-down me-1"></i>Aplicar a Honorarios
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
                     <div class="form-row">
                         <div class="form-group">
                             <label for="honorarios">Honorarios Profesionales ($) *</label>
-                            <input type="number" id="honorarios" class="form-control" required min="0" step="0.01" placeholder="0.00">
-                            <small class="text-muted">Ingrese monto directo o use calculadora UMA arriba</small>
+                            <input type="number" id="honorarios" class="form-control" required min="0" step="0.01" placeholder="0.00" readonly>
+                            <small class="text-muted">Calculado automáticamente desde los servicios agregados</small>
                         </div>
                         <div class="form-group">
                             <label for="gastosAdmin">Gastos Administrativos ($)</label>
@@ -1043,6 +1165,7 @@
             constructor() {
                 this.presupuestos = this.loadPresupuestos();
                 this.editingId = null;
+                this.serviciosTemp = []; // Array temporal para servicios del presupuesto actual
                 this.init();
             }
 
@@ -1075,10 +1198,8 @@
                     dni: data.dni,
                     email: data.email,
                     telefono: data.telefono,
-                    servicio: data.servicio,
+                    servicios: this.serviciosTemp, // Array de servicios
                     descripcion: data.descripcion,
-                    valorUMA: parseFloat(data.valorUMA) || 0,
-                    cantidadUMA: parseFloat(data.cantidadUMA) || 0,
                     honorarios: parseFloat(data.honorarios),
                     gastosAdmin: parseFloat(data.gastosAdmin) || 0,
                     iva: parseFloat(data.iva) || 0,
@@ -1095,6 +1216,7 @@
                 };
                 this.presupuestos.unshift(presupuesto);
                 this.savePresupuestos();
+                this.serviciosTemp = []; // Limpiar servicios temporales
             }
 
             updatePresupuesto(id, data) {
@@ -1110,10 +1232,8 @@
                         dni: data.dni,
                         email: data.email,
                         telefono: data.telefono,
-                        servicio: data.servicio,
+                        servicios: this.serviciosTemp, // Array de servicios
                         descripcion: data.descripcion,
-                        valorUMA: parseFloat(data.valorUMA) || 0,
-                        cantidadUMA: parseFloat(data.cantidadUMA) || 0,
                         honorarios: parseFloat(data.honorarios),
                         gastosAdmin: parseFloat(data.gastosAdmin) || 0,
                         iva: parseFloat(data.iva) || 0,
@@ -1128,6 +1248,7 @@
                         detalleAdicional: data.detalleAdicional
                     };
                     this.savePresupuestos();
+                    this.serviciosTemp = []; // Limpiar servicios temporales
                 }
             }
 
@@ -1157,10 +1278,7 @@
                     document.getElementById('dni').value = p.dni || '';
                     document.getElementById('email').value = p.email || '';
                     document.getElementById('telefono').value = p.telefono || '';
-                    document.getElementById('servicio').value = p.servicio;
                     document.getElementById('descripcion').value = p.descripcion;
-                    document.getElementById('valorUMA').value = p.valorUMA || 0;
-                    document.getElementById('cantidadUMA').value = p.cantidadUMA || 0;
                     document.getElementById('honorarios').value = p.honorarios;
                     document.getElementById('gastosAdmin').value = p.gastosAdmin || 0;
                     document.getElementById('iva').value = p.iva || 0;
@@ -1172,7 +1290,10 @@
                     document.getElementById('notas').value = p.notas || '';
                     document.getElementById('detalleAdicional').value = p.detalleAdicional || '';
 
-                    calcularTotalUMA();
+                    // Cargar servicios
+                    this.serviciosTemp = p.servicios || [];
+                    this.renderServiciosTemp();
+
                     calcularTotal();
 
                     document.getElementById('formPresupuesto').classList.add('active');
@@ -1208,16 +1329,22 @@
                     ${p.email ? `<div class="detail-row"><div class="detail-label">Email:</div><div class="detail-value">${p.email}</div></div>` : ''}
                     ${p.telefono ? `<div class="detail-row"><div class="detail-label">Teléfono:</div><div class="detail-value">${p.telefono}</div></div>` : ''}
                     <div class="detail-row">
-                        <div class="detail-label">Servicio:</div>
-                        <div class="detail-value">${p.servicio || 'Sin especificar'}</div>
+                        <div class="detail-label">Servicios:</div>
+                        <div class="detail-value">
+                            ${(p.servicios && p.servicios.length > 0) ? p.servicios.map(s => `
+                                <div style="margin-bottom: 0.5rem; padding: 0.5rem; background: #f8fafc; border-left: 3px solid var(--accent-color); border-radius: 4px;">
+                                    <strong>${s.nombre}</strong><br>
+                                    <small>Valor UMA: $${s.valorUMA.toLocaleString('es-AR')} × ${s.cantidadUMA} = $${s.total.toLocaleString('es-AR', { minimumFractionDigits: 2 })}</small>
+                                </div>
+                            `).join('') : 'Sin servicios especificados'}
+                        </div>
                     </div>
                     <div class="detail-row">
                         <div class="detail-label">Descripción:</div>
                         <div class="detail-value">${p.descripcion || 'Sin descripción'}</div>
                     </div>
-                    ${p.valorUMA > 0 ? `<div class="detail-row"><div class="detail-label">UMA:</div><div class="detail-value">${p.cantidadUMA} UMA × $${p.valorUMA.toLocaleString('es-AR')}</div></div>` : ''}
                     <div class="detail-row">
-                        <div class="detail-label">Honorarios:</div>
+                        <div class="detail-label">Honorarios Profesionales:</div>
                         <div class="detail-value"><strong>$${p.honorarios.toLocaleString('es-AR', { minimumFractionDigits: 2 })}</strong></div>
                     </div>
                     ${p.gastosAdmin > 0 ? `<div class="detail-row"><div class="detail-label">Gastos Admin:</div><div class="detail-value">$${p.gastosAdmin.toLocaleString('es-AR', { minimumFractionDigits: 2 })}</div></div>` : ''}
@@ -1628,15 +1755,139 @@
                 document.getElementById('formTitle').innerHTML = '<i class="bi bi-file-earmark-plus me-2"></i>Crear Nuevo Presupuesto';
                 document.getElementById('btnSubmitText').textContent = 'Guardar Presupuesto';
                 this.editingId = null;
+                this.serviciosTemp = [];
+                this.renderServiciosTemp();
                 calcularTotal();
+            }
+
+            calcularTotalServicio() {
+                const valor = parseFloat(document.getElementById('valorUMAServicio').value) || 0;
+                const cantidad = parseFloat(document.getElementById('cantidadUMAServicio').value) || 0;
+                const total = valor * cantidad;
+                document.getElementById('totalServicio').value = total.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            }
+
+            autocompletarUMAServicio(e) {
+                const selectedOption = e.target.selectedOptions[0];
+                const uma = selectedOption.getAttribute('data-uma');
+                if (uma) {
+                    document.getElementById('cantidadUMAServicio').value = uma;
+                    this.calcularTotalServicio();
+                }
+            }
+
+            agregarServicio() {
+                const servicioSelect = document.getElementById('servicioSelect').value;
+                const servicioPersonalizado = document.getElementById('servicioPersonalizado').value.trim();
+                const valorUMA = parseFloat(document.getElementById('valorUMAServicio').value) || 0;
+                const cantidadUMA = parseFloat(document.getElementById('cantidadUMAServicio').value) || 0;
+
+                if (!servicioSelect && !servicioPersonalizado) {
+                    alert('Por favor seleccione un servicio o ingrese uno personalizado');
+                    return;
+                }
+
+                if (valorUMA <= 0 || cantidadUMA <= 0) {
+                    alert('Por favor ingrese valores válidos para UMA');
+                    return;
+                }
+
+                const servicio = {
+                    id: Date.now(),
+                    nombre: servicioPersonalizado || servicioSelect,
+                    valorUMA: valorUMA,
+                    cantidadUMA: cantidadUMA,
+                    total: valorUMA * cantidadUMA
+                };
+
+                this.serviciosTemp.push(servicio);
+                this.renderServiciosTemp();
+
+                // Limpiar formulario de servicio
+                document.getElementById('servicioSelect').value = '';
+                document.getElementById('servicioPersonalizado').value = '';
+                document.getElementById('cantidadUMAServicio').value = '1';
+                document.getElementById('totalServicio').value = '';
+
+                // Actualizar honorarios
+                this.calcularHonorariosDesdeServicios();
+            }
+
+            eliminarServicio(id) {
+                this.serviciosTemp = this.serviciosTemp.filter(s => s.id !== id);
+                this.renderServiciosTemp();
+                this.calcularHonorariosDesdeServicios();
+            }
+
+            renderServiciosTemp() {
+                const container = document.getElementById('serviciosAgregados');
+                const emptyState = document.getElementById('serviciosEmpty');
+
+                if (this.serviciosTemp.length === 0) {
+                    emptyState.style.display = 'block';
+                    // Eliminar servicios existentes
+                    const items = container.querySelectorAll('.servicio-item, .servicios-total-general');
+                    items.forEach(item => item.remove());
+                    return;
+                }
+
+                emptyState.style.display = 'none';
+
+                // Limpiar servicios previos
+                const items = container.querySelectorAll('.servicio-item, .servicios-total-general');
+                items.forEach(item => item.remove());
+
+                // Renderizar servicios
+                this.serviciosTemp.forEach(servicio => {
+                    const div = document.createElement('div');
+                    div.className = 'servicio-item';
+                    div.innerHTML = `
+                        <div class="servicio-info">
+                            <div class="servicio-nombre">${servicio.nombre}</div>
+                            <div class="servicio-detalles">
+                                <span><i class="bi bi-calculator"></i> Valor UMA: $${servicio.valorUMA.toLocaleString('es-AR')}</span>
+                                <span><i class="bi bi-x"></i> Cantidad: ${servicio.cantidadUMA}</span>
+                            </div>
+                        </div>
+                        <div class="servicio-total">$${servicio.total.toLocaleString('es-AR', { minimumFractionDigits: 2 })}</div>
+                        <button type="button" class="btn-remove-servicio" onclick="manager.eliminarServicio(${servicio.id})">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    `;
+                    container.appendChild(div);
+                });
+
+                // Agregar total general
+                const totalGeneral = this.serviciosTemp.reduce((sum, s) => sum + s.total, 0);
+                const totalDiv = document.createElement('div');
+                totalDiv.className = 'servicios-total-general';
+                totalDiv.innerHTML = `
+                    <span><i class="bi bi-briefcase-fill me-2"></i>TOTAL SERVICIOS (${this.serviciosTemp.length})</span>
+                    <span>$${totalGeneral.toLocaleString('es-AR', { minimumFractionDigits: 2 })}</span>
+                `;
+                container.appendChild(totalDiv);
+            }
+
+            calcularHonorariosDesdeServicios() {
+                const totalServicios = this.serviciosTemp.reduce((sum, s) => sum + s.total, 0);
+                document.getElementById('honorarios').value = totalServicios.toFixed(2);
+                calcularTotal(); // Llamar a la función global para recalcular todo
             }
 
             init() {
                 this.updateStats();
                 this.render();
 
+                // Event listeners para servicios
+                document.getElementById('btnAgregarServicio').addEventListener('click', () => this.agregarServicio());
+                document.getElementById('valorUMAServicio').addEventListener('input', () => this.calcularTotalServicio());
+                document.getElementById('cantidadUMAServicio').addEventListener('input', () => this.calcularTotalServicio());
+                document.getElementById('servicioSelect').addEventListener('change', (e) => this.autocompletarUMAServicio(e));
+
                 document.getElementById('btnNuevoPresupuesto').addEventListener('click', () => {
                     this.resetForm();
+                    this.serviciosTemp = [];
+                    this.renderServiciosTemp();
                     document.getElementById('formPresupuesto').classList.add('active');
                     document.getElementById('formPresupuesto').scrollIntoView({ behavior: 'smooth' });
                 });
