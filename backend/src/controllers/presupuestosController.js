@@ -142,15 +142,14 @@ exports.crearPresupuesto = async (req, res) => {
 
         // Crear presupuesto
         const presupuesto = await Presupuesto.create({
-            nombre,
+            cliente: nombre,
             telefono,
             email: email || null,
-            empresa: empresa || null,
-            rut: rut || null,
+            dni: rut || null,
             fecha,
             servicios: servicios || [],
             honorarios,
-            gastos_operacionales: gastos_operacionales || 0,
+            gastos_admin: gastos_operacionales || 0,
             iva: iva || 0,
             total,
             notas: notas || '',

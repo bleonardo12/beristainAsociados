@@ -117,9 +117,9 @@ app.get('/health', (req, res) => {
 });
 
 // API routes
-app.use('/api/auth', authLimiter, authRoutes);
-app.use('/api/presupuestos', generalLimiter, presupuestosRoutes);
-app.use('/api/causas', generalLimiter, causasRoutes);
+app.use('/auth', authLimiter, authRoutes);
+app.use('/presupuestos', generalLimiter, presupuestosRoutes);
+app.use('/causas', generalLimiter, causasRoutes);
 
 // Ruta 404
 app.use((req, res) => {
