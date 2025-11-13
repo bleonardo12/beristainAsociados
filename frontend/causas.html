@@ -20,6 +20,9 @@
     <!-- CSS personalizado -->
     <link rel="stylesheet" type="text/css" href="styles.css">
 
+    <!-- SheetJS para exportar Excel -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
     <style>
         :root {
             --primary-color: #1a365d;
@@ -892,9 +895,15 @@
         <div class="content-section">
             <div class="section-header">
                 <h2>Listado de Causas</h2>
-                <button class="btn-primary-custom" id="btnNewCausa">
-                    <i class="bi bi-plus-lg"></i> Nueva Causa
-                </button>
+                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                    <button id="btnExportarExcelCausas" class="btn-primary-custom" style="background: #10b981;" title="Exportar todas las causas a Excel">
+                        <i class="bi bi-file-earmark-spreadsheet"></i>
+                        Exportar Excel
+                    </button>
+                    <button class="btn-primary-custom" id="btnNewCausa">
+                        <i class="bi bi-plus-lg"></i> Nueva Causa
+                    </button>
+                </div>
             </div>
 
             <!-- Filtros -->
@@ -1613,6 +1622,116 @@ END:VEVENT\n`;
 
         // Inicializar
         const manager = new CausasManager();
+
+        // ==========================================
+        // SISTEMA DE EXPORTACIÓN
+        // ==========================================
+
+        // Exportar causas a Excel
+        function exportarCausasExcel() {
+            const causas = manager.causas;
+
+            if (causas.length === 0) {
+                alert('No hay causas para exportar');
+                return;
+            }
+
+            // Preparar datos para Excel - Hoja 1: Causas
+            const datosCausas = causas.map(c => {
+                const tareasTotales = c.tareas?.length || 0;
+                const tareasCompletadas = c.tareas?.filter(t => t.completada).length || 0;
+                const tareasPendientes = tareasTotales - tareasCompletadas;
+
+                return {
+                    'Expediente': c.numeroExpediente,
+                    'Tipo': c.tipoCausa,
+                    'Carátula': c.caratula,
+                    'Cliente': c.cliente,
+                    'Estado': manager.getEstadoLabel(c.estado),
+                    'Juzgado': c.juzgado || 'No especificado',
+                    'Fecha Inicio': c.fechaInicio ? manager.formatDate(c.fechaInicio) : 'No especificada',
+                    'Tareas Totales': tareasTotales,
+                    'Tareas Completadas': tareasCompletadas,
+                    'Tareas Pendientes': tareasPendientes,
+                    'Observaciones': c.observaciones || ''
+                };
+            });
+
+            // Preparar datos para Excel - Hoja 2: Tareas
+            const datosTareas = [];
+            causas.forEach(c => {
+                if (c.tareas && c.tareas.length > 0) {
+                    c.tareas.forEach(t => {
+                        datosTareas.push({
+                            'Expediente': c.numeroExpediente,
+                            'Cliente': c.cliente,
+                            'Tarea': t.descripcion,
+                            'Prioridad': t.prioridad.toUpperCase(),
+                            'Vencimiento': t.vencimiento ? manager.formatDate(t.vencimiento) : '',
+                            'Hora': t.hora || '',
+                            'Estado': t.completada ? 'Completada' : 'Pendiente',
+                            'Notas': t.notas || ''
+                        });
+                    });
+                }
+            });
+
+            // Crear libro de Excel con 2 hojas
+            const wb = XLSX.utils.book_new();
+
+            // Hoja 1: Causas
+            const wsCausas = XLSX.utils.json_to_sheet(datosCausas);
+            const colWidthsCausas = [
+                { wch: 20 }, // Expediente
+                { wch: 15 }, // Tipo
+                { wch: 50 }, // Carátula
+                { wch: 25 }, // Cliente
+                { wch: 12 }, // Estado
+                { wch: 25 }, // Juzgado
+                { wch: 15 }, // Fecha Inicio
+                { wch: 15 }, // Tareas Totales
+                { wch: 18 }, // Tareas Completadas
+                { wch: 18 }, // Tareas Pendientes
+                { wch: 40 }  // Observaciones
+            ];
+            wsCausas['!cols'] = colWidthsCausas;
+            XLSX.utils.book_append_sheet(wb, wsCausas, 'Causas');
+
+            // Hoja 2: Tareas (si hay)
+            if (datosTareas.length > 0) {
+                const wsTareas = XLSX.utils.json_to_sheet(datosTareas);
+                const colWidthsTareas = [
+                    { wch: 20 }, // Expediente
+                    { wch: 25 }, // Cliente
+                    { wch: 40 }, // Tarea
+                    { wch: 10 }, // Prioridad
+                    { wch: 15 }, // Vencimiento
+                    { wch: 10 }, // Hora
+                    { wch: 12 }, // Estado
+                    { wch: 40 }  // Notas
+                ];
+                wsTareas['!cols'] = colWidthsTareas;
+                XLSX.utils.book_append_sheet(wb, wsTareas, 'Tareas');
+            }
+
+            // Generar archivo
+            const fecha = new Date().toISOString().split('T')[0];
+            const nombreArchivo = `Causas-Beristain-${fecha}.xlsx`;
+            XLSX.writeFile(wb, nombreArchivo);
+
+            const mensaje = datosTareas.length > 0
+                ? `✅ Exportación exitosa!\n\n${causas.length} causas\n${datosTareas.length} tareas\n\nArchivo: ${nombreArchivo}`
+                : `✅ Exportación exitosa: ${causas.length} causas exportadas a ${nombreArchivo}`;
+
+            alert(mensaje);
+        }
+
+        // Event listener para exportar causas
+        document.getElementById('btnExportarExcelCausas').addEventListener('click', exportarCausasExcel);
+
+        // ==========================================
+        // FIN SISTEMA DE EXPORTACIÓN
+        // ==========================================
     </script>
 </body>
 </html>

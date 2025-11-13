@@ -23,6 +23,9 @@
     <!-- jsPDF para exportar PDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
+    <!-- SheetJS para exportar Excel -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
     <style>
         :root {
             --primary-color: #1a365d;
@@ -788,10 +791,24 @@
         <div class="content-section">
             <div class="section-header">
                 <h2>Listado de Presupuestos</h2>
-                <button id="btnNuevoPresupuesto" class="btn-primary-custom">
-                    <i class="bi bi-plus-circle"></i>
-                    Nuevo Presupuesto
-                </button>
+                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                    <button id="btnExportarExcel" class="btn-primary-custom" style="background: #10b981;" title="Exportar todos los presupuestos a Excel">
+                        <i class="bi bi-file-earmark-spreadsheet"></i>
+                        Exportar Excel
+                    </button>
+                    <button id="btnBackupCompleto" class="btn-primary-custom" style="background: #f59e0b;" title="Descargar backup completo (JSON)">
+                        <i class="bi bi-cloud-download"></i>
+                        Backup
+                    </button>
+                    <button id="btnRestaurarBackup" class="btn-primary-custom" style="background: #8b5cf6;" title="Restaurar desde backup">
+                        <i class="bi bi-cloud-upload"></i>
+                        Restaurar
+                    </button>
+                    <button id="btnNuevoPresupuesto" class="btn-primary-custom">
+                        <i class="bi bi-plus-circle"></i>
+                        Nuevo Presupuesto
+                    </button>
+                </div>
             </div>
 
             <!-- Formulario de presupuesto -->
@@ -1942,6 +1959,235 @@
         // Inicializar
         const manager = new PresupuestosManager();
         window.manager = manager;
+
+        // ==========================================
+        // SISTEMA DE EXPORTACIÓN Y BACKUPS
+        // ==========================================
+
+        // Exportar presupuestos a Excel
+        function exportarPresupuestosExcel() {
+            const presupuestos = manager.presupuestos;
+
+            if (presupuestos.length === 0) {
+                alert('No hay presupuestos para exportar');
+                return;
+            }
+
+            // Preparar datos para Excel
+            const datosExcel = presupuestos.map(p => {
+                const serviciosTexto = (p.servicios && p.servicios.length > 0)
+                    ? p.servicios.map(s => `${s.nombre} (${s.cantidadUMA} UMA × $${s.valorUMA})`).join('; ')
+                    : 'Sin servicios';
+
+                return {
+                    'Número': p.numero || 'N/A',
+                    'Fecha': p.fecha,
+                    'Cliente': p.cliente,
+                    'DNI': p.dni || '',
+                    'Email': p.email || '',
+                    'Teléfono': p.telefono || '',
+                    'Servicios': serviciosTexto,
+                    'Descripción': p.descripcion || '',
+                    'Honorarios': p.honorarios,
+                    'Gastos Admin': p.gastosAdmin || 0,
+                    'IVA %': p.iva || 0,
+                    'Total': p.total,
+                    'Anticipo': p.anticipo || 0,
+                    'Saldo': p.saldo || 0,
+                    'Forma de Pago': p.formaPago,
+                    'Cuotas': p.cuotas || 1,
+                    'Vigencia (días)': p.vigencia || 30,
+                    'Vencimiento': p.vencimiento || '',
+                    'Estado': p.estado,
+                    'Observaciones': p.notas || '',
+                    'Detalle Adicional': p.detalleAdicional || ''
+                };
+            });
+
+            // Crear libro de Excel
+            const ws = XLSX.utils.json_to_sheet(datosExcel);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, 'Presupuestos');
+
+            // Ajustar ancho de columnas
+            const colWidths = [
+                { wch: 20 }, // Número
+                { wch: 12 }, // Fecha
+                { wch: 25 }, // Cliente
+                { wch: 12 }, // DNI
+                { wch: 25 }, // Email
+                { wch: 15 }, // Teléfono
+                { wch: 50 }, // Servicios
+                { wch: 40 }, // Descripción
+                { wch: 12 }, // Honorarios
+                { wch: 12 }, // Gastos
+                { wch: 8 },  // IVA
+                { wch: 12 }, // Total
+                { wch: 12 }, // Anticipo
+                { wch: 12 }, // Saldo
+                { wch: 20 }, // Forma de pago
+                { wch: 8 },  // Cuotas
+                { wch: 12 }, // Vigencia
+                { wch: 12 }, // Vencimiento
+                { wch: 12 }, // Estado
+                { wch: 40 }, // Observaciones
+                { wch: 40 }  // Detalle
+            ];
+            ws['!cols'] = colWidths;
+
+            // Generar archivo
+            const fecha = new Date().toISOString().split('T')[0];
+            const nombreArchivo = `Presupuestos-Beristain-${fecha}.xlsx`;
+            XLSX.writeFile(wb, nombreArchivo);
+
+            alert(`✅ Exportación exitosa: ${presupuestos.length} presupuestos exportados a ${nombreArchivo}`);
+        }
+
+        // Backup completo en JSON
+        function descargarBackupCompleto() {
+            const presupuestos = localStorage.getItem('presupuestos');
+            const causas = localStorage.getItem('causas');
+
+            const backup = {
+                fecha: new Date().toISOString(),
+                version: '1.0',
+                presupuestos: presupuestos ? JSON.parse(presupuestos) : [],
+                causas: causas ? JSON.parse(causas) : []
+            };
+
+            const totalItems = backup.presupuestos.length + backup.causas.length;
+
+            if (totalItems === 0) {
+                alert('No hay datos para respaldar');
+                return;
+            }
+
+            // Convertir a JSON
+            const dataStr = JSON.stringify(backup, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+
+            // Crear link de descarga
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            const fecha = new Date().toISOString().split('T')[0];
+            link.download = `beristain-backup-${fecha}.json`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+
+            // Guardar fecha del último backup
+            localStorage.setItem('ultimoBackup', new Date().toISOString());
+
+            alert(`✅ Backup completado exitosamente!\n\n${backup.presupuestos.length} presupuestos\n${backup.causas.length} causas\n\nArchivo: beristain-backup-${fecha}.json`);
+        }
+
+        // Restaurar desde backup
+        function restaurarBackup(event) {
+            const file = event.target.files[0];
+
+            if (!file) return;
+
+            if (!file.name.endsWith('.json')) {
+                alert('❌ Por favor seleccione un archivo .json válido');
+                return;
+            }
+
+            if (!confirm('⚠️ ATENCIÓN: Esto reemplazará todos los datos actuales.\n\n¿Está seguro de que desea restaurar desde este backup?')) {
+                event.target.value = ''; // Limpiar input
+                return;
+            }
+
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                try {
+                    const backup = JSON.parse(e.target.result);
+
+                    // Validar estructura
+                    if (!backup.presupuestos && !backup.causas) {
+                        throw new Error('Formato de backup inválido');
+                    }
+
+                    // Restaurar datos
+                    if (backup.presupuestos) {
+                        localStorage.setItem('presupuestos', JSON.stringify(backup.presupuestos));
+                    }
+                    if (backup.causas) {
+                        localStorage.setItem('causas', JSON.stringify(backup.causas));
+                    }
+
+                    const totalRestaurado = (backup.presupuestos?.length || 0) + (backup.causas?.length || 0);
+
+                    alert(`✅ Backup restaurado exitosamente!\n\n${backup.presupuestos?.length || 0} presupuestos\n${backup.causas?.length || 0} causas\n\nLa página se recargará para aplicar los cambios.`);
+
+                    // Recargar página
+                    location.reload();
+
+                } catch (error) {
+                    alert('❌ Error al restaurar backup: ' + error.message);
+                    console.error('Error:', error);
+                }
+
+                // Limpiar input
+                event.target.value = '';
+            };
+
+            reader.onerror = function() {
+                alert('❌ Error al leer el archivo');
+                event.target.value = '';
+            };
+
+            reader.readAsText(file);
+        }
+
+        // Recordatorio de backup
+        function verificarRecordatorioBackup() {
+            const ultimoBackup = localStorage.getItem('ultimoBackup');
+            const diasSinBackup = 7; // Recordar cada 7 días
+
+            if (!ultimoBackup) {
+                // Primer uso, no mostrar recordatorio aún
+                return;
+            }
+
+            const fechaUltimoBackup = new Date(ultimoBackup);
+            const hoy = new Date();
+            const diferenciaDias = Math.floor((hoy - fechaUltimoBackup) / (1000 * 60 * 60 * 24));
+
+            if (diferenciaDias >= diasSinBackup) {
+                setTimeout(() => {
+                    if (confirm(`⏰ RECORDATORIO DE BACKUP\n\nHan pasado ${diferenciaDias} días desde el último backup.\n\n¿Desea hacer un backup ahora?`)) {
+                        descargarBackupCompleto();
+                    } else {
+                        // Posponer por 1 día
+                        const ayer = new Date();
+                        ayer.setDate(ayer.getDate() - (diasSinBackup - 1));
+                        localStorage.setItem('ultimoBackup', ayer.toISOString());
+                    }
+                }, 2000); // Mostrar después de 2 segundos
+            }
+        }
+
+        // Event listeners para botones de exportación
+        document.getElementById('btnExportarExcel').addEventListener('click', exportarPresupuestosExcel);
+        document.getElementById('btnBackupCompleto').addEventListener('click', descargarBackupCompleto);
+        document.getElementById('btnRestaurarBackup').addEventListener('click', function() {
+            // Crear input file temporal
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            input.onchange = restaurarBackup;
+            input.click();
+        });
+
+        // Verificar recordatorio al cargar
+        verificarRecordatorioBackup();
+
+        // ==========================================
+        // FIN SISTEMA DE EXPORTACIÓN Y BACKUPS
+        // ==========================================
 
         // Event listeners para calculadoras
         document.getElementById('valorUMA').addEventListener('input', calcularTotalUMA);
