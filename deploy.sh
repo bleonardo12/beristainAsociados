@@ -1,15 +1,15 @@
 #!/bin/bash
-echo "ï¿½ï¿½ Fetching changes from GitHub..."
+echo "ğŸ“¦ Fetching changes from GitHub..."
 git fetch origin
 
-echo "í´€ Merging branch..."
-git merge origin/claude/fix-responsive-design-011CUsQjjT8cgmQ7VTTFRv91
+echo "ğŸ”€ Merging branch..."
+git merge origin/claude/web-page-improvements-011CV65GJfhxwPVYCtMxDf8o
 
 echo "â¬†ï¸  Pushing to GitHub master..."
 git push origin master
 
-echo "í³¡ Deploying to VPS..."
-ssh -o StrictHostKeyChecking=no root@69.62.95.98 << 'ENDSSH'
+echo "ğŸš€ Deploying to VPS..."
+ssh -o StrictHostKeyChecking=no root@srv777726.hstgr.cloud << 'ENDSSH'
 cd /var/www/beristainAsociados
 git pull origin master
 nginx -t && systemctl reload nginx
