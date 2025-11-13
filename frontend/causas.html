@@ -1,0 +1,1618 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- Metadatos básicos -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Gestión de Causas - Área Socios | Beristain & Asociados</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/favicon.png">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+    <!-- Fuentes -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+    <!-- CSS personalizado -->
+    <link rel="stylesheet" type="text/css" href="styles.css">
+
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --secondary-color: #2d5a8a;
+            --accent-color: #c9a961;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+            --border-color: #e2e8f0;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header-causas {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 2rem 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-area img {
+            width: 80px;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .header-title h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.75rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .header-title p {
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .nav-tabs-custom {
+            display: flex;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.5rem;
+            border-radius: 8px;
+        }
+
+        .nav-tabs-custom a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-tabs-custom a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .nav-tabs-custom a.active {
+            background: white;
+            color: var(--primary-color);
+        }
+
+        .btn-logout {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .btn-logout:hover {
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .notification-badge {
+            position: relative;
+        }
+
+        .notification-badge .badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--danger-color);
+            color: white;
+            border-radius: 50%;
+            padding: 0.25rem 0.5rem;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
+        /* Container principal */
+        .main-container {
+            max-width: 1400px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+
+        /* Cards de información */
+        .info-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .info-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            border-left: 4px solid var(--accent-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .info-card-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .info-card h3 {
+            font-size: 1rem;
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+        }
+
+        .info-card .value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .info-card.warning {
+            border-left-color: var(--warning-color);
+        }
+
+        .info-card.warning .value {
+            color: var(--warning-color);
+        }
+
+        /* Alertas de vencimientos */
+        .alerts-section {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+
+        .alert-item {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: transform 0.2s ease;
+        }
+
+        .alert-item:hover {
+            transform: translateX(5px);
+        }
+
+        .alert-item.alert-urgent {
+            background: #fee2e2;
+            border-left: 4px solid var(--danger-color);
+        }
+
+        .alert-item.alert-soon {
+            background: #fef3c7;
+            border-left: 4px solid var(--warning-color);
+        }
+
+        .alert-item.alert-normal {
+            background: #dbeafe;
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        /* Sección principal */
+        .content-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            margin-bottom: 2rem;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border-color);
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .section-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.75rem;
+            color: var(--primary-color);
+        }
+
+        .btn-primary-custom {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-primary-custom:hover {
+            background: var(--secondary-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(26, 54, 93, 0.3);
+        }
+
+        /* Filtros */
+        .filters-section {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .filter-group label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .filter-group select,
+        .filter-group input {
+            padding: 0.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 0.875rem;
+        }
+
+        /* Tabla de causas */
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: var(--bg-light);
+        }
+
+        th {
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-dark);
+            border-bottom: 2px solid var(--border-color);
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        tbody tr {
+            transition: background 0.2s ease;
+        }
+
+        tbody tr:hover {
+            background: var(--bg-light);
+        }
+
+        .status-badge {
+            padding: 0.375rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .status-activo {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-finalizado {
+            background: #e0e7ff;
+            color: #3730a3;
+        }
+
+        .status-pausa {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-archivado {
+            background: #f3f4f6;
+            color: #4b5563;
+        }
+
+        .priority-badge {
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .priority-alta {
+            background: var(--danger-color);
+            color: white;
+        }
+
+        .priority-media {
+            background: var(--warning-color);
+            color: white;
+        }
+
+        .priority-baja {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-action {
+            padding: 0.375rem 0.75rem;
+            border: none;
+            border-radius: 6px;
+            background: var(--primary-color);
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.875rem;
+            margin-right: 0.25rem;
+        }
+
+        .btn-action:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .btn-action.btn-edit {
+            background: #0891b2;
+        }
+
+        .btn-action.btn-delete {
+            background: var(--danger-color);
+        }
+
+        .btn-action.btn-tasks {
+            background: var(--accent-color);
+        }
+
+        .btn-action.btn-calendar {
+            background: var(--success-color);
+        }
+
+        /* Formulario */
+        .form-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            margin-bottom: 2rem;
+            display: none;
+        }
+
+        .form-section.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            padding-top: 1.5rem;
+            border-top: 2px solid var(--border-color);
+        }
+
+        .btn-secondary-custom {
+            background: var(--text-light);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .btn-secondary-custom:hover {
+            background: var(--text-dark);
+            transform: translateY(-2px);
+        }
+
+        /* Modal de tareas */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            max-width: 800px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .modal-header h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-color);
+        }
+
+        .btn-close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-light);
+            transition: color 0.2s ease;
+        }
+
+        .btn-close-modal:hover {
+            color: var(--text-dark);
+        }
+
+        /* Lista de tareas */
+        .tasks-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .task-item {
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            transition: background 0.2s ease;
+        }
+
+        .task-item:hover {
+            background: var(--bg-light);
+        }
+
+        .task-item.completed {
+            opacity: 0.6;
+        }
+
+        .task-item.completed .task-description {
+            text-decoration: line-through;
+        }
+
+        .task-checkbox {
+            margin-top: 0.25rem;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .task-content {
+            flex: 1;
+        }
+
+        .task-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.5rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .task-description {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .task-meta {
+            font-size: 0.875rem;
+            color: var(--text-light);
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .task-notes {
+            font-size: 0.875rem;
+            color: var(--text-light);
+            margin-top: 0.5rem;
+        }
+
+        .task-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-small {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.75rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-small.btn-delete {
+            background: var(--danger-color);
+            color: white;
+        }
+
+        .btn-small.btn-delete:hover {
+            background: #dc2626;
+        }
+
+        /* Formulario de nueva tarea */
+        .new-task-form {
+            padding: 1rem;
+            background: var(--bg-light);
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .nav-tabs-custom {
+                width: 100%;
+            }
+
+            .info-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .table-container {
+                font-size: 0.875rem;
+            }
+
+            th, td {
+                padding: 0.5rem;
+            }
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--text-light);
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header-causas">
+        <div class="header-content">
+            <div class="logo-area">
+                <img src="images/logo-juris.png" alt="Logo Beristain & Asociados">
+                <div class="header-title">
+                    <h1>Gestión de Causas</h1>
+                    <p>Panel de control de causas jurídicas</p>
+                </div>
+            </div>
+
+            <div class="header-actions">
+                <nav class="nav-tabs-custom">
+                    <a href="presupuestos.html">
+                        <i class="bi bi-file-earmark-text"></i> Presupuestos
+                    </a>
+                    <a href="causas.html" class="active">
+                        <i class="bi bi-briefcase"></i> Causas
+                    </a>
+                </nav>
+
+                <a href="#" class="btn-logout" id="btnLogout">
+                    <i class="bi bi-box-arrow-right"></i> Cerrar sesión
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="main-container">
+        <!-- Dashboard Cards -->
+        <div class="info-cards">
+            <div class="info-card">
+                <div class="info-card-icon">
+                    <i class="bi bi-briefcase"></i>
+                </div>
+                <h3>Causas Activas</h3>
+                <div class="value" id="totalActivas">0</div>
+            </div>
+
+            <div class="info-card">
+                <div class="info-card-icon">
+                    <i class="bi bi-check-circle"></i>
+                </div>
+                <h3>Causas Finalizadas</h3>
+                <div class="value" id="totalFinalizadas">0</div>
+            </div>
+
+            <div class="info-card warning">
+                <div class="info-card-icon">
+                    <i class="bi bi-clock-history"></i>
+                </div>
+                <h3>Tareas Pendientes</h3>
+                <div class="value" id="totalTareasPendientes">0</div>
+            </div>
+
+            <div class="info-card warning">
+                <div class="info-card-icon">
+                    <i class="bi bi-exclamation-triangle"></i>
+                </div>
+                <h3>Vencimientos Próximos</h3>
+                <div class="value" id="totalVencimientosProximos">0</div>
+            </div>
+        </div>
+
+        <!-- Alertas de vencimientos -->
+        <div class="alerts-section" id="alertsSection" style="display: none;">
+            <h3 style="margin-bottom: 1rem; color: var(--primary-color);">
+                <i class="bi bi-bell"></i> Alertas de Vencimientos
+            </h3>
+            <div id="alertsList"></div>
+        </div>
+
+        <!-- Formulario de Nueva Causa -->
+        <div class="form-section" id="formSection">
+            <div class="section-header">
+                <h2 id="formTitle">Nueva Causa</h2>
+                <button class="btn-secondary-custom" id="btnCancelForm">
+                    <i class="bi bi-x-lg"></i> Cancelar
+                </button>
+            </div>
+
+            <form id="causaForm">
+                <input type="hidden" id="causaId">
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="numeroExpediente">Número de Expediente *</label>
+                        <input type="text" id="numeroExpediente" required placeholder="Ej: EXP-2024-12345">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tipoCausa">Tipo de Causa *</label>
+                        <select id="tipoCausa" required>
+                            <option value="">Seleccionar tipo</option>
+                            <option value="Penal">Penal</option>
+                            <option value="Civil">Civil</option>
+                            <option value="Comercial">Comercial</option>
+                            <option value="Tránsito">Accidente de Tránsito</option>
+                            <option value="Laboral">Laboral</option>
+                            <option value="Familia">Familia</option>
+                            <option value="Administrativo">Administrativo</option>
+                            <option value="Otro">Otro</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="caratula">Carátula/Descripción *</label>
+                    <textarea id="caratula" required placeholder="Ej: PÉREZ, JUAN c/ GÓMEZ, MARÍA s/ COBRO DE PESOS"></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="cliente">Cliente *</label>
+                        <input type="text" id="cliente" required placeholder="Nombre del cliente">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="estado">Estado *</label>
+                        <select id="estado" required>
+                            <option value="activo">Activo</option>
+                            <option value="pausa">En Pausa</option>
+                            <option value="finalizado">Finalizado</option>
+                            <option value="archivado">Archivado</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="juzgado">Juzgado/Fuero</label>
+                        <input type="text" id="juzgado" placeholder="Ej: Juzgado Civil N° 5">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fechaInicio">Fecha de Inicio</label>
+                        <input type="date" id="fechaInicio">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="observaciones">Observaciones</label>
+                    <textarea id="observaciones" placeholder="Notas adicionales sobre la causa"></textarea>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary-custom" id="btnCancelForm2">Cancelar</button>
+                    <button type="submit" class="btn-primary-custom">
+                        <i class="bi bi-save"></i> Guardar Causa
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Lista de Causas -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>Listado de Causas</h2>
+                <button class="btn-primary-custom" id="btnNewCausa">
+                    <i class="bi bi-plus-lg"></i> Nueva Causa
+                </button>
+            </div>
+
+            <!-- Filtros -->
+            <div class="filters-section">
+                <div class="filter-group">
+                    <label>Buscar</label>
+                    <input type="text" id="searchInput" placeholder="Buscar por expediente, cliente o carátula...">
+                </div>
+
+                <div class="filter-group">
+                    <label>Filtrar por Estado</label>
+                    <select id="filterEstado">
+                        <option value="">Todos</option>
+                        <option value="activo">Activo</option>
+                        <option value="pausa">En Pausa</option>
+                        <option value="finalizado">Finalizado</option>
+                        <option value="archivado">Archivado</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label>Filtrar por Tipo</label>
+                    <select id="filterTipo">
+                        <option value="">Todos</option>
+                        <option value="Penal">Penal</option>
+                        <option value="Civil">Civil</option>
+                        <option value="Comercial">Comercial</option>
+                        <option value="Tránsito">Tránsito</option>
+                        <option value="Laboral">Laboral</option>
+                        <option value="Familia">Familia</option>
+                        <option value="Administrativo">Administrativo</option>
+                        <option value="Otro">Otro</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Tabla -->
+            <div class="table-container">
+                <table id="causasTable">
+                    <thead>
+                        <tr>
+                            <th>Expediente</th>
+                            <th>Carátula</th>
+                            <th>Cliente</th>
+                            <th>Tipo</th>
+                            <th>Estado</th>
+                            <th>Juzgado</th>
+                            <th>Fecha Inicio</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="causasTableBody">
+                        <!-- Se llenará dinámicamente -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="empty-state" id="emptyState" style="display: none;">
+                <i class="bi bi-inbox"></i>
+                <h3>No hay causas registradas</h3>
+                <p>Comienza agregando una nueva causa haciendo clic en "Nueva Causa"</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal de Tareas -->
+    <div class="modal" id="tasksModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="bi bi-list-check"></i> Tareas de la Causa</h3>
+                <button class="btn-close-modal" onclick="closeTasksModal()">&times;</button>
+            </div>
+
+            <div class="modal-body">
+                <p style="color: var(--text-light); margin-bottom: 1rem;">
+                    <strong>Expediente:</strong> <span id="modalExpediente"></span><br>
+                    <strong>Carátula:</strong> <span id="modalCaratula"></span>
+                </p>
+
+                <!-- Formulario de nueva tarea -->
+                <div class="new-task-form">
+                    <h4 style="margin-bottom: 1rem; font-size: 1rem;">Agregar Nueva Tarea</h4>
+                    <form id="newTaskForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="taskDescripcion">Descripción *</label>
+                                <input type="text" id="taskDescripcion" required placeholder="Ej: Presentar escrito">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="taskPrioridad">Prioridad *</label>
+                                <select id="taskPrioridad" required>
+                                    <option value="baja">Baja</option>
+                                    <option value="media" selected>Media</option>
+                                    <option value="alta">Alta</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="taskVencimiento">Fecha de Vencimiento</label>
+                                <input type="date" id="taskVencimiento">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="taskHora">Hora</label>
+                                <input type="time" id="taskHora">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="taskNotas">Notas</label>
+                            <textarea id="taskNotas" placeholder="Notas adicionales" rows="2"></textarea>
+                        </div>
+
+                        <button type="submit" class="btn-primary-custom" style="width: 100%;">
+                            <i class="bi bi-plus-lg"></i> Agregar Tarea
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Lista de tareas -->
+                <h4 style="margin-bottom: 1rem; font-size: 1rem;">Tareas</h4>
+                <ul class="tasks-list" id="tasksList">
+                    <!-- Se llenará dinámicamente -->
+                </ul>
+
+                <div class="empty-state" id="emptyTasks" style="display: none; padding: 2rem 1rem;">
+                    <i class="bi bi-list-ul" style="font-size: 2rem;"></i>
+                    <p>No hay tareas registradas</p>
+                </div>
+
+                <!-- Botón exportar a calendario -->
+                <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 2px solid var(--border-color);">
+                    <button class="btn-primary-custom" onclick="exportToCalendar()" style="width: 100%;">
+                        <i class="bi bi-calendar-event"></i> Exportar a Google Calendar (.ics)
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Detalles -->
+    <div class="modal" id="detailsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="bi bi-info-circle"></i> Detalles de la Causa</h3>
+                <button class="btn-close-modal" onclick="closeDetailsModal()">&times;</button>
+            </div>
+
+            <div class="modal-body" id="detailsContent">
+                <!-- Se llenará dinámicamente -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Verificar autenticación
+        if (sessionStorage.getItem('authenticated') !== 'true') {
+            window.location.href = 'login.html';
+        }
+
+        // Clase para gestionar causas
+        class CausasManager {
+            constructor() {
+                this.causas = [];
+                this.currentCausaId = null;
+                this.loadCausas();
+                this.init();
+            }
+
+            init() {
+                // Event listeners
+                document.getElementById('btnNewCausa').addEventListener('click', () => this.showForm());
+                document.getElementById('btnCancelForm').addEventListener('click', () => this.hideForm());
+                document.getElementById('btnCancelForm2').addEventListener('click', () => this.hideForm());
+                document.getElementById('causaForm').addEventListener('submit', (e) => this.handleSubmit(e));
+                document.getElementById('btnLogout').addEventListener('click', (e) => this.logout(e));
+
+                // Filtros
+                document.getElementById('searchInput').addEventListener('input', () => this.applyFilters());
+                document.getElementById('filterEstado').addEventListener('change', () => this.applyFilters());
+                document.getElementById('filterTipo').addEventListener('change', () => this.applyFilters());
+
+                // Modal de tareas
+                document.getElementById('newTaskForm').addEventListener('submit', (e) => this.handleNewTask(e));
+
+                // Renderizar
+                this.render();
+                this.updateStats();
+                this.checkAlerts();
+            }
+
+            loadCausas() {
+                const stored = localStorage.getItem('causas');
+                this.causas = stored ? JSON.parse(stored) : [];
+            }
+
+            saveCausas() {
+                localStorage.setItem('causas', JSON.stringify(this.causas));
+                this.render();
+                this.updateStats();
+                this.checkAlerts();
+            }
+
+            showForm(causa = null) {
+                const formSection = document.getElementById('formSection');
+                const formTitle = document.getElementById('formTitle');
+
+                if (causa) {
+                    formTitle.textContent = 'Editar Causa';
+                    this.fillForm(causa);
+                } else {
+                    formTitle.textContent = 'Nueva Causa';
+                    document.getElementById('causaForm').reset();
+                    document.getElementById('causaId').value = '';
+                }
+
+                formSection.classList.add('active');
+                formSection.scrollIntoView({ behavior: 'smooth' });
+            }
+
+            hideForm() {
+                document.getElementById('formSection').classList.remove('active');
+                document.getElementById('causaForm').reset();
+                document.getElementById('causaId').value = '';
+            }
+
+            fillForm(causa) {
+                document.getElementById('causaId').value = causa.id;
+                document.getElementById('numeroExpediente').value = causa.numeroExpediente;
+                document.getElementById('tipoCausa').value = causa.tipoCausa;
+                document.getElementById('caratula').value = causa.caratula;
+                document.getElementById('cliente').value = causa.cliente;
+                document.getElementById('estado').value = causa.estado;
+                document.getElementById('juzgado').value = causa.juzgado || '';
+                document.getElementById('fechaInicio').value = causa.fechaInicio || '';
+                document.getElementById('observaciones').value = causa.observaciones || '';
+            }
+
+            handleSubmit(e) {
+                e.preventDefault();
+
+                const causaId = document.getElementById('causaId').value;
+                const causa = {
+                    id: causaId || Date.now(),
+                    numeroExpediente: document.getElementById('numeroExpediente').value,
+                    tipoCausa: document.getElementById('tipoCausa').value,
+                    caratula: document.getElementById('caratula').value,
+                    cliente: document.getElementById('cliente').value,
+                    estado: document.getElementById('estado').value,
+                    juzgado: document.getElementById('juzgado').value,
+                    fechaInicio: document.getElementById('fechaInicio').value,
+                    observaciones: document.getElementById('observaciones').value,
+                    fechaCreacion: new Date().toISOString(),
+                    tareas: []
+                };
+
+                if (causaId) {
+                    // Editar
+                    const index = this.causas.findIndex(c => c.id == causaId);
+                    if (index !== -1) {
+                        // Mantener las tareas existentes
+                        causa.tareas = this.causas[index].tareas || [];
+                        this.causas[index] = causa;
+                    }
+                } else {
+                    // Crear
+                    this.causas.unshift(causa);
+                }
+
+                this.saveCausas();
+                this.hideForm();
+
+                // Mostrar mensaje de éxito
+                alert(causaId ? 'Causa actualizada exitosamente' : 'Causa creada exitosamente');
+            }
+
+            editCausa(id) {
+                const causa = this.causas.find(c => c.id == id);
+                if (causa) {
+                    this.showForm(causa);
+                }
+            }
+
+            deleteCausa(id) {
+                if (confirm('¿Estás seguro de que deseas eliminar esta causa? Esta acción no se puede deshacer.')) {
+                    this.causas = this.causas.filter(c => c.id != id);
+                    this.saveCausas();
+                    alert('Causa eliminada exitosamente');
+                }
+            }
+
+            viewDetails(id) {
+                const causa = this.causas.find(c => c.id == id);
+                if (!causa) return;
+
+                const content = `
+                    <div style="line-height: 1.8;">
+                        <p><strong>Número de Expediente:</strong> ${causa.numeroExpediente}</p>
+                        <p><strong>Tipo de Causa:</strong> ${causa.tipoCausa}</p>
+                        <p><strong>Carátula:</strong> ${causa.caratula}</p>
+                        <p><strong>Cliente:</strong> ${causa.cliente}</p>
+                        <p><strong>Estado:</strong> <span class="status-badge status-${causa.estado}">${this.getEstadoLabel(causa.estado)}</span></p>
+                        <p><strong>Juzgado/Fuero:</strong> ${causa.juzgado || 'No especificado'}</p>
+                        <p><strong>Fecha de Inicio:</strong> ${causa.fechaInicio ? this.formatDate(causa.fechaInicio) : 'No especificada'}</p>
+                        <p><strong>Observaciones:</strong> ${causa.observaciones || 'Sin observaciones'}</p>
+                        <p><strong>Tareas totales:</strong> ${causa.tareas?.length || 0}</p>
+                        <p><strong>Tareas completadas:</strong> ${causa.tareas?.filter(t => t.completada).length || 0}</p>
+                    </div>
+                `;
+
+                document.getElementById('detailsContent').innerHTML = content;
+                document.getElementById('detailsModal').classList.add('active');
+            }
+
+            manageTasks(id) {
+                const causa = this.causas.find(c => c.id == id);
+                if (!causa) return;
+
+                this.currentCausaId = id;
+                document.getElementById('modalExpediente').textContent = causa.numeroExpediente;
+                document.getElementById('modalCaratula').textContent = causa.caratula;
+
+                this.renderTasks(causa.tareas || []);
+                document.getElementById('tasksModal').classList.add('active');
+            }
+
+            handleNewTask(e) {
+                e.preventDefault();
+
+                if (!this.currentCausaId) return;
+
+                const causa = this.causas.find(c => c.id == this.currentCausaId);
+                if (!causa) return;
+
+                if (!causa.tareas) causa.tareas = [];
+
+                const task = {
+                    id: Date.now(),
+                    descripcion: document.getElementById('taskDescripcion').value,
+                    prioridad: document.getElementById('taskPrioridad').value,
+                    vencimiento: document.getElementById('taskVencimiento').value,
+                    hora: document.getElementById('taskHora').value,
+                    notas: document.getElementById('taskNotas').value,
+                    completada: false,
+                    fechaCreacion: new Date().toISOString()
+                };
+
+                causa.tareas.unshift(task);
+                this.saveCausas();
+
+                document.getElementById('newTaskForm').reset();
+                this.renderTasks(causa.tareas);
+            }
+
+            renderTasks(tareas) {
+                const tasksList = document.getElementById('tasksList');
+                const emptyTasks = document.getElementById('emptyTasks');
+
+                if (!tareas || tareas.length === 0) {
+                    tasksList.innerHTML = '';
+                    emptyTasks.style.display = 'block';
+                    return;
+                }
+
+                emptyTasks.style.display = 'none';
+
+                tasksList.innerHTML = tareas.map(task => `
+                    <li class="task-item ${task.completada ? 'completed' : ''}">
+                        <input type="checkbox"
+                               class="task-checkbox"
+                               ${task.completada ? 'checked' : ''}
+                               onchange="manager.toggleTask(${task.id})">
+                        <div class="task-content">
+                            <div class="task-header">
+                                <span class="task-description">${task.descripcion}</span>
+                                <span class="priority-badge priority-${task.prioridad}">${task.prioridad.toUpperCase()}</span>
+                            </div>
+                            <div class="task-meta">
+                                ${task.vencimiento ? `<span><i class="bi bi-calendar"></i> ${this.formatDate(task.vencimiento)}</span>` : ''}
+                                ${task.hora ? `<span><i class="bi bi-clock"></i> ${task.hora}</span>` : ''}
+                            </div>
+                            ${task.notas ? `<div class="task-notes">${task.notas}</div>` : ''}
+                        </div>
+                        <div class="task-actions">
+                            <button class="btn-small btn-delete" onclick="manager.deleteTask(${task.id})">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div>
+                    </li>
+                `).join('');
+            }
+
+            toggleTask(taskId) {
+                if (!this.currentCausaId) return;
+
+                const causa = this.causas.find(c => c.id == this.currentCausaId);
+                if (!causa || !causa.tareas) return;
+
+                const task = causa.tareas.find(t => t.id === taskId);
+                if (task) {
+                    task.completada = !task.completada;
+                    this.saveCausas();
+                    this.renderTasks(causa.tareas);
+                }
+            }
+
+            deleteTask(taskId) {
+                if (!this.currentCausaId) return;
+                if (!confirm('¿Eliminar esta tarea?')) return;
+
+                const causa = this.causas.find(c => c.id == this.currentCausaId);
+                if (!causa || !causa.tareas) return;
+
+                causa.tareas = causa.tareas.filter(t => t.id !== taskId);
+                this.saveCausas();
+                this.renderTasks(causa.tareas);
+            }
+
+            applyFilters() {
+                const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+                const estadoFilter = document.getElementById('filterEstado').value;
+                const tipoFilter = document.getElementById('filterTipo').value;
+
+                let filtered = this.causas;
+
+                if (searchTerm) {
+                    filtered = filtered.filter(c =>
+                        c.numeroExpediente.toLowerCase().includes(searchTerm) ||
+                        c.caratula.toLowerCase().includes(searchTerm) ||
+                        c.cliente.toLowerCase().includes(searchTerm)
+                    );
+                }
+
+                if (estadoFilter) {
+                    filtered = filtered.filter(c => c.estado === estadoFilter);
+                }
+
+                if (tipoFilter) {
+                    filtered = filtered.filter(c => c.tipoCausa === tipoFilter);
+                }
+
+                this.renderFiltered(filtered);
+            }
+
+            renderFiltered(causas) {
+                const tbody = document.getElementById('causasTableBody');
+                const emptyState = document.getElementById('emptyState');
+
+                if (causas.length === 0) {
+                    tbody.innerHTML = '';
+                    emptyState.style.display = 'block';
+                    return;
+                }
+
+                emptyState.style.display = 'none';
+                tbody.innerHTML = causas.map(causa => this.createTableRow(causa)).join('');
+            }
+
+            render() {
+                this.renderFiltered(this.causas);
+            }
+
+            createTableRow(causa) {
+                const tareasPendientes = (causa.tareas || []).filter(t => !t.completada).length;
+                const proximoVencimiento = this.getProximoVencimiento(causa.tareas || []);
+
+                return `
+                    <tr>
+                        <td><strong>${causa.numeroExpediente}</strong></td>
+                        <td>${causa.caratula}</td>
+                        <td>${causa.cliente}</td>
+                        <td>${causa.tipoCausa}</td>
+                        <td><span class="status-badge status-${causa.estado}">${this.getEstadoLabel(causa.estado)}</span></td>
+                        <td>${causa.juzgado || '-'}</td>
+                        <td>${causa.fechaInicio ? this.formatDate(causa.fechaInicio) : '-'}</td>
+                        <td>
+                            <button class="btn-action" onclick="manager.viewDetails(${causa.id})" title="Ver detalles">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                            <button class="btn-action btn-tasks" onclick="manager.manageTasks(${causa.id})" title="Tareas (${tareasPendientes})">
+                                <i class="bi bi-list-check"></i> ${tareasPendientes}
+                            </button>
+                            <button class="btn-action btn-edit" onclick="manager.editCausa(${causa.id})" title="Editar">
+                                <i class="bi bi-pencil"></i>
+                            </button>
+                            <button class="btn-action btn-delete" onclick="manager.deleteCausa(${causa.id})" title="Eliminar">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            }
+
+            updateStats() {
+                const activas = this.causas.filter(c => c.estado === 'activo').length;
+                const finalizadas = this.causas.filter(c => c.estado === 'finalizado').length;
+
+                let totalTareas = 0;
+                this.causas.forEach(causa => {
+                    if (causa.tareas) {
+                        totalTareas += causa.tareas.filter(t => !t.completada).length;
+                    }
+                });
+
+                const vencimientos = this.getVencimientosProximos();
+
+                document.getElementById('totalActivas').textContent = activas;
+                document.getElementById('totalFinalizadas').textContent = finalizadas;
+                document.getElementById('totalTareasPendientes').textContent = totalTareas;
+                document.getElementById('totalVencimientosProximos').textContent = vencimientos.length;
+            }
+
+            checkAlerts() {
+                const vencimientos = this.getVencimientosProximos();
+                const alertsSection = document.getElementById('alertsSection');
+                const alertsList = document.getElementById('alertsList');
+
+                if (vencimientos.length === 0) {
+                    alertsSection.style.display = 'none';
+                    return;
+                }
+
+                alertsSection.style.display = 'block';
+                alertsList.innerHTML = vencimientos.map(item => {
+                    const dias = this.getDiasRestantes(item.task.vencimiento);
+                    let alertClass = 'alert-normal';
+                    let icon = 'bi-info-circle';
+
+                    if (dias <= 1) {
+                        alertClass = 'alert-urgent';
+                        icon = 'bi-exclamation-triangle-fill';
+                    } else if (dias <= 3) {
+                        alertClass = 'alert-soon';
+                        icon = 'bi-exclamation-circle';
+                    }
+
+                    return `
+                        <div class="alert-item ${alertClass}">
+                            <i class="bi ${icon}"></i>
+                            <div style="flex: 1;">
+                                <strong>${item.causa.numeroExpediente}</strong> - ${item.task.descripcion}
+                                <br>
+                                <small>Vence: ${this.formatDate(item.task.vencimiento)} ${item.task.hora ? `a las ${item.task.hora}` : ''} (${dias === 0 ? 'HOY' : dias === 1 ? 'MAÑANA' : `en ${dias} días`})</small>
+                            </div>
+                            <button class="btn-action btn-tasks" onclick="manager.manageTasks(${item.causa.id})">
+                                Ver
+                            </button>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            getVencimientosProximos() {
+                const vencimientos = [];
+                const hoy = new Date();
+                hoy.setHours(0, 0, 0, 0);
+
+                this.causas.forEach(causa => {
+                    if (!causa.tareas) return;
+
+                    causa.tareas.forEach(task => {
+                        if (task.completada || !task.vencimiento) return;
+
+                        const vencimiento = new Date(task.vencimiento);
+                        vencimiento.setHours(0, 0, 0, 0);
+
+                        const diffTime = vencimiento - hoy;
+                        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+                        if (diffDays <= 7 && diffDays >= 0) {
+                            vencimientos.push({
+                                causa: causa,
+                                task: task,
+                                dias: diffDays
+                            });
+                        }
+                    });
+                });
+
+                return vencimientos.sort((a, b) => a.dias - b.dias);
+            }
+
+            getDiasRestantes(fechaVencimiento) {
+                const hoy = new Date();
+                hoy.setHours(0, 0, 0, 0);
+
+                const vencimiento = new Date(fechaVencimiento);
+                vencimiento.setHours(0, 0, 0, 0);
+
+                const diffTime = vencimiento - hoy;
+                return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            }
+
+            getProximoVencimiento(tareas) {
+                const pendientes = tareas.filter(t => !t.completada && t.vencimiento);
+                if (pendientes.length === 0) return null;
+
+                pendientes.sort((a, b) => new Date(a.vencimiento) - new Date(b.vencimiento));
+                return pendientes[0].vencimiento;
+            }
+
+            formatDate(dateString) {
+                const date = new Date(dateString);
+                return date.toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+            }
+
+            getEstadoLabel(estado) {
+                const labels = {
+                    'activo': 'Activo',
+                    'finalizado': 'Finalizado',
+                    'pausa': 'En Pausa',
+                    'archivado': 'Archivado'
+                };
+                return labels[estado] || estado;
+            }
+
+            logout(e) {
+                e.preventDefault();
+                if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                    sessionStorage.removeItem('authenticated');
+                    sessionStorage.removeItem('loginTime');
+                    window.location.href = 'login.html';
+                }
+            }
+        }
+
+        // Funciones globales para modals
+        function closeTasksModal() {
+            document.getElementById('tasksModal').classList.remove('active');
+            document.getElementById('newTaskForm').reset();
+            manager.currentCausaId = null;
+        }
+
+        function closeDetailsModal() {
+            document.getElementById('detailsModal').classList.remove('active');
+        }
+
+        function exportToCalendar() {
+            if (!manager.currentCausaId) return;
+
+            const causa = manager.causas.find(c => c.id == manager.currentCausaId);
+            if (!causa || !causa.tareas) {
+                alert('No hay tareas para exportar');
+                return;
+            }
+
+            const tareasPendientes = causa.tareas.filter(t => !t.completada && t.vencimiento);
+
+            if (tareasPendientes.length === 0) {
+                alert('No hay tareas pendientes con fecha de vencimiento');
+                return;
+            }
+
+            // Generar archivo .ics
+            let icsContent = `BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Beristain & Asociados//Gestión de Causas//ES
+CALSCALE:GREGORIAN
+METHOD:PUBLISH\n`;
+
+            tareasPendientes.forEach(task => {
+                const dtstart = task.vencimiento.replace(/-/g, '');
+                const dtend = dtstart;
+                const timestamp = new Date().toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+
+                icsContent += `BEGIN:VEVENT
+UID:${task.id}@beristain-asociados.com
+DTSTAMP:${timestamp}
+DTSTART;VALUE=DATE:${dtstart}
+DTEND;VALUE=DATE:${dtend}
+SUMMARY:${task.descripcion}
+DESCRIPTION:Causa: ${causa.numeroExpediente}\\nCarátula: ${causa.caratula}\\nPrioridad: ${task.prioridad.toUpperCase()}${task.notas ? '\\nNotas: ' + task.notas : ''}
+LOCATION:${causa.juzgado || 'No especificado'}
+STATUS:CONFIRMED
+PRIORITY:${task.prioridad === 'alta' ? '1' : task.prioridad === 'media' ? '5' : '9'}
+BEGIN:VALARM
+TRIGGER:-P1D
+ACTION:DISPLAY
+DESCRIPTION:Recordatorio: ${task.descripcion}
+END:VALARM
+END:VEVENT\n`;
+            });
+
+            icsContent += 'END:VCALENDAR';
+
+            // Descargar archivo
+            const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `causa-${causa.numeroExpediente.replace(/[^a-zA-Z0-9]/g, '-')}-tareas.ics`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            alert('Archivo .ics generado. Puedes importarlo en Google Calendar, Outlook, o cualquier aplicación de calendario.');
+        }
+
+        // Cerrar modals al hacer clic fuera
+        window.onclick = function(event) {
+            const tasksModal = document.getElementById('tasksModal');
+            const detailsModal = document.getElementById('detailsModal');
+
+            if (event.target === tasksModal) {
+                closeTasksModal();
+            }
+            if (event.target === detailsModal) {
+                closeDetailsModal();
+            }
+        }
+
+        // Inicializar
+        const manager = new CausasManager();
+    </script>
+</body>
+</html>
