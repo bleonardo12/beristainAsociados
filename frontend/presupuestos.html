@@ -62,6 +62,8 @@
             max-width: 1400px;
             margin: 0 auto;
             padding: 0 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
         }
 
         .logo-area {
@@ -111,6 +113,40 @@
             background: rgba(255, 255, 255, 0.3);
             color: white;
             transform: translateY(-2px);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .nav-tabs-custom {
+            display: flex;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.5rem;
+            border-radius: 8px;
+        }
+
+        .nav-tabs-custom a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-tabs-custom a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .nav-tabs-custom a.active {
+            background: white;
+            color: var(--primary-color);
         }
 
         /* Container principal */
@@ -527,6 +563,15 @@
                 text-align: center;
             }
 
+            .header-actions {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .nav-tabs-custom {
+                width: 100%;
+            }
+
             .info-cards {
                 grid-template-columns: 1fr;
             }
@@ -563,18 +608,23 @@
             <div class="logo-area">
                 <img src="img/logonuevoB.jpg" alt="Beristain & Asociados">
                 <div class="header-title">
-                    <h1>Área de Socios</h1>
-                    <p>Sistema Profesional de Presupuestos</p>
+                    <h1>Gestión de Presupuestos</h1>
+                    <p>Panel de control de presupuestos</p>
                 </div>
             </div>
-            <div class="user-info">
-                <a href="index.html" class="btn-logout">
-                    <i class="bi bi-house-fill"></i>
-                    Volver al inicio
-                </a>
+
+            <div class="header-actions">
+                <nav class="nav-tabs-custom">
+                    <a href="presupuestos.html" class="active">
+                        <i class="bi bi-file-earmark-text"></i> Presupuestos
+                    </a>
+                    <a href="causas.html">
+                        <i class="bi bi-briefcase"></i> Causas
+                    </a>
+                </nav>
+
                 <button id="logoutBtn" class="btn-logout">
-                    <i class="bi bi-box-arrow-right"></i>
-                    Cerrar sesión
+                    <i class="bi bi-box-arrow-right"></i> Cerrar sesión
                 </button>
             </div>
         </div>
