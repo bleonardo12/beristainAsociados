@@ -1,27 +1,49 @@
-backend/
-├── config/               # Configuraciones
-│   ├── database.js       # Configuración de la base de datos
-│   └── mail.js           # Configuración del servicio de correo
-├── controllers/          # Controladores de rutas
-│   ├── contactController.js   # Control de formulario de contacto
-│   ├── chatbotController.js   # Lógica del chatbot
-│   └── testimonialsController.js  # Control de testimonios
-├── middleware/           # Middleware personalizado
-│   ├── rateLimiter.js    # Limitador de tasa para evitar spam
-│   ├── security.js       # Headers de seguridad
-│   └── validator.js      # Validación de datos
-├── models/               # Modelos de datos
-│   ├── Contact.js        # Modelo para mensajes de contacto
-│   └── Testimonial.js    # Modelo para testimonios
-├── routes/               # Rutas de la API
-│   ├── api.js            # Rutas principales de la API
-│   ├── contact.js        # Rutas de contacto
-│   └── chatbot.js        # Rutas del chatbot
-├── utils/                # Utilidades
-│   ├── logger.js         # Configuración de logging
-│   └── emailService.js   # Servicio para enviar emails
-├── .env                  # Variables de entorno (no se versiona)
-├── .env.example          # Ejemplo de variables de entorno
-├── .gitignore            # Archivos a ignorar en Git
-├── package.json          # Dependencias y scripts
-└── server.js             # Punto de entrada principal
+# Backend API - Beristain & Asociados
+
+Backend RESTful API para el sistema de gestión de estudio jurídico.
+
+## 🚀 FASE 2 - Backend con Sincronización
+
+Este es el backend completo para sincronización entre dispositivos.
+
+## 📋 Estado Actual: EN DESARROLLO
+
+**Archivos creados:**
+- ✅ Estructura de directorios
+- ✅ package.json con dependencias
+- ✅ Configuración de base de datos
+- ✅ Modelos (User, Presupuesto, Causa)
+- ✅ Middlewares (auth, validation)
+- ✅ Controllers (authController)
+
+**Pendientes:**
+- ⏳ Resto de controllers (presupuestos, causas)
+- ⏳ Rutas API completas
+- ⏳ Servidor Express (server.js)
+- ⏳ Utilidades (backup, logger, migrate)
+- ⏳ Testing e instalación
+
+## 🔧 Próximos Pasos
+
+El desarrollo continúa en la siguiente sesión con:
+1. Controllers completos
+2. Rutas API
+3. Servidor Express
+4. Scripts de migración
+5. Instalación en VPS
+6. Conexión con frontend
+
+## 📦 Instalación (Cuando esté completo)
+
+```bash
+cd backend
+npm install
+cp .env.example .env
+# Configurar .env
+npm run migrate
+npm start
+```
+
+## 📝 Notas
+
+Backend en desarrollo activo. No instalar aún en producción.
