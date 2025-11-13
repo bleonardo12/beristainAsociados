@@ -9,7 +9,7 @@ const Presupuesto = sequelize.define('Presupuesto', {
     },
     numero: {
         type: DataTypes.STRING(50),
-        allowNull: false,
+        allowNull: true,
         unique: true
     },
     fecha: {
@@ -19,7 +19,7 @@ const Presupuesto = sequelize.define('Presupuesto', {
     // Datos del cliente
     cliente: {
         type: DataTypes.STRING(200),
-        allowNull: false
+        allowNull: true
     },
     dni: {
         type: DataTypes.STRING(20),
