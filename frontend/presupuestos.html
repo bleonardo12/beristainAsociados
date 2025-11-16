@@ -1114,20 +1114,22 @@
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/api.js"></script>
     <script>
-        // Verificar autenticación
-        if (sessionStorage.getItem('authenticated') !== 'true') {
-            window.location.href = 'login.html';
+       // Verificar autenticación con API
+        if (!requireAuth()) {
+            // requireAuth() ya redirige a login si no está autenticado
         }
-
-        // Cerrar sesión
+        
+        // Mostrar información del usuario
+        displayUserInfo();
+    
+        // Cerrar sesión con API
         document.getElementById('logoutBtn').addEventListener('click', () => {
             if (confirm('¿Está seguro que desea cerrar sesión?')) {
-                sessionStorage.removeItem('authenticated');
-                sessionStorage.removeItem('loginTime');
-                window.location.href = 'login.html';
+                API.auth.logout();
             }
-        });
+        });   
 
         // Funciones de calculadoras (definidas primero)
         function calcularTotalUMA() {
@@ -2190,6 +2192,7 @@
         // ==========================================
 
         // Event listeners para calculadoras
+	/*
         document.getElementById('valorUMA').addEventListener('input', calcularTotalUMA);
         document.getElementById('cantidadUMA').addEventListener('input', calcularTotalUMA);
         document.getElementById('btnAplicarUMA').addEventListener('click', aplicarUMAaHonorarios);
@@ -2198,7 +2201,7 @@
         document.getElementById('gastosAdmin').addEventListener('input', calcularTotal);
         document.getElementById('iva').addEventListener('change', calcularTotal);
         document.getElementById('anticipo').addEventListener('input', calcularSaldo);
-
+	 */
         // Cerrar modal
         function closeModal() {
             document.getElementById('modalDetalles').classList.remove('active');
