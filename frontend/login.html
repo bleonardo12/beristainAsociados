@@ -224,6 +224,7 @@
             font-size: 1rem;
         }
     </style>
+    <script src="js/api.js"></script>	
 </head>
 <body>
     <div class="login-container">
@@ -234,9 +235,22 @@
         </div>
 
         <form id="loginForm">
-            <div id="errorMessage" class="error-message">
+            <div id="errorMessage" class="error-message">	
                 <i class="bi bi-exclamation-circle-fill"></i>
                 <span id="errorText">Contraseña incorrecta. Por favor, inténtelo de nuevo.</span>
+            </div>
+		 <div class="form-group">
+                <label for="email">
+                    <i class="bi bi-envelope-fill"></i> Email
+                </label>
+                <input
+                    type="email"
+                    id="email"
+                    class="form-control"
+                    placeholder="Ingrese su email"
+                    autocomplete="username"
+                    required
+                >
             </div>
 
             <div class="form-group">
@@ -278,10 +292,9 @@
     </div>
 
     <script>
-        // Configuración - IMPORTANTE: Cambiar esta contraseña en producción
-        const CORRECT_PASSWORD = '123leo123$';
+           // Configuración
         const MAX_ATTEMPTS = 5;
-        const LOCKOUT_TIME = 5 * 60 * 1000; // 5 minutos en milisegundos
+        const LOCKOUT_TIME = 5 * 60 * 1000; // 5 minutos
 
         // Estado
         let attempts = parseInt(localStorage.getItem('loginAttempts') || '0');
@@ -289,6 +302,7 @@
 
         // Elementos DOM
         const form = document.getElementById('loginForm');
+        const emailInput = document.getElementById('email');
         const passwordInput = document.getElementById('password');
         const togglePassword = document.getElementById('togglePassword');
         const errorMessage = document.getElementById('errorMessage');
@@ -296,22 +310,22 @@
         const loginButton = document.getElementById('loginButton');
         const buttonText = document.getElementById('buttonText');
 
-        // Verificar si está autenticado al cargar la página
-        if (sessionStorage.getItem('authenticated') === 'true') {
+        // Verificar si ya está autenticado
+        if (API.isAuthenticated()) {
             window.location.href = 'presupuestos.html';
         }
 
-        // Verificar si está bloqueado
+        // Verificar bloqueo
         function checkLockout() {
             const now = Date.now();
             if (lockoutUntil > now) {
                 const remainingTime = Math.ceil((lockoutUntil - now) / 1000 / 60);
                 errorText.textContent = `Demasiados intentos fallidos. Inténtelo de nuevo en ${remainingTime} minutos.`;
                 errorMessage.classList.add('show');
+                emailInput.disabled = true;
                 passwordInput.disabled = true;
                 loginButton.disabled = true;
 
-                // Programar reactivación
                 setTimeout(() => {
                     resetLockout();
                 }, lockoutUntil - now);
@@ -327,6 +341,7 @@
             lockoutUntil = 0;
             localStorage.setItem('loginAttempts', '0');
             localStorage.setItem('lockoutUntil', '0');
+            emailInput.disabled = false;
             passwordInput.disabled = false;
             loginButton.disabled = false;
             errorMessage.classList.remove('show');
@@ -347,8 +362,8 @@
             }
         });
 
-        // Manejo del formulario
-        form.addEventListener('submit', (e) => {
+        // Manejo del formulario con API
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
 
             // Verificar bloqueo
@@ -356,20 +371,19 @@
                 return;
             }
 
+            const email = emailInput.value.trim();
             const password = passwordInput.value;
 
             // Deshabilitar botón y mostrar loading
             loginButton.disabled = true;
             buttonText.innerHTML = '<span class="spinner"></span> Verificando...';
 
-            // Simular verificación (añadir pequeño delay para UX)
-            setTimeout(() => {
-                if (password === CORRECT_PASSWORD) {
-                    // Login exitoso
-                    sessionStorage.setItem('authenticated', 'true');
-                    sessionStorage.setItem('loginTime', Date.now().toString());
+            try {
+                // Llamar al backend
+                const response = await API.auth.login(email, password);
 
-                    // Resetear intentos
+                if (response.success) {
+                    // Login exitoso
                     resetLockout();
 
                     // Mensaje de éxito
@@ -381,41 +395,47 @@
                     setTimeout(() => {
                         window.location.href = 'presupuestos.html';
                     }, 500);
-                } else {
-                    // Login fallido
-                    attempts++;
-                    localStorage.setItem('loginAttempts', attempts.toString());
-
-                    if (attempts >= MAX_ATTEMPTS) {
-                        // Bloquear
-                        lockoutUntil = Date.now() + LOCKOUT_TIME;
-                        localStorage.setItem('lockoutUntil', lockoutUntil.toString());
-                        checkLockout();
-                    } else {
-                        // Mostrar error
-                        const remainingAttempts = MAX_ATTEMPTS - attempts;
-                        errorText.textContent = `Contraseña incorrecta. Le quedan ${remainingAttempts} intentos.`;
-                        errorMessage.classList.add('show');
-
-                        // Limpiar campo
-                        passwordInput.value = '';
-                        passwordInput.focus();
-                    }
-
-                    // Restaurar botón
-                    loginButton.disabled = false;
-                    buttonText.innerHTML = '<i class="bi bi-box-arrow-in-right"></i> Ingresar';
                 }
-            }, 800);
+            } catch (error) {
+                // Login fallido
+                attempts++;
+                localStorage.setItem('loginAttempts', attempts.toString());
+
+                if (attempts >= MAX_ATTEMPTS) {
+                    // Bloquear
+                    lockoutUntil = Date.now() + LOCKOUT_TIME;
+                    localStorage.setItem('lockoutUntil', lockoutUntil.toString());
+                    checkLockout();
+                } else {
+                    // Mostrar error
+                    const remainingAttempts = MAX_ATTEMPTS - attempts;
+                    errorText.textContent = `Credenciales incorrectas. Le quedan ${remainingAttempts} intentos.`;
+                    errorMessage.classList.add('show');
+
+                    // Limpiar campos
+                    passwordInput.value = '';
+                    passwordInput.focus();
+                }
+
+                // Restaurar botón
+                loginButton.disabled = false;
+                buttonText.innerHTML = '<i class="bi bi-box-arrow-in-right"></i> Ingresar';
+            }
         });
 
         // Verificar bloqueo al cargar
         checkLockout();
 
-        // Focus automático en el campo de contraseña
-        passwordInput.focus();
+        // Focus automático en el email
+        emailInput.focus();
 
         // Limpiar error al escribir
+        emailInput.addEventListener('input', () => {
+            if (errorMessage.classList.contains('show')) {
+                errorMessage.classList.remove('show');
+            }
+        });
+        
         passwordInput.addEventListener('input', () => {
             if (errorMessage.classList.contains('show')) {
                 errorMessage.classList.remove('show');

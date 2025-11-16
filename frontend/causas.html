@@ -1063,12 +1063,16 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/api.js"></script>
 
     <script>
-        // Verificar autenticación
-        if (sessionStorage.getItem('authenticated') !== 'true') {
-            window.location.href = 'login.html';
+       // Verificar autenticación con API
+        if (!requireAuth()) {
+            // requireAuth() ya redirige a login si no está autenticado
         }
+        
+        // Mostrar información del usuario
+        displayUserInfo();
 
         // Clase para gestionar causas
         class CausasManager {
@@ -1529,9 +1533,7 @@
             logout(e) {
                 e.preventDefault();
                 if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
-                    sessionStorage.removeItem('authenticated');
-                    sessionStorage.removeItem('loginTime');
-                    window.location.href = 'login.html';
+                     API.auth.logout();
                 }
             }
         }
