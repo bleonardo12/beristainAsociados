@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <!-- Metadatos básicos -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Honorarios profesionales en Derecho Penal. Primera reunión sin cargo. Presupuesto personalizado según complejidad del caso. Beristain & Asociados.">
+        <meta name="keywords" content="honorarios abogados, presupuesto legal, costos derecho penal, abogados Buenos Aires, defensa penal, honorarios profesionales">
+        <meta name="author" content="Beristain & Asociados Estudio Jurídico">
+        <meta name="robots" content="index, follow">
+
+        <!-- Etiqueta canónica -->
+        <link rel="canonical" href="https://www.beristainyasociados.com.ar/honorarios.html">
+
+        <!-- Metadatos Open Graph -->
+        <meta property="og:type" content="website">
+        <meta property="og:title" content="Honorarios Profesionales | Beristain & Asociados">
+        <meta property="og:description" content="Primera reunión sin cargo. Presupuesto personalizado según complejidad. Honorarios profesionales acordes a su caso.">
+        <meta property="og:url" content="https://www.beristainyasociados.com.ar/honorarios.html">
+        <meta property="og:image" content="https://www.beristainyasociados.com.ar/img/logonuevoB.jpg">
+        <meta property="og:locale" content="es_AR">
+
+        <!-- Metadatos para dispositivos móviles -->
+        <meta name="theme-color" content="#1a365d">
+        <link rel="shortcut icon" href="/favicon.png">
+
+        <title>Honorarios Profesionales | Beristain & Asociados - Derecho Penal</title>
+
+        <!-- Fuentes -->
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+        <!-- CSS personalizado -->
+        <link rel="stylesheet" type="text/css" href="styles.css?v=20251117">
+
+        <!-- Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-MLZ2VR5SYR"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
+            gtag('config', 'G-MLZ2VR5SYR', { 'anonymize_ip': true });
+        </script>
+
+        <!-- Google Ads -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=AW-11107730225"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'AW-11107730225');
+        </script>
+
+        <style>
+            .hero-honorarios {
+                background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
+                color: white;
+                padding: 80px 0 60px;
+                margin-top: 70px;
+            }
+
+            .hero-honorarios h1 {
+                font-family: 'Playfair Display', serif;
+                font-size: 2.5rem;
+                font-weight: 700;
+                margin-bottom: 20px;
+            }
+
+            .hero-honorarios p {
+                font-size: 1.2rem;
+                opacity: 0.95;
+            }
+
+            .honorarios-section {
+                padding: 60px 0;
+            }
+
+            .card-honorarios {
+                border: none;
+                border-radius: 15px;
+                box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+                height: 100%;
+                overflow: hidden;
+            }
+
+            .card-honorarios:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            }
+
+            .card-header-custom {
+                background: linear-gradient(135deg, #2c5282 0%, #1a365d 100%);
+                color: white;
+                padding: 25px;
+                border: none;
+            }
+
+            .card-header-custom h3 {
+                margin: 0;
+                font-size: 1.5rem;
+                font-weight: 600;
+            }
+
+            .card-body-custom {
+                padding: 30px;
+            }
+
+            .precio-desde {
+                font-size: 1.1rem;
+                color: #666;
+                margin-bottom: 15px;
+            }
+
+            .precio-valor {
+                font-size: 2.5rem;
+                font-weight: 700;
+                color: #1a365d;
+                margin-bottom: 10px;
+            }
+
+            .incluye-lista {
+                list-style: none;
+                padding: 0;
+                margin: 20px 0;
+            }
+
+            .incluye-lista li {
+                padding: 10px 0;
+                border-bottom: 1px solid #f0f0f0;
+                position: relative;
+                padding-left: 30px;
+            }
+
+            .incluye-lista li:before {
+                content: "✓";
+                position: absolute;
+                left: 0;
+                color: #10b981;
+                font-weight: bold;
+                font-size: 1.2rem;
+            }
+
+            .incluye-lista li:last-child {
+                border-bottom: none;
+            }
+
+            .factores-box {
+                background: #f8f9fa;
+                border-left: 4px solid #1a365d;
+                padding: 20px;
+                margin: 20px 0;
+                border-radius: 5px;
+            }
+
+            .cta-box {
+                background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+                color: white;
+                padding: 40px;
+                border-radius: 15px;
+                text-align: center;
+                margin: 40px 0;
+            }
+
+            .cta-box h3 {
+                font-size: 2rem;
+                margin-bottom: 15px;
+            }
+
+            .cta-box .btn {
+                background: white;
+                color: #10b981;
+                font-weight: 600;
+                padding: 15px 40px;
+                font-size: 1.1rem;
+                border: none;
+                margin: 10px;
+            }
+
+            .cta-box .btn:hover {
+                background: #f0f0f0;
+                transform: scale(1.05);
+            }
+
+            .badge-custom {
+                background: #10b981;
+                color: white;
+                padding: 5px 15px;
+                border-radius: 20px;
+                font-size: 0.9rem;
+                font-weight: 500;
+            }
+
+            @media (max-width: 768px) {
+                .hero-honorarios h1 {
+                    font-size: 2rem;
+                }
+                .precio-valor {
+                    font-size: 2rem;
+                }
+                .cta-box h3 {
+                    font-size: 1.5rem;
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: #1a365d;">
+            <div class="container">
+                <a class="navbar-brand" href="index.html">
+                    <img src="img/logonuevoB.jpg" alt="Logo Beristain & Asociados" height="40" class="d-inline-block align-text-top">
+                    Beristain & Asociados
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html#areas">Áreas de Práctica</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="honorarios.html">Honorarios</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html#contact-form-section">Contacto</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section class="hero-honorarios">
+            <div class="container text-center">
+                <h1>Honorarios Profesionales</h1>
+                <p class="lead">Transparencia, profesionalismo y presupuestos acordes a la complejidad de su caso</p>
+                <p><span class="badge-custom">Primera Reunión Sin Cargo</span></p>
+            </div>
+        </section>
+
+        <!-- Información General -->
+        <section class="honorarios-section bg-light">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-10">
+                        <div class="text-center mb-5">
+                            <h2 class="mb-4" style="color: #1a365d; font-family: 'Playfair Display', serif;">¿Cómo funcionan nuestros honorarios?</h2>
+                            <p class="lead" style="color: #555;">Cada caso es único. Nuestros honorarios se establecen de manera personalizada según la complejidad, urgencia y alcance de su situación legal.</p>
+                        </div>
+
+                        <div class="factores-box">
+                            <h4 style="color: #1a365d; margin-bottom: 20px;"><i class="bi bi-info-circle-fill"></i> Factores que determinan los honorarios:</h4>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <ul class="incluye-lista">
+                                        <li>Complejidad técnica del caso</li>
+                                        <li>Jurisdicción (Federal, Provincial, CABA)</li>
+                                        <li>Urgencia de la situación</li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <ul class="incluye-lista">
+                                        <li>Etapa procesal del expediente</li>
+                                        <li>Cantidad de audiencias estimadas</li>
+                                        <li>Necesidad de peritajes o investigación</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Rangos de Honorarios -->
+        <section class="honorarios-section">
+            <div class="container">
+                <div class="text-center mb-5">
+                    <h2 style="color: #1a365d; font-family: 'Playfair Display', serif;">Rangos de Inversión Orientativos</h2>
+                    <p style="color: #666;">Estos montos son referenciales. El presupuesto definitivo se establece en la primera reunión.</p>
+                </div>
+
+                <div class="row g-4">
+                    <!-- Casos Simples -->
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card card-honorarios">
+                            <div class="card-header-custom">
+                                <h3><i class="bi bi-file-earmark-text"></i> Casos Simples</h3>
+                            </div>
+                            <div class="card-body-custom">
+                                <p class="precio-desde">Desde</p>
+                                <div class="precio-valor">$450.000</div>
+                                <p style="color: #666; margin-bottom: 25px;">Causas con pocas audiencias</p>
+
+                                <h5 style="color: #1a365d; margin-bottom: 15px;">Ejemplos:</h5>
+                                <ul class="incluye-lista" style="font-size: 0.95rem;">
+                                    <li>Tenencia simple de estupefacientes</li>
+                                    <li>Lesiones leves</li>
+                                    <li>Hurtos menores</li>
+                                    <li>Amenazas simples</li>
+                                </ul>
+
+                                <h5 style="color: #1a365d; margin-top: 25px; margin-bottom: 15px;">Incluye:</h5>
+                                <ul class="incluye-lista" style="font-size: 0.9rem;">
+                                    <li>Primera reunión de evaluación</li>
+                                    <li>Análisis completo del expediente</li>
+                                    <li>Estrategia legal personalizada</li>
+                                    <li>Representación en audiencias</li>
+                                    <li>Comunicación directa con el abogado</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Casos Intermedios -->
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card card-honorarios" style="border: 3px solid #10b981;">
+                            <div class="card-header-custom" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+                                <h3><i class="bi bi-briefcase"></i> Casos Intermedios</h3>
+                                <span class="badge bg-warning text-dark">Más Frecuente</span>
+                            </div>
+                            <div class="card-body-custom">
+                                <p class="precio-desde">Desde</p>
+                                <div class="precio-valor">$800.000</div>
+                                <p style="color: #666; margin-bottom: 25px;">Causas de complejidad moderada</p>
+
+                                <h5 style="color: #1a365d; margin-bottom: 15px;">Ejemplos:</h5>
+                                <ul class="incluye-lista" style="font-size: 0.95rem;">
+                                    <li>Robos agravados</li>
+                                    <li>Estafas de mediana cuantía</li>
+                                    <li>Lesiones graves</li>
+                                    <li>Casos con múltiples imputados</li>
+                                </ul>
+
+                                <h5 style="color: #1a365d; margin-top: 25px; margin-bottom: 15px;">Incluye:</h5>
+                                <ul class="incluye-lista" style="font-size: 0.9rem;">
+                                    <li>Todo lo de casos simples, más:</li>
+                                    <li>Coordinación de peritajes</li>
+                                    <li>Estrategias de negociación</li>
+                                    <li>Seguimiento permanente del expediente</li>
+                                    <li>Contacto 24/7 para urgencias</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Casos Complejos -->
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card card-honorarios">
+                            <div class="card-header-custom" style="background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);">
+                                <h3><i class="bi bi-shield-lock"></i> Casos Complejos</h3>
+                            </div>
+                            <div class="card-body-custom">
+                                <p class="precio-desde">Desde</p>
+                                <div class="precio-valor">$1.500.000</div>
+                                <p style="color: #666; margin-bottom: 25px;">Causas graves o federales</p>
+
+                                <h5 style="color: #1a365d; margin-bottom: 15px;">Ejemplos:</h5>
+                                <ul class="incluye-lista" style="font-size: 0.95rem;">
+                                    <li>Narcotráfico (simple o agravado)</li>
+                                    <li>Homicidios</li>
+                                    <li>Causas federales</li>
+                                    <li>Delitos económicos complejos</li>
+                                </ul>
+
+                                <h5 style="color: #1a365d; margin-top: 25px; margin-bottom: 15px;">Incluye:</h5>
+                                <ul class="incluye-lista" style="font-size: 0.9rem;">
+                                    <li>Todo lo anterior, más:</li>
+                                    <li>Equipo multidisciplinario</li>
+                                    <li>Investigación privada si es necesario</li>
+                                    <li>Estrategias avanzadas de defensa</li>
+                                    <li>Disponibilidad inmediata 24/7</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Nota sobre casos excepcionales -->
+                <div class="row mt-5">
+                    <div class="col-lg-8 offset-lg-2">
+                        <div class="alert alert-info" style="border-left: 4px solid #1a365d;">
+                            <h5><i class="bi bi-exclamation-circle"></i> Casos Excepcionales</h5>
+                            <p style="margin-bottom: 0;">Para causas de máxima complejidad (múltiples delitos, jurisdicciones internacionales, etc.) los honorarios pueden superar los $2.000.000. Se evalúa caso por caso.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Formas de Pago -->
+        <section class="honorarios-section bg-light">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="text-center mb-4">
+                            <h2 style="color: #1a365d; font-family: 'Playfair Display', serif;">Formas de Pago</h2>
+                        </div>
+
+                        <div class="card card-honorarios">
+                            <div class="card-body-custom">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h5 style="color: #1a365d;"><i class="bi bi-credit-card"></i> Métodos Aceptados:</h5>
+                                        <ul class="incluye-lista">
+                                            <li>Efectivo</li>
+                                            <li>Transferencia bancaria</li>
+                                            <li>Depósito bancario</li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h5 style="color: #1a365d;"><i class="bi bi-calendar-check"></i> Modalidades:</h5>
+                                        <ul class="incluye-lista">
+                                            <li>Pago contado (anticipo + saldos)</li>
+                                            <li>Plan de pagos según el caso</li>
+                                            <li>Seña inicial + cuotas mensuales</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="alert alert-success mt-4" style="margin-bottom: 0;">
+                                    <p style="margin: 0;"><strong>Beneficio:</strong> Descuento del 10% en pago contado del monto total.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Honorarios -->
+        <section class="honorarios-section">
+            <div class="container">
+                <div class="text-center mb-5">
+                    <h2 style="color: #1a365d; font-family: 'Playfair Display', serif;">Preguntas Frecuentes</h2>
+                </div>
+
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="accordion" id="faqAccordion">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                        ¿La primera reunión realmente es sin cargo?
+                                    </button>
+                                </h2>
+                                <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        <strong>Sí, completamente gratuita.</strong> En la primera reunión evaluamos su caso, analizamos la documentación, y le brindamos un presupuesto personalizado. No hay costo ni compromiso.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                        ¿Qué pasa si no puedo pagar todo de una vez?
+                                    </button>
+                                </h2>
+                                <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        Ofrecemos <strong>planes de pago flexibles</strong> según cada caso. Generalmente se abona una seña inicial y el resto en cuotas mensuales. Evaluamos cada situación particularmente.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                        ¿Los honorarios incluyen todos los gastos?
+                                    </button>
+                                </h2>
+                                <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        Los honorarios incluyen <strong>todo el trabajo profesional del abogado</strong>. Gastos extraordinarios como peritajes externos, investigadores privados, o tasas judiciales especiales se informan previamente y se facturan aparte.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                                        ¿Por qué sus honorarios son más altos que otros estudios?
+                                    </button>
+                                </h2>
+                                <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        Somos un <strong>estudio boutique especializado en casos complejos</strong>. No atendemos casos simples que otros estudios pueden resolver. Nuestro equipo tiene 20 años de experiencia en causas graves (narcotráfico, homicidios, delitos federales). Ofrecemos defensa senior con estrategias avanzadas y disponibilidad 24/7.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">
+                                        ¿Puedo consultar mi caso sin compromiso?
+                                    </button>
+                                </h2>
+                                <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        <strong>Por supuesto.</strong> La primera reunión es justamente para que usted conozca nuestra propuesta, entienda el alcance de su caso, y decida sin presiones si desea que lo representemos.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Final -->
+        <section class="honorarios-section">
+            <div class="container">
+                <div class="cta-box">
+                    <h3><i class="bi bi-calendar-check"></i> Primera Reunión Sin Cargo</h3>
+                    <p style="font-size: 1.1rem; margin-bottom: 30px;">Evaluamos su caso y le brindamos un presupuesto personalizado sin compromiso</p>
+                    <div>
+                        <a href="https://wa.me/5491135913161?text=Hola%2C%20necesito%20información%20sobre%20honorarios%20para%20mi%20caso%20penal." class="btn btn-lg" target="_blank">
+                            <i class="bi bi-whatsapp"></i> WhatsApp
+                        </a>
+                        <a href="tel:+5491135913161" class="btn btn-lg">
+                            <i class="bi bi-telephone-fill"></i> Llamar Ahora
+                        </a>
+                    </div>
+                    <p style="font-size: 0.9rem; margin-top: 20px; opacity: 0.9;">
+                        <i class="bi bi-clock"></i> Disponibilidad 24/7 para urgencias penales
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer style="background-color: #1a365d; color: white; padding: 40px 0 20px;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5>Beristain & Asociados</h5>
+                        <p>Estudio Jurídico Especializado</p>
+                        <p><i class="bi bi-telephone"></i> 11-3591-3161</p>
+                        <p><i class="bi bi-envelope"></i> estudio@beristainyasociados.com.ar</p>
+                    </div>
+                    <div class="col-md-6 text-md-end">
+                        <h5>Enlaces Rápidos</h5>
+                        <p><a href="index.html" style="color: white; text-decoration: none;">Inicio</a></p>
+                        <p><a href="index.html#areas" style="color: white; text-decoration: none;">Áreas de Práctica</a></p>
+                        <p><a href="honorarios.html" style="color: white; text-decoration: none;">Honorarios</a></p>
+                    </div>
+                </div>
+                <hr style="border-color: rgba(255,255,255,0.2); margin: 30px 0 20px;">
+                <div class="text-center">
+                    <p style="margin: 0; opacity: 0.8;">&copy; 2025 Beristain & Asociados. Todos los derechos reservados.</p>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Bootstrap JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+        <!-- Analytics tracking para clicks en botones -->
+        <script>
+            // Track WhatsApp clicks
+            document.querySelectorAll('a[href*="wa.me"]').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'conversion', {
+                            'send_to': 'AW-11107730225/Yg24CK6u4LsbELGGyrAp',
+                            'value': 75.0,
+                            'currency': 'ARS'
+                        });
+                        gtag('event', 'whatsapp_click_honorarios', {
+                            'event_category': 'Contact',
+                            'event_label': 'WhatsApp - Honorarios Page'
+                        });
+                    }
+                });
+            });
+
+            // Track Phone clicks
+            document.querySelectorAll('a[href^="tel:"]').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'conversion', {
+                            'send_to': 'AW-11107730225/MjxGCJ-v6bsbELGGyrAp',
+                            'value': 100.0,
+                            'currency': 'ARS'
+                        });
+                        gtag('event', 'phone_click_honorarios', {
+                            'event_category': 'Contact',
+                            'event_label': 'Phone - Honorarios Page'
+                        });
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>
