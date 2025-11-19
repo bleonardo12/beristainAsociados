@@ -1,0 +1,28 @@
+# Node modules
+node_modules/
+
+# Environment variables
+.env
+
+# Logs
+logs/*.log
+
+# Backups
+backups/*.sql
+
+# macOS
+.DS_Store
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Temporary files
+*.tmp
+*.bak
+
+# PM2
+ecosystem.config.js
+.pm2/
