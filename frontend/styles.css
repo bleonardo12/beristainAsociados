@@ -276,6 +276,55 @@ p {
     font-weight: 700;
 }
 
+/* Hero CTA Button */
+.hero-cta-container {
+    margin-top: var(--spacing-lg);
+    text-align: center;
+}
+
+.btn-hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #25D366;
+    color: white;
+    padding: 16px 32px;
+    border-radius: var(--radius-md);
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+    animation: pulse-cta 2s infinite;
+}
+
+.btn-hero-cta:hover {
+    background: #128C7E;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5);
+}
+
+.btn-hero-cta i {
+    font-size: 1.3rem;
+}
+
+.hero-cta-subtitle {
+    color: var(--neutral-white);
+    font-size: 0.9rem;
+    margin-top: 10px;
+    opacity: 0.9;
+}
+
+@keyframes pulse-cta {
+    0%, 100% {
+        box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+    }
+    50% {
+        box-shadow: 0 4px 25px rgba(37, 211, 102, 0.7);
+    }
+}
+
 /* ========== SECCIONES ========== */
 section {
     padding: var(--spacing-xl) var(--spacing-md);
