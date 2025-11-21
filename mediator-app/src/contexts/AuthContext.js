@@ -10,24 +10,9 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    loadStoredUser();
+    // No cargar sesión automáticamente - siempre mostrar login
+    setLoading(false);
   }, []);
-
-  const loadStoredUser = async () => {
-    try {
-      const storedUser = await AsyncStorage.getItem(STORAGE_KEYS.USER_DATA);
-      const storedToken = await AsyncStorage.getItem(STORAGE_KEYS.AUTH_TOKEN);
-
-      if (storedUser && storedToken) {
-        setUser(JSON.parse(storedUser));
-        setIsAuthenticated(true);
-      }
-    } catch (error) {
-      console.error('Error loading stored user:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const signIn = async (userData, token) => {
     try {

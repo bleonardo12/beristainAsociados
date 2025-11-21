@@ -1,26 +1,26 @@
 // Sistema de diseño - Colores y estilos globales
 
 export const colors = {
-  // Primarios - Tonos calmantes
-  primary: '#4A90A4',
-  primaryLight: '#7AB8CC',
-  primaryDark: '#2D6A7A',
+  // Primarios - Tonos vibrantes y llamativos
+  primary: '#6366F1',
+  primaryLight: '#818CF8',
+  primaryDark: '#4F46E5',
 
-  // Secundarios - Acentos
-  secondary: '#6B5B95',
-  accent: '#88D8B0',
+  // Secundarios - Acentos llamativos
+  secondary: '#EC4899',
+  accent: '#10B981',
 
-  // Termómetro
+  // Termómetro - Colores más intensos
   thermometer: {
-    cold: '#4ECDC4',      // Verde-azulado - Muy bien
-    cool: '#88D8B0',      // Verde - Acercamiento
-    neutral: '#F7DC6F',   // Amarillo - Neutral
-    warm: '#F39C12',      // Naranja - Tensión
-    hot: '#E74C3C',       // Rojo - Escalamiento
+    cold: '#06B6D4',      // Cyan brillante - Muy bien
+    cool: '#10B981',      // Esmeralda - Acercamiento
+    neutral: '#FBBF24',   // Amarillo brillante - Neutral
+    warm: '#F97316',      // Naranja intenso - Tensión
+    hot: '#EF4444',       // Rojo brillante - Escalamiento
   },
 
-  // UI
-  background: '#F8FAFC',
+  // UI - Fondo con más personalidad
+  background: '#F0F9FF',
   surface: '#FFFFFF',
   surfaceElevated: '#FFFFFF',
 
@@ -38,11 +38,11 @@ export const colors = {
   error: '#EF4444',
   info: '#3B82F6',
 
-  // Chat
+  // Chat - Burbujas más coloridas
   chat: {
-    bubbleOwn: '#4A90A4',
-    bubbleOther: '#E2E8F0',
-    bubbleAI: '#F0E6FF',
+    bubbleOwn: '#6366F1',
+    bubbleOther: '#F1F5F9',
+    bubbleAI: '#FDF4FF',
   },
 
   // Bordes

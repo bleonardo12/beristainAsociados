@@ -18,7 +18,6 @@ const HomeScreen = ({ navigation }) => {
   const { sessions } = useMediation();
 
   const activeSessions = sessions.filter(s => s.status === 'active').length;
-  const pendingSessions = sessions.filter(s => s.status === 'pending').length;
 
   return (
     <SafeAreaView style={styles.container}>
@@ -48,27 +47,20 @@ const HomeScreen = ({ navigation }) => {
           </Text>
         </TouchableOpacity>
 
-        {/* Stats rápidas */}
-        <View style={styles.statsContainer}>
-          <StatCard
-            icon="chatbubbles"
-            value={activeSessions}
-            label="Activas"
-            color={colors.success}
-          />
-          <StatCard
-            icon="time"
-            value={pendingSessions}
-            label="Pendientes"
-            color={colors.warning}
-          />
-          <StatCard
-            icon="checkmark-circle"
-            value={sessions.filter(s => s.status === 'resolved').length}
-            label="Resueltas"
-            color={colors.primary}
-          />
-        </View>
+        {/* Botón Mis Sesiones */}
+        <TouchableOpacity
+          style={styles.sessionsButton}
+          onPress={() => navigation.navigate('Sesiones')}
+        >
+          <Ionicons name="chatbubbles" size={28} color={colors.secondary} />
+          <View style={styles.sessionsButtonContent}>
+            <Text style={styles.sessionsButtonText}>Mis Sesiones</Text>
+            <Text style={styles.sessionsButtonSubtext}>
+              {activeSessions > 0 ? `${activeSessions} activa${activeSessions > 1 ? 's' : ''}` : 'Ver historial'}
+            </Text>
+          </View>
+          <Ionicons name="chevron-forward" size={24} color={colors.text.muted} />
+        </TouchableOpacity>
 
         {/* Cómo funciona */}
         <View style={styles.section}>
@@ -118,14 +110,6 @@ const HomeScreen = ({ navigation }) => {
     </SafeAreaView>
   );
 };
-
-const StatCard = ({ icon, value, label, color }) => (
-  <View style={styles.statCard}>
-    <Ionicons name={icon} size={24} color={color} />
-    <Text style={[styles.statValue, { color }]}>{value}</Text>
-    <Text style={styles.statLabel}>{label}</Text>
-  </View>
-);
 
 const StepItem = ({ number, title, description }) => (
   <View style={styles.stepItem}>
@@ -178,28 +162,30 @@ const styles = StyleSheet.create({
   mainActionSubtitle: {
     ...typography.bodySmall,
     color: 'rgba(255, 255, 255, 0.8)',
+    textAlign: 'center',
   },
-  statsContainer: {
+  sessionsButton: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: spacing.lg,
-  },
-  statCard: {
-    flex: 1,
-    backgroundColor: colors.surface,
-    borderRadius: borderRadius.md,
-    padding: spacing.md,
     alignItems: 'center',
-    marginHorizontal: spacing.xs,
-    ...shadows.sm,
+    backgroundColor: colors.surface,
+    borderRadius: borderRadius.lg,
+    padding: spacing.lg,
+    marginBottom: spacing.lg,
+    ...shadows.md,
   },
-  statValue: {
-    ...typography.h2,
-    marginVertical: spacing.xs,
+  sessionsButtonContent: {
+    flex: 1,
+    marginLeft: spacing.md,
   },
-  statLabel: {
+  sessionsButtonText: {
+    ...typography.body,
+    fontWeight: '600',
+    color: colors.text.primary,
+  },
+  sessionsButtonSubtext: {
     ...typography.caption,
     color: colors.text.muted,
+    marginTop: 2,
   },
   section: {
     marginBottom: spacing.lg,
