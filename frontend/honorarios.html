@@ -59,7 +59,6 @@
                 background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
                 color: white;
                 padding: 80px 0 60px;
-                margin-top: 70px;
             }
 
             .hero-honorarios h1 {
@@ -209,34 +208,46 @@
     </head>
 
     <body>
-        <!-- Navbar -->
-        <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: #1a365d;">
-            <div class="container">
-                <a class="navbar-brand" href="index.html">
-                    <img src="img/logonuevoB.jpg" alt="Logo Beristain & Asociados" height="40" class="d-inline-block align-text-top">
-                    Beristain & Asociados
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="index.html">Inicio</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="index.html#areas">Áreas de Práctica</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="honorarios.html">Honorarios</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="index.html#contact-form-section">Contacto</a>
-                        </li>
-                    </ul>
+        <header>
+            <!-- Navbar -->
+            <nav class="navbar navbar-expand-lg sticky-top">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="index.html" title="Beristain & Asociados Estudio Jurídico">
+                        <img src="img/logonuevoB.jpg" alt="Beristain Asociados Abogados" class="logo-principal" width="auto">
+                    </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link" href="index.html">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="index.html#profesionales">Quienes Somos</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="index.html#areasDePractica" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Áreas de práctica
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li><a class="dropdown-item" href="index.html#dchoPenal">Derecho Penal</a></li>
+                                    <li><a class="dropdown-item" href="index.html#dchoCivil">Derecho Civil y Comercial</a></li>
+                                    <li><a class="dropdown-item" href="index.html#dchoFam">Derecho de Familia y Sucesiones</a></li>
+                                    <li><a class="dropdown-item" href="index.html#dchoSeguros">Seguros y Accidentes de tránsito</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="honorarios.html">Honorarios</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="index.html#contact-form-section">Contacto</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-        </nav>
+            </nav>
+        </header>
 
         <!-- Hero Section -->
         <section class="hero-honorarios">
