@@ -1432,9 +1432,6 @@
                 doc.setFont('helvetica', 'normal');
                 doc.text('Estudio Jurídico', 105, 26, { align: 'center' });
 
-                doc.setFontSize(10);
-                doc.text('Araujo 319 - CABA', 105, 32, { align: 'center' });
-
                 yPos = 50;
 
                 // INFORMACIÓN DEL PRESUPUESTO
@@ -1500,34 +1497,83 @@
 
                 yPos += 15;
 
-                // SERVICIO
+                // SERVICIOS JURÍDICOS
+                if (yPos > 240) {
+                    doc.addPage();
+                    yPos = 20;
+                }
+
                 doc.setFillColor(...primaryColor);
                 doc.rect(20, yPos - 5, 170, 8, 'F');
                 doc.setTextColor(255, 255, 255);
                 doc.setFontSize(12);
                 doc.setFont('helvetica', 'bold');
-                doc.text('SERVICIO JURÍDICO', 22, yPos);
+                doc.text('SERVICIOS JURÍDICOS', 22, yPos);
 
                 yPos += 10;
                 doc.setTextColor(...grayColor);
-                doc.setFontSize(11);
+                doc.setFontSize(10);
 
-                doc.setFont('helvetica', 'bold');
-                doc.text('Área/Servicio:', 20, yPos);
-                yPos += 6;
-                doc.setFont('helvetica', 'normal');
-                doc.text(p.servicio || 'Sin especificar', 20, yPos);
+                // Listar servicios con detalle
+                if (p.servicios && p.servicios.length > 0) {
+                    p.servicios.forEach((servicio, index) => {
+                        // Verificar espacio en página
+                        if (yPos > 260) {
+                            doc.addPage();
+                            yPos = 20;
+                        }
 
-                yPos += 10;
+                        doc.setFont('helvetica', 'bold');
+                        doc.text(`${index + 1}. ${servicio.nombre}`, 20, yPos);
+                        yPos += 5;
+
+                        doc.setFont('helvetica', 'normal');
+                        doc.text(`   Valor UMA: $ ${servicio.valorUMA.toLocaleString('es-AR', { minimumFractionDigits: 2 })}`, 20, yPos);
+                        doc.text(`Cant: ${servicio.cantidadUMA}`, 110, yPos);
+                        doc.setFont('helvetica', 'bold');
+                        doc.text(`$ ${servicio.total.toLocaleString('es-AR', { minimumFractionDigits: 2 })}`, 188, yPos, { align: 'right' });
+                        yPos += 7;
+                    });
+                } else {
+                    doc.setFont('helvetica', 'normal');
+                    doc.text('Sin servicios especificados', 20, yPos);
+                    yPos += 7;
+                }
+
+                yPos += 5;
+
+                // Verificar espacio para descripción
+                if (yPos > 230) {
+                    doc.addPage();
+                    yPos = 20;
+                }
+
                 doc.setFont('helvetica', 'bold');
                 doc.text('Descripción:', 20, yPos);
                 yPos += 6;
                 doc.setFont('helvetica', 'normal');
                 const descripcionLines = doc.splitTextToSize(p.descripcion || 'Sin descripción', 170);
+
+                // Verificar si la descripción cabe en la página actual
+                if (yPos + (descripcionLines.length * 6) > 270) {
+                    doc.addPage();
+                    yPos = 20;
+                    doc.setFont('helvetica', 'bold');
+                    doc.text('Descripción (continuación):', 20, yPos);
+                    yPos += 6;
+                    doc.setFont('helvetica', 'normal');
+                }
+
                 doc.text(descripcionLines, 20, yPos);
                 yPos += (descripcionLines.length * 6) + 10;
 
                 // TABLA DE HONORARIOS
+                // Verificar espacio para la tabla (necesita al menos 50px)
+                if (yPos > 230) {
+                    doc.addPage();
+                    yPos = 20;
+                }
+
                 doc.setFillColor(...primaryColor);
                 doc.rect(20, yPos - 5, 170, 8, 'F');
                 doc.setTextColor(255, 255, 255);
@@ -1687,13 +1733,12 @@
                     doc.setFontSize(9);
                     doc.setFont('helvetica', 'normal');
                     doc.setTextColor(...grayColor);
-                    doc.text('Beristain & Asociados - Estudio Jurídico', 105, 283, { align: 'center' });
-                    doc.text('Dr. Leonardo Beristain - CUIT: 20-37992116-8', 105, 288, { align: 'center' });
+                    doc.text('Beristain & Asociados - Estudio Jurídico', 105, 285, { align: 'center' });
+                    doc.text('Dr. Leonardo Beristain - CUIT: 20-37992116-8', 105, 290, { align: 'center' });
                     doc.setFontSize(8);
-                    doc.text('CPACF T146 F648 | CALM TXII F289 | CFALP T204 F114', 105, 292, { align: 'center' });
+                    doc.text('CPACF T146 F648 | CALM TXII F289 | CFALP T204 F114', 105, 295, { align: 'center' });
                     doc.setFontSize(9);
-                    doc.text('Araujo 319 - CABA | Tel: +54 11 3591-3161', 105, 296, { align: 'center' });
-                    doc.text('Email: beristainyasociadosej@gmail.com', 105, 300, { align: 'center' });
+                    doc.text('Tel: +54 11 3591-3161 | Email: beristainyasociadosej@gmail.com', 105, 300, { align: 'center' });
                 }
 
                 // GUARDAR
