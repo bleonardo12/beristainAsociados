@@ -38,9 +38,13 @@ app.use(helmet({
     }
 }));
 
-// CORS
+// CORS - Permitir ambos dominios (con y sin www)
 const corsOptions = {
-    origin: process.env.FRONTEND_URL || '*',
+    origin: [
+        'https://beristainyasociados.com.ar',
+        'https://www.beristainyasociados.com.ar',
+        'http://localhost:3000'
+    ],
     credentials: true,
     optionsSuccessStatus: 200
 };
