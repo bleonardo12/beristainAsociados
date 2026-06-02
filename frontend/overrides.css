@@ -44,6 +44,12 @@
         transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s linear 0.3s !important;
         margin-top: 0 !important;
     }
+    @media (min-width: 992px) {
+    /* Evita que el botón diseñado para el menú colapsable aparezca en la barra de escritorio */
+    body .navbar-collapse .btn-contact-professional {
+        display: none !important;
+    }
+}
 }
 
 /* ========== MENÚ MÓVIL OVERLAY FULL-SCREEN ========== */
