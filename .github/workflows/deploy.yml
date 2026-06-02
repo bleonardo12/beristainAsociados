@@ -13,18 +13,21 @@ jobs:
       - name: Checkout del código
         uses: actions/checkout@v3
 
-      - name: Configurar clave SSH
+      # REEMPLAZAMOS EL PASO ANTERIOR POR ESTE AGENTE OFICIAL
+      - name: Configurar SSH Agent y Clave
+        uses: webfactory/ssh-agent@v0.8.0
+        with:
+          ssh-private-key: ${{ secrets.DEPLOY_KEY }}
+
+      - name: Registrar Host de Confianza
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.DEPLOY_KEY }}" > ~/.ssh/id_ed25519
-          chmod 600 ~/.ssh/id_ed25519
-          # Ajuste: Especificamos el puerto 2222 para el keyscan
           ssh-keyscan -p 2222 -H srv777726.hstgr.cloud >> ~/.ssh/known_hosts
 
       - name: Deploy al VPS
         run: |
-          # Ajuste: Añadimos -p 2222 para conectarse por tu puerto personalizado
-          ssh -i ~/.ssh/id_ed25519 -p 2222 root@srv777726.hstgr.cloud << 'ENDSSH'
+          # Ahora ya no necesitas pasarle el "-i", el agente la inyecta solo
+          ssh -p 2222 root@srv777726.hstgr.cloud << 'ENDSSH'
             set -e
             echo "📦 Iniciando deploy..."
             cd /var/www/beristainAsociados
