@@ -35,4 +35,5 @@ coverage/
 .nyc_output/
 
 # Caché
-.cache/
+.cache/deploy_key_nueva
+deploy_key_nueva.pub
