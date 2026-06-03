@@ -20,23 +20,24 @@
 } /* <--- CIERRA EL ROOT AQUÍ */
 
 /* ========== MODO OSCURO ========== */
+/* ========== MODO OSCURO UNIFICADO ========== */
 .dark-theme {
     --primary: #E8D5B7;
     --primary-light: #F5EBD9;
     --primary-dark: #D4AF77;
-    
     --secondary: #2C3E50;
     --secondary-light: #1A252F;
-    
     --accent: #D4AF77;
-    --accent-light: #5D6D7E;
-
     --neutral-white: #121212;
     --neutral-100: #1A1A1A;
     --neutral-200: #2C2C2C;
     --neutral-300: #404040;
     --neutral-600: #A0A0A0;
     --neutral-700: #E0E0E0;
+    
+    /* Variables de UI */
+    --bg-body: var(--neutral-white);
+    --text-body: var(--neutral-700);
 }
 
 /* ========== RESET Y BASE ========== */
@@ -53,13 +54,15 @@ html {
 }
 
 body {
-    font-family: var(--font-secondary);
-    font-size: 16px;
-    line-height: 1.6;
-    color: var(--neutral-700);
     background-color: var(--neutral-white);
-    overflow-x: hidden;
+    color: var(--neutral-700);
     transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Cuando el tema es oscuro, esto es lo ÚNICO que necesitas para cambiar todo */
+.dark-theme body {
+    background-color: var(--neutral-white); /* Aquí las variables ya cambiaron de valor */
+    color: var(--neutral-700);
 }
 
 img {
@@ -1326,36 +1329,6 @@ footer a:hover {
     outline-offset: 3px;
 }
 
-/* ========== THEME TOGGLE (Modo Oscuro/Claro) ========== */
-#theme-toggle {
-    position: fixed;
-    top: 90px;          /* Lo movemos a la parte superior */
-    right: 20px;        /* A la derecha */
-    z-index: 9998;      /* Debajo de la barra de llamada (que es 9999) */
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
-    color: var(--neutral-white);
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: var(--shadow-md);
-    transition: var(--transition);
-    font-size: 1.2rem;
-}
-
-#theme-toggle:hover {
-    transform: scale(1.1);
-    background: linear-gradient(135deg, var(--primary-light) 0%, var(--secondary) 100%);
-    box-shadow: var(--shadow-lg);
-}
-
-#theme-toggle:active {
-    transform: scale(0.95);
-}
 
 /* ========== ACCESIBILIDAD ========== */
 :focus-visible {
@@ -1446,7 +1419,7 @@ body footer p {
     font-family: 'Inter', sans-serif;
     font-size: 0.95rem;
     line-height: 1.8;
-    color: #cbd5e1;
+    color: var(--neutral-600);
     margin-top: 0;
     margin-bottom: 0.75rem;
     transition: color 0.3s ease;
@@ -1454,32 +1427,3 @@ body footer p {
     width: 100%;
 }
 
-/* 1. Reset para elementos que Bootstrap bloquea */
-html.dark-theme, 
-html.dark-theme body {
-    background-color: var(--neutral-white) !important;
-    color: var(--neutral-700) !important;
-}
-
-/* 2. Forzar componentes específicos */
-html.dark-theme .navbar,
-html.dark-theme .card,
-html.dark-theme .modal-content {
-    background-color: var(--neutral-100) !important;
-    color: var(--neutral-700) !important;
-    border-color: var(--neutral-300) !important;
-}
-
-/* 3. Corregir textos en modo oscuro */
-html.dark-theme h1, 
-html.dark-theme h2, 
-html.dark-theme h3, 
-html.dark-theme p, 
-html.dark-theme a {
-    color: var(--neutral-700) !important;
-}
-
-/* 4. Asegurar que las fuentes originales se mantengan */
-html.dark-theme {
-    font-family: var(--font-secondary) !important;
-}
