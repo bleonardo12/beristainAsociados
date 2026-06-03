@@ -41,7 +41,7 @@
             <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
             <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
             <link rel="preload" href="img/Facultad_de_derecho_uba.webp" as="image" fetchpriority="high">
-            <link rel="preload" href="img/logonuevoB.jpg" as="image" fetchpriority="high">
+            <link rel="preload" href="img/logonuevoB.webp" as="image" type="image/webp" fetchpriority="high">
 
             <!-- DNS prefetch para CDNs externos -->
             <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
@@ -204,7 +204,10 @@
 
                         <a class="navbar-brand" href="index.html" title="Beristain & Asociados Estudio Jurídico">
 
-                            <img src="img/logonuevoB.jpg" alt="Beristain Asociados Abogados" class="logo-principal" width="52" height="52" fetchpriority="high" loading="eager">
+                            <picture>
+                                <source srcset="img/logonuevoB.webp" type="image/webp">
+                                <img src="img/logonuevoB.jpg" alt="Beristain Asociados Abogados" class="logo-principal" width="52" height="52" fetchpriority="high" loading="eager">
+                            </picture>
 
                         </a>
 
