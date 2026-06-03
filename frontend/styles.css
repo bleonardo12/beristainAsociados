@@ -249,8 +249,9 @@ h1,h2,h3,h4,h5,h6 {
     .hero-studio         { animation: heroFadeUp 0.55s cubic-bezier(0.22,1,0.36,1) both; animation-delay: 0.5s;  }
     .hero-desc           { animation: heroFadeUp 0.55s cubic-bezier(0.22,1,0.36,1) both; animation-delay: 0.6s;  }
     .hero-phone-display  { animation: heroFadeUp 0.55s cubic-bezier(0.22,1,0.36,1) both; animation-delay: 0.7s;  }
-    .hero-cta-container  { animation: heroFadeUp 0.55s cubic-bezier(0.22,1,0.36,1) both; animation-delay: 0.82s; }
-    .hero-trust          { animation: heroFadeUp 0.5s  cubic-bezier(0.22,1,0.36,1) both; animation-delay: 0.96s; }
+    .hero-urgency-timer  { animation: heroFadeUp 0.5s  cubic-bezier(0.22,1,0.36,1) both; animation-delay: 0.8s;  }
+    .hero-cta-container  { animation: heroFadeUp 0.55s cubic-bezier(0.22,1,0.36,1) both; animation-delay: 0.92s; }
+    .hero-trust          { animation: heroFadeUp 0.5s  cubic-bezier(0.22,1,0.36,1) both; animation-delay: 1.06s; }
 }
 
 .home {
@@ -367,6 +368,24 @@ h1,h2,h3,h4,h5,h6 {
 }
 .hero-phone-display a:hover { color: var(--white); }
 .hero-phone-label { font-size: 0.82rem; color: rgba(255,255,255,0.35); }
+
+.hero-urgency-timer {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.38);
+    margin-bottom: var(--spacing-md);
+    font-variant-numeric: tabular-nums;
+    min-height: 1.2em;
+}
+.hero-urgency-timer .timer-icon  { color: var(--gold); font-size: 0.75rem; }
+.hero-urgency-timer .timer-label { color: rgba(255,255,255,0.5); }
+.hero-urgency-timer .timer-time  {
+    color: var(--gold-light);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
 
 .hero-cta-container {
     display: flex;

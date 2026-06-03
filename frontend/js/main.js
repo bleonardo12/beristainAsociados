@@ -12,6 +12,7 @@ import { initEmergencyBanner } from './modules/emergencyBanner.js';
 import LogoManager from './modules/logoModule.js';
 import { initSmoothScroll } from './modules/smoothScroll.js';
 import { initAnalytics } from './modules/analytics.js';
+import { initUrgencyTimer } from './modules/urgencyTimer.js';
 
 /**
  * Inicialización de la aplicación con patrones modernos de rendimiento
@@ -20,6 +21,7 @@ class App {
   constructor() {
     // Registro de componentes
     this.components = [
+      { name: 'urgencyTimer', priority: 'critical', init: initUrgencyTimer, initialized: false },
       { name: 'navbar', priority: 'critical', init: initNavbar, initialized: false },
       { name: 'smoothScroll', priority: 'critical', init: initSmoothScroll, initialized: false },
       { name: 'contactForm', priority: 'critical', init: initContactForm, initialized: false },
