@@ -46,9 +46,13 @@
    DESKTOP Y PANTALLAS GRANDES (Desde 992px en adelante)
    ========================================================================== */
 @media (min-width: 992px) {
-    /* Nav-links en desktop: blanco nítido sobre fondo navy oscuro */
+    /* Nav-links en desktop: uppercase premium, tono de estudio jurídico */
     body .navbar-nav .nav-link {
         color: rgba(255, 255, 255, 0.88) !important;
+        font-size: 0.75rem !important;
+        font-weight: 500 !important;
+        letter-spacing: 0.09em !important;
+        text-transform: uppercase !important;
     }
     body .navbar-nav .nav-link:hover,
     body .navbar-nav .nav-link.active {
