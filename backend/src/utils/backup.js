@@ -56,13 +56,13 @@ const ejecutarBackup = async () => {
         console.log(`📋 Base de datos: ${dbConfig.database}`);
         console.log(`📁 Archivo: ${nombreArchivo}\n`);
 
-        // Construir comando mysqldump
-        const comando = `mysqldump -h ${dbConfig.host} -P ${dbConfig.port} -u ${dbConfig.user} ${
-            dbConfig.password ? `-p${dbConfig.password}` : ''
-        } ${dbConfig.database} > "${rutaCompleta}"`;
+        // Construir comando mysqldump — la contraseña va por variable de entorno
+        // para evitar que quede expuesta en el historial del shell o en ps aux
+        const env = { ...process.env, MYSQL_PWD: dbConfig.password || '' };
+        const comando = `mysqldump -h ${dbConfig.host} -P ${dbConfig.port} -u ${dbConfig.user} ${dbConfig.database} > "${rutaCompleta}"`;
 
         // Ejecutar backup
-        await execPromise(comando);
+        await execPromise(comando, { env });
 
         // Verificar que el archivo se creó
         const stats = fs.statSync(rutaCompleta);
@@ -141,13 +141,12 @@ const restaurarBackup = async (archivoBackup) => {
             throw new Error('Archivo de backup no encontrado');
         }
 
-        // Construir comando mysql
-        const comando = `mysql -h ${dbConfig.host} -P ${dbConfig.port} -u ${dbConfig.user} ${
-            dbConfig.password ? `-p${dbConfig.password}` : ''
-        } ${dbConfig.database} < "${archivoBackup}"`;
+        // Construir comando mysql — contraseña por variable de entorno
+        const env = { ...process.env, MYSQL_PWD: dbConfig.password || '' };
+        const comando = `mysql -h ${dbConfig.host} -P ${dbConfig.port} -u ${dbConfig.user} ${dbConfig.database} < "${archivoBackup}"`;
 
         // Ejecutar restauración
-        await execPromise(comando);
+        await execPromise(comando, { env });
 
         console.log('✅ Backup restaurado exitosamente!\n');
         logger.info(`Backup restaurado: ${archivoBackup}`);

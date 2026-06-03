@@ -39,8 +39,11 @@ app.use(helmet({
 }));
 
 // CORS
+if (process.env.NODE_ENV === 'production' && !process.env.FRONTEND_URL) {
+    logger.warn('⚠️  FRONTEND_URL no definida en producción — CORS rechazará todos los orígenes');
+}
 const corsOptions = {
-    origin: process.env.FRONTEND_URL || '*',
+    origin: process.env.FRONTEND_URL || (process.env.NODE_ENV === 'production' ? false : 'http://localhost:3000'),
     credentials: true,
     optionsSuccessStatus: 200
 };

@@ -43,17 +43,11 @@ const sanitizeInput = (req, res, next) => {
 
 // Middleware para parsear paginación
 const parsePagination = (req, res, next) => {
-    const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 10;
+    const page = Math.max(1, parseInt(req.query.page) || 1);
+    const limit = Math.min(Math.max(1, parseInt(req.query.limit) || 10), 100);
     const offset = (page - 1) * limit;
 
-    // Limitar el máximo de resultados por página
-    req.pagination = {
-        page: page > 0 ? page : 1,
-        limit: Math.min(limit, 100), // Máximo 100 por página
-        offset: offset >= 0 ? offset : 0
-    };
-
+    req.pagination = { page, limit, offset };
     next();
 };
 
@@ -81,9 +75,14 @@ const parseFilters = (req, res, next) => {
         req.filters.fecha_hasta = req.query.fecha_hasta;
     }
 
-    // Ordenamiento
+    // Ordenamiento — whitelist de campos permitidos para evitar inyección
+    const ALLOWED_SORT_FIELDS = [
+        'created_at', 'updated_at', 'cliente', 'estado',
+        'caratula', 'fecha_inicio', 'numero_expediente',
+        'fecha', 'total'
+    ];
     req.sorting = {
-        field: req.query.sort_by || 'created_at',
+        field: ALLOWED_SORT_FIELDS.includes(req.query.sort_by) ? req.query.sort_by : 'created_at',
         order: req.query.order === 'asc' ? 'ASC' : 'DESC'
     };
 

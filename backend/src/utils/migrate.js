@@ -6,7 +6,7 @@
  */
 
 require('dotenv').config();
-const { sequelize, syncDatabase } = require('../models');
+const { sequelize } = require('../models');
 const logger = require('./logger');
 
 const migrate = async () => {
