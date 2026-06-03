@@ -1453,3 +1453,33 @@ body footer p {
     text-align: center;
     width: 100%;
 }
+
+/* 1. Reset para elementos que Bootstrap bloquea */
+html.dark-theme, 
+html.dark-theme body {
+    background-color: var(--neutral-white) !important;
+    color: var(--neutral-700) !important;
+}
+
+/* 2. Forzar componentes específicos */
+html.dark-theme .navbar,
+html.dark-theme .card,
+html.dark-theme .modal-content {
+    background-color: var(--neutral-100) !important;
+    color: var(--neutral-700) !important;
+    border-color: var(--neutral-300) !important;
+}
+
+/* 3. Corregir textos en modo oscuro */
+html.dark-theme h1, 
+html.dark-theme h2, 
+html.dark-theme h3, 
+html.dark-theme p, 
+html.dark-theme a {
+    color: var(--neutral-700) !important;
+}
+
+/* 4. Asegurar que las fuentes originales se mantengan */
+html.dark-theme {
+    font-family: var(--font-secondary) !important;
+}
