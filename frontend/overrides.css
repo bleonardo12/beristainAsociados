@@ -1801,13 +1801,24 @@ body .emergency-banner p {
     margin: 0 auto !important;
     padding: 0 70px !important;
     font-size: 18px !important;
-    line-height: 1.7 !important;
+    line-height: 1.5 !important;
     width: 100% !important;
     font-weight: 500 !important;
     text-align: center !important;
     letter-spacing: 0.3px !important;
     color: #e8e8e8 !important;
     text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5) !important;
+}
+
+@media (max-width: 575.98px) {
+    body .emergency-banner p {
+        font-size: 13px !important;
+        padding: 0 48px !important;
+        line-height: 1.4 !important;
+    }
+    body .emergency-banner {
+        padding: 14px 0 !important;
+    }
 }
 
 body .emergency-banner p strong {

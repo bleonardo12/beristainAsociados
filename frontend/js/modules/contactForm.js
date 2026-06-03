@@ -194,9 +194,30 @@ export function initContactForm() {
     }
   }
 
+  // Pre-selección automática desde parámetro URL (?area=penal, ?area=accidentes, etc.)
+  const urlArea = new URLSearchParams(window.location.search).get('area');
+  if (urlArea) {
+    const asunto = form.elements['asunto'];
+    if (asunto) {
+      const match = Array.from(asunto.options).find(o =>
+        o.value.toLowerCase().includes(urlArea.toLowerCase())
+      );
+      if (match) asunto.value = match.value;
+    }
+  }
+
   form.addEventListener("submit", async function (e) {
     e.preventDefault();
     e.stopPropagation();
+
+    // Verificación honeypot anti-spam
+    const honeypot = form.elements['hp_website'];
+    if (honeypot && honeypot.value.trim() !== '') {
+      form.classList.add('submitted');
+      showFeedback("¡Mensaje enviado correctamente! Te contactaremos pronto.");
+      form.reset();
+      return;
+    }
 
     console.log('📤 Formulario enviado, iniciando validación...');
 
