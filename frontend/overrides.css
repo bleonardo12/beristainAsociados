@@ -622,8 +622,8 @@ body .navbar-collapse {
 html body .navbar .logo-principal,
 html body .navbar-brand .logo-principal,
 html body img.logo-principal {
-    height: 52px !important;
-    width: 52px !important;
+    height: 70px !important;
+    width: 70px !important;
     max-height: none !important;
     max-width: none !important;
     object-fit: cover !important;
@@ -636,8 +636,8 @@ html body img.logo-principal {
 /* Logo scrolled */
 html body .navbar.scrolled .logo-principal,
 html body .navbar.scrolled img.logo-principal {
-    height: 42px !important;
-    width: 42px !important;
+    height: 56px !important;
+    width: 56px !important;
     border-radius: 50% !important;
 }
 
@@ -645,8 +645,8 @@ html body .navbar.scrolled img.logo-principal {
 @media (max-width: 991.98px) {
     html body .navbar .logo-principal,
     html body img.logo-principal {
-        height: 48px !important;
-        width: 48px !important;
+        height: 58px !important;
+        width: 58px !important;
         border-radius: 50% !important;
     }
 }
@@ -654,8 +654,8 @@ html body .navbar.scrolled img.logo-principal {
 @media (max-width: 767.98px) {
     html body .navbar .logo-principal,
     html body img.logo-principal {
-        height: 44px !important;
-        width: 44px !important;
+        height: 50px !important;
+        width: 50px !important;
         border-radius: 50% !important;
     }
 }
@@ -2057,4 +2057,42 @@ body .home-text p:has(+ .urgencias) { /* Por si usás una clase genérica */
 body .home-text h1 {
     margin-top: 0.5rem !important;
     margin-bottom: 1.5rem !important;
+}
+
+/* ==========================================================================
+   LIGHT MODE — overrides para secciones con fondo navy hardcodeado
+   Las secciones de contenido pasan a fondo blanco/claro con texto oscuro.
+   El hero y la navbar siempre son dark (es la identidad de marca).
+   ========================================================================== */
+html:not(.dark-theme) .stats-strip {
+    background: var(--gray-100) !important;
+    border-color: var(--gray-200) !important;
+}
+html:not(.dark-theme) .stat-num { color: var(--navy-mid) !important; }
+html:not(.dark-theme) .stat-label { color: var(--gray-500) !important; }
+
+html:not(.dark-theme) .urgencia-accion {
+    background: var(--off-white) !important;
+}
+html:not(.dark-theme) .urgencia-accion .section-title { color: var(--navy-mid) !important; }
+html:not(.dark-theme) .urgencia-accion .section-eyebrow { color: var(--gold) !important; }
+html:not(.dark-theme) .urgencia-accion .section-sub { color: var(--gray-500) !important; }
+html:not(.dark-theme) .urgencia-card {
+    background: var(--white) !important;
+    border: 0.5px solid var(--gray-200) !important;
+    border-left: 3px solid var(--gold) !important;
+}
+html:not(.dark-theme) .urgencia-card:hover { background: var(--gray-100) !important; }
+html:not(.dark-theme) .urgencia-card h3 { color: var(--navy-deep) !important; }
+html:not(.dark-theme) .urgencia-card p { color: var(--gray-700) !important; }
+html:not(.dark-theme) .urgencia-cta-sub { color: var(--gray-500) !important; }
+
+/* Theme toggle en light mode → fondo claro */
+html:not(.dark-theme) .theme-toggle {
+    background: rgba(255,255,255,0.92) !important;
+    border-color: rgba(212,175,119,0.5) !important;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12) !important;
+}
+html:not(.dark-theme) .theme-toggle:hover {
+    background: var(--gray-100) !important;
 }

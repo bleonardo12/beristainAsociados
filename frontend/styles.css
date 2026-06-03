@@ -79,16 +79,21 @@ h1,h2,h3,h4,h5,h6 {
 
 /* ========== THEME TOGGLE ========== */
 .theme-toggle {
-    width: 36px; height: 36px;
-    background: rgba(15,30,56,0.85);
-    border: 1px solid rgba(212,175,119,0.3);
+    position: fixed;
+    bottom: 28px;
+    left: 24px;
+    z-index: 9990;
+    width: 40px; height: 40px;
+    background: rgba(8,17,31,0.92);
+    border: 1px solid rgba(212,175,119,0.4);
     border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
     cursor: pointer; transition: var(--transition);
     color: var(--gold);
-    font-size: 14px;
-    flex-shrink: 0;
+    font-size: 15px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
 }
+.theme-toggle:hover { background: var(--navy-mid); border-color: var(--gold); transform: scale(1.08); }
 .theme-toggle:hover { background: var(--navy-mid); border-color: var(--gold); }
 .dark-icon, .light-icon { position: absolute; transition: var(--transition); }
 .light-icon { opacity: 0; }
@@ -150,13 +155,13 @@ h1,h2,h3,h4,h5,h6 {
 .navbar.scrolled { box-shadow: 0 4px 24px rgba(0,0,0,0.3); }
 
 .logo-principal {
-    height: 52px; width: 52px;
+    height: 70px; width: 70px;
     border-radius: 50%;
     border: 1.5px solid rgba(212,175,119,0.4);
     object-fit: cover;
     transition: var(--transition);
 }
-.navbar.scrolled .logo-principal { height: 44px; width: 44px; }
+.navbar.scrolled .logo-principal { height: 56px; width: 56px; }
 
 .nav-link {
     color: rgba(255,255,255,0.65) !important;
@@ -684,8 +689,8 @@ h1,h2,h3,h4,h5,h6 {
 /* ── SECCIÓN URGENCIA-ACCION ── */
 .urgencia-accion { background: var(--navy-deep); }
 .urgencia-accion .section-title,
-.urgencia-accion .section-eyebrow { color: var(--off-white); }
-.urgencia-accion .section-title { color: var(--white); }
+.urgencia-accion .section-eyebrow { color: rgba(255,255,255,0.75); }
+.urgencia-accion .section-title { color: #ffffff; }
 .urgencia-accion .section-sub { color: rgba(255,255,255,0.55); max-width: 680px; margin-bottom: var(--spacing-xl); }
 
 .urgencia-grid {
@@ -713,7 +718,7 @@ h1,h2,h3,h4,h5,h6 {
 .urgencia-card h3 {
     font-family: var(--font-display);
     font-size: 1.1rem;
-    color: var(--white);
+    color: #ffffff;
     margin-bottom: var(--spacing-xs);
 }
 .urgencia-card p { font-size: 0.88rem; color: rgba(255,255,255,0.55); line-height: 1.7; }
@@ -887,7 +892,7 @@ h1,h2,h3,h4,h5,h6 {
     font-family: var(--font-display);
     font-size: clamp(1.6rem, 3vw, 2.2rem);
     font-weight: 700;
-    color: var(--white);
+    color: #ffffff;
     margin-bottom: var(--spacing-xs);
 }
 .urg-title span { color: var(--gold); }
