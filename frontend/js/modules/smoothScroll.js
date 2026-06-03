@@ -1,56 +1,29 @@
 /**
- * Módulo de scroll suave con fallback para navegadores antiguos
- * Mejora la experiencia de navegación con smooth scroll
- * Compatible con Safari < 15.4 y otros navegadores legacy
- *
- * @version 1.0
+ * Módulo de scroll suave v1.1
+ * Optimizado con AbortController y gestión de foco accesible
  */
 
-/**
- * Inicializa el smooth scroll
- */
+let abortController = new AbortController();
+
 export function initSmoothScroll() {
-  try {
-    // Detectar si el navegador soporta scroll-behavior: smooth
-    const supportsNativeSmoothScroll = 'scrollBehavior' in document.documentElement.style;
+  // Limpieza previa si se reinicia el módulo
+  abortController.abort();
+  abortController = new AbortController();
+  const { signal } = abortController;
 
-    if (supportsNativeSmoothScroll) {
-      log('Usando scroll suave nativo del navegador');
-      enableNativeSmoothScroll();
-    } else {
-      log('Aplicando polyfill de scroll suave');
-      enableSmoothScrollPolyfill();
-    }
+  const supportsNative = 'scrollBehavior' in document.documentElement.style;
 
-    // Mejorar scroll para enlaces con anclas
-    setupAnchorScrolling();
-
-    log('Smooth scroll inicializado correctamente');
-  } catch (error) {
-    console.error('Error al inicializar smooth scroll:', error);
+  if (!supportsNative) {
+    window.smoothScrollTo = createPolyfill();
   }
+
+  setupAnchorScrolling(signal);
 }
 
-/**
- * Habilita el scroll suave nativo
- */
-function enableNativeSmoothScroll() {
-  document.documentElement.style.scrollBehavior = 'smooth';
-}
+function createPolyfill() {
+  const easeInOutCubic = (t) => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 
-/**
- * Polyfill de scroll suave para navegadores que no lo soportan
- */
-function enableSmoothScrollPolyfill() {
-  // Implementación de ease-in-out
-  const easeInOutCubic = (t) => {
-    return t < 0.5
-      ? 4 * t * t * t
-      : 1 - Math.pow(-2 * t + 2, 3) / 2;
-  };
-
-  // Función de scroll suave manual
-  window.smoothScrollTo = (targetY, duration = 800) => {
+  return (targetY, duration = 800) => {
     const startY = window.pageYOffset;
     const difference = targetY - startY;
     const startTime = performance.now();
@@ -58,24 +31,14 @@ function enableSmoothScrollPolyfill() {
     const animateScroll = (currentTime) => {
       const elapsed = currentTime - startTime;
       const progress = Math.min(elapsed / duration, 1);
-      const ease = easeInOutCubic(progress);
-
-      window.scrollTo(0, startY + difference * ease);
-
-      if (progress < 1) {
-        requestAnimationFrame(animateScroll);
-      }
+      window.scrollTo(0, startY + difference * easeInOutCubic(progress));
+      if (progress < 1) requestAnimationFrame(animateScroll);
     };
-
     requestAnimationFrame(animateScroll);
   };
 }
 
-/**
- * Configura el scroll suave para enlaces con anclas
- */
-function setupAnchorScrolling() {
-  // Seleccionar todos los enlaces que apuntan a anclas (#)
+function setupAnchorScrolling(signal) {
   const anchorLinks = document.querySelectorAll('a[href^="#"]:not([href="#"])');
 
   anchorLinks.forEach(link => {
@@ -85,49 +48,27 @@ function setupAnchorScrolling() {
 
       if (targetElement) {
         e.preventDefault();
+        
+        const navbar = document.querySelector('.navbar');
+        const offset = navbar?.offsetHeight || 100;
+        const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - offset;
 
-        // Calcular posición con offset para navbar fijo
-        const navbarHeight = document.querySelector('.navbar')?.offsetHeight || 100;
-        const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
-
-        // Usar scroll nativo o polyfill según disponibilidad
+        // Ejecución de scroll
         if (typeof window.smoothScrollTo === 'function') {
           window.smoothScrollTo(targetPosition);
         } else {
-          window.scrollTo({
-            top: targetPosition,
-            behavior: 'smooth'
-          });
+          window.scrollTo({ top: targetPosition, behavior: 'smooth' });
         }
 
-        // Actualizar la URL sin hacer scroll adicional
-        if (history.pushState) {
-          history.pushState(null, null, targetId);
+        // Accesibilidad: Asegurar que el elemento pueda recibir foco
+        if (!targetElement.hasAttribute('tabindex')) {
+          targetElement.setAttribute('tabindex', '-1');
         }
-
-        // Enfocar el elemento para accesibilidad
-        setTimeout(() => {
-          targetElement.focus({ preventScroll: true });
-        }, 800);
+        
+        // PushState y Foco
+        history.pushState(null, null, targetId);
+        targetElement.focus({ preventScroll: true });
       }
-    });
+    }, { signal });
   });
-
-  log(`Configurados ${anchorLinks.length} enlaces con scroll suave`);
 }
-
-/**
- * Logging helper
- */
-function log(message) {
-  if (typeof console !== 'undefined' && console.log) {
-    console.log(`[SmoothScroll] ${message}`);
-  }
-}
-
-/**
- * Exportar API pública
- */
-export default {
-  init: initSmoothScroll
-};

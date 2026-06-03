@@ -8,7 +8,6 @@
 export function initAnalytics() {
   console.log('📊 Inicializando módulo de Analytics...');
 
-  // Verificar que gtag esté disponible
   if (typeof gtag === 'undefined') {
     console.warn('⚠️ gtag no disponible - Analytics deshabilitado');
     return;
@@ -16,25 +15,12 @@ export function initAnalytics() {
 
   console.log('✅ gtag disponible, configurando tracking...');
 
-  // Trackear clicks en botones CTA
   trackCTAClicks();
-
-  // Trackear scroll profundo
   trackScrollDepth();
-
-  // Trackear tiempo en página
   trackTimeOnPage();
-
-  // Trackear interacción con secciones
   trackSectionViews();
-
-  // Trackear clicks en enlaces sociales
   trackSocialClicks();
-
-  // Trackear clicks en WhatsApp
   trackWhatsAppClicks();
-
-  // Trackear clicks en teléfono
   trackPhoneClicks();
 
   console.log('✅ Analytics inicializado correctamente');
@@ -44,27 +30,23 @@ export function initAnalytics() {
  * Trackear clicks en botones CTA (Call To Action)
  */
 function trackCTAClicks() {
-  // Botón "Contacto Inmediato" en navbar
   const contactoInmediatoBtn = document.querySelector('[data-bs-target="#contactoInmediatoModal"]');
   if (contactoInmediatoBtn) {
     contactoInmediatoBtn.addEventListener('click', () => {
       gtag('event', 'cta_click', {
-        'event_category': 'Engagement',
-        'event_label': 'Contacto Inmediato - Navbar',
-        'value': 1
+        'cta_location': 'navbar_modal_trigger',
+        'cta_name': 'Contacto Inmediato'
       });
       console.log('📊 Tracked: Contacto Inmediato clicked');
     });
   }
 
-  // Botones de "Consulta Gratuita"
   const consultaBtns = document.querySelectorAll('a[href="#contact-form-section"], button[onclick*="contact"]');
   consultaBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       gtag('event', 'cta_click', {
-        'event_category': 'Engagement',
-        'event_label': 'Consulta Gratuita',
-        'value': 1
+        'cta_location': 'body_section',
+        'cta_name': 'Consulta Gratuita'
       });
       console.log('📊 Tracked: Consulta Gratuita clicked');
     });
@@ -72,49 +54,53 @@ function trackCTAClicks() {
 }
 
 /**
- * Trackear profundidad de scroll
+ * Trackear profundidad de scroll utilizando nombres estándar de GA4
  */
 function trackScrollDepth() {
   const scrollMilestones = [25, 50, 75, 90, 100];
   const reached = new Set();
 
   window.addEventListener('scroll', () => {
-    const scrollPercent = Math.round(
-      (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100
-    );
+    const totalScrollable = document.documentElement.scrollHeight - window.innerHeight;
+    if (totalScrollable <= 0) return;
+
+    const scrollPercent = Math.round((window.scrollY / totalScrollable) * 100);
 
     scrollMilestones.forEach(milestone => {
       if (scrollPercent >= milestone && !reached.has(milestone)) {
         reached.add(milestone);
-        gtag('event', 'scroll_depth', {
-          'event_category': 'Engagement',
-          'event_label': `${milestone}%`,
-          'value': milestone
+        // GA4 estándar utiliza el parámetro 'percent' para el evento 'scroll'
+        gtag('event', 'scroll_depth_milestone', {
+          'percent': milestone
         });
         console.log(`📊 Tracked: Scroll depth ${milestone}%`);
       }
     });
-  });
+  }, { passive: true }); // Mejora el rendimiento del scroll
 }
 
 /**
- * Trackear tiempo en página (en intervalos)
+ * Trackear tiempo en página limpiando el intervalo al finalizar
  */
 function trackTimeOnPage() {
   const intervals = [30, 60, 120, 300]; // segundos
+  const maxInterval = Math.max(...intervals);
   let timeSpent = 0;
 
-  setInterval(() => {
+  const timer = setInterval(() => {
     timeSpent += 10;
+    
     if (intervals.includes(timeSpent)) {
-      gtag('event', 'time_on_page', {
-        'event_category': 'Engagement',
-        'event_label': `${timeSpent}s`,
-        'value': timeSpent
+      gtag('event', 'time_on_page_milestone', {
+        'duration_seconds': timeSpent
       });
       console.log(`📊 Tracked: Time on page ${timeSpent}s`);
     }
-  }, 10000); // Cada 10 segundos
+
+    if (timeSpent >= maxInterval) {
+      clearInterval(timer);
+    }
+  }, 10000);
 }
 
 /**
@@ -128,12 +114,10 @@ function trackSectionViews() {
       if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
         const sectionId = entry.target.id;
         gtag('event', 'section_view', {
-          'event_category': 'Engagement',
-          'event_label': sectionId,
-          'value': 1
+          'section_id': sectionId
         });
         console.log(`📊 Tracked: Section view - ${sectionId}`);
-        observer.unobserve(entry.target); // Solo trackear una vez
+        observer.unobserve(entry.target);
       }
     });
   }, { threshold: 0.5 });
@@ -145,20 +129,14 @@ function trackSectionViews() {
  * Trackear clicks en redes sociales
  */
 function trackSocialClicks() {
-  const socialLinks = {
-    'instagram': document.querySelector('a[href*="instagram.com"]'),
-    'linkedin': document.querySelector('a[href*="linkedin.com"]'),
-    'tiktok': document.querySelector('a[href*="tiktok.com"]'),
-    'facebook': document.querySelector('a[href*="facebook.com"]')
-  };
-
-  Object.entries(socialLinks).forEach(([platform, link]) => {
+  const platforms = ['instagram', 'linkedin', 'tiktok', 'facebook'];
+  
+  platforms.forEach(platform => {
+    const link = document.querySelector(`a[href*="${platform}.com"]`);
     if (link) {
       link.addEventListener('click', () => {
         gtag('event', 'social_click', {
-          'event_category': 'Social',
-          'event_label': platform,
-          'value': 1
+          'social_platform': platform
         });
         console.log(`📊 Tracked: ${platform} click`);
       });
@@ -167,33 +145,27 @@ function trackSocialClicks() {
 }
 
 /**
- * Trackear clicks en WhatsApp
- * IMPORTANTE: WhatsApp es una conversión valiosa (contacto directo)
+ * Trackear clicks en WhatsApp protegido contra selectores duplicados
  */
 function trackWhatsAppClicks() {
-  const whatsappLinks = document.querySelectorAll('a[href*="wa.me"], a[href*="whatsapp"]');
+  // Combinamos los selectores separados por coma para que querySelectorAll devuelva elementos únicos
+  const whatsappLinks = document.querySelectorAll('a[href*="wa.me"], a[href*="whatsapp.com"]');
 
   whatsappLinks.forEach(link => {
     link.addEventListener('click', () => {
-      // 📊 GOOGLE ADS: Conversión de WhatsApp
-      // Conversión configurada: "WhatsApp - Contacto Directo"
-      // Label obtenido de Google Ads: Yg24CK6u4LsbELGGyrAp
       if (typeof gtag !== 'undefined') {
         // Conversión de Google Ads para WhatsApp
         gtag('event', 'conversion', {
-          'send_to': 'AW-11107730225/Yg24CK6u4LsbELGGyrAp', // ✅ CONFIGURADO
-          'value': 75.0, // Valor mayor porque es contacto más directo
+          'send_to': 'AW-11107730225/Yg24CK6u4LsbELGGyrAp',
+          'value': 75.0,
           'currency': 'ARS',
-          'transaction_id': Date.now().toString()
+          'transaction_id': `wa_${Date.now()}`
         });
         console.log('📊 Google Ads WhatsApp conversion tracked');
       }
 
-      // Evento de Analytics
-      gtag('event', 'whatsapp_click', {
-        'event_category': 'Contact',
-        'event_label': 'WhatsApp',
-        'value': 1
+      gtag('event', 'contact_click', {
+        'contact_method': 'whatsapp'
       });
       console.log('📊 Tracked: WhatsApp click');
     });
@@ -202,7 +174,6 @@ function trackWhatsAppClicks() {
 
 /**
  * Trackear clicks en teléfono
- * IMPORTANTE: Llamadas telefónicas son conversiones de alto valor
  */
 function trackPhoneClicks() {
   const phoneLinks = document.querySelectorAll('a[href^="tel:"]');
@@ -211,24 +182,20 @@ function trackPhoneClicks() {
     link.addEventListener('click', () => {
       const phoneNumber = link.href.replace('tel:', '');
 
-      // 📊 GOOGLE ADS: Conversión de llamada telefónica
-      // Conversión configurada: "Llamada - Click to Call"
-      // Label obtenido de Google Ads: MjxGCJ-v6bsbELGGyrAp
       if (typeof gtag !== 'undefined') {
+        // Conversión de Google Ads para Llamada Directa
         gtag('event', 'conversion', {
-          'send_to': 'AW-11107730225/MjxGCJ-v6bsbELGGyrAp', // ✅ CONFIGURADO
-          'value': 100.0, // Valor máximo - contacto inmediato
+          'send_to': 'AW-11107730225/MjxGCJ-v6bsbELGGyrAp',
+          'value': 100.0,
           'currency': 'ARS',
-          'transaction_id': Date.now().toString()
+          'transaction_id': `tel_${Date.now()}`
         });
         console.log('📊 Google Ads Phone conversion tracked');
       }
 
-      // Evento de Analytics
-      gtag('event', 'phone_click', {
-        'event_category': 'Contact',
-        'event_label': phoneNumber,
-        'value': 1
+      gtag('event', 'contact_click', {
+        'contact_method': 'phone',
+        'phone_number': phoneNumber
       });
       console.log('📊 Tracked: Phone click');
     });
@@ -236,88 +203,44 @@ function trackPhoneClicks() {
 }
 
 /**
- * Función auxiliar para trackear eventos personalizados desde otros módulos
- * @param {string} eventName - Nombre del evento
- * @param {object} params - Parámetros del evento
+ * Funciones auxiliares globales exportadas para el resto del sistema modular
  */
 export function trackEvent(eventName, params = {}) {
-  if (typeof gtag === 'undefined') {
-    console.warn('⚠️ gtag no disponible');
-    return;
-  }
-
+  if (typeof gtag === 'undefined') return;
   gtag('event', eventName, params);
   console.log(`📊 Tracked custom event: ${eventName}`, params);
 }
 
-/**
- * Trackear conversión de Google Ads
- * @param {string} conversionLabel - Label de conversión de Google Ads
- * @param {number} value - Valor de la conversión
- * @param {string} currency - Moneda (default: ARS)
- */
 export function trackConversion(conversionLabel, value = 1.0, currency = 'ARS') {
-  if (typeof gtag === 'undefined') {
-    console.warn('⚠️ gtag no disponible para conversión');
-    return;
-  }
-
+  if (typeof gtag === 'undefined') return;
   gtag('event', 'conversion', {
     'send_to': `AW-11107730225/${conversionLabel}`,
     'value': value,
     'currency': currency,
-    'transaction_id': Date.now().toString()
+    'transaction_id': `conv_${Date.now()}`
   });
-
   console.log(`📊 Tracked conversion: ${conversionLabel}, value: ${value} ${currency}`);
 }
 
-/**
- * Trackear interacciones con el formulario
- * @param {string} fieldName - Nombre del campo
- * @param {string} action - Acción (focus, blur, input)
- */
 export function trackFormInteraction(fieldName, action) {
   if (typeof gtag === 'undefined') return;
-
   gtag('event', 'form_interaction', {
-    'event_category': 'Form',
-    'event_label': `${fieldName} - ${action}`,
-    'value': 1
+    'form_field': fieldName,
+    'form_action': action
   });
-
-  console.log(`📊 Tracked form interaction: ${fieldName} - ${action}`);
 }
 
-/**
- * Trackear abandono de formulario
- * @param {string} lastField - Último campo interactuado
- */
 export function trackFormAbandonment(lastField) {
   if (typeof gtag === 'undefined') return;
-
   gtag('event', 'form_abandonment', {
-    'event_category': 'Form',
-    'event_label': lastField,
-    'value': 1
+    'last_active_field': lastField
   });
-
-  console.log(`📊 Tracked form abandonment at: ${lastField}`);
 }
 
-/**
- * Trackear errores de validación
- * @param {string} fieldName - Campo con error
- * @param {string} errorType - Tipo de error
- */
 export function trackFormError(fieldName, errorType) {
   if (typeof gtag === 'undefined') return;
-
   gtag('event', 'form_error', {
-    'event_category': 'Form',
-    'event_label': `${fieldName} - ${errorType}`,
-    'value': 1
+    'invalid_field': fieldName,
+    'error_type': errorType
   });
-
-  console.log(`📊 Tracked form error: ${fieldName} - ${errorType}`);
 }

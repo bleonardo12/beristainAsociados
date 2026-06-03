@@ -1,32 +1,29 @@
-/* overrides.css - Este archivo debe cargarse DESPUÉS de bootstrap.css y styles.css */
+/* ==========================================================================
+   BERISTAIN & ASOCIADOS - OVERRIDES.CSS (Control de Anulaciones y Responsive)
+   Este archivo debe cargarse DESPUÉS de bootstrap.css y styles.css
+   ========================================================================== */
 
 /* ==== AUMENTAR ESPECIFICIDAD PARA SOBRESCRIBIR BOOTSTRAP ==== */
 
-/* ==== AJUSTES NAVBAR PARA EVITAR BOTÓN CORTADO ==== */
-/* Reducir espacio entre items del navbar en pantallas medianas/grandes */
-@media (min-width: 992px) and (max-width: 1199px) {
-    body .navbar-nav .nav-link {
-        padding-left: 0.6rem !important;
-        padding-right: 0.6rem !important;
-        font-size: 0.9rem !important;
-    }
-
-    body .btn-contact-professional {
-        padding: 0.4rem 0.8rem !important;
-        font-size: 0.85rem !important;
-    }
-}
-
-/* Pantallas muy grandes - espaciado normal */
-@media (min-width: 1200px) {
-    body .navbar-nav .nav-link {
-        padding-left: 0.75rem !important;
-        padding-right: 0.75rem !important;
-    }
-}
-
-/* Dropdown automático - SOLO EN DESKTOP (pantallas grandes) */
+/* ==========================================================================
+   DESKTOP Y PANTALLAS GRANDES (Desde 992px en adelante)
+   ========================================================================== */
 @media (min-width: 992px) {
+    /* Reducir espacio entre items del navbar en pantallas medianas/grandes */
+    @media (max-width: 1199px) {
+        body .navbar-nav .nav-link {
+            padding-left: 0.6rem !important;
+            padding-right: 0.6rem !important;
+            font-size: 0.9rem !important;
+        }
+
+        body .btn-contact-professional {
+            padding: 0.4rem 0.8rem !important;
+            font-size: 0.85rem !important;
+        }
+    }
+
+    /* Dropdown automático al pasar el mouse (hover) - Solo Desktop */
     body .navbar-nav .dropdown:hover .dropdown-menu {
         display: block !important;
         margin-top: 0 !important;
@@ -44,19 +41,48 @@
         transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s linear 0.3s !important;
         margin-top: 0 !important;
     }
-    @media (min-width: 992px) {
-    /* Evita que el botón diseñado para el menú colapsable aparezca en la barra de escritorio */
+
+    /* Evita que el botón diseñado para el menú colapsable móvil aparezca en la barra de escritorio */
     body .navbar-collapse .btn-contact-professional {
         display: none !important;
     }
 }
+
+/* Pantallas de escritorio muy grandes (Desde 1200px en adelante) */
+@media (min-width: 1200px) {
+    body .navbar-nav .nav-link {
+        padding-left: 0.75rem !important;
+        padding-right: 0.75rem !important;
+    }
 }
 
-/* ========== MENÚ MÓVIL OVERLAY FULL-SCREEN ========== */
+
+/* ==========================================================================
+   MENÚ MÓVIL OVERLAY FULL-SCREEN Y RESPONSIVE (Hasta 991.98px)
+   ========================================================================== */
 @media (max-width: 991.98px) {
     /* Prevenir scroll horizontal cuando el menú está cerrado */
     body {
         overflow-x: hidden !important;
+    }
+
+    /* Animación del Dropdown Móvil: Forzar el estado final permanente */
+    body .navbar-nav .dropdown-menu.show {
+        display: block !important;
+        max-height: 500px !important; /* Mantiene el límite del keyframe final */
+        overflow: hidden !important;
+        animation: slideDown 0.3s ease !important;
+    }
+
+    /* Coexistencia con el Banner de Urgencias Activo en Celulares y Tablets */
+    /* El selector :has detecta si el banner está visible y desplaza el navbar de forma segura */
+    body:has(.emergency-banner.visible) nav.navbar {
+        top: 80px !important; /* Desplaza el menú para que no tape el banner */
+    }
+    
+    body:has(.emergency-banner.visible) .navbar-collapse {
+        top: 80px !important;
+        height: calc(100vh - 80px) !important;
     }
 
     /* Navbar base - mantener fixed para sticky */
@@ -115,13 +141,13 @@
     body .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::before {
         top: 0 !important;
         transform: rotate(45deg) !important;
-        background-color: #2d3748 !important; /* Oscuro para modo claro */
+        background-color: #2d3748 !important;
     }
 
     body .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::after {
         top: 0 !important;
         transform: rotate(-45deg) !important;
-        background-color: #2d3748 !important; /* Oscuro para modo claro */
+        background-color: #2d3748 !important;
     }
 
     /* Dark mode - hacer visible el hamburger icon cerrado */
@@ -178,7 +204,7 @@
         border: none !important;
     }
 
-    /* Ocultar navbar-collapse por defecto */
+    /* Ocultar navbar-collapse por defecto y transformarlo en lateral overlay */
     body .navbar-collapse {
         position: fixed !important;
         top: 0 !important;
@@ -192,22 +218,20 @@
         overflow-y: auto !important;
         overflow-x: hidden !important;
         box-shadow: -5px 0 25px rgba(0, 0, 0, 0.3) !important;
-        /* Layout en columna para apilar navbar-nav y botón */
         display: flex !important;
         flex-direction: column !important;
         justify-content: flex-start !important;
-        /* Usar transform para mejor performance - moverlo completamente fuera */
         transform: translateX(calc(100% + 10px)) !important;
         transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
         visibility: hidden !important;
-        pointer-events: none !important; /* No permitir interacción cuando está cerrado */
+        pointer-events: none !important; 
     }
 
     /* Mostrar cuando tiene clase .show */
     body .navbar-collapse.show {
         transform: translateX(0) !important;
         visibility: visible !important;
-        pointer-events: auto !important; /* Habilitar interacción cuando está abierto */
+        pointer-events: auto !important; 
     }
 
     /* Overlay oscuro de fondo */
@@ -239,13 +263,13 @@
     body .navbar-nav {
         flex-direction: column !important;
         width: 100% !important;
-        padding: 80px 0 0 0 !important; /* Reducido padding superior */
+        padding: 80px 0 0 0 !important; 
         gap: 0 !important;
-        margin: 0 !important; /* Eliminar margin-end auto de Bootstrap */
-        flex-grow: 0 !important; /* NO ocupar espacio - dejar botón cerca */
+        margin: 0 !important; 
+        flex-grow: 0 !important; 
     }
 
-    /* Items de navegación */
+    /* Items de navegación móvil */
     body .navbar-nav .nav-item {
         width: 100% !important;
         border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
@@ -260,7 +284,7 @@
         transition: all 0.3s ease !important;
         position: relative !important;
         display: block !important;
-        text-shadow: none !important; /* Sin sombra para texto nítido */
+        text-shadow: none !important; 
         -webkit-font-smoothing: antialiased !important;
         -moz-osx-font-smoothing: grayscale !important;
     }
@@ -296,12 +320,11 @@
         display: flex !important;
         justify-content: space-between !important;
         align-items: center !important;
-        text-shadow: none !important; /* Sin sombra para texto nítido */
+        text-shadow: none !important;
         -webkit-font-smoothing: antialiased !important;
         -moz-osx-font-smoothing: grayscale !important;
     }
 
-    /* Indicador de dropdown (flecha) */
     body .navbar-nav .dropdown-toggle::after {
         border: none !important;
         content: '\25BC' !important;
@@ -318,7 +341,6 @@
         color: #f0ca45 !important;
     }
 
-    /* Menú dropdown */
     body .navbar-nav .dropdown-menu {
         position: static !important;
         float: none !important;
@@ -338,15 +360,15 @@
 
     body .navbar-nav .dropdown-menu.show {
         display: block !important;
+        max-height: 500px !important;
+        overflow: hidden !important;
         animation: slideDown 0.3s ease !important;
     }
 
-    /* NO activar con hover */
     body .navbar-nav .dropdown:hover .dropdown-menu {
         display: none !important;
     }
 
-    /* Items del dropdown */
     body .navbar-nav .dropdown-menu .dropdown-item,
     html.dark-theme .navbar-nav .dropdown-menu .dropdown-item {
         color: rgba(255, 255, 255, 0.9) !important;
@@ -355,9 +377,7 @@
         background-color: transparent !important;
         border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
         transition: all 0.3s ease !important;
-        text-shadow: none !important; /* Sin sombra para texto nítido */
-        -webkit-font-smoothing: antialiased !important;
-        -moz-osx-font-smoothing: grayscale !important;
+        text-shadow: none !important;
     }
 
     body .navbar-nav .dropdown-menu .dropdown-item:last-child {
@@ -371,10 +391,10 @@
         padding-left: 3.5rem !important;
     }
 
-    /* Botón de contacto en móvil - debajo de los items del menú */
+    /* Botón de contacto en móvil - integrado en el lateral overlay */
     body .navbar-collapse .btn-contact-professional {
         width: calc(100% - 4rem) !important;
-        margin: 1.5rem 2rem 2rem 2rem !important; /* Próximo a los items, no al final */
+        margin: 1.5rem 2rem 2rem 2rem !important; 
         padding: 1rem 1.5rem !important;
         background: linear-gradient(135deg, #f0ca45 0%, #e5b639 100%) !important;
         color: #1a365d !important;
@@ -383,7 +403,7 @@
         font-size: 1.05rem !important;
         box-shadow: 0 4px 15px rgba(240, 202, 69, 0.3) !important;
         transition: all 0.3s ease !important;
-        flex-shrink: 0 !important; /* No permitir que se comprima */
+        flex-shrink: 0 !important; 
     }
 
     body .navbar-collapse .btn-contact-professional:hover {
@@ -391,38 +411,80 @@
         box-shadow: 0 6px 20px rgba(240, 202, 69, 0.4) !important;
     }
 
-    /* Animación slideDown */
-    @keyframes slideDown {
-        from {
-            opacity: 0;
-            max-height: 0;
-        }
-        to {
-            opacity: 1;
-            max-height: 500px;
-        }
+    /* Ocultar elementos flotantes cuando el menú móvil está abierto para evitar pisadas visuales */
+    body.mobile-menu-open .whatsapp-float {
+        opacity: 0 !important;
+        pointer-events: none !important;
     }
 
-    /* Prevenir scroll del body cuando el menú está abierto */
+    @keyframes slideDown {
+        from { opacity: 0; max-height: 0; }
+        to { opacity: 1; max-height: 500px; }
+    }
+
     body.mobile-menu-open {
         overflow: hidden !important;
     }
 }
 
+/* Ajustes Finos específicos para Celulares (Hasta 767.98px) */
+@media (max-width: 767.98px) {
+    /* Transformación del botón de WhatsApp a Círculo Perfecto */
+    body .whatsapp-float, html .whatsapp-float, .whatsapp-float {
+        width: 65px !important;
+        height: 65px !important;
+        min-width: 65px !important;
+        bottom: 100px !important;
+        right: 20px !important;
+        padding: 0 !important;
+        border-radius: 50% !important;
+    }
+
+    /* Asegurar el centrado y redimensionamiento del icono nativo de WA */
+    body .whatsapp-icon, html .whatsapp-icon, .whatsapp-icon {
+        font-size: 1.8rem !important;
+        margin: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+    .whatsapp-tooltip {
+        display: none !important;
+    }
+}
+
+
+/* ==========================================================================
+   Alineación de Componentes del Footer (Fuera de Media Queries)
+   ========================================================================== */
+/* Se aplica de forma quirúrgica solo a los párrafos con iconos inline */
+body footer p:has(i) {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-wrap: wrap !important;
+    min-height: 1.8rem !important;
+}
+
 /* ========== HEADER MEJORADO ========== */
 
-/* Aumentar altura del navbar para contener logo grande */
+/* Ajustar altura y comportamiento base del navbar */
 body nav.navbar {
     height: auto !important;
     min-height: 200px !important;
     padding: 10px 0 !important;
+    /* Quitamos el !important de la transición en styles para que responda con suavidad */
+    transition: min-height 0.3s ease, padding 0.3s ease, background-color 0.3s ease !important;
 }
 
 body nav.navbar.scrolled {
     min-height: 110px !important;
 }
 
-/* Responsive: ajustar altura del navbar */
+/* Responsive: ajustar altura del navbar de forma escalonada */
 @media (max-width: 1199.98px) {
     body nav.navbar {
         min-height: 180px !important;
@@ -491,23 +553,22 @@ body .navbar-collapse {
 
 /* Estilos específicos para desktop (botón fuera del collapse) */
 @media (min-width: 992px) {
-    /* Botón de contacto en desktop - posicionado después del collapse */
     body .navbar .btn-contact-professional.d-none.d-lg-block {
         margin-left: 0.5rem !important;
         flex-shrink: 0 !important;
     }
 }
 
-/* Logo más grande y elegante con fondo transparente (reducido 12%) */
+/* Logo más grande y elegante (Círculo perfecto) */
 html body .navbar .logo-principal,
 html body .navbar-brand .logo-principal,
 html body img.logo-principal {
     height: 176px !important;  /* 200px - 12% = 176px */
-    width: 176px !important;  /* Forzar width igual a height para círculo perfecto */
+    width: 176px !important;   /* Forzar width igual a height para círculo perfecto */
     max-height: none !important;
     max-width: none !important;
     object-fit: cover !important;  /* Cambiar de contain a cover */
-    transition: all 0.3s ease !important;
+    transition: height 0.3s ease, width 0.3s ease, transform 0.3s ease !important;
     filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.15)) !important;
     border-radius: 50% !important;  /* Logo completamente circular */
     -webkit-border-radius: 50% !important;  /* Safari */
@@ -522,8 +583,6 @@ html body .navbar.scrolled img.logo-principal {
     width: 88px !important;   /* Mantener círculo perfecto */
     min-height: 80px !important;
     border-radius: 50% !important;
-    -webkit-border-radius: 50% !important;
-    -moz-border-radius: 50% !important;
 }
 
 /* Responsive logo - tamaños para móviles */
@@ -533,8 +592,6 @@ html body .navbar.scrolled img.logo-principal {
         height: 115px !important;  /* 130px - 12% = 115px */
         width: 115px !important;   /* Mantener círculo perfecto */
         border-radius: 50% !important;
-        -webkit-border-radius: 50% !important;
-        -moz-border-radius: 50% !important;
     }
 }
 
@@ -544,8 +601,6 @@ html body .navbar.scrolled img.logo-principal {
         height: 88px !important;  /* 100px - 12% = 88px */
         width: 88px !important;   /* Mantener círculo perfecto */
         border-radius: 50% !important;
-        -webkit-border-radius: 50% !important;
-        -moz-border-radius: 50% !important;
     }
 }
 
@@ -553,10 +608,10 @@ html body .navbar.scrolled img.logo-principal {
 body .navbar-nav .nav-link {
     color: #2d3748 !important;
     font-weight: 500 !important;
-    font-size: 1rem !important; /* Reducido de 1.05rem a 1rem */
+    font-size: 1rem !important; 
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
-    letter-spacing: 0.2px !important; /* Reducido de 0.3px a 0.2px */
-    padding: 0.75rem 0.5rem !important;  /* Reducido de 0.85rem a 0.5rem */
+    letter-spacing: 0.2px !important; 
+    padding: 0.75rem 0.5rem !important;  
     position: relative !important;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
     white-space: nowrap !important;
@@ -570,10 +625,10 @@ body .navbar-nav .nav-item {
 
 /* Botón de contacto más compacto y visible */
 body .btn-contact-professional {
-    padding: 0.5rem 1rem !important; /* Más compacto */
-    font-size: 0.9rem !important; /* Reducido de 0.95rem */
+    padding: 0.5rem 1rem !important; 
+    font-size: 0.9rem !important; 
     white-space: nowrap !important;
-    flex-shrink: 0 !important;  /* No permitir que se comprima */
+    flex-shrink: 0 !important;  
     margin-left: 0.5rem !important;
 }
 
@@ -626,8 +681,6 @@ body .navbar-nav .dropdown-menu .dropdown-item:hover {
     padding-left: 1.75rem !important;
 }
 
-/* Banner de emergencia - Los estilos ahora están en styles.css */
-/* Este archivo solo contiene overrides para componentes específicos */
 
 /* ========== MODAL MODERNO (Rediseñado) ========== */
 body .modal-modern {
@@ -677,13 +730,12 @@ body .modal-subtitle {
 }
 
 body .btn-close-modern {
-    background-color: rgba(255, 255, 255, 0.2) !important; /* background-color en lugar de background */
+    background-color: rgba(255, 255, 255, 0.2) !important; 
     border-radius: 50% !important;
     width: 40px !important;
     height: 40px !important;
     opacity: 1 !important;
     transition: all 0.3s ease !important;
-    /* Hacer la X blanca para que sea visible en el header oscuro */
     filter: invert(1) brightness(2) !important;
 }
 
@@ -739,7 +791,6 @@ body .contact-option {
     border: 2px solid transparent;
 }
 
-/* Efecto de brillo en hover */
 body .contact-option::before {
     content: '';
     position: absolute;
@@ -755,7 +806,7 @@ body .contact-option:hover::before {
     left: 100%;
 }
 
-/* WhatsApp */
+/* WhatsApp Option */
 body .whatsapp-option {
     background: linear-gradient(135deg, #25D366 0%, #20BA5A 100%);
     color: white;
@@ -767,7 +818,7 @@ body .whatsapp-option:hover {
     border-color: #20BA5A;
 }
 
-/* Teléfono */
+/* Teléfono Option */
 body .phone-option {
     background: linear-gradient(135deg, #4a6fa5 0%, #3a5a8f 100%);
     color: white;
@@ -779,7 +830,7 @@ body .phone-option:hover {
     border-color: #3a5a8f;
 }
 
-/* Email */
+/* Email Option */
 body .email-option {
     background: linear-gradient(135deg, #c9b037 0%, #b39f30 100%);
     color: white;
@@ -791,7 +842,7 @@ body .email-option:hover {
     border-color: #b39f30;
 }
 
-/* Formulario */
+/* Formulario Option */
 body .form-option {
     background: linear-gradient(135deg, #1a365d 0%, #142a4a 100%);
     color: white;
@@ -914,30 +965,24 @@ body .modal-footer-text i {
     margin-right: 0.5rem;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
     body .contact-options-grid {
         grid-template-columns: 1fr;
     }
-
-    body .modal-header-modern {
-        padding: 1.5rem !important;
-    }
-
+    body .modal-header-modern,
     body .modal-body-modern {
         padding: 1.5rem !important;
     }
-
     body .modal-title {
         font-size: 1.4rem !important;
     }
-
     body .contact-option {
         padding: 1rem;
     }
 }
 
-/* Formulario de contacto mejorado */
+
+/* ========== FORMULARIO DE CONTACTO MEJORADO ========== */
 body #contact-form {
     background-color: var(--neutral-200) !important;
     border-radius: var(--border-radius-lg) !important;
@@ -995,7 +1040,7 @@ body #contact-form button[type="submit"] {
     display: block !important;
     width: 100% !important;
     margin-top: var(--spacing-sm) !important;
-    min-height: 44px !important; /* Mejorar área táctil */
+    min-height: 44px !important;
 }
 
 body #contact-form button[type="submit"]:hover {
@@ -1003,19 +1048,18 @@ body #contact-form button[type="submit"]:hover {
     transform: translateY(-2px) !important;
 }
 
-/* Ajustes para dispositivos móviles para el formulario */
 @media (max-width: 576px) {
     body #contact-form {
         padding: var(--spacing-md) !important;
-        margin: 0 1rem var(--spacing-xl) 1rem !important; /* Más margen lateral */
+        margin: 0 1rem var(--spacing-xl) 1rem !important;
     }
 
     body #contact-form input,
     body #contact-form textarea,
     body #contact-form select {
-        padding: 14px !important; /* Aumentado de 10px a 14px */
-        font-size: 16px !important; /* Fijo 16px para evitar zoom en iOS */
-        min-height: 48px !important; /* Área táctil más grande */
+        padding: 14px !important;
+        font-size: 16px !important; /* Evita auto-zoom molesto en iOS */
+        min-height: 48px !important;
         margin-bottom: 1rem !important;
     }
 
@@ -1024,9 +1068,9 @@ body #contact-form button[type="submit"]:hover {
     }
 
     body #contact-form button[type="submit"] {
-        padding: 16px 20px !important; /* Botón más grande */
+        padding: 16px 20px !important;
         font-size: 16px !important;
-        min-height: 52px !important; /* Mejor área táctil */
+        min-height: 52px !important;
     }
 
     body #contact-form label {
@@ -1035,26 +1079,26 @@ body #contact-form button[type="submit"]:hover {
     }
 }
 
-/* Cards uniformes - Grid 2x2 en desktop */
+
+/* ========== CARDS UNIFORMES - GRID ÁREAS DE PRÁCTICA ========== */
 body .areas-practica-grid {
     display: grid !important;
-    grid-template-columns: repeat(2, 1fr) !important; /* Forzar 2 columnas */
+    grid-template-columns: repeat(2, 1fr) !important; /* Grid 2x2 exacto */
     gap: 2rem !important;
     margin-top: 2.5rem !important;
-    max-width: 1200px !important; /* Aumentado para dar más espacio */
+    max-width: 1200px !important;
     margin-left: auto !important;
     margin-right: auto !important;
 }
 
-/* Responsive: 1 columna en móviles */
 @media (max-width: 768px) {
     body .areas-practica-grid {
-        grid-template-columns: 1fr !important;
+        grid-template-columns: 1fr !important; /* 1 columna en móviles */
     }
 }
 
 body .card-container {
-    width: 100% !important; /* Asegurar que ocupe todo el espacio */
+    width: 100% !important;
     height: 100% !important;
 }
 
@@ -1139,113 +1183,78 @@ body .card-text li::before {
     background-color: var(--secondary) !important;
 }
 
-/* Corregir los iconos del tema */
+
+/* ========== CONSOLIDACIÓN EXCLUSIVA TEMA OSCURO (DARK MODE) ========== */
+
+/* Control de Iconos de Selección de Tema (Luna / Sol) */
 body .dark-icon {
-    opacity: 1 !important; /* Visible en modo claro (luna) */
+    opacity: 1 !important;
     transform: rotate(0) !important;
-    will-change: opacity, transform;
+    transition: opacity 0.3s ease, transform 0.3s ease !important;
 }
-
 body .light-icon {
-    opacity: 0 !important; /* Oculto en modo claro */
+    opacity: 0 !important;
     transform: rotate(90deg) !important;
-    will-change: opacity, transform;
+    transition: opacity 0.3s ease, transform 0.3s ease !important;
 }
-
-/* CONSOLIDACIÓN DE SELECTORES TEMA OSCURO */
-/* Usar consistentemente html.dark-theme para coincidencia con styles.css */
 
 html.dark-theme .dark-icon {
-    opacity: 0 !important; /* Oculto en modo oscuro */
+    opacity: 0 !important;
     transform: rotate(-90deg) !important;
 }
-
 html.dark-theme .light-icon {
-    opacity: 1 !important; /* Visible en modo oscuro (sol) */
+    opacity: 1 !important;
     transform: rotate(0) !important;
 }
 
-/* Colores de tema oscuro */
+/* Modificaciones estructurales cuando .dark-theme está activo */
 html.dark-theme body,
 html.dark-theme main,
-html.dark-theme section {
-    background-color: var(--neutral-100) !important;
-    color: var(--neutral-600) !important;
+html.dark-theme section,
+html.dark-theme .section-padding {
+    background-color: #1a1a2e !important; /* Unificamos el azul profundo */
+    color: #d1d5db !important; /* Gris claro de alto contraste legible */
+}
+
+html.dark-theme .bg-light {
+    background-color: #16213e !important; /* Diferenciación sutil de secciones secundarias */
 }
 
 html.dark-theme .navbar {
-    background-color: rgba(var(--neutral-100-rgb), 0.85) !important;
+    background-color: rgba(26, 26, 46, 0.9) !important; /* Navbar oscuro semitransparente */
 }
 
-html.dark-theme .card {
-    background-color: var(--neutral-200) !important;
-    border: 1px solid var(--neutral-300) !important;
+/* Enlaces de navegación en modo oscuro */
+html.dark-theme .navbar-nav .nav-link {
+    color: #e2e8f0 !important;
+}
+html.dark-theme .navbar-nav .nav-link:hover,
+html.dark-theme .navbar-nav .nav-link.active {
+    color: #f0ca45 !important;
+}
+
+/* Componentes de Tarjetas en modo oscuro */
+html.dark-theme .card,
+html.dark-theme .comentario-card {
+    background-color: #222244 !important;
+    border: 1px solid #333366 !important;
 }
 
 html.dark-theme .card-header {
-    background-color: var(--neutral-300) !important;
+    background-color: #2a2a55 !important;
 }
 
+/* Tipografías y Títulos en modo oscuro */
 html.dark-theme .section-title,
 html.dark-theme .card-body h4,
-html.dark-theme h1, 
-html.dark-theme h2, 
-html.dark-theme h3, 
-html.dark-theme h4, 
-html.dark-theme h5, 
-html.dark-theme h6 {
-    color: var(--neutral-700) !important;
+html.dark-theme .comentario-header h4,
+html.dark-theme h1, html.dark-theme h2, html.dark-theme h3, 
+html.dark-theme h4, html.dark-theme h5, html.dark-theme h6 {
+    color: #ffffff !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4) !important;
 }
 
-html.dark-theme .card-text li {
-    color: var(--neutral-600) !important;
-}
-
-html.dark-theme .modal-header {
-    background-color: var(--primary) !important;
-}
-
-html.dark-theme .modal-content,
-html.dark-theme .modal-body {
-    background-color: var(--neutral-100) !important;
-}
-
-html.dark-theme .modal-footer {
-    background-color: var(--neutral-200) !important;
-}
-
-html.dark-theme .comentario-card {
-    background-color: var(--neutral-200) !important;
-}
-
-html.dark-theme .comentario-header h4 {
-    color: var(--neutral-700) !important;
-}
-
-html.dark-theme .comentario-body p {
-    color: var(--neutral-600) !important;
-}
-
-html.dark-theme .form-control,
-html.dark-theme .form-select {
-    background-color: var(--neutral-300) !important;
-    border-color: var(--neutral-400) !important;
-    color: var(--neutral-700) !important;
-}
-
-html.dark-theme .form-floating label {
-    color: var(--neutral-500) !important;
-}
-
-html.dark-theme .contact-info a {
-    color: var(--accent) !important;
-}
-
-html.dark-theme .contact-info a:hover {
-    color: var(--secondary) !important;
-}
-
-/* Mejorar contraste de texto en modo oscuro - ACTUALIZADO */
+/* Forzar contraste máximo en descripciones y listados */
 html.dark-theme p,
 html.dark-theme .section-text,
 html.dark-theme .card-text li,
@@ -1254,704 +1263,244 @@ html.dark-theme .description p,
 html.dark-theme .hero-content p,
 html.dark-theme .territorio-content p,
 html.dark-theme .text-design {
-    color: #d1d5db !important; /* Gris claro para mejor contraste */
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
+    color: #d1d5db !important; 
 }
 
-/* Fondos oscuros mejorados */
-html.dark-theme body,
-html.dark-theme main,
-html.dark-theme section {
-    background-color: #1a1a2e !important; /* Azul oscuro profundo */
-    color: #d1d5db !important;
+/* Modales en Modo Oscuro */
+html.dark-theme .modal-content,
+html.dark-theme .modal-body,
+html.dark-theme .modal-body-modern {
+    background: #1a1a2e !important;
+    color: #ffffff !important;
+}
+html.dark-theme .modal-footer-modern,
+html.dark-theme .modal-footer {
+    background-color: #16213e !important;
+}
+html.dark-theme .welcome-message {
+    background: linear-gradient(135deg, #2c2c35 0%, #1e1e24 100%) !important;
+    border-left-color: #f0ca45 !important;
+}
+html.dark-theme .welcome-message p {
+    color: #f0ca45 !important;
 }
 
-html.dark-theme .section-padding {
-    background-color: #1a1a2e !important;
+/* Formulario en Modo Oscuro */
+html.dark-theme #contact-form {
+    background-color: #16213e !important;
+}
+html.dark-theme .form-control,
+html.dark-theme .form-select,
+html.dark-theme #contact-form input,
+html.dark-theme #contact-form textarea,
+html.dark-theme #contact-form select {
+    background-color: #222244 !important;
+    border-color: #333366 !important;
+    color: #ffffff !important;
+}
+html.dark-theme #contact-form label,
+html.dark-theme .form-floating label {
+    color: #94a3b8 !important;
 }
 
-html.dark-theme .bg-light {
-    background-color: #16213e !important; /* Ligeramente diferente para secciones alternas */
+/* Links informativos */
+html.dark-theme .contact-info a {
+    color: #f0ca45 !important;
 }
-
+html.dark-theme .contact-info a:hover {
+    color: #ffffff !important;
+}
 /* ========================================
-   FOOTER EN MODO OSCURO
+   TARJETAS DE SERVICIOS / ÁREAS DE PRÁCTICA
    ======================================== */
 
-html.dark-theme footer {
-    background: linear-gradient(135deg, #0a0e27 0%, #16213e 50%, #0a0e27 100%) !important;
-    color: #f1f5f9 !important;
+body .servicio-card,
+body .practice-area-box {
+    background-color: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 12px !important;
+    padding: 2.5rem 2rem !important;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1) !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03) !important;
+    height: 100% !important;
+    position: relative !important;
+    overflow: hidden !important;
 }
 
-/* Separador superior más brillante en dark mode */
-html.dark-theme footer::before {
-    background: linear-gradient(90deg,
-        var(--primary) 0%,
-        var(--secondary) 30%,
-        #ffd700 50%,
-        var(--secondary) 70%,
-        var(--primary) 100%) !important;
-    box-shadow: 0 2px 12px rgba(255, 136, 0, 0.3) !important;
+body .servicio-card:hover,
+body .practice-area-box:hover {
+    transform: translateY(-5px) !important;
+    border-color: rgba(var(--secondary-rgb), 0.4) !important;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
 }
 
-/* Títulos en dark mode */
-html.dark-theme footer h4 {
+/* Títulos de tarjetas internas (Equiparados a H3) */
+body .servicio-card h3,
+body .practice-area-box h3,
+body .territorio-card h3 {
+    font-family: 'Playfair Display', serif !important;
+    font-size: 1.4rem !important;
+    font-weight: 600 !important;
+    color: var(--primary) !important;
+    margin-bottom: 1rem !important;
+    margin-top: 0 !important;
+    text-align: left !important;
+    line-height: 1.4 !important;
+}
+
+/* Iconos dentro de tarjetas */
+body .servicio-card .icon-box,
+body .practice-area-box .icon {
+    width: 60px !important;
+    height: 60px !important;
+    background-color: rgba(var(--primary-rgb), 0.05) !important;
+    color: var(--primary) !important;
+    border-radius: 8px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 1.75rem !important;
+    margin-bottom: 1.5rem !important;
+    transition: all 0.3s ease !important;
+}
+
+body .servicio-card:hover .icon-box,
+body .practice-area-box:hover .icon {
+    background-color: var(--secondary) !important;
     color: #ffffff !important;
-    text-shadow: 0 2px 8px rgba(255, 136, 0, 0.2) !important;
 }
 
-/* Línea decorativa bajo títulos - más brillante */
-html.dark-theme footer h4::after {
-    background: linear-gradient(90deg, var(--secondary), #ffd700, transparent) !important;
-    box-shadow: 0 0 8px rgba(255, 136, 0, 0.4) !important;
+/* Modo oscuro para tarjetas de servicios */
+html.dark-theme .servicio-card,
+html.dark-theme .practice-area-box {
+    background-color: #16213e !important;
+    border-color: #2d3748 !important;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3) !important;
 }
 
-/* Párrafos en dark mode */
-html.dark-theme footer p {
-    color: #e2e8f0 !important;
+html.dark-theme .servicio-card h3,
+html.dark-theme .practice-area-box h3 {
+    color: #ffffff !important;
 }
 
-/* Enlaces en dark mode */
-html.dark-theme footer a {
-    color: #e2e8f0 !important;
-}
-
-html.dark-theme footer a:hover {
-    color: #ffd700 !important;
-    text-shadow: 0 0 8px rgba(255, 215, 0, 0.4) !important;
-}
-
-/* Iconos más brillantes en dark mode */
-html.dark-theme footer i {
-    color: #ffd700 !important;
-    filter: drop-shadow(0 0 4px rgba(255, 215, 0, 0.3)) !important;
-}
-
-/* Iconos sociales en dark mode */
-html.dark-theme footer .social-links a {
-    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%) !important;
-    border-color: rgba(255, 215, 0, 0.2) !important;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
-}
-
-html.dark-theme footer .social-links a:hover {
-    background: linear-gradient(135deg, #ffd700 0%, var(--secondary) 100%) !important;
-    border-color: #ffd700 !important;
-    box-shadow: 0 8px 32px rgba(255, 215, 0, 0.6) !important;
-}
-
-html.dark-theme footer .social-links a i {
+html.dark-theme .servicio-card .icon-box,
+html.dark-theme .practice-area-box .icon {
+    background-color: rgba(255, 215, 0, 0.1) !important;
     color: #ffd700 !important;
 }
 
-html.dark-theme footer .social-links a:hover i {
+html.dark-theme .servicio-card:hover .icon-box,
+html.dark-theme .practice-area-box:hover .icon {
+    background-color: var(--secondary) !important;
     color: #0a0e27 !important;
 }
 
-/* Jurisdicción en dark mode */
-html.dark-theme footer .jurisdiccion {
-    border-top-color: rgba(255, 215, 0, 0.15) !important;
+
+/* ========================================
+   MODALES Y DIÁLOGOS DE CONSULTA
+   ======================================== */
+
+body .modal-content {
+    background-color: #ffffff !important;
+    border: none !important;
+    border-radius: 16px !important;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
+    overflow: hidden !important;
 }
 
-html.dark-theme footer .jurisdiccion p {
-    color: #f1f5f9 !important;
+body .modal-header {
+    background-color: rgba(var(--primary-rgb), 0.02) !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+    padding: 1.5rem 2rem !important;
 }
 
-/* Copyright en dark mode */
-html.dark-theme footer .copyright {
-    border-top-color: rgba(255, 215, 0, 0.1) !important;
+body .modal-title {
+    font-family: 'Playfair Display', serif !important;
+    font-size: 1.5rem !important;
+    font-weight: 600 !important;
+    color: var(--primary) !important;
 }
 
-html.dark-theme footer .copyright p {
-    color: #f1f5f9 !important;
+body .modal-body {
+    padding: 2rem !important;
 }
 
-/* Territorio cards en modo oscuro */
-html.dark-theme .territorio-card {
+body .modal-footer {
+    border-top: 1px solid #e2e8f0 !important;
+    padding: 1.25rem 2rem !important;
+    background-color: rgba(var(--primary-rgb), 0.02) !important;
+}
+
+/* Botón de cierre (Close X) */
+body .modal-header .btn-close {
+    transition: transform 0.2s ease !important;
+    background-size: 0.8rem !important;
+}
+
+body .modal-header .btn-close:focus {
+    box-shadow: none !important;
+}
+
+body .modal-header .btn-close:hover {
+    transform: rotate(90deg) !important;
+}
+
+/* Modo oscuro para Modales */
+html.dark-theme .modal-content {
     background-color: #16213e !important;
     border: 1px solid #2d3748 !important;
 }
 
-html.dark-theme .territorio-card h3 {
-    color: var(--secondary) !important;
+html.dark-theme .modal-header {
+    background-color: #0a0e27 !important;
+    border-bottom-color: #2d3748 !important;
 }
 
-/* Botones en modo oscuro */
-html.dark-theme button,
-html.dark-theme .btn {
-    background-color: #2d3748 !important;
-    color: #d1d5db !important;
-    border-color: #4a5568 !important;
-}
-
-html.dark-theme button:hover,
-html.dark-theme .btn:hover {
-    background-color: var(--primary) !important;
-    color: white !important;
-}
-
-/* Estilo para resaltar secciones al navegar desde el modal */
-.highlight-section {
-    animation: highlight-pulse 2s ease-out;
-    will-change: box-shadow;
-}
-
-@keyframes highlight-pulse {
-    0% { 
-        box-shadow: 0 0 0 0 rgba(var(--secondary-rgb), 0.7);
-    }
-    70% { 
-        box-shadow: 0 0 0 20px rgba(var(--secondary-rgb), 0);
-    }
-    100% { 
-        box-shadow: 0 0 0 0 rgba(var(--secondary-rgb), 0);
-    }
-}
-
-/* Estilos específicos para HOME */
-body .home-text h1 {
-    font-family: 'Playfair Display', serif !important;
-    font-size: clamp(3rem, 5.5vw + 0.5rem, 5rem) !important; /* Ligeramente más grande */
+html.dark-theme .modal-title {
     color: #ffffff !important;
-    text-transform: uppercase !important;
-    line-height: 1.2 !important; /* Más compacto para 3 líneas */
-    font-weight: 600 !important; /* Ajustado de 700 a 600 - más refinado */
-    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.9) !important; /* Sombra más fuerte */
-    transition: color 0.3s ease !important;
-    margin-bottom: var(--spacing-lg) !important;
-    will-change: color;
-    text-align: center;
-    letter-spacing: 0.08em !important; /* Ligeramente más espaciado */
-    max-width: 900px;
-    margin-left: auto !important;
-    margin-right: auto !important;
 }
 
-/* Estilo para el ampersand en línea separada */
-body .home-text h1 br + :not(br) {
-    display: inline-block;
+html.dark-theme .modal-footer {
+    background-color: #0a0e27 !important;
+    border-top-color: #2d3748 !important;
 }
 
-body .home-text h1:hover {
-    color: var(--secondary) !important;
-    cursor: default !important;
+html.dark-theme .modal-header .btn-close {
+    filter: invert(1) grayscale(1) brightness(2) !important;
 }
 
-/* ========== EQUIPARAR TODOS LOS TÍTULOS H2 Y H3 ========== */
-/* Estilo unificado profesional para todos los títulos de sección */
-body .section-title,
-body h2.section-title,
-body .slider-area h3,
-body .hero-content h3,
-body h3.wrap {
-    font-family: 'Playfair Display', serif !important;
-    font-size: clamp(2.2rem, 4vw, 3rem) !important;
-    font-weight: 600 !important;
-    color: var(--primary) !important;
-    text-align: center !important;
-    margin-bottom: 2rem !important;
-    letter-spacing: 0.02em !important;
-    line-height: 1.3 !important;
-}
-
-/* ========== ESTILO UNIFICADO PARA TODOS LOS PÁRRAFOS ========== */
-body .section-text,
-body p,
-body .description p,
-body .hero-content p,
-body .territorio-content p,
-body .text-design {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
-    font-size: 1.05rem !important;
-    line-height: 1.7 !important;
-    color: #4a5568 !important;
-    text-align: left !important; /* Alineado a izquierda para mejor lectura */
-    margin-bottom: 1.5rem !important;
-    letter-spacing: 0.01em !important;
-    font-weight: 400 !important;
-}
-
-body .home-text h1::after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 4px;
-    background-color: var(--secondary);
-    bottom: 0px;
-    left: 0;
-    transition: width 0.6s ease;
-}
-
-body .home-text h1:hover::after {
-    width: 80% !important; /* Reemplazado valor fijo por uno relativo */
-    max-width: 350px !important; /* Límite máximo para pantallas grandes */
-    height: 4px !important;
-    border-radius: 0 !important;
-    transform: translateY(0) !important;
-}
-
-body .home-text h3 {
-    font-family: var(--font-secondary) !important;
-    font-size: clamp(1.2rem, 2.5vw + 0.3rem, 2.2rem) !important; /* Tamaño reducido */
-    color: #ffffff !important;
-    font-weight: 500 !important;
-    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.8) !important;
-    transition: color 0.3s ease !important;
-    will-change: color;
-    white-space: normal !important;
-    overflow: visible !important;
-     text-overflow: clip !important;
-    max-width: 100% !important;
-}
-
-body .home-text h3:hover {
-    color: var(--secondary) !important;
-    cursor: default !important;
-}
-
-body .home-text h3 span {
-    color: #f0ca45 !important;
-    font-weight: 700 !important;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9) !important;
-    transition: color 0.3s ease, transform 0.3s ease !important;
-    display: inline-block !important;
-    will-change: transform, color;
-}
-
-body .home-text h3:hover span {
-    color: #ffffff !important;
-    transform: scale(1.05) !important;
-}
-
-/* Hacer el fondo oscuro más transparente */
-body .home-text {
-    background-color: rgba(0, 0, 0, 0.3) !important; /* Fondo más transparente */
-    padding: 2rem var(--spacing-lg) !important;
-}
-
-/* Asegurar que la imagen de fondo se vea mejor */
-body .home {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('img/Facultad_de_derecho_uba.webp') !important; /* Gradiente más transparente */
-    background-position: center !important;
-    background-size: cover !important;
-}
-
-/* Mejorar la apariencia de los elementos de formulario */
-body .form-floating > .form-control:focus,
-body .form-floating > .form-select:focus {
-    border-color: var(--primary) !important;
-    box-shadow: 0 0 0 0.25rem rgba(var(--primary-rgb), 0.25) !important;
-}
-
-/* Ajustar botones en el formulario */
-body .btn-lg {
-    padding: 0.75rem 2rem !important;
-    font-size: 1.125rem !important;
-    border-radius: 8px !important;
-}
 
 /* ========================================
-   SPINNER DEL FORMULARIO - FEEDBACK VISUAL
+   OPTIMIZACIONES GLOBALES DE ACCESIBILIDAD
    ======================================== */
 
-/* Contenedor del spinner */
-.spinner-container {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 1rem !important;
-    margin-top: 1.5rem !important;
-    padding: 1rem !important;
-    background: linear-gradient(135deg, rgba(0, 94, 184, 0.05), rgba(255, 136, 0, 0.05)) !important;
-    border-radius: 8px !important;
-    border: 1px solid rgba(0, 94, 184, 0.2) !important;
+/* Enfoque de teclado unificado (Focus ring) */
+body a:focus-visible,
+body button:focus-visible,
+body input:focus-visible,
+body textarea:focus-visible,
+body select:focus-visible {
+    outline: 3px solid var(--secondary) !important;
+    outline-offset: 2px !important;
 }
 
-/* Ocultar spinner por defecto */
-.spinner-container.hidden {
-    display: none !important;
+/* Selección de texto adaptada a la marca */
+::selection {
+    background-color: rgba(var(--secondary-rgb), 0.25) !important;
+    color: inherit !important;
 }
 
-/* Spinner animado de Bootstrap */
-.spinner-border {
-    width: 2rem !important;
-    height: 2rem !important;
-    border-width: 0.25em !important;
-    animation: spinner-border 0.75s linear infinite !important;
-}
-
-/* Color del spinner */
-.spinner-border.text-primary {
-    color: var(--primary) !important;
-}
-
-/* Texto junto al spinner */
-.spinner-text {
-    font-family: 'Inter', sans-serif !important;
-    font-size: 1rem !important;
-    font-weight: 500 !important;
-    color: var(--primary) !important;
-    letter-spacing: 0.01em !important;
-}
-
-/* Animación del spinner (Bootstrap 5 style) */
-@keyframes spinner-border {
-    to {
-        transform: rotate(360deg);
+/* Optimización de transiciones si el usuario prefiere reducción de movimiento */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
     }
-}
-
-/* Dark mode para spinner */
-html.dark-theme .spinner-container {
-    background: linear-gradient(135deg, rgba(0, 94, 184, 0.15), rgba(255, 136, 0, 0.15)) !important;
-    border-color: rgba(255, 136, 0, 0.3) !important;
-}
-
-html.dark-theme .spinner-text {
-    color: var(--secondary) !important;
-}
-
-html.dark-theme .spinner-border.text-primary {
-    color: var(--secondary) !important;
-}
-
-/* ========================================
-   MENSAJES DE FEEDBACK DEL FORMULARIO
-   ======================================== */
-
-/* Feedback general - más visible */
-.form-feedback {
-    margin-top: 1.5rem !important;
-    padding: 1rem 1.5rem !important;
-    border-radius: 8px !important;
-    text-align: center !important;
-    font-family: 'Inter', sans-serif !important;
-    font-size: 1rem !important;
-    font-weight: 500 !important;
-    display: block !important;
-    animation: slideInUp 0.3s ease-out !important;
-}
-
-/* Mensaje de éxito */
-.form-feedback.success {
-    background: linear-gradient(135deg, rgba(40, 167, 69, 0.15), rgba(34, 139, 34, 0.1)) !important;
-    color: #155724 !important;
-    border: 2px solid #28a745 !important;
-    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.2) !important;
-}
-
-/* Mensaje de error */
-.form-feedback.error {
-    background: linear-gradient(135deg, rgba(220, 53, 69, 0.15), rgba(200, 35, 51, 0.1)) !important;
-    color: #721c24 !important;
-    border: 2px solid #dc3545 !important;
-    box-shadow: 0 4px 12px rgba(220, 53, 69, 0.2) !important;
-}
-
-/* Animación de entrada */
-@keyframes slideInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Dark mode para feedback */
-html.dark-theme .form-feedback.success {
-    background: linear-gradient(135deg, rgba(40, 167, 69, 0.25), rgba(34, 139, 34, 0.15)) !important;
-    color: #4ade80 !important;
-    border-color: #22c55e !important;
-}
-
-html.dark-theme .form-feedback.error {
-    background: linear-gradient(135deg, rgba(220, 53, 69, 0.25), rgba(200, 35, 51, 0.15)) !important;
-    color: #fca5a5 !important;
-    border-color: #ef4444 !important;
-}
-
-/* ========================================
-   FOOTER - DISEÑO MODERNO Y PROFESIONAL
-   ======================================== */
-
-/* Footer principal - Background con gradiente sutil */
-body footer {
-    background: linear-gradient(135deg, #2c3e50 0%, #34495e 50%, #2c3e50 100%) !important;
-    color: #e8eaed !important;
-    padding: 4rem 0 1.5rem !important;
-    margin-top: 4rem !important;
-    position: relative !important;
-    overflow: hidden !important;
-}
-
-/* Separador superior decorativo */
-body footer::before {
-    content: '' !important;
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    height: 4px !important;
-    background: linear-gradient(90deg,
-        var(--primary) 0%,
-        var(--secondary) 50%,
-        var(--primary) 100%) !important;
-}
-
-/* Container del footer - Asegurar funcionamiento correcto del grid */
-body footer .container {
-    max-width: 100% !important;
-}
-
-/* Row del footer - Forzar alineación desde arriba para todas las columnas */
-body footer .row {
-    display: flex !important;
-    flex-wrap: wrap !important;
-    align-items: flex-start !important;
-}
-
-/* Columnas del footer - NO usar display flex, mantener grid de Bootstrap */
-body footer .col-lg-3,
-body footer .col-md-6 {
-    text-align: center !important;
-    padding-top: 0 !important;
-    margin-top: 0 !important;
-    vertical-align: top !important;
-}
-
-/* Resetear cualquier margen/padding en clases mb de Bootstrap que pueda desalinear */
-body footer .mb-4,
-body footer .mb-lg-0 {
-    margin-bottom: 0 !important;
-}
-
-/* Asegurar que todos los h4 estén perfectamente alineados */
-body footer h4:first-child {
-    margin-top: 0 !important;
-    padding-top: 0 !important;
-}
-
-/* Títulos del footer - Playfair Display para elegancia */
-body footer h4 {
-    font-family: 'Playfair Display', serif !important;
-    font-size: 1.5rem !important;
-    font-weight: 600 !important;
-    color: #ffffff !important;
-    margin-top: 0 !important;
-    margin-bottom: 1.5rem !important;
-    letter-spacing: 0.02em !important;
-    position: relative !important;
-    padding-bottom: 0.75rem !important;
-    text-align: center !important;
-    width: 100% !important;
-    min-height: 60px !important;
-}
-
-/* Línea decorativa bajo títulos - Centrada */
-body footer h4::after {
-    content: '' !important;
-    position: absolute !important;
-    bottom: 0 !important;
-    left: 50% !important;
-    transform: translateX(-50%) !important;
-    width: 60px !important;
-    height: 3px !important;
-    background: linear-gradient(90deg, transparent, var(--secondary), transparent) !important;
-    border-radius: 2px !important;
-}
-
-/* Párrafos del footer - Centrados y con estructura uniforme */
-body footer p {
-    font-family: 'Inter', sans-serif !important;
-    font-size: 0.95rem !important;
-    line-height: 1.8 !important;
-    color: #cbd5e1 !important;
-    margin-top: 0 !important;
-    margin-bottom: 0.75rem !important;
-    transition: color 0.3s ease !important;
-    text-align: center !important;
-    width: 100% !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    flex-wrap: wrap !important;
-    min-height: 1.8rem !important;
-}
-
-/* Iconos en el footer - Alineados uniformemente */
-body footer i {
-    color: var(--secondary) !important;
-    font-size: 1.15rem !important;
-    margin-right: 0.5rem !important;
-    transition: all 0.3s ease !important;
-    vertical-align: middle !important;
-    flex-shrink: 0 !important;
-}
-
-body footer p:hover i {
-    transform: scale(1.15) !important;
-}
-
-/* Enlaces del footer */
-body footer a {
-    color: #cbd5e1 !important;
-    text-decoration: none !important;
-    transition: all 0.3s ease !important;
-}
-
-body footer a:hover {
-    color: var(--secondary) !important;
-    text-decoration: none !important;
-}
-
-/* Contenedor de redes sociales - Centrado y alineado con los párrafos */
-body footer .social-links {
-    display: flex !important;
-    gap: 1rem !important;
-    margin-top: 0 !important;
-    margin-bottom: 0.75rem !important;
-    justify-content: center !important;
-    width: 100% !important;
-    min-height: 1.8rem !important;
-}
-
-/* Iconos sociales rediseñados - Círculos grandes y elegantes */
-body footer .social-links a {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    width: 50px !important;
-    height: 50px !important;
-    background: linear-gradient(135deg, #34495e 0%, #2c3e50 100%) !important;
-    border: 2px solid rgba(255, 255, 255, 0.1) !important;
-    border-radius: 50% !important;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
-    position: relative !important;
-    overflow: hidden !important;
-}
-
-/* Efecto hover en iconos sociales */
-body footer .social-links a:hover {
-    background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%) !important;
-    border-color: var(--secondary) !important;
-    transform: translateY(-8px) scale(1.1) !important;
-    box-shadow: 0 8px 24px rgba(255, 136, 0, 0.4) !important;
-}
-
-/* Iconos dentro de los círculos sociales */
-body footer .social-links a i {
-    color: #ffffff !important;
-    font-size: 1.5rem !important;
-    margin: 0 !important;
-    transition: transform 0.3s ease !important;
-}
-
-body footer .social-links a:hover i {
-    transform: scale(1.2) rotate(5deg) !important;
-}
-
-/* Sección de jurisdicción */
-body footer .jurisdiccion {
-    margin-top: 3rem !important;
-    padding-top: 2rem !important;
-    border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
-    text-align: center !important;
-}
-
-body footer .jurisdiccion p {
-    font-size: 1rem !important;
-    color: #e8eaed !important;
-    max-width: 800px !important;
-    margin: 0 auto !important;
-    line-height: 1.7 !important;
-}
-
-/* Sección de copyright */
-body footer .copyright {
-    margin-top: 2rem !important;
-    padding-top: 1.5rem !important;
-    border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
-    text-align: center !important;
-}
-
-body footer .copyright p {
-    font-size: 1rem !important;
-    color: #e8eaed !important;
-    max-width: 800px !important;
-    margin: 0 auto !important;
-    line-height: 1.7 !important;
-    letter-spacing: 0.02em !important;
-}
-
-/* Responsive - Tablets */
-@media (max-width: 991.98px) {
-    body footer {
-        padding: 3rem 0 1.5rem !important;
-    }
-
-    body footer h4 {
-        font-size: 1.35rem !important;
-        margin-bottom: 1.25rem !important;
-    }
-
-    body footer .col-lg-3,
-    body footer .col-md-6 {
-        margin-bottom: 2.5rem !important;
-        text-align: center !important;
-    }
-}
-
-/* Responsive - Móviles */
-@media (max-width: 767.98px) {
-    body footer {
-        padding: 2.5rem 0 1.5rem !important;
-        margin-top: 3rem !important;
-    }
-
-    body footer h4 {
-        font-size: 1.25rem !important;
-        margin-bottom: 1rem !important;
-    }
-
-    body footer h4::after {
-        width: 50px !important;
-    }
-
-    body footer p {
-        font-size: 0.9rem !important;
-    }
-
-    body footer .col-lg-3,
-    body footer .col-md-6 {
-        margin-bottom: 2rem !important;
-        text-align: center !important;
-    }
-
-    body footer .social-links {
-        justify-content: center !important;
-    }
-
-    body footer .social-links a {
-        width: 45px !important;
-        height: 45px !important;
-    }
-
-    body footer .social-links a i {
-        font-size: 1.35rem !important;
-    }
-
-    body footer .jurisdiccion {
-        margin-top: 2rem !important;
-        padding-top: 1.5rem !important;
-    }
-
-    body footer .copyright {
-        margin-top: 1.5rem !important;
-        padding-top: 1rem !important;
+    
+    .highlight-section {
+        animation: none !important;
     }
 }
 
@@ -2367,4 +1916,29 @@ html .whatsapp-float:hover,
         opacity: 0 !important;
         pointer-events: none !important;
     }
+}
+
+/* ========================================
+   AJUSTE DE JERARQUÍA: NOMBRE DEL ESTUDIO
+   ======================================== */
+body .home-text .studio-name, 
+body .home-text h2,
+body .home-text p:has(+ .urgencias) { /* Por si usás una clase genérica */
+    font-family: 'Playfair Display', serif !important;
+    font-size: clamp(1.2rem, 2vw + 0.2rem, 1.8rem) !important; /* Más grande y dinámico */
+    color: #ffd700 !important; /* Dorado sutil para combinar con los acentos del sitio */
+    text-transform: uppercase !important;
+    letter-spacing: 0.25em !important; /* Espaciado premium entre letras */
+    font-weight: 600 !important;
+    margin-bottom: 1.5rem !important;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8) !important; /* Despegue total del fondo */
+    opacity: 1 !important;
+    text-align: center !important;
+    display: block !important;
+}
+
+/* Ajuste del margen del título principal para balancear el espacio */
+body .home-text h1 {
+    margin-top: 0.5rem !important;
+    margin-bottom: 1.5rem !important;
 }
