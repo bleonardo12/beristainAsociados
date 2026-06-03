@@ -468,7 +468,6 @@ h1,h2,h3,h4,h5,h6 {
 /* ========== SOBRE NOSOTROS ========== */
 .sobre-nosotros { padding: var(--spacing-2xl) var(--spacing-xl); background: var(--off-white); }
 .sobre-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: var(--spacing-2xl); align-items: start; }
-.sobre-content {}
 .sobre-content p { font-size: 1rem; color: var(--gray-500); line-height: 1.8; }
 .sobre-perfil {
     background: var(--white);
