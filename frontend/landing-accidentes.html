@@ -7,9 +7,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="index, follow">
-    <title>Abogado Civil CABA | Sucesiones · Daños · Contratos | Beristain & Asociados</title>
-    <meta name="description" content="Especialistas en sucesiones, daños y perjuicios, cobros ejecutivos, contratos y locaciones. Primera consulta sin cargo. CABA y GBA.">
-    <link rel="canonical" href="https://www.beristainyasociados.com.ar/landing-civil.html">
+    <title>Abogado Accidentes de Tránsito CABA | Reclamo de Indemnización | Beristain & Asociados</title>
+    <meta name="description" content="Tuviste un accidente? Reclamá la indemnización real. Lesiones, daño material y lucro cesante contra la aseguradora. Primera consulta sin cargo. CABA y GBA.">
+    <link rel="canonical" href="https://www.beristainyasociados.com.ar/landing-accidentes.html">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -46,39 +46,15 @@
         a { text-decoration: none; color: inherit; }
         img { max-width: 100%; display: block; }
 
-        /* ── BARRA SUPERIOR ── */
-        .top-bar {
-            background: var(--navy2);
-            border-bottom: 2px solid var(--gold);
-            padding: 10px 16px;
-            text-align: center;
-            font-size: 0.82rem;
-            color: rgba(255,255,255,0.8);
-            letter-spacing: 0.04em;
-        }
+        .top-bar { background: var(--navy2); border-bottom: 2px solid var(--gold); padding: 10px 16px; text-align: center; font-size: 0.82rem; color: rgba(255,255,255,0.8); letter-spacing: 0.04em; }
         .top-bar strong { color: var(--gold); }
         .top-bar a { color: var(--gold2); font-weight: 600; }
 
-        /* ── HERO ── */
-        .hero {
-            background: linear-gradient(155deg, var(--navy) 0%, var(--navy2) 60%, #0a1628 100%);
-            padding: 52px 24px 60px;
-            position: relative; overflow: hidden;
-        }
-        .hero::after {
-            content: ''; position: absolute;
-            bottom: 0; left: 0; right: 0; height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(212,175,119,0.4), transparent);
-        }
+        .hero { background: linear-gradient(155deg, var(--navy) 0%, var(--navy2) 60%, #0a1628 100%); padding: 52px 24px 60px; position: relative; overflow: hidden; }
+        .hero::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(212,175,119,0.4), transparent); }
         .hero-inner { max-width: 680px; margin: 0 auto; }
-        .hero-badge {
-            display: inline-flex; align-items: center; gap: 8px;
-            background: rgba(212,175,119,0.1);
-            border: 0.5px solid rgba(212,175,119,0.3);
-            border-radius: 4px; padding: 5px 12px;
-            font-size: 0.75rem; color: var(--gold2);
-            letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 20px;
-        }
+
+        .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(212,175,119,0.1); border: 0.5px solid rgba(212,175,119,0.3); border-radius: 4px; padding: 5px 12px; font-size: 0.75rem; color: var(--gold2); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 20px; }
         .badge-dot { width: 7px; height: 7px; border-radius: 50%; background: #4CAF50; animation: blink 1.8s infinite; }
         @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.25} }
         .hero-eyebrow { font-size: 0.8rem; color: rgba(212,175,119,0.65); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 14px; }
@@ -98,12 +74,10 @@
         .trust-item { display: flex; align-items: center; gap: 7px; font-size: 0.8rem; color: rgba(255,255,255,0.4); }
         .trust-item i { color: var(--gold); font-size: 0.8rem; }
 
-        /* ── STATS ── */
         .stats { background: var(--navy); border-bottom: 1px solid rgba(212,175,119,0.12); padding: 24px 16px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; text-align: center; }
         .stat-num { font-family: var(--font-d); font-size: clamp(1.3rem, 3vw, 1.8rem); font-weight: 700; color: var(--gold); display: block; }
         .stat-label { font-size: 0.68rem; color: rgba(255,255,255,0.35); letter-spacing: 0.06em; text-transform: uppercase; }
 
-        /* ── ESPECIALIDADES ── */
         .specs { background: var(--cream); padding: 52px 24px; }
         .specs-inner { max-width: 960px; margin: 0 auto; }
         .eyebrow { font-size: 0.72rem; color: var(--gold); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 6px; display: block; }
@@ -118,7 +92,12 @@
         .spec-card.primary h3 { color: #b8922e; }
         .spec-card p { font-size: 0.85rem; color: var(--gray); line-height: 1.6; }
 
-        /* ── PROCESO ── */
+        /* Urgencia banner */
+        .urgencia-banner { background: linear-gradient(135deg, #1a0a0a 0%, #2d1010 100%); border-top: 2px solid var(--red); border-bottom: 2px solid var(--red); padding: 28px 24px; text-align: center; }
+        .urgencia-banner p { color: rgba(255,255,255,0.7); font-size: 0.95rem; margin-bottom: 12px; }
+        .urgencia-banner p strong { color: #ff6b6b; }
+        .urgencia-banner .btn-call { display: inline-flex; margin: 0 auto; }
+
         .process { background: var(--navy); padding: 48px 24px; }
         .process-inner { max-width: 800px; margin: 0 auto; }
         .process .eyebrow { text-align: center; }
@@ -130,7 +109,6 @@
         .step h4 { font-family: var(--font-d); font-size: 1.05rem; color: var(--white); margin-bottom: 6px; }
         .step p { font-size: 0.82rem; color: rgba(255,255,255,0.45); line-height: 1.6; }
 
-        /* ── FAQ ── */
         .faq-section { background: var(--cream); padding: 52px 24px; }
         .faq-inner { max-width: 760px; margin: 0 auto; }
         .faq-item { background: var(--white); border: 0.5px solid #e5e0d8; border-radius: 8px; margin-bottom: 10px; overflow: hidden; }
@@ -139,7 +117,6 @@
         .faq-item[open] summary::after { content: '−'; }
         .faq-item p { padding: 0 20px 16px; font-size: 0.88rem; color: var(--gray); line-height: 1.7; }
 
-        /* ── FORMULARIO ── */
         .form-section { background: var(--white); border-top: 1px solid #e5e0d8; padding: 52px 24px 72px; }
         .form-inner { max-width: 560px; margin: 0 auto; }
         .form-inner .section-title { text-align: center; }
@@ -158,11 +135,9 @@
         .form-trust span { font-size: 0.78rem; color: var(--gray); display: flex; align-items: center; gap: 5px; }
         .form-trust i { color: var(--gold); }
 
-        /* ── FOOTER ── */
         .footer-mini { background: var(--navy); padding: 20px 24px; text-align: center; font-size: 0.8rem; color: rgba(255,255,255,0.35); }
         .footer-mini a { color: rgba(255,255,255,0.5); }
 
-        /* ── BARRA MOBILE ── */
         .mobile-bar { display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 999; border-top: 2px solid var(--gold); }
         .mobile-bar a { flex: 1; background: var(--navy2); color: var(--white); text-align: center; padding: 13px; font-size: 0.9rem; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 7px; }
         .mobile-bar a.wa { background: var(--green); flex: 0 0 60px; font-size: 1.3rem; }
@@ -181,23 +156,21 @@
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W6F4XTKN" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
 
-    <!-- Barra superior -->
     <div class="top-bar">
-        <strong>CONSULTA SIN CARGO</strong> — Derecho Civil · Sucesiones · Daños y Perjuicios ·
+        <strong>ACCIDENTES DE TRÁNSITO</strong> — Reclamo de indemnización · CABA y GBA ·
         <a href="tel:+5491135913161">+54 9 11 3591-3161</a>
     </div>
 
-    <!-- Hero -->
     <section class="hero">
         <div class="hero-inner">
             <div class="hero-badge">
                 <span class="badge-dot"></span>
-                <span>Especialistas en derecho civil · CABA y GBA</span>
+                <span>Especialistas en accidentes de tránsito · CABA y GBA</span>
             </div>
-            <p class="hero-eyebrow">Sucesiones · Daños · Contratos · Locaciones</p>
-            <h1>Resolvemos tu caso<br>civil con <span class="gold">experiencia y claridad</span></h1>
+            <p class="hero-eyebrow">Reclamo de indemnización · Lesiones · Daño material</p>
+            <h1>Tuviste un accidente?<br>Reclamá lo que te <span class="gold">corresponde</span></h1>
             <p class="hero-desc">
-                Sucesiones, <strong>daños y perjuicios</strong>, cobros ejecutivos, contratos, locaciones y responsabilidad civil. Asesoramiento directo, honorarios transparentes y primera consulta sin cargo.
+                Las aseguradoras ofrecen <strong>montos muy por debajo del daño real</strong>. Con representación legal reclamás la indemnización integral: lesiones, daño material, lucro cesante y daño moral. Primera consulta sin cargo.
             </p>
             <div class="hero-phone">
                 <i class="bi bi-telephone-fill"></i>
@@ -208,8 +181,8 @@
                 <a href="tel:+5491135913161" class="btn-call" onclick="trackCall('hero')">
                     <i class="bi bi-telephone-fill"></i> Llamar ahora
                 </a>
-                <a href="https://wa.me/5491135913161?text=Hola%2C+necesito+asesoramiento+en+derecho+civil" target="_blank" rel="noopener" class="btn-wa" onclick="trackWA('hero')">
-                    <i class="bi bi-whatsapp"></i> Consultar por WhatsApp
+                <a href="https://wa.me/5491135913161?text=Hola%2C+tuve+un+accidente+de+tr%C3%A1nsito+y+necesito+asesoramiento" target="_blank" rel="noopener" class="btn-wa" onclick="trackWA('hero')">
+                    <i class="bi bi-whatsapp"></i> WhatsApp urgente
                 </a>
                 <a href="#contacto" class="btn-call" style="background:transparent;border:1px solid rgba(212,175,119,0.5);color:var(--gold2);">
                     Formulario de consulta
@@ -223,7 +196,6 @@
         </div>
     </section>
 
-    <!-- Stats -->
     <div class="stats">
         <div><span class="stat-num">+100</span><span class="stat-label">Causas resueltas</span></div>
         <div><span class="stat-num">UBA</span><span class="stat-label">Formación</span></div>
@@ -231,109 +203,118 @@
         <div><span class="stat-num">&lt; 2hs</span><span class="stat-label">Respuesta</span></div>
     </div>
 
-    <!-- Especialidades -->
     <section class="specs">
         <div class="specs-inner">
-            <span class="eyebrow">Áreas de práctica civil</span>
-            <h2 class="section-title">¿En qué podemos ayudarte?</h2>
+            <span class="eyebrow">Lo que reclamamos por vos</span>
+            <h2 class="section-title">Indemnización integral por tu accidente</h2>
             <div class="spec-grid">
                 <div class="spec-card primary">
-                    <div class="spec-icon"><i class="bi bi-house-heart-fill"></i></div>
-                    <h3>Sucesiones y herencias</h3>
-                    <p>Apertura, tramitación y cierre de sucesiones. Declaratoria de herederos, partición y adjudicación de bienes. Conflictos sucesorios.</p>
+                    <div class="spec-icon"><i class="bi bi-cash-stack"></i></div>
+                    <h3>Reclamo de indemnización</h3>
+                    <p>Reclamamos la indemnización real frente a la aseguradora de la contraparte o la propia. Negociación extrajudicial y litigio si es necesario.</p>
                 </div>
                 <div class="spec-card">
-                    <div class="spec-icon"><i class="bi bi-exclamation-triangle-fill"></i></div>
-                    <h3>Daños y perjuicios</h3>
-                    <p>Reclamo de indemnizaciones por daños materiales, morales y lucro cesante. Accidentes, mala praxis y responsabilidad civil extracontractual.</p>
+                    <div class="spec-icon"><i class="bi bi-heart-pulse-fill"></i></div>
+                    <h3>Lesiones y daño físico</h3>
+                    <p>Incapacidad física temporaria o permanente, daño estético, daño psicológico y gastos médicos. Peritos médicos y psicológicos para acreditar el daño.</p>
                 </div>
                 <div class="spec-card">
-                    <div class="spec-icon"><i class="bi bi-cash-coin"></i></div>
-                    <h3>Cobros ejecutivos</h3>
-                    <p>Recupero de deudas mediante juicio ejecutivo, embargo de bienes y cuentas. Pagarés, cheques, facturas y documentos comerciales.</p>
+                    <div class="spec-icon"><i class="bi bi-car-front-fill"></i></div>
+                    <h3>Daño material al vehículo</h3>
+                    <p>Reparación, privación de uso y desvalorización del rodado. Reclamamos el valor real del daño, no el que fija unilateralmente la aseguradora.</p>
                 </div>
                 <div class="spec-card">
-                    <div class="spec-icon"><i class="bi bi-file-earmark-text-fill"></i></div>
-                    <h3>Contratos</h3>
-                    <p>Redacción, revisión e impugnación de contratos civiles y comerciales. Incumplimientos, rescisión y cláusulas abusivas.</p>
+                    <div class="spec-icon"><i class="bi bi-graph-down-arrow"></i></div>
+                    <h3>Lucro cesante</h3>
+                    <p>Si el accidente te impidió trabajar o generó pérdida de ingresos, reclamamos el lucro cesante correspondiente al período de incapacidad.</p>
                 </div>
                 <div class="spec-card">
-                    <div class="spec-icon"><i class="bi bi-building"></i></div>
-                    <h3>Locaciones</h3>
-                    <p>Conflictos entre locadores e inquilinos. Desalojos, falta de pago, daños al inmueble y renegociación de contratos de alquiler.</p>
+                    <div class="spec-icon"><i class="bi bi-handshake-fill"></i></div>
+                    <h3>Mediación prejudicial</h3>
+                    <p>Antes del juicio, la mediación es obligatoria. Te representamos en esa instancia buscando un acuerdo justo. Si no hay acuerdo, vamos a juicio.</p>
                 </div>
                 <div class="spec-card">
-                    <div class="spec-icon"><i class="bi bi-shield-fill-exclamation"></i></div>
-                    <h3>Prescripción adquisitiva</h3>
-                    <p>Usucapión y regularización dominial. Tramitación judicial para la adquisición del dominio por posesión continua y pública.</p>
+                    <div class="spec-icon"><i class="bi bi-building-fill"></i></div>
+                    <h3>Intimación a aseguradoras</h3>
+                    <p>Intimamos formalmente a la aseguradora para que se pronuncie sobre el siniestro. El silencio o rechazo injustificado tiene consecuencias legales.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Proceso -->
+    <!-- Banner urgencia para que no esperen -->
+    <div class="urgencia-banner">
+        <p>⚠️ <strong>Los plazos de prescripción corren desde el accidente.</strong> En Argentina el reclamo prescribe a los 3 años. Cuanto antes actuás, más fácil es reunir prueba y mejores son los resultados.</p>
+        <a href="tel:+5491135913161" class="btn-call" onclick="trackCall('urgencia_banner')">
+            <i class="bi bi-telephone-fill"></i> Llamar ahora — Consulta sin cargo
+        </a>
+    </div>
+
     <section class="process">
         <div class="process-inner">
             <span class="eyebrow" style="text-align:center">Cómo trabajamos</span>
-            <h2 class="section-title">Tu caso, paso a paso</h2>
+            <h2 class="section-title">Tu reclamo, paso a paso</h2>
             <div class="process-steps">
                 <div class="step">
                     <div class="step-num">1</div>
-                    <h4>Consulta inicial gratuita</h4>
-                    <p>Analizamos tu situación, evaluamos la viabilidad del reclamo y te explicamos el camino más conveniente sin compromiso.</p>
+                    <h4>Evaluación del caso</h4>
+                    <p>Analizamos el accidente, las lesiones y los daños. Evaluamos la viabilidad del reclamo y te explicamos el camino sin cargo.</p>
                 </div>
                 <div class="step">
                     <div class="step-num">2</div>
-                    <h4>Estrategia y presupuesto</h4>
-                    <p>Definimos la estrategia legal más efectiva y te damos un presupuesto claro antes de comenzar. Sin sorpresas.</p>
+                    <h4>Intimación y mediación</h4>
+                    <p>Intimamos a la aseguradora y te representamos en la mediación prejudicial. En muchos casos el acuerdo se alcanza en esta etapa.</p>
                 </div>
                 <div class="step">
                     <div class="step-num">3</div>
-                    <h4>Representación completa</h4>
-                    <p>Nos hacemos cargo de todo el proceso judicial o extrajudicial, manteniéndote informado en cada etapa.</p>
+                    <h4>Juicio si es necesario</h4>
+                    <p>Si la aseguradora no ofrece un monto justo, iniciamos el juicio. Te mantenemos informado en cada etapa del proceso.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- FAQ -->
     <section class="faq-section">
         <div class="faq-inner">
             <span class="eyebrow">Preguntas frecuentes</span>
-            <h2 class="section-title" style="margin-bottom:24px">Dudas comunes</h2>
+            <h2 class="section-title" style="margin-bottom:24px">Lo que más nos preguntan</h2>
 
             <details class="faq-item">
-                <summary>¿Cuánto tiempo tarda una sucesión en Argentina?</summary>
-                <p>Depende de la complejidad del patrimonio y si hay conflictos entre herederos. Una sucesión simple sin inmuebles puede resolverse en 6 a 12 meses; con bienes registrables suele tomar entre 1 y 2 años. La tramitación extrajudicial (notarial) puede ser más rápida si todos los herederos están de acuerdo.</p>
+                <summary>¿Puedo reclamar si el seguro ya me pagó algo?</summary>
+                <p>Sí, siempre que no hayas firmado un recibo de pago total y cancelación del siniestro. Si firmaste algo, revisalo antes de actuar: si dice "pago total" o "renuncia a reclamos futuros", puede limitar tus opciones. Consultanos con el documento y lo evaluamos.</p>
             </details>
 
             <details class="faq-item">
-                <summary>¿Puedo reclamar daños y perjuicios si el seguro me ofrece poco?</summary>
-                <p>Sí. Las aseguradoras frecuentemente ofrecen montos muy inferiores al daño real. Con representación legal podés reclamar judicialmente la indemnización integral: daño emergente, lucro cesante, daño moral y daño físico. En muchos casos el resultado mejora significativamente respecto a la oferta inicial.</p>
+                <summary>¿Cuánto tiempo tengo para reclamar?</summary>
+                <p>El reclamo por accidentes de tránsito prescribe a los <strong>3 años</strong> desde el accidente (Art. 2561 CCyC). Pasado ese plazo perdés el derecho a reclamar judicialmente. No esperes: cuanto antes actuás, más prueba existe y más fácil es acreditar el daño.</p>
             </details>
 
             <details class="faq-item">
-                <summary>¿Qué hago si el inquilino no paga y no se va?</summary>
-                <p>Existe una vía rápida: el proceso de desalojo por falta de pago. Con la documentación correcta (contrato vigente y comprobantes de deuda) podemos iniciar el juicio de desalojo y, en paralelo, reclamar las deudas de alquiler adeudadas. Consultanos antes de intentar vías informales que pueden perjudicarte.</p>
+                <summary>¿Qué pasa si el otro conductor no tenía seguro?</summary>
+                <p>Podés reclamar directamente al conductor responsable como persona física. También existe la posibilidad de accionar contra el titular del vehículo. En algunos casos interviene el Fondo de Garantía de Sustentabilidad. Evaluamos tu caso para definir la vía más efectiva.</p>
             </details>
 
             <details class="faq-item">
-                <summary>¿Conviene ir a mediación o directamente a juicio?</summary>
-                <p>En la mayoría de las causas civiles la mediación prejudicial es obligatoria antes de ir a juicio. En muchos casos permite resolver el conflicto más rápido y con menos costo. Si la contraparte no cumple o no acuerda, se abre la vía judicial. Te asesoramos en cada etapa.</p>
+                <summary>¿Necesito ir a juicio o puede resolverse antes?</summary>
+                <p>En la mayoría de los casos la mediación prejudicial (obligatoria antes del juicio) permite llegar a un acuerdo. Si la aseguradora ofrece un monto razonable, el acuerdo puede firmarse ahí. Si no, el juicio es la vía para obtener la indemnización real. Te asesoramos en cada etapa.</p>
             </details>
 
             <details class="faq-item">
-                <summary>¿Cuánto cuesta contratar un abogado civilista?</summary>
-                <p>Los honorarios dependen del tipo de causa y su complejidad. La primera consulta es siempre sin cargo. El esquema incluye apertura de carpeta y honorarios acordados según la instancia y el trabajo involucrado. Te lo explicamos con total transparencia antes de comenzar, sin sorpresas.</p>
+                <summary>¿Qué documentación necesito para empezar?</summary>
+                <p>Para la consulta inicial alcanza con: datos del accidente (fecha, lugar, involucrados), copia del acta policial o denuncia, datos del seguro de la contraparte si los tenés, y fotos del vehículo si las tenés. El resto lo vamos recopilando durante el proceso.</p>
+            </details>
+
+            <details class="faq-item">
+                <summary>¿Cuánto cobran por llevar el caso?</summary>
+                <p>La primera consulta es siempre sin cargo. El esquema de honorarios incluye apertura de carpeta y honorarios acordados según la etapa y complejidad del caso. Te lo explicamos con total transparencia antes de comenzar, sin compromisos.</p>
             </details>
         </div>
     </section>
 
-    <!-- Formulario -->
     <section class="form-section" id="contacto">
         <div class="form-inner">
             <span class="eyebrow" style="text-align:center;display:block">Consulta gratuita</span>
-            <h2 class="section-title">Contanos tu caso</h2>
+            <h2 class="section-title">Contanos tu accidente</h2>
             <p class="form-sub">Sin cargo. Te respondemos en menos de 2 horas hábiles.</p>
 
             <form id="lp-form" class="lp-form" novalidate>
@@ -346,20 +327,19 @@
                 <label for="lp-email">Email</label>
                 <input type="email" id="lp-email" name="email" required placeholder="ejemplo@email.com" autocomplete="email">
 
-                <label for="lp-asunto">¿Sobre qué necesitás asesoramiento?</label>
+                <label for="lp-asunto">¿Cuál es tu situación?</label>
                 <select id="lp-asunto" name="asunto" required>
-                    <option value="">Seleccioná un área</option>
-                    <option value="Sucesiones">Sucesiones y herencias</option>
-                    <option value="Daños y Perjuicios">Daños y perjuicios</option>
-                    <option value="Cobros Ejecutivos">Cobros ejecutivos / Recupero de deudas</option>
-                    <option value="Contratos Civiles">Contratos — redacción o conflicto</option>
-                    <option value="Locaciones">Locaciones — desalojo o reclamo</option>
-                    <option value="Prescripción Adquisitiva">Prescripción adquisitiva (usucapión)</option>
-                    <option value="Derecho Civil">Otra consulta civil</option>
+                    <option value="">Seleccioná una opción</option>
+                    <option value="Accidente con lesiones">Tuve lesiones en el accidente</option>
+                    <option value="Accidente daño material">Solo daño material al vehículo</option>
+                    <option value="Accidente - seguro ofrece poco">El seguro me ofrece muy poco</option>
+                    <option value="Accidente - contraparte sin seguro">La contraparte no tiene seguro</option>
+                    <option value="Accidente - ya firmé algo">Ya firmé un recibo / quiero saber si tengo derechos</option>
+                    <option value="Seguros y Accidentes">Otro — consulta sobre accidente</option>
                 </select>
 
-                <label for="lp-message">Contanos brevemente tu situación <span style="color:var(--gray);font-weight:400">(opcional)</span></label>
-                <textarea id="lp-message" name="message" placeholder="Ej: Falleció mi padre hace 3 meses y necesito iniciar la sucesión..."></textarea>
+                <label for="lp-message">Contanos brevemente qué pasó <span style="color:var(--gray);font-weight:400">(opcional)</span></label>
+                <textarea id="lp-message" name="message" placeholder="Ej: Tuve un accidente el 15/05, el otro conductor dobló sin señalizar. Tengo lesiones en el cuello y el auto tiene daños..."></textarea>
 
                 <div class="hp" aria-hidden="true">
                     <input type="text" name="hp_website" tabindex="-1" autocomplete="off" value="">
@@ -377,7 +357,6 @@
         </div>
     </section>
 
-    <!-- Footer -->
     <footer class="footer-mini">
         <strong style="color:rgba(255,255,255,0.6)">Beristain & Asociados</strong> · Estudio Jurídico · Av. Rivadavia 8012 5º C, CABA ·
         <a href="mailto:beristainyasociadosej@gmail.com">beristainyasociadosej@gmail.com</a>
@@ -385,12 +364,11 @@
         <a href="/politica-privacidad.html">Política de privacidad</a>
     </footer>
 
-    <!-- Barra mobile -->
     <div class="mobile-bar">
         <a href="tel:+5491135913161" onclick="trackCall('mobile_bar')">
             <i class="bi bi-telephone-fill"></i> Llamar ahora
         </a>
-        <a href="https://wa.me/5491135913161?text=Hola%2C+necesito+asesoramiento+en+derecho+civil" target="_blank" class="wa" onclick="trackWA('mobile_bar')">
+        <a href="https://wa.me/5491135913161?text=Hola%2C+tuve+un+accidente+y+necesito+asesoramiento" target="_blank" class="wa" onclick="trackWA('mobile_bar')">
             <i class="bi bi-whatsapp"></i>
         </a>
     </div>
@@ -415,7 +393,7 @@
         const params = {
             nombre:  form.name.value.trim(),
             email:   form.email.value.trim(),
-            asunto:  `[CIVIL] ${form.asunto.value}`,
+            asunto:  `[ACCIDENTES] ${form.asunto.value}`,
             mensaje: `Teléfono: ${form.phone.value.trim()}\n\n${form.message?.value?.trim() || '(Sin mensaje adicional)'}`
         };
 
@@ -423,8 +401,8 @@
             if (typeof emailjs === 'undefined') throw new Error('no emailjs');
             await emailjs.send(EJSCONFIG.serviceID, EJSCONFIG.templateID, params);
             if (typeof gtag !== 'undefined') {
-                gtag('event', 'conversion', { send_to: 'AW-11107730225/1LBbCOr-37sbELGGyrAp', value: 1.0, currency: 'ARS', transaction_id: `civ_${Date.now()}` });
-                gtag('event', 'form_submission_success', { lead_legal_area: 'Derecho Civil', source: 'landing_civil' });
+                gtag('event', 'conversion', { send_to: 'AW-11107730225/1LBbCOr-37sbELGGyrAp', value: 1.0, currency: 'ARS', transaction_id: `acc_${Date.now()}` });
+                gtag('event', 'form_submission_success', { lead_legal_area: 'Accidentes de Tránsito', source: 'landing_accidentes' });
             }
             fb.textContent = '✅ ¡Mensaje enviado! Te contactamos pronto.';
             fb.className   = 'form-feedback success';
@@ -440,12 +418,12 @@
     function trackCall(loc) {
         if (typeof gtag === 'undefined') return;
         gtag('event', 'conversion', { send_to: 'AW-11107730225/MjxGCJ-v6bsbELGGyrAp', value: 100, currency: 'ARS', transaction_id: `tel_${Date.now()}` });
-        gtag('event', 'contact_click', { contact_method: 'phone', click_location: loc, area: 'civil' });
+        gtag('event', 'contact_click', { contact_method: 'phone', click_location: loc, area: 'accidentes' });
     }
     function trackWA(loc) {
         if (typeof gtag === 'undefined') return;
         gtag('event', 'conversion', { send_to: 'AW-11107730225/Yg24CK6u4LsbELGGyrAp', value: 75, currency: 'ARS', transaction_id: `wa_${Date.now()}` });
-        gtag('event', 'contact_click', { contact_method: 'whatsapp', click_location: loc, area: 'civil' });
+        gtag('event', 'contact_click', { contact_method: 'whatsapp', click_location: loc, area: 'accidentes' });
     }
     </script>
 </body>
