@@ -33,7 +33,7 @@
             
 
             <!-- Precargar recursos críticos -->
-            <link rel="preconnect" href="https://fonts.googleapis.com">
+            <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
             <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
             <link rel="preload" href="img/Facultad_de_derecho_uba.webp" as="image" fetchpriority="high">
 
@@ -496,71 +496,92 @@
 
                 
 
-                <!-- Sección Hero -->
+                                <!-- Sección Hero -->
 
-                <section class="home" id="home">
-
-                    <div class="home-text animate-on-scroll fade-up">
-
-                    <h1>
-
-                        Abogado Penalista en CABA y GBA
-
-                    </h1>
-
-                        <h2 class="hero-nombre">
-
-                            <span class="highlight">BERISTAIN</span> & ASOCIADOS
-
-                        </h2>
-
-                            <h3>Urgencias penales 24hs — Defendemos tu presente, aseguramos tu <span>futuro.</span></h3>
-
-                        <!-- CTA Hero para conversiones -->
-
-                        <div class="hero-cta-container">
-
-                            <a href="https://wa.me/5491135913161?text=Hola%2C%20tengo%20un%20problema%20legal%20y%20necesito%20orientaci%C3%B3n.%20%C2%BFPuedo%20agendar%20una%20evaluaci%C3%B3n%20inicial%3F"
-
-                            class="btn-hero-cta"
-
-                            target="_blank"
-
-                            rel="noopener noreferrer">
-
-                                <i class="bi bi-whatsapp"></i> Evaluación Inicial Sin Cargo
-
-                            </a>
-
-                            <p class="hero-cta-subtitle">Respuesta en menos de 2 horas</p>
-
+                                <section class="home" id="home">
+                    <div class="home-text">
+                        <div class="hero-badge">
+                            <span class="badge-dot"></span>
+                            Disponible ahora — urgencias penales 24hs
                         </div>
-
+                        <p class="hero-eyebrow">Abogado penalista en CABA y GBA</p>
+                        <h1>
+                            Defendemos tu caso<br>
+                            con <span class="gold">rigor y experiencia</span>
+                        </h1>
+                        <p class="hero-studio">BERISTAIN &amp; ASOCIADOS · ESTUDIO JURÍDICO · UBA</p>
+                        <p class="hero-desc">
+                            Si vos o un familiar está <strong>detenido, imputado o necesita defensa penal urgente</strong>, contactanos ahora. Atendemos en CABA, GBA y fuero federal.
+                        </p>
+                        <div class="hero-cta-container">
+                            <a href="tel:+5491135913161" class="btn-hero-primary">
+                                <i class="bi bi-telephone-fill"></i> Llamar ahora — 24hs
+                            </a>
+                            <a href="https://wa.me/5491135913161?text=Hola%2C%20necesito%20un%20abogado%20penalista%20urgente" class="btn-hero-wa" target="_blank" rel="noopener noreferrer">
+                                <i class="bi bi-whatsapp"></i> WhatsApp urgente
+                            </a>
+                            <button type="button" class="btn-hero-secondary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                Consulta sin cargo
+                            </button>
+                        </div>
+                        <div class="hero-trust">
+                            <div class="trust-item">
+                                <div class="trust-icon"><i class="bi bi-check-lg"></i></div>
+                                <span class="trust-text">Primera consulta sin cargo</span>
+                            </div>
+                            <div class="trust-item">
+                                <div class="trust-icon"><i class="bi bi-lightning-fill"></i></div>
+                                <span class="trust-text">Respuesta en menos de 2hs</span>
+                            </div>
+                            <div class="trust-item">
+                                <div class="trust-icon"><i class="bi bi-shield-check"></i></div>
+                                <span class="trust-text">Confidencialidad garantizada</span>
+                            </div>
+                        </div>
                     </div>
-
                 </section>
 
+                <!-- Stats strip -->
+                <div class="stats-strip">
+                    <div class="stat-item">
+                        <span class="stat-num">24hs</span>
+                        <span class="stat-label">Disponibilidad</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-num">UBA</span>
+                        <span class="stat-label">Formación</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-num">CABA · GBA</span>
+                        <span class="stat-label">Cobertura</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-num">&lt; 2hs</span>
+                        <span class="stat-label">Tiempo de respuesta</span>
+                    </div>
+                </div>
             
 
                 <!-- Sección "Sobre Nosotros" -->
 
-                <section id="profesionales" class="section-padding">
-
-                    <div class="container">
-
-                        <h2 class="section-title animate-on-scroll fade-up">Sobre Nosotros</h2>
-
-                        <p class="section-text animate-on-scroll fade-up">Somos un grupo de profesionales del derecho, orgullosos de ofrecerte un completo plan de asesoramiento jurídico, pensado y analizado pura y exclusivamente para vos, asegurándonos que tus intereses sean representados de manera total e íntegra. <br> <br>
-
-                            Nuestro estudio jurídico cuenta con profesionales altamente capacitados, especialistas en derecho público y en derecho privado, que abarca una amplia gama de áreas legales con el firme propósito de hacer valer los derechos de nuestros clientes y satisfacer sus necesidades.
-
-                        </p>
-
-                    </div>
-
-                </section>
-
-
+                <section id="profesionales" class="sobre-nosotros section-padding">
+    <div class="container">
+        <span class="section-eyebrow">El estudio</span>
+        <h2 class="section-title">Sobre Nosotros</h2>
+        <div class="sobre-grid">
+            <div class="sobre-content">
+                <p>Somos un grupo de profesionales del derecho comprometidos con ofrecerte un plan de asesoramiento jurídico pensado exclusivamente para vos, asegurándonos que tus intereses sean representados de manera total e íntegra.</p>
+                <p>Nuestro estudio cuenta con profesionales altamente capacitados, especialistas en derecho público y privado, con el firme propósito de hacer valer los derechos de nuestros clientes y satisfacer sus necesidades.</p>
+            </div>
+            <div class="sobre-perfil">
+                <p class="perfil-title">Socio Fundador</p>
+                <h3 class="perfil-name">Dr. Leonardo Beristain</h3>
+                <p class="perfil-text">Egresado de la Universidad de Buenos Aires. Con un profundo sentido de compromiso hacia el ejercicio de la abogacía, he dedicado mi trayectoria a acercar el derecho a la sociedad, ofreciendo soluciones jurídicas concretas y eficaces.</p>
+                <p class="perfil-text">El aprendizaje constante y la perseverancia son pilares esenciales que guían mi labor y la de mi equipo en la búsqueda de resultados óptimos para nuestros clientes.</p>
+            </div>
+        </div>
+    </div>
+</section>
 
                 <!-- Sección Equipo -->
 
@@ -993,6 +1014,26 @@
             <span class="whatsapp-tooltip">Evaluación sin cargo</span>
         </a>
 
+        <section class="urgencia-strip">
+    <div class="urgencia-inner">
+        <div>
+            <div class="urg-badge">
+                <span class="badge-dot"></span>
+                Línea activa ahora
+            </div>
+            <h2 class="urg-title">¿Tenés un <span>caso urgente?</span></h2>
+            <p class="urg-sub">Respondemos en menos de 2 horas. Primera consulta sin cargo.</p>
+        </div>
+        <div class="urg-actions">
+            <a href="tel:+5491135913161" class="btn-urg-call">
+                <i class="bi bi-telephone-fill"></i> 11 3591-3161
+            </a>
+            <a href="https://wa.me/5491135913161?text=Hola%2C%20necesito%20un%20abogado%20penalista%20urgente" class="btn-urg-wa" target="_blank" rel="noopener noreferrer">
+                <i class="bi bi-whatsapp"></i> Escribir por WhatsApp
+            </a>
+        </div>
+    </div>
+</section>
         <footer>
             <div class="container">
                 <div class="row">
