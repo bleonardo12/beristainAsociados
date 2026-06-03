@@ -56,8 +56,8 @@
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
             <!-- CSS personalizado - Reestructurado mobile-first -->
-            <link rel="stylesheet" type="text/css" href="styles.css?v=20260603">
-            <link rel="stylesheet" type="text/css" href="overrides.css?v=20260603">
+            <link rel="stylesheet" type="text/css" href="styles.css?v=20260603b">
+            <link rel="stylesheet" type="text/css" href="overrides.css?v=20260603b">
             
             <!-- Google Analytics (carga diferida) -->
             <script async defer src="https://www.googletagmanager.com/gtag/js?id=G-MLZ2VR5SYR"></script>
@@ -120,8 +120,91 @@
                     "https://www.instagram.com/beristainyasociados",
                     "https://www.linkedin.com/company/beristainasociados",
                     "https://www.tiktok.com/@beristainasociados"
+                ],
+                "aggregateRating": {
+                    "@type": "AggregateRating",
+                    "ratingValue": "5",
+                    "reviewCount": "3"
+                },
+                "review": [
+                    {
+                        "@type": "Review",
+                        "author": { "@type": "Person", "name": "Martin Zarate" },
+                        "reviewRating": { "@type": "Rating", "ratingValue": "5" },
+                        "reviewBody": "Excelente atención por parte del equipo de abogados. Resolvieron mi caso de manera rápida y profesional. ¡Totalmente recomendados!"
+                    },
+                    {
+                        "@type": "Review",
+                        "author": { "@type": "Person", "name": "Liliana Serrano" },
+                        "reviewRating": { "@type": "Rating", "ratingValue": "5" },
+                        "reviewBody": "Gracias a Beristain & Asociados, pude resolver un problema legal complicado. Siempre estuvieron disponibles para asesorarme."
+                    },
+                    {
+                        "@type": "Review",
+                        "author": { "@type": "Person", "name": "Evelyn" },
+                        "reviewRating": { "@type": "Rating", "ratingValue": "5" },
+                        "reviewBody": "Muy profesionales y comprometidos. Me sentí acompañada en todo momento. Definitivamente los elegiría nuevamente."
+                    }
                 ]
                 }
+            </script>
+
+            <!-- Schema FAQ — genera rich results en Google Search -->
+            <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "FAQPage",
+                "mainEntity": [
+                    {
+                        "@type": "Question",
+                        "name": "¿Qué hago si me detienen o detienen a un familiar?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Lo primero es ejercer el derecho a guardar silencio hasta tener asistencia legal. No declarés sin un abogado presente. Llamanos inmediatamente al +54 9 11 3591-3161 — estamos disponibles las 24hs para urgencias penales."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "¿Cuánto cuesta la defensa penal?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Los honorarios se fijan según la complejidad del caso, el fuero y la instancia procesal. La primera consulta es siempre sin cargo. Analizamos tu situación y damos un presupuesto claro antes de comenzar."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "¿En qué casos conviene llamar a un abogado penalista?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Ante cualquier citación policial o judicial, detención, imputación, o si sos víctima de un delito y querés presentar una denuncia. Cuanto antes actuás, mejores son los resultados."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "¿Qué es la probation y cuándo se puede pedir?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "La probation (suspensión del juicio a prueba) permite resolver la causa sin condena en delitos de pena menor. Requiere cumplir ciertas condiciones por un período determinado. No todos los casos califican — evaluamos tu situación sin cargo."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Tuve un accidente de tránsito, ¿la aseguradora debe cubrirme?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Las aseguradoras frecuentemente ofrecen montos inferiores a los que corresponden. Con representación legal podés reclamar la indemnización real por lesiones, daños materiales y lucro cesante."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "¿Para qué sirve un perito contador judicial?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "El perito contadora actúa como auxiliar del juez en causas con cuestiones económicas o patrimoniales: fraudes, estafas, liquidaciones de sociedades, sucesiones con bienes, o cualquier proceso donde se necesite analizar documentación contable ante la Justicia."
+                        }
+                    }
+                ]
+            }
             </script>
         </head>
         <body>
@@ -133,18 +216,6 @@
                 <!-- Skip link para accesibilidad -->
 
             <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
-
-
-
-            <!-- Selector de tema claro/oscuro -->
-
-            <button id="theme-toggle" aria-label="Cambiar modo oscuro/claro" class="theme-toggle">
-
-                <i class="bi bi-moon-fill dark-icon"></i>
-
-                <i class="bi bi-sun-fill light-icon"></i>
-
-            </button>
 
 
 
@@ -211,6 +282,12 @@
 
                         </a>
 
+                        <!-- Selector de tema claro/oscuro -->
+                        <button id="theme-toggle" aria-label="Cambiar modo oscuro/claro" class="theme-toggle">
+                            <i class="bi bi-moon-fill dark-icon"></i>
+                            <i class="bi bi-sun-fill light-icon"></i>
+                        </button>
+
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 
                             <span class="navbar-toggler-icon"></span>
@@ -218,6 +295,15 @@
                         </button>
 
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+                            <!-- Header del menú móvil — visible solo en mobile -->
+                            <div class="mobile-menu-top d-lg-none">
+                                <picture>
+                                    <source srcset="img/logonuevoB.webp" type="image/webp">
+                                    <img src="img/logonuevoB.jpg" alt="Beristain & Asociados" width="40" height="40" class="mobile-menu-logo">
+                                </picture>
+                                <span class="mobile-menu-name">Beristain &amp; Asociados</span>
+                            </div>
 
                             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
@@ -518,6 +604,7 @@
                                 <!-- Sección Hero -->
 
                                 <section class="home" id="home">
+                    <div class="hero-inner">
                     <div class="home-text">
                         <div class="hero-badge">
                             <span class="badge-dot"></span>
@@ -565,6 +652,26 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- Foto del Dr. Beristain — visible solo desktop -->
+                    <div class="hero-portrait d-none d-lg-flex">
+                        <div class="hero-portrait-frame">
+                            <picture>
+                                <source srcset="img/IMGPROFESIONALBERISTAIN.webp" type="image/webp">
+                                <img src="img/dr-beristain.png"
+                                     alt="Dr. Leonardo Beristain — Abogado Penalista CABA"
+                                     class="hero-portrait-img"
+                                     width="420" height="500"
+                                     loading="eager">
+                            </picture>
+                            <div class="hero-portrait-badge">
+                                <i class="bi bi-patch-check-fill"></i>
+                                <span>Abogado Penalista · UBA</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    </div><!-- /hero-inner -->
                 </section>
 
                 <!-- Stats strip -->
@@ -642,6 +749,14 @@
             </div>
             <div class="sobre-perfiles">
                 <div class="sobre-perfil">
+                    <picture>
+                        <source srcset="img/IMGPROFESIONALBERISTAIN.webp" type="image/webp">
+                        <img src="img/dr-beristain.png"
+                             alt="Dr. Leonardo Beristain — Abogado Penalista UBA"
+                             class="perfil-foto"
+                             width="220" height="264"
+                             loading="lazy">
+                    </picture>
                     <p class="perfil-title">Abogado — Socio Fundador</p>
                     <h3 class="perfil-name">Dr. Leonardo Beristain</h3>
                     <p class="perfil-text">Egresado de la Universidad de Buenos Aires. Especialista en derecho penal, civil y accidentes de tránsito. Con un profundo compromiso hacia el ejercicio de la abogacía, ofrezco soluciones jurídicas concretas y eficaces en CABA, GBA y fuero federal.</p>
