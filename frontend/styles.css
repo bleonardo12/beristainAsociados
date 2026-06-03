@@ -615,6 +615,182 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 /* ========== URGENCIA STRIP ========== */
+/* ── SECCIÓN URGENCIA-ACCION ── */
+.urgencia-accion { background: var(--navy-deep); }
+.urgencia-accion .section-title,
+.urgencia-accion .section-eyebrow { color: var(--off-white); }
+.urgencia-accion .section-title { color: var(--white); }
+.urgencia-accion .section-sub { color: rgba(255,255,255,0.55); max-width: 680px; margin-bottom: var(--spacing-xl); }
+
+.urgencia-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-2xl);
+}
+@media (max-width: 767px) { .urgencia-grid { grid-template-columns: 1fr; } }
+
+.urgencia-card {
+    background: rgba(255,255,255,0.04);
+    border: 0.5px solid rgba(212,175,119,0.15);
+    border-left: 3px solid var(--gold);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-lg);
+    transition: var(--transition);
+}
+.urgencia-card:hover { background: rgba(255,255,255,0.07); border-left-color: var(--gold-light); }
+.urgencia-icon {
+    font-size: 1.5rem;
+    color: var(--gold);
+    margin-bottom: var(--spacing-sm);
+}
+.urgencia-card h3 {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    color: var(--white);
+    margin-bottom: var(--spacing-xs);
+}
+.urgencia-card p { font-size: 0.88rem; color: rgba(255,255,255,0.55); line-height: 1.7; }
+
+.urgencia-cta { text-align: center; }
+.btn-urgencia {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--gold);
+    color: var(--navy-deep);
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 16px 36px;
+    border-radius: var(--radius-sm);
+    transition: var(--transition);
+    margin-bottom: var(--spacing-sm);
+}
+.btn-urgencia:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(212,175,119,0.35); }
+.urgencia-cta-sub { display: block; font-size: 0.8rem; color: rgba(255,255,255,0.35); margin-top: 8px; }
+
+/* ── FAQ ── */
+.faq-section { background: var(--off-white); }
+.faq-grid { max-width: 820px; margin: 0 auto; display: flex; flex-direction: column; gap: 10px; }
+
+.faq-item {
+    background: var(--white);
+    border: 0.5px solid var(--gray-200);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    transition: box-shadow 0.25s;
+}
+.faq-item[open] { box-shadow: var(--shadow-md); }
+.faq-item[open] .faq-icon { transform: rotate(180deg); }
+
+.faq-question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 22px;
+    cursor: pointer;
+    list-style: none;
+    font-weight: 500;
+    font-size: 0.97rem;
+    color: var(--navy-mid);
+    transition: background 0.2s;
+    user-select: none;
+}
+.faq-question::-webkit-details-marker { display: none; }
+.faq-question:hover { background: var(--gray-100); }
+.faq-icon { color: var(--gold); font-size: 0.85rem; flex-shrink: 0; transition: transform 0.3s ease; }
+
+.faq-answer {
+    padding: 0 22px 20px;
+    font-size: 0.9rem;
+    color: var(--gray-600);
+    line-height: 1.75;
+    border-top: 1px solid var(--gray-100);
+}
+.faq-answer p { margin-top: 14px; }
+.faq-answer a { color: var(--navy-mid); font-weight: 600; text-decoration: underline; }
+
+/* ── CHAT WIDGET ── */
+.chat-widget {
+    position: fixed;
+    bottom: 96px;
+    right: 24px;
+    width: 300px;
+    background: var(--white);
+    border-radius: 16px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.18);
+    z-index: 1048;
+    opacity: 0;
+    transform: translateY(20px) scale(0.96);
+    pointer-events: none;
+    transition: opacity 0.35s ease, transform 0.35s ease;
+}
+.chat-widget.visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+}
+.chat-close {
+    position: absolute;
+    top: 10px; right: 12px;
+    background: none; border: none;
+    color: rgba(255,255,255,0.7);
+    font-size: 0.9rem;
+    cursor: pointer;
+    padding: 4px;
+    transition: color 0.2s;
+}
+.chat-close:hover { color: var(--white); }
+.chat-header {
+    background: #25D366;
+    border-radius: 16px 16px 0 0;
+    padding: 16px 40px 16px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.chat-avatar {
+    width: 42px; height: 42px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem;
+    color: var(--white);
+    flex-shrink: 0;
+}
+.chat-info { display: flex; flex-direction: column; }
+.chat-name { font-weight: 700; font-size: 0.9rem; color: var(--white); }
+.chat-status { font-size: 0.75rem; color: rgba(255,255,255,0.8); display: flex; align-items: center; gap: 5px; }
+.chat-dot { width: 7px; height: 7px; background: #90EE90; border-radius: 50%; animation: blink 1.8s infinite; }
+.chat-body { padding: 16px; }
+.chat-bubble {
+    background: #f0f4f8;
+    border-radius: 0 12px 12px 12px;
+    padding: 12px 14px;
+    font-size: 0.88rem;
+    color: #374151;
+    line-height: 1.6;
+}
+.chat-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: 0 16px 16px;
+    background: #25D366;
+    color: var(--white);
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 12px;
+    border-radius: 8px;
+    transition: background 0.2s;
+}
+.chat-btn:hover { background: #20BA5A; }
+@media (max-width: 767px) {
+    .chat-widget { bottom: 140px; right: 12px; width: 280px; }
+}
+
 .urgencia-strip {
     background: linear-gradient(135deg, var(--navy-deep) 0%, var(--navy-mid) 100%);
     padding: var(--spacing-2xl) var(--spacing-xl);
