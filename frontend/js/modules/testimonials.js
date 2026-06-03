@@ -203,6 +203,3 @@ export function initTestimonials() {
   return Array.from(testimonialSections).map(section => new TestimonialsCarousel(section));
 }
 
-if (typeof document !== 'undefined') {
-  document.addEventListener('DOMContentLoaded', initTestimonials);
-}

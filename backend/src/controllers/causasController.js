@@ -14,13 +14,13 @@ exports.listarCausas = async (req, res) => {
             where.estado = filters.estado;
         }
 
-        // Búsqueda por texto (nombre_caso, cliente, numero_causa, tribunal)
+        // Búsqueda por texto
         if (filters.search) {
             where[Op.or] = [
-                { nombre_caso: { [Op.like]: `%${filters.search}%` } },
+                { caratula: { [Op.like]: `%${filters.search}%` } },
                 { cliente: { [Op.like]: `%${filters.search}%` } },
-                { numero_causa: { [Op.like]: `%${filters.search}%` } },
-                { tribunal: { [Op.like]: `%${filters.search}%` } }
+                { numero_expediente: { [Op.like]: `%${filters.search}%` } },
+                { juzgado: { [Op.like]: `%${filters.search}%` } }
             ];
         }
 
@@ -151,17 +151,14 @@ exports.crearCausa = async (req, res) => {
 
         // Crear causa
         const causa = await Causa.create({
-            nombre_caso,
+            caratula: nombre_caso,
             cliente,
-            numero_causa: numero_causa || null,
-            tribunal: tribunal || null,
+            numero_expediente: numero_causa || null,
+            juzgado: tribunal || null,
+            tipo_causa: materia || 'General',
             fecha_inicio,
-            fecha_termino: fecha_termino || null,
-            materia: materia || '',
-            descripcion: descripcion || '',
+            observaciones: notas || descripcion || '',
             tareas: tareas || [],
-            documentos: documentos || [],
-            notas: notas || '',
             estado: 'activo',
             user_id: req.userId,
             modificado_por: req.userId
@@ -239,17 +236,16 @@ exports.actualizarCausa = async (req, res) => {
 
         // Actualizar campos
         await causa.update({
-            nombre_caso: nombre_caso !== undefined ? nombre_caso : causa.nombre_caso,
+            caratula: nombre_caso !== undefined ? nombre_caso : causa.caratula,
             cliente: cliente !== undefined ? cliente : causa.cliente,
-            numero_causa: numero_causa !== undefined ? numero_causa : causa.numero_causa,
-            tribunal: tribunal !== undefined ? tribunal : causa.tribunal,
+            numero_expediente: numero_causa !== undefined ? numero_causa : causa.numero_expediente,
+            juzgado: tribunal !== undefined ? tribunal : causa.juzgado,
+            tipo_causa: materia !== undefined ? materia : causa.tipo_causa,
             fecha_inicio: fecha_inicio !== undefined ? fecha_inicio : causa.fecha_inicio,
-            fecha_termino: fecha_termino !== undefined ? fecha_termino : causa.fecha_termino,
-            materia: materia !== undefined ? materia : causa.materia,
-            descripcion: descripcion !== undefined ? descripcion : causa.descripcion,
+            observaciones: (notas !== undefined || descripcion !== undefined)
+                ? (notas || descripcion || '')
+                : causa.observaciones,
             tareas: tareas !== undefined ? tareas : causa.tareas,
-            documentos: documentos !== undefined ? documentos : causa.documentos,
-            notas: notas !== undefined ? notas : causa.notas,
             estado: estado !== undefined ? estado : causa.estado,
             modificado_por: req.userId
         });
@@ -316,7 +312,7 @@ exports.eliminarCausa = async (req, res) => {
 // Obtener estadísticas de causas
 exports.obtenerEstadisticas = async (req, res) => {
     try {
-        const userId = req.query.user_id || req.userId;
+        const userId = req.userId;
 
         const where = {};
         if (req.userRole !== 'admin') {

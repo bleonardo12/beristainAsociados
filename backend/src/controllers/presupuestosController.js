@@ -14,11 +14,11 @@ exports.listarPresupuestos = async (req, res) => {
             where.estado = filters.estado;
         }
 
-        // Búsqueda por texto (nombre o empresa)
+        // Búsqueda por texto
         if (filters.search) {
             where[Op.or] = [
-                { nombre: { [Op.like]: `%${filters.search}%` } },
-                { empresa: { [Op.like]: `%${filters.search}%` } }
+                { cliente: { [Op.like]: `%${filters.search}%` } },
+                { dni: { [Op.like]: `%${filters.search}%` } }
             ];
         }
 
@@ -223,15 +223,14 @@ exports.actualizarPresupuesto = async (req, res) => {
 
         // Actualizar campos
         await presupuesto.update({
-            nombre: nombre !== undefined ? nombre : presupuesto.nombre,
+            cliente: nombre !== undefined ? nombre : presupuesto.cliente,
             telefono: telefono !== undefined ? telefono : presupuesto.telefono,
             email: email !== undefined ? email : presupuesto.email,
-            empresa: empresa !== undefined ? empresa : presupuesto.empresa,
-            rut: rut !== undefined ? rut : presupuesto.rut,
+            dni: rut !== undefined ? rut : presupuesto.dni,
             fecha: fecha !== undefined ? fecha : presupuesto.fecha,
             servicios: servicios !== undefined ? servicios : presupuesto.servicios,
             honorarios: honorarios !== undefined ? honorarios : presupuesto.honorarios,
-            gastos_operacionales: gastos_operacionales !== undefined ? gastos_operacionales : presupuesto.gastos_operacionales,
+            gastos_admin: gastos_operacionales !== undefined ? gastos_operacionales : presupuesto.gastos_admin,
             iva: iva !== undefined ? iva : presupuesto.iva,
             total: total !== undefined ? total : presupuesto.total,
             notas: notas !== undefined ? notas : presupuesto.notas,
@@ -301,7 +300,7 @@ exports.eliminarPresupuesto = async (req, res) => {
 // Obtener estadísticas de presupuestos
 exports.obtenerEstadisticas = async (req, res) => {
     try {
-        const userId = req.query.user_id || req.userId;
+        const userId = req.userId;
 
         const where = {};
         if (req.userRole !== 'admin') {

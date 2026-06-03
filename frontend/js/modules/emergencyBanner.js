@@ -13,8 +13,8 @@ export function initEmergencyBanner() {
         // Quitar foco antes de ocultar
         closeButton.blur();
         document.body.focus();
-        
-        banner.style.display = 'none';
+
+        banner.classList.remove('visible');
         banner.setAttribute('aria-hidden', 'true');
     });
 

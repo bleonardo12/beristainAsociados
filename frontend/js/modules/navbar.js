@@ -24,16 +24,6 @@ export function initNavbar(options = {}) {
             });
         });
 
-        // Logo Dinámico
-        const logo = document.querySelector('.logo-principal');
-        if (logo) {
-            window.addEventListener('scroll', () => {
-                const isScrolled = window.scrollY > 50;
-                logo.style.height = isScrolled ? '60px' : '100px'; // Ajusta estos px a tu gusto
-                logo.style.transition = 'height 0.3s ease';
-            });
-        }
-
         return createNavbarAPI();
     } catch (error) {
         console.error('[Navbar] Error:', error);

@@ -30,7 +30,7 @@ export function initAnalytics() {
  * Trackear clicks en botones CTA (Call To Action)
  */
 function trackCTAClicks() {
-  const contactoInmediatoBtn = document.querySelector('[data-bs-target="#contactoInmediatoModal"]');
+  const contactoInmediatoBtn = document.querySelector('[data-bs-target="#staticBackdrop"]');
   if (contactoInmediatoBtn) {
     contactoInmediatoBtn.addEventListener('click', () => {
       gtag('event', 'cta_click', {

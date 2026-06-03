@@ -3,26 +3,49 @@
    Este archivo debe cargarse DESPUÉS de bootstrap.css y styles.css
    ========================================================================== */
 
+/* ==== ALIASES DE VARIABLES (compatibilidad con styles.css) ==== */
+:root {
+    --primary:           var(--navy-mid);
+    --primary-dark:      var(--navy-deep);
+    --primary-rgb:       15, 30, 56;
+    --secondary:         var(--gold);
+    --secondary-rgb:     212, 175, 119;
+    --neutral-100:       var(--white);
+    --neutral-200:       var(--off-white);
+    --neutral-300:       var(--gray-100);
+    --neutral-400:       var(--gray-200);
+    --neutral-600:       var(--gray-500);
+    --neutral-700:       var(--gray-700);
+    --border-radius-lg:  var(--radius-lg);
+    --border-radius-md:  var(--radius-md);
+    --transition-normal: var(--transition);
+    --font-primary:      var(--font-display);
+    --font-secondary:    var(--font-body);
+    --fs-base:           1rem;
+    --fs-sm:             0.875rem;
+    --fs-xs:             0.75rem;
+}
+
 /* ==== AUMENTAR ESPECIFICIDAD PARA SOBRESCRIBIR BOOTSTRAP ==== */
+
+/* Reducir espacio entre items del navbar en pantallas medianas (992px–1199px) */
+@media (min-width: 992px) and (max-width: 1199px) {
+    body .navbar-nav .nav-link {
+        padding-left: 0.6rem !important;
+        padding-right: 0.6rem !important;
+        font-size: 0.9rem !important;
+    }
+
+    body .btn-contact-professional {
+        padding: 0.4rem 0.8rem !important;
+        font-size: 0.85rem !important;
+    }
+}
 
 /* ==========================================================================
    DESKTOP Y PANTALLAS GRANDES (Desde 992px en adelante)
    ========================================================================== */
 @media (min-width: 992px) {
-    /* Reducir espacio entre items del navbar en pantallas medianas/grandes */
-    @media (max-width: 1199px) {
-        body .navbar-nav .nav-link {
-            padding-left: 0.6rem !important;
-            padding-right: 0.6rem !important;
-            font-size: 0.9rem !important;
-        }
-
-        body .btn-contact-professional {
-            padding: 0.4rem 0.8rem !important;
-            font-size: 0.85rem !important;
-        }
-    }
-
     /* Dropdown automático al pasar el mouse (hover) - Solo Desktop */
     body .navbar-nav .dropdown:hover .dropdown-menu {
         display: block !important;
@@ -1338,7 +1361,7 @@ body .practice-area-box:hover {
 body .servicio-card h3,
 body .practice-area-box h3,
 body .territorio-card h3 {
-    font-family: 'Playfair Display', serif !important;
+    font-family: var(--font-display) !important;
     font-size: 1.4rem !important;
     font-weight: 600 !important;
     color: var(--primary) !important;
@@ -1415,7 +1438,7 @@ body .modal-header {
 }
 
 body .modal-title {
-    font-family: 'Playfair Display', serif !important;
+    font-family: var(--font-display) !important;
     font-size: 1.5rem !important;
     font-weight: 600 !important;
     color: var(--primary) !important;
@@ -1924,7 +1947,7 @@ html .whatsapp-float:hover,
 body .home-text .studio-name, 
 body .home-text h2,
 body .home-text p:has(+ .urgencias) { /* Por si usás una clase genérica */
-    font-family: 'Playfair Display', serif !important;
+    font-family: var(--font-display) !important;
     font-size: clamp(1.2rem, 2vw + 0.2rem, 1.8rem) !important; /* Más grande y dinámico */
     color: #ffd700 !important; /* Dorado sutil para combinar con los acentos del sitio */
     text-transform: uppercase !important;

@@ -82,11 +82,5 @@ const logger = winston.createLogger({
     exitOnError: false
 });
 
-// Si no estamos en producción, también log a consola con formato bonito
-if (process.env.NODE_ENV !== 'production') {
-    logger.add(new winston.transports.Console({
-        format: consoleFormat
-    }));
-}
 
 module.exports = logger;
