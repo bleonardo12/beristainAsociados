@@ -258,8 +258,20 @@ p {
 .home-text h1 {
     color: var(--neutral-white);
     text-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
-    margin-bottom: var(--spacing-lg);
-    letter-spacing: 0.05em;
+    margin-bottom: var(--spacing-sm);
+    letter-spacing: 0.02em;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    font-weight: 700;
+}
+
+.home-text .hero-nombre {
+    color: var(--secondary);
+    font-size: clamp(1.1rem, 2.5vw, 1.8rem);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: var(--spacing-md);
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }
 
 .home-text h3 {
@@ -1406,12 +1418,9 @@ footer a:hover {
 }
 
 /* 1. Añadir transiciones suaves para evitar el salto visual (Layout Shift) */
+/* Transición suave navbar */
 body nav.navbar {
-    height: auto;
-    min-height: 200px;
-    padding: 10px 0;
-    /* Esta línea es clave para que el cambio a .scrolled no sea brusco */
-    transition: min-height 0.3s ease, padding 0.3s ease, background-color 0.3s ease; 
+    transition: padding 0.3s ease, background-color 0.3s ease;
 }
 
 /* 2. Limpiar el flujo del footer para que los textos legales/informativos no se rompan */
