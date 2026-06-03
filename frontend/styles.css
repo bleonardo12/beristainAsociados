@@ -1346,12 +1346,12 @@ footer a:hover { color: var(--gold); }
 
 /* Brand wordmark — responsive */
 @media (max-width: 991.98px) {
-    /* En mobile solo mostramos el nombre principal, sin sub-línea */
-    .brand-name-sub { display: none !important; }
-    .brand-name-main { font-size: 1.2rem; letter-spacing: 0.04em; }
+    .brand-name-main { font-size: 1.1rem; letter-spacing: 0.04em; }
+    .brand-name-sub { font-size: 0.56rem; letter-spacing: 0.12em; }
 }
 @media (max-width: 575px) {
-    .brand-name-main { font-size: 1.05rem; }
+    .brand-name-main { font-size: 0.98rem; letter-spacing: 0.02em; }
+    .brand-name-sub { font-size: 0.52rem; letter-spacing: 0.09em; }
 }
 
 /* ========== ACCESIBILIDAD ========== */
