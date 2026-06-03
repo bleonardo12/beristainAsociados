@@ -164,13 +164,13 @@ h1,h2,h3,h4,h5,h6 {
 .navbar.scrolled .logo-principal { height: 56px; width: 56px; }
 
 .nav-link {
-    color: rgba(255,255,255,0.65) !important;
+    color: rgba(255,255,255,0.88) !important;
     font-size: 0.92rem;
-    font-weight: 400;
+    font-weight: 500;
     padding: var(--spacing-xs) var(--spacing-sm) !important;
     border-radius: var(--radius-sm);
     transition: var(--transition);
-    letter-spacing: 0.02em;
+    letter-spacing: 0.05em;
 }
 .nav-link:hover, .nav-link.active {
     color: var(--gold) !important;
@@ -573,6 +573,7 @@ h1,h2,h3,h4,h5,h6 {
     padding-bottom: var(--spacing-sm);
     letter-spacing: -0.01em;
 }
+.section-title span { color: var(--gold); }
 .dark-theme .section-title { color: var(--gold-light); }
 .section-title::after {
     content: '';
@@ -651,8 +652,19 @@ h1,h2,h3,h4,h5,h6 {
     align-items: center;
 }
 .dark-theme .card-header { background: var(--gray-200); }
-.card-header img { width: 56px; height: 56px; transition: var(--transition); }
-.card:hover .card-header img { transform: scale(1.12) rotate(-3deg); }
+
+/* Icono Bootstrap en card-header */
+.card-icon {
+    width: 68px; height: 68px;
+    border-radius: 50%;
+    background: rgba(212,175,119,0.12);
+    border: 1.5px solid rgba(212,175,119,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.8rem;
+    color: var(--gold);
+    transition: var(--transition);
+}
+.card:hover .card-icon { background: rgba(212,175,119,0.2); transform: scale(1.08); }
 
 .card-body { padding: var(--spacing-lg); }
 .card-body h4 {
@@ -665,8 +677,23 @@ h1,h2,h3,h4,h5,h6 {
 }
 .dark-theme .card-body h4 { color: var(--gold-light); }
 
-.card.featured { border-top: 2px solid var(--gold); }
+/* Card destacada (Derecho Penal): fondo invertido navy */
+.card.featured {
+    background: var(--navy-deep);
+    border: 1px solid rgba(212,175,119,0.25);
+    border-top: 3px solid var(--gold);
+}
+.card.featured .card-header { background: rgba(255,255,255,0.04); }
+.card.featured .card-icon {
+    background: rgba(212,175,119,0.15);
+    border-color: rgba(212,175,119,0.45);
+    color: var(--gold);
+}
 .card.featured .card-body h4 { color: var(--gold); }
+.card.featured .card-text li { color: rgba(255,255,255,0.72); }
+.card.featured .card-text li::before { background: var(--gold); }
+.dark-theme .card.featured { background: var(--navy-deep); border-color: rgba(212,175,119,0.3); }
+.dark-theme .card.featured .card-header { background: rgba(255,255,255,0.03); }
 
 .card-text { list-style: none; padding: 0; }
 .card-text li {
@@ -956,6 +983,28 @@ h1,h2,h3,h4,h5,h6 {
 }
 .dark-theme .territorio-content h3 { color: var(--gold-light); }
 .territorio-content p { font-size: 0.9rem; color: var(--gray-500); text-align: center; margin: 0; }
+.territorio-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+}
+.territorio-list li {
+    position: relative;
+    padding-left: var(--spacing-md);
+    margin-bottom: 6px;
+    font-size: 0.88rem;
+    color: var(--gray-500);
+    line-height: 1.5;
+}
+.territorio-list li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 8px;
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--gold);
+}
 
 /* ========== SERVICIOS ADICIONALES ========== */
 .servicios-grid { margin-top: var(--spacing-lg); }

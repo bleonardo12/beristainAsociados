@@ -56,8 +56,8 @@
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
             <!-- CSS personalizado - Reestructurado mobile-first -->
-            <link rel="stylesheet" type="text/css" href="styles.css?v=20260603c">
-            <link rel="stylesheet" type="text/css" href="overrides.css?v=20260603c">
+            <link rel="stylesheet" type="text/css" href="styles.css?v=20260603d">
+            <link rel="stylesheet" type="text/css" href="overrides.css?v=20260603d">
             
             <!-- Google Analytics (carga diferida) -->
             <script async defer src="https://www.googletagmanager.com/gtag/js?id=G-MLZ2VR5SYR"></script>
@@ -774,6 +774,7 @@
 
                     <div class="container">
 
+                        <span class="section-eyebrow animate-on-scroll fade-up">Especialidades legales</span>
                         <h2 class="section-title animate-on-scroll fade-up">Áreas <span>de</span> práctica</h2>
 
                         <p class="section-text animate-on-scroll fade-up">El <strong>Derecho Penal</strong> es nuestra especialidad principal. Sumamos Accidentes de tránsito, Derecho Civil y el respaldo técnico de nuestra <strong>Perito Contadora Judicial</strong> para brindarte una defensa integral.</p>
@@ -787,9 +788,7 @@
                                 <div class="card featured animate-on-scroll scale-in" data-delay="100">
 
                                     <div class="card-header" id="dchoPenal">
-
-                                        <img src="img/prisionero.webp" alt="Derecho Penal" width="60" height="60" loading="lazy">
-
+                                        <div class="card-icon"><i class="bi bi-shield-shaded"></i></div>
                                     </div>
 
                                     <div class="card-body">
@@ -827,9 +826,7 @@
                                 <div class="card animate-on-scroll scale-in" data-delay="200">
 
                                     <div class="card-header" id="dchoCivil">
-
-                                        <img src="img/linea-de-sucesion.webp" alt="Derecho Civil" width="60" height="60" loading="lazy">
-
+                                        <div class="card-icon"><i class="bi bi-file-earmark-text-fill"></i></div>
                                     </div>
 
                                     <div class="card-body">
@@ -865,9 +862,7 @@
                                 <div class="card animate-on-scroll scale-in" data-delay="300">
 
                                     <div class="card-header" id="dchoFam">
-
-                                        <img src="img/house-door.svg" alt="Familia y Sucesiones" width="60" height="60" loading="lazy">
-
+                                        <div class="card-icon"><i class="bi bi-people-fill"></i></div>
                                     </div>
 
                                     <div class="card-body">
@@ -901,9 +896,7 @@
                                 <div class="card animate-on-scroll scale-in" data-delay="400">
 
                                     <div class="card-header" id="dchoSeguros">
-
-                                        <img src="img/car-front.svg" alt="Seguros y Accidentes de tránsito" width="60" height="60" loading="lazy">
-
+                                        <div class="card-icon"><i class="bi bi-car-front-fill"></i></div>
                                     </div>
 
                                     <div class="card-body">
@@ -940,51 +933,64 @@
             <!-- Sección Territorio Profesional (Sintaxis Corregida) -->
             <section id="territorio-profesional" class="section-padding bg-light">
                 <div class="container">
-                    <h2 class="section-title animate-on-scroll fade-up">Territorio en el cual ejercemos la labor profesional</h2>
-                    <p class="section-text animate-on-scroll fade-up">Nuestro estudio jurídico brinda servicios legales especializados en las siguientes jurisdicciones:</p>
-                    
+                    <span class="section-eyebrow animate-on-scroll fade-up">Cobertura geográfica</span>
+                    <h2 class="section-title animate-on-scroll fade-up">¿Dónde te <span>representamos</span>?</h2>
+                    <p class="section-text animate-on-scroll fade-up">Actuamos en CABA, el Gran Buenos Aires y ante la Justicia Federal en todo el país.</p>
+
                     <div class="row territorio-grid">
                         <!-- CABA -->
                         <div class="col-lg-4 col-md-6 mb-4">
                             <div class="territorio-card animate-on-scroll fade-up" data-delay="100">
                                 <div class="territorio-img">
-                                    <img src="img/Mapa-caba.png" alt="Mapa de la Ciudad Autónoma de Buenos Aires" class="img-fluid territorio-mapa" loading="lazy" width="200" height="140">
+                                    <img src="img/Mapa-caba.png" alt="Mapa CABA" class="img-fluid territorio-mapa" loading="lazy" width="200" height="140">
                                 </div>
                                 <div class="territorio-content">
-                                    <h3>Ciudad Autónoma de Buenos Aires</h3>
-                                    <p>Abarcamos todos los fueros y juzgados de la Ciudad de Buenos Aires, brindando asesoramiento legal completo en el ámbito de la Capital Federal.</p>
+                                    <h3>CABA</h3>
+                                    <ul class="territorio-list">
+                                        <li>Todos los fueros y juzgados</li>
+                                        <li>Sede principal del estudio</li>
+                                        <li>Atención presencial en Av. Rivadavia 8012</li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
-                        
-                        <!-- Provincia de Buenos Aires -->
+
+                        <!-- Gran Buenos Aires -->
                         <div class="col-lg-4 col-md-6 mb-4">
                             <div class="territorio-card animate-on-scroll fade-up" data-delay="200">
                                 <div class="territorio-img">
-                                    <img src="img/mapa-provincia-ba.png" alt="Mapa de la Provincia de Buenos Aires" class="img-fluid territorio-mapa" loading="lazy" width="200" height="140">
+                                    <img src="img/mapa-provincia-ba.png" alt="Mapa Gran Buenos Aires" class="img-fluid territorio-mapa" loading="lazy" width="200" height="140">
                                 </div>
                                 <div class="territorio-content">
-                                    <h3>Provincia de Buenos Aires</h3>
-                                    <p>Contamos con amplia experiencia en litigios y asesoramiento dentro de la jurisdicción bonaerense, incluyendo todos sus departamentos judiciales.</p>
+                                    <h3>Gran Buenos Aires</h3>
+                                    <ul class="territorio-list">
+                                        <li>Toda la Provincia de Buenos Aires</li>
+                                        <li>Todos los departamentos judiciales</li>
+                                        <li>Consultas y representación a distancia</li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
-                        
-                    <!-- Fuero Federal -->
-                    <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="territorio-card animate-on-scroll fade-up" data-delay="300">
-                            <div class="territorio-img">
-                                <img src="img/mapa-argentina.png" alt="Mapa de Argentina - Fuero Federal" class="img-fluid territorio-mapa" loading="lazy" width="200" height="140">
-                            </div>
-                            <div class="territorio-content">
-                                <h3>Fuero Federal</h3>
-                                <p>Ejercemos la representación ante los tribunales federales del país, garantizando una defensa técnica sólida en causas de competencia federal.</p>
+
+                        <!-- Fuero Federal -->
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            <div class="territorio-card animate-on-scroll fade-up" data-delay="300">
+                                <div class="territorio-img">
+                                    <img src="img/mapa-argentina.png" alt="Mapa Argentina - Fuero Federal" class="img-fluid territorio-mapa" loading="lazy" width="200" height="140">
+                                </div>
+                                <div class="territorio-content">
+                                    <h3>Fuero Federal</h3>
+                                    <ul class="territorio-list">
+                                        <li>Causas federales en todo el país</li>
+                                        <li>Tribunales federales penales y civiles</li>
+                                        <li>Defensa técnica en instancias nacionales</li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div> <!-- Cierre correcto de la fila -->
-            </div>
-        </section>
+                </div>
+            </section>
 
             <!-- Sección Servicios Adicionales -->
             <section id="servicios-adicionales" class="section-padding">
