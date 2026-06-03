@@ -56,9 +56,10 @@ body {
     font-family: var(--font-secondary);
     font-size: 16px;
     line-height: 1.6;
-    color: var(--neutral-600);
+    color: var(--neutral-700);
     background-color: var(--neutral-white);
     overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 img {
@@ -884,7 +885,7 @@ footer a:hover {
     padding: var(--spacing-md);
     text-align: center;
     position: relative;
-    z-index: 1040;
+    z-index: 9997;
 }
 
 .emergency-banner .container {
@@ -1328,11 +1329,11 @@ footer a:hover {
 /* ========== THEME TOGGLE (Modo Oscuro/Claro) ========== */
 #theme-toggle {
     position: fixed;
-    bottom: 20px;
-    right: 90px;
-    z-index: 999;
-    width: 50px;
-    height: 50px;
+    top: 90px;          /* Lo movemos a la parte superior */
+    right: 20px;        /* A la derecha */
+    z-index: 9998;      /* Debajo de la barra de llamada (que es 9999) */
+    width: 45px;
+    height: 45px;
     border-radius: 50%;
     background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
     color: var(--neutral-white);
@@ -1343,7 +1344,7 @@ footer a:hover {
     justify-content: center;
     box-shadow: var(--shadow-md);
     transition: var(--transition);
-    font-size: 1.3rem;
+    font-size: 1.2rem;
 }
 
 #theme-toggle:hover {
