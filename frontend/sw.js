@@ -4,6 +4,7 @@ const PRECACHE = [
     '/index.html',
     '/styles.css',
     '/overrides.css',
+    '/img/logonuevoB.webp',
     '/img/logonuevoB.jpg',
     '/img/prisionero.webp',
     '/img/linea-de-sucesion.webp',
