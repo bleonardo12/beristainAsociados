@@ -15,18 +15,18 @@ export class LogoManager {
    */
   LOGO_SIZES = {
     default: {
-      lg: 176,    // >= 1200px (200px - 12% = 176px)
-      md: 158,    // >= 992px (180px - 12% = 158px)
-      sm: 115,    // >= 768px (130px - 12% = 115px)
-      xs: 88,     // >= 576px (100px - 12% = 88px)
-      xxs: 79     // < 576px (90px - 12% = 79px)
+      lg: 52,   // >= 1200px
+      md: 50,   // >= 992px
+      sm: 48,   // >= 768px
+      xs: 44,   // >= 576px
+      xxs: 40   // < 576px
     },
     scrolled: {
-      lg: 88,     // >= 1200px (100px - 12% = 88px)
-      md: 79,     // >= 992px (90px - 12% = 79px)
-      sm: 70,     // >= 768px (80px - 12% = 70px)
-      xs: 62,     // >= 576px (70px - 12% = 62px)
-      xxs: 53     // < 576px (60px - 12% = 53px)
+      lg: 42,   // >= 1200px
+      md: 40,   // >= 992px
+      sm: 38,   // >= 768px
+      xs: 36,   // >= 576px
+      xxs: 34   // < 576px
     }
   };
 
