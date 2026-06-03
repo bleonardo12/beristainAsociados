@@ -460,7 +460,7 @@ h1,h2,h3,h4,h5,h6 {
     border-bottom: 1px solid rgba(212,175,119,0.12);
     padding: var(--spacing-lg) var(--spacing-xl);
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     gap: var(--spacing-md);
 }
 .stat-item { text-align: center; }
@@ -1160,7 +1160,7 @@ footer a:hover { color: var(--gold); }
 
 @media (max-width: 767px) {
     .home { padding: var(--spacing-xl) var(--spacing-md); min-height: 100svh; }
-    .stats-strip { grid-template-columns: repeat(2, 1fr); padding: var(--spacing-lg) var(--spacing-md); }
+    .stats-strip { grid-template-columns: repeat(3, 1fr); padding: var(--spacing-lg) var(--spacing-md); }
     .section-padding { padding: var(--spacing-xl) var(--spacing-md); }
     .sobre-nosotros { padding: var(--spacing-xl) var(--spacing-md); }
     .sobre-grid { grid-template-columns: 1fr; gap: var(--spacing-lg); }
