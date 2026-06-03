@@ -332,6 +332,25 @@ h1,h2,h3,h4,h5,h6 {
 }
 .hero-desc strong { color: rgba(255,255,255,0.9); font-weight: 500; }
 
+.hero-phone-display {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: var(--spacing-lg);
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.55);
+}
+.hero-phone-display i { color: var(--gold); font-size: 0.85rem; }
+.hero-phone-display a {
+    color: var(--gold-light);
+    font-weight: 600;
+    font-size: 1.05rem;
+    letter-spacing: 0.04em;
+    transition: var(--transition);
+}
+.hero-phone-display a:hover { color: var(--white); }
+.hero-phone-label { font-size: 0.82rem; color: rgba(255,255,255,0.35); }
+
 .hero-cta-container {
     display: flex;
     flex-wrap: wrap;

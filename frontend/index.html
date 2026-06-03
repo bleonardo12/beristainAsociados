@@ -37,6 +37,13 @@
             <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
             <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
             <link rel="preload" href="img/Facultad_de_derecho_uba.webp" as="image" fetchpriority="high">
+            <link rel="preload" href="img/logonuevoB.jpg" as="image" fetchpriority="high">
+
+            <!-- DNS prefetch para CDNs externos -->
+            <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+            <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+            <link rel="dns-prefetch" href="https://www.google-analytics.com">
+            <link rel="dns-prefetch" href="https://googleads.g.doubleclick.net">
 
             <title>Beristain & Asociados | Abogados Especialistas en Derecho Penal y Civil - Buenos Aires</title>
 
@@ -188,7 +195,7 @@
 
                         <a class="navbar-brand" href="index.html" title="Beristain & Asociados Estudio Jurídico">
 
-                            <img src="img/logonuevoB.jpg" alt="Beristain Asociados Abogados" class="logo-principal" width="auto">
+                            <img src="img/logonuevoB.jpg" alt="Beristain Asociados Abogados" class="logo-principal" width="52" height="52" fetchpriority="high">
 
                         </a>
 
@@ -513,6 +520,11 @@
                         <p class="hero-desc">
                             Si vos o un familiar está <strong>detenido, imputado o necesita defensa penal urgente</strong>, contactanos ahora. Atendemos en CABA, GBA y fuero federal.
                         </p>
+                        <p class="hero-phone-display">
+                            <i class="bi bi-telephone-fill"></i>
+                            <a href="tel:+5491135913161">+54 9 11 3591-3161</a>
+                            <span class="hero-phone-label">— Urgencias 24hs</span>
+                        </p>
                         <div class="hero-cta-container">
                             <a href="tel:+5491135913161" class="btn-hero-primary">
                                 <i class="bi bi-telephone-fill"></i> Llamar ahora — 24hs
@@ -675,7 +687,7 @@
 
                                     <div class="card-header" id="dchoPenal">
 
-                                        <img src="img/prisionero.webp" alt="Derecho Penal" width="60" height="60">
+                                        <img src="img/prisionero.webp" alt="Derecho Penal" width="60" height="60" loading="lazy">
 
                                     </div>
 
@@ -715,7 +727,7 @@
 
                                     <div class="card-header" id="dchoCivil">
 
-                                        <img src="img/linea-de-sucesion.webp" alt="Derecho Civil" width="60" height="60">
+                                        <img src="img/linea-de-sucesion.webp" alt="Derecho Civil" width="60" height="60" loading="lazy">
 
                                     </div>
 
@@ -747,7 +759,7 @@
 
                                     <div class="card-header" id="dchoFam">
 
-                                        <img src="img/house-door.svg" alt="Familia y Sucesiones" width="60" height="60">
+                                        <img src="img/house-door.svg" alt="Familia y Sucesiones" width="60" height="60" loading="lazy">
 
                                     </div>
 
@@ -783,7 +795,7 @@
 
                                     <div class="card-header" id="dchoSeguros">
 
-                                        <img src="img/car-front.svg" alt="Seguros y Accidentes de tránsito" width="60" height="60">
+                                        <img src="img/car-front.svg" alt="Seguros y Accidentes de tránsito" width="60" height="60" loading="lazy">
 
                                     </div>
 
@@ -825,7 +837,7 @@
                         <div class="col-lg-4 col-md-6 mb-4">
                             <div class="territorio-card animate-on-scroll fade-up" data-delay="100">
                                 <div class="territorio-img">
-                                    <img src="img/Mapa-caba.png" alt="Mapa de la Ciudad Autónoma de Buenos Aires" class="img-fluid territorio-mapa">
+                                    <img src="img/Mapa-caba.png" alt="Mapa de la Ciudad Autónoma de Buenos Aires" class="img-fluid territorio-mapa" loading="lazy" width="200" height="140">
                                 </div>
                                 <div class="territorio-content">
                                     <h3>Ciudad Autónoma de Buenos Aires</h3>
@@ -838,7 +850,7 @@
                         <div class="col-lg-4 col-md-6 mb-4">
                             <div class="territorio-card animate-on-scroll fade-up" data-delay="200">
                                 <div class="territorio-img">
-                                    <img src="img/mapa-provincia-ba.png" alt="Mapa de la Provincia de Buenos Aires" class="img-fluid territorio-mapa">
+                                    <img src="img/mapa-provincia-ba.png" alt="Mapa de la Provincia de Buenos Aires" class="img-fluid territorio-mapa" loading="lazy" width="200" height="140">
                                 </div>
                                 <div class="territorio-content">
                                     <h3>Provincia de Buenos Aires</h3>
@@ -851,7 +863,7 @@
                     <div class="col-lg-4 col-md-6 mb-4">
                         <div class="territorio-card animate-on-scroll fade-up" data-delay="300">
                             <div class="territorio-img">
-                                <img src="img/mapa-argentina.png" alt="Mapa de Argentina - Fuero Federal" class="img-fluid territorio-mapa">
+                                <img src="img/mapa-argentina.png" alt="Mapa de Argentina - Fuero Federal" class="img-fluid territorio-mapa" loading="lazy" width="200" height="140">
                             </div>
                             <div class="territorio-content">
                                 <h3>Fuero Federal</h3>
@@ -1071,10 +1083,7 @@
             </div>
         </footer>
 
-        <!-- Scripts --> <!-- Scripts --> <!-- Scripts --> <!-- Scripts -->
-                <!-- deploy test 2025-11-06 13:xx -->
-                 <!-- DEPLOY_OK_2025-11-06_13:45 -->
-
+        <!-- Scripts -->
         <!-- EmailJS para formulario de contacto - SIN defer para cargar primero -->
         <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 

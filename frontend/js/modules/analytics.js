@@ -153,8 +153,13 @@ function trackWhatsAppClicks() {
 
   whatsappLinks.forEach(link => {
     link.addEventListener('click', () => {
+      let location = 'other';
+      if (link.closest('.home'))            location = 'hero';
+      else if (link.closest('.urgencia-strip')) location = 'urgencia_strip';
+      else if (link.closest('.mobile-call-bar'))location = 'mobile_bar';
+      else if (link.classList.contains('whatsapp-float')) location = 'float_button';
+
       if (typeof gtag !== 'undefined') {
-        // Conversión de Google Ads para WhatsApp
         gtag('event', 'conversion', {
           'send_to': 'AW-11107730225/Yg24CK6u4LsbELGGyrAp',
           'value': 75.0,
@@ -165,9 +170,10 @@ function trackWhatsAppClicks() {
       }
 
       gtag('event', 'contact_click', {
-        'contact_method': 'whatsapp'
+        'contact_method': 'whatsapp',
+        'click_location': location
       });
-      console.log('📊 Tracked: WhatsApp click');
+      console.log(`📊 Tracked: WhatsApp click from ${location}`);
     });
   });
 }
@@ -182,8 +188,14 @@ function trackPhoneClicks() {
     link.addEventListener('click', () => {
       const phoneNumber = link.href.replace('tel:', '');
 
+      // Determinar ubicación del click para segmentar en Analytics
+      let location = 'other';
+      if (link.closest('.emergency-banner'))    location = 'emergency_banner';
+      else if (link.closest('.home'))           location = 'hero';
+      else if (link.closest('.urgencia-strip')) location = 'urgencia_strip';
+      else if (link.closest('.mobile-call-bar'))location = 'mobile_bar';
+
       if (typeof gtag !== 'undefined') {
-        // Conversión de Google Ads para Llamada Directa
         gtag('event', 'conversion', {
           'send_to': 'AW-11107730225/MjxGCJ-v6bsbELGGyrAp',
           'value': 100.0,
@@ -195,9 +207,10 @@ function trackPhoneClicks() {
 
       gtag('event', 'contact_click', {
         'contact_method': 'phone',
-        'phone_number': phoneNumber
+        'phone_number': phoneNumber,
+        'click_location': location
       });
-      console.log('📊 Tracked: Phone click');
+      console.log(`📊 Tracked: Phone click from ${location}`);
     });
   });
 }
