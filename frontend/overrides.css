@@ -724,18 +724,20 @@ body .navbar-nav .nav-link.active::after {
     width: 80% !important;
 }
 
-/* Items del dropdown — claros sobre fondo navy */
+/* Items del dropdown — misma familia tipográfica que nav-links desktop */
 body .navbar-nav .dropdown-menu .dropdown-item {
-    color: rgba(255,255,255,0.75) !important;
-    font-weight: 400 !important;
-    font-size: 0.93rem !important;
-    padding: 0.7rem 1.4rem !important;
+    color: rgba(255,255,255,0.78) !important;
+    font-weight: 500 !important;
+    font-size: 0.72rem !important;
+    letter-spacing: 0.07em !important;
+    text-transform: uppercase !important;
+    padding: 0.75rem 1.4rem !important;
     transition: all 0.2s ease !important;
 }
 
 body .navbar-nav .dropdown-menu .dropdown-item:hover {
     background: rgba(240, 202, 69, 0.12) !important;
-    color: #f0ca45 !important;
+    color: #d4af77 !important;
     padding-left: 1.7rem !important;
 }
 
