@@ -1,33 +1,26 @@
 /**
  * Módulo para la gestión del consentimiento de cookies
  * Implementa un banner de consentimiento GDPR/CCPA compatible,
- * con almacenamiento de preferencias y gestión de cookies.
- * 
- * @version 3.0
+ * con almacenamiento de preferencias granulares y gestión de cookies.
+ * * @version 3.1
  */
 
-// Configuración
 const CONFIG = {
   COOKIE_CONSENT_KEY: 'cookie-consent-v3',
   COOKIE_CONSENT_EXPIRY: 365, // días
   ANIMATION_DURATION: 500, // ms
   BANNER_DELAY: 1000, // ms para mostrar el banner
   ANNOUNCEMENT_DURATION: 3000, // ms para anuncios de accesibilidad
-  DEBUG: false // Modo de desarrollo
+  DEBUG: false
 };
 
-/**
- * Tipos de consentimiento posibles
- */
 const ConsentType = {
-  NONE: 'none',    // No se ha dado consentimiento
-  ESSENTIAL: 'essential', // Solo cookies esenciales
-  FULL: 'full'     // Todas las cookies (incluyendo analíticas y marketing)
+  NONE: 'none',
+  ESSENTIAL: 'essential',
+  PARTIAL: 'partial',
+  FULL: 'full'
 };
 
-/**
- * Categorías de cookies
- */
 const CookieCategory = {
   ESSENTIAL: 'essential',
   ANALYTICS: 'analytics',
@@ -37,83 +30,85 @@ const CookieCategory = {
 
 // Variables globales del módulo
 let currentConsentType = ConsentType.NONE;
+let allowedCategories = {
+  essential: true,
+  analytics: false,
+  marketing: false,
+  preferences: false
+};
+
 let cookieBanner = null;
 let preferencesPanel = null;
 let bannerVisible = false;
 
-/**
- * Inicializa el sistema de consentimiento de cookies
- * @returns {Object} API para gestionar el consentimiento
- */
 export function initCookieConsent() {
   try {
     log('Inicializando sistema de consentimiento de cookies');
     
-    // Obtener elementos DOM
     cookieBanner = document.getElementById('cookie-banner');
-    if (!cookieBanner) {
-      warn('Banner de cookies no encontrado en el DOM');
-      return createConsentAPI();
-    }
     
-    // Verificar si existe consentimiento previo
-    currentConsentType = getConsentStatus();
+    // 1. Establecer el estado 'default' de Google Consent Mode v2 inmediatamente
+    initializeDefaultConsent();
+
+    // 2. Verificar si ya existe consentimiento previo guardado
+    const savedConsent = getConsentStatus();
+    currentConsentType = savedConsent.type;
+    allowedCategories = savedConsent.categories;
     
-    // Configurar internacionalización
     setupI18n();
     
     if (currentConsentType === ConsentType.NONE) {
-      // Mostrar banner si no hay consentimiento previo
-      setupConsentBanner(cookieBanner);
+      if (cookieBanner) {
+        setupConsentBanner(cookieBanner);
+      } else {
+        warn('Banner de cookies no encontrado en el DOM');
+      }
     } else {
-      // Inicializar servicios según consentimiento existente
-      log(`Consentimiento existente: ${currentConsentType}`);
-      initializeServices(currentConsentType);
+      log(`Consentimiento existente: ${currentConsentType}`, allowedCategories);
+      applyConsentToServices(allowedCategories);
     }
     
-    // Añadir enlace para gestionar preferencias en la política de privacidad
     setupPreferencesLinks();
     
-    // Retornar API pública
     return createConsentAPI();
   } catch (error) {
-    error('Error al inicializar sistema de cookies:', error);
+    console.error('[Cookie Consent] Error al inicializar sistema de cookies:', error);
     return createConsentAPI();
   }
 }
 
 /**
- * Configura enlaces a preferencias de cookies en políticas de privacidad
+ * Inicializa Google Consent Mode v2 con valores denegados por defecto
  */
-function setupPreferencesLinks() {
-  try {
-    // Buscar enlaces con atributo data-cookie-preferences
-    const links = document.querySelectorAll('[data-cookie-preferences]');
-    
-    links.forEach(link => {
-      link.addEventListener('click', (e) => {
-        e.preventDefault();
-        openCookiePreferences();
-      });
+function initializeDefaultConsent() {
+  if (typeof gtag === 'function') {
+    gtag('consent', 'default', {
+      'analytics_storage': 'denied',
+      'ad_storage': 'denied',
+      'ad_user_data': 'denied',
+      'ad_personalization': 'denied',
+      'personalization_storage': 'denied',
+      'wait_for_update': 500
     });
-  } catch (err) {
-    error('Error al configurar enlaces de preferencias:', err);
+    log('Consent Mode v2 seteado por defecto: DENIED');
   }
 }
 
-/**
- * Configura el soporte para múltiples idiomas
- */
+function setupPreferencesLinks() {
+  const links = document.querySelectorAll('[data-cookie-preferences]');
+  links.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      openCookiePreferences();
+    });
+  });
+}
+
 function setupI18n() {
-  // Implementación básica que podría expandirse
   const lang = document.documentElement.lang || 'es';
   log(`Idioma detectado: ${lang}`);
 }
 
-/**
- * Configura el banner de consentimiento y sus controles
- * @param {HTMLElement} banner - Elemento del banner
- */
 function setupConsentBanner(banner) {
   try {
     const acceptButton = document.getElementById('accept-cookies');
@@ -124,85 +119,52 @@ function setupConsentBanner(banner) {
       return;
     }
     
-    // Configurar botones para accesibilidad
     acceptButton.setAttribute('aria-describedby', 'cookie-banner-description');
     rejectButton.setAttribute('aria-describedby', 'cookie-banner-description');
     
-    // Mostrar banner con animación después de un breve retraso
     setTimeout(() => {
       showBanner(banner);
     }, CONFIG.BANNER_DELAY);
     
-    // Configurar evento para botón de aceptar
+    // Aceptar Todo
     acceptButton.addEventListener('click', () => {
-      handleConsentChoice(ConsentType.FULL);
+      const fullCategories = { essential: true, analytics: true, marketing: true, preferences: true };
+      handleConsentChoice(ConsentType.FULL, fullCategories);
     });
     
-    // Configurar evento para botón de rechazar
+    // Rechazar Todo (Solo Esenciales)
     rejectButton.addEventListener('click', () => {
-      handleConsentChoice(ConsentType.ESSENTIAL);
+      const essentialCategories = { essential: true, analytics: false, marketing: false, preferences: false };
+      handleConsentChoice(ConsentType.ESSENTIAL, essentialCategories);
     });
     
-    // Gestión del foco para accesibilidad
     setupFocusTrap(banner);
-    
-    // Permitir escape para cerrar
     document.addEventListener('keydown', handleEscapeKey);
-    
-    log('Banner de consentimiento configurado');
   } catch (error) {
-    error('Error al configurar banner de cookies:', error);
+    console.error('[Cookie Consent] Error al configurar banner:', error);
   }
 }
 
-/**
- * Maneja la elección de consentimiento del usuario
- * @param {string} consentType - Tipo de consentimiento elegido
- */
-function handleConsentChoice(consentType) {
+function handleConsentChoice(consentType, categories) {
   try {
-    // Guardar preferencia
-    setConsentStatus(consentType);
+    saveConsentToStorage(consentType, categories);
+    
     currentConsentType = consentType;
+    allowedCategories = categories;
     
-    // Ocultar banner
     hideBanner(cookieBanner);
+    applyConsentToServices(categories);
     
-    // Inicializar servicios
-    initializeServices(consentType);
-    
-    // Anunciar para lectores de pantalla
-    announceToScreenReader(`Preferencias de cookies actualizadas: ${getConsentDescription(consentType)}`);
-    
-    log(`Usuario eligió: ${consentType}`);
+    announceToScreenReader(`Preferencias de cookies actualizadas.`);
+    log(`Usuario eligió tipo: ${consentType}`, categories);
   } catch (err) {
-    error('Error al procesar elección de consentimiento:', err);
+    console.error('[Cookie Consent] Error al procesar elección:', err);
   }
 }
 
-/**
- * Obtiene descripción del tipo de consentimiento
- * @param {string} consentType - Tipo de consentimiento
- * @returns {string} Descripción del consentimiento
- */
-function getConsentDescription(consentType) {
-  switch (consentType) {
-    case ConsentType.FULL:
-      return 'Todas las cookies aceptadas';
-    case ConsentType.ESSENTIAL:
-      return 'Solo cookies esenciales';
-    default:
-      return 'Sin preferencia definida';
-  }
-}
-
-/**
- * Configura una trampa de foco para el banner
- * @param {HTMLElement} banner - Elemento del banner
- */
-function setupFocusTrap(banner) {
+function setupFocusTrap(container) {
   try {
-    const focusableElements = banner.querySelectorAll(
+    const focusableElements = container.querySelectorAll(
       'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
     );
     
@@ -211,7 +173,6 @@ function setupFocusTrap(banner) {
     const firstElement = focusableElements[0];
     const lastElement = focusableElements[focusableElements.length - 1];
     
-    // Crear ciclo de foco
     lastElement.addEventListener('keydown', (e) => {
       if (e.key === 'Tab' && !e.shiftKey) {
         e.preventDefault();
@@ -226,112 +187,57 @@ function setupFocusTrap(banner) {
       }
     });
   } catch (err) {
-    error('Error al configurar trampa de foco:', err);
+    console.error('[Cookie Consent] Error en trampa de foco:', err);
   }
 }
 
-/**
- * Maneja la tecla Escape para cerrar el banner
- * @param {KeyboardEvent} e - Evento de teclado
- */
 function handleEscapeKey(e) {
   if (e.key === 'Escape' && bannerVisible) {
-    // Si presiona escape, elegir opciones esenciales por defecto
-    handleConsentChoice(ConsentType.ESSENTIAL);
+    const essentialCategories = { essential: true, analytics: false, marketing: false, preferences: false };
+    handleConsentChoice(ConsentType.ESSENTIAL, essentialCategories);
   }
 }
 
-/**
- * Muestra el banner con animación
- * @param {HTMLElement} banner - Elemento del banner
- */
 function showBanner(banner) {
-  try {
-    // Asegurar que el banner esté visible antes de la animación
-    banner.style.display = 'block';
-    banner.style.opacity = '0';
-    banner.style.transform = 'translateY(100%)';
-    
-    // Forzar reflow para asegurar que los cambios se apliquen
-    banner.offsetHeight;
-    
-    // Añadir clase para animar
-    banner.classList.add('visible');
-    bannerVisible = true;
-    
-    // Anunciar para lectores de pantalla
-    announceToScreenReader('Aviso importante sobre cookies y privacidad');
-    
-    // Enfocar primer botón para accesibilidad
-    setTimeout(() => {
-      const firstButton = banner.querySelector('button');
-      if (firstButton) firstButton.focus();
-    }, 100);
-    
-    log('Banner mostrado');
-  } catch (error) {
-    error('Error al mostrar banner:', error);
-  }
+  banner.style.display = 'block';
+  banner.style.opacity = '0';
+  banner.style.transform = 'translateY(100%)';
+  
+  banner.offsetHeight; // Reflow
+  
+  banner.classList.add('visible');
+  bannerVisible = true;
+  
+  announceToScreenReader('Aviso importante sobre cookies y privacidad');
+  
+  setTimeout(() => {
+    const firstButton = banner.querySelector('button');
+    if (firstButton) firstButton.focus();
+  }, 100);
 }
 
-/**
- * Oculta el banner con animación
- * @param {HTMLElement} banner - Elemento del banner
- */
 function hideBanner(banner) {
-  try {
-    // Configurar transición suave
-    banner.style.transition = `transform ${CONFIG.ANIMATION_DURATION}ms ease-in-out, opacity ${CONFIG.ANIMATION_DURATION}ms ease-in-out`;
-    
-    // Ocultar con animación
-    banner.classList.remove('visible');
-    bannerVisible = false;
-    
-    // Permitir que la animación termine antes de ocultar completamente
-    setTimeout(() => {
-      banner.style.display = 'none';
-      
-      // Devolver foco a elemento apropiado
-      returnFocusAfterBanner();
-    }, CONFIG.ANIMATION_DURATION);
-    
-    log('Banner ocultado');
-  } catch (error) {
-    error('Error al ocultar banner:', error);
-    
-    // Fallback si falla la animación
-    if (banner) {
-      banner.style.display = 'none';
-    }
-  }
+  if (!banner) return;
+  banner.style.transition = `transform ${CONFIG.ANIMATION_DURATION}ms ease-in-out, opacity ${CONFIG.ANIMATION_DURATION}ms ease-in-out`;
+  banner.classList.remove('visible');
+  bannerVisible = false;
+  
+  setTimeout(() => {
+    banner.style.display = 'none';
+    returnFocusAfterBanner();
+  }, CONFIG.ANIMATION_DURATION);
 }
 
-/**
- * Devuelve el foco después de cerrar el banner
- */
 function returnFocusAfterBanner() {
-  try {
-    // Buscar un elemento apropiado para devolver el foco
-    const mainContent = document.querySelector('main h1') || 
-                        document.querySelector('main') ||
-                        document.querySelector('body');
-    
-    if (mainContent && typeof mainContent.focus === 'function') {
-      mainContent.focus();
-    }
-  } catch (err) {
-    error('Error al devolver foco:', err);
+  const mainContent = document.querySelector('main h1') || document.querySelector('main') || document.body;
+  if (mainContent && typeof mainContent.focus === 'function') {
+    mainContent.focus();
   }
 }
 
-/**
- * Anuncia un mensaje para lectores de pantalla
- * @param {string} message - Mensaje a anunciar
- */
 function announceToScreenReader(message) {
   try {
     let ariaElement = document.getElementById('cookie-aria-live');
-    
     if (!ariaElement) {
       ariaElement = document.createElement('div');
       ariaElement.id = 'cookie-aria-live';
@@ -341,294 +247,139 @@ function announceToScreenReader(message) {
       document.body.appendChild(ariaElement);
     }
     
-    // Vaciar y luego añadir el nuevo mensaje
     ariaElement.textContent = '';
-    setTimeout(() => {
-      ariaElement.textContent = message;
-    }, 100);
-    
-    // Eliminar después de un tiempo
-    setTimeout(() => {
-      ariaElement.textContent = '';
-    }, CONFIG.ANNOUNCEMENT_DURATION);
+    setTimeout(() => { ariaElement.textContent = message; }, 100);
+    setTimeout(() => { ariaElement.textContent = ''; }, CONFIG.ANNOUNCEMENT_DURATION);
   } catch (error) {
-    error('Error al anunciar a lector de pantalla:', error);
+    console.error('[Cookie Consent] Error en aria-live:', error);
   }
 }
 
-/**
- * Guarda el estado de consentimiento en cookies y localStorage
- * @param {string} consentType - Tipo de consentimiento
- */
-function setConsentStatus(consentType) {
+function saveConsentToStorage(consentType, categories) {
   try {
-    // Crear objeto con información de consentimiento
     const consentData = {
       type: consentType,
+      categories: categories,
       timestamp: new Date().toISOString(),
-      version: '3.0'
+      version: '3.1'
     };
     
-    // Convertir a JSON
     const consentJson = JSON.stringify(consentData);
-    
-    // Guardar como cookie
     setCookie(CONFIG.COOKIE_CONSENT_KEY, consentJson, CONFIG.COOKIE_CONSENT_EXPIRY);
     
-    // También guardar en localStorage como respaldo
     try {
       localStorage.setItem(CONFIG.COOKIE_CONSENT_KEY, consentJson);
     } catch (e) {
-      warn('No se pudo guardar en localStorage', e);
+      warn('Storage bloqueado o lleno.');
     }
-    
-    // Actualizar la variable global
-    currentConsentType = consentType;
-    
-    log(`Consentimiento guardado: ${consentType}`);
     return true;
   } catch (error) {
-    error('Error al guardar consentimiento:', error);
+    console.error('[Cookie Consent] Error al guardar estructurado:', error);
     return false;
   }
 }
 
-/**
- * Obtiene el estado actual de consentimiento
- * @returns {string} Tipo de consentimiento
- */
 function getConsentStatus() {
+  const defaultFallback = {
+    type: ConsentType.NONE,
+    categories: { essential: true, analytics: false, marketing: false, preferences: false }
+  };
+
   try {
-    // Intentar leer desde cookie
     const cookieValue = getCookie(CONFIG.COOKIE_CONSENT_KEY);
-    
     if (cookieValue) {
-      try {
-        const data = JSON.parse(cookieValue);
-        return data.type || ConsentType.NONE;
-      } catch (e) {
-        warn('Error al parsear cookie JSON', e);
-        eraseCookie(CONFIG.COOKIE_CONSENT_KEY);
-        return ConsentType.NONE;
-      }
+      const data = JSON.parse(cookieValue);
+      if (data.categories) return data;
     }
     
-    // Si no hay cookie, intentar leer desde localStorage
-    try {
-      const localData = localStorage.getItem(CONFIG.COOKIE_CONSENT_KEY);
-      if (localData) {
-        const data = JSON.parse(localData);
-        
-        // Sincronizar con cookie por si acaso
+    const localData = localStorage.getItem(CONFIG.COOKIE_CONSENT_KEY);
+    if (localData) {
+      const data = JSON.parse(localData);
+      if (data.categories) {
         setCookie(CONFIG.COOKIE_CONSENT_KEY, localData, CONFIG.COOKIE_CONSENT_EXPIRY);
-        
-        return data.type || ConsentType.NONE;
+        return data;
       }
-    } catch (e) {
-      warn('Error al leer localStorage', e);
     }
-    
-    return ConsentType.NONE;
-  } catch (error) {
-    error('Error al obtener estado de consentimiento:', error);
-    return ConsentType.NONE;
+  } catch (e) {
+    warn('Error al parsear storage, aplicando fallback por defecto.');
   }
+  return defaultFallback;
 }
 
 /**
- * Inicializa servicios según el nivel de consentimiento
- * @param {string} consentType - Tipo de consentimiento
+ * Aplica de forma granular los permisos del usuario a las APIs de terceros
  */
-function initializeServices(consentType) {
+function applyConsentToServices(categories) {
   try {
-    // Siempre se cargan servicios esenciales
-    initializeEssentialServices();
-    
-    // Servicios adicionales si hay consentimiento completo
-    if (consentType === ConsentType.FULL) {
-      initializeMarketingServices();
-      initializeAnalyticsServices();
-      initializePreferencesServices();
-    }
-    
-    log(`Servicios inicializados para tipo: ${consentType}`);
-  } catch (error) {
-    error('Error al inicializar servicios:', error);
-  }
-}
-
-/**
- * Inicializa servicios esenciales (siempre permitidos)
- */
-function initializeEssentialServices() {
-  try {
-    // Implementar lógica para servicios esenciales
-    log('Servicios esenciales inicializados');
-  } catch (err) {
-    error('Error al inicializar servicios esenciales:', err);
-  }
-}
-
-/**
- * Inicializa servicios de analítica (solo con consentimiento completo)
- */
-function initializeAnalyticsServices() {
-  try {
-    // Google Analytics 4 (gtag)
     if (typeof gtag === 'function') {
       gtag('consent', 'update', {
-        'analytics_storage': 'granted'
+        'analytics_storage': categories.analytics ? 'granted' : 'denied',
+        'ad_storage': categories.marketing ? 'granted' : 'denied',
+        'ad_user_data': categories.marketing ? 'granted' : 'denied',
+        'ad_personalization': categories.marketing ? 'granted' : 'denied',
+        'personalization_storage': categories.preferences ? 'granted' : 'denied'
       });
-      log('Google Analytics inicializado (gtag)');
-    }
-    
-    // Google Analytics (analytics.js legacy)
-    if (typeof ga === 'function') {
-      ga('set', 'anonymizeIp', false);
-      log('Google Analytics inicializado (analytics.js)');
-    }
-    
-    log('Servicios de analítica inicializados');
-  } catch (err) {
-    error('Error al inicializar servicios de analítica:', err);
-  }
-}
-
-/**
- * Inicializa servicios de marketing (solo con consentimiento completo)
- */
-function initializeMarketingServices() {
-  try {
-    // Google Ads y marketing (actualizado para cumplir con Google Consent Mode v2)
-    if (typeof gtag === 'function') {
-      gtag('consent', 'update', {
-        'ad_storage': 'granted',
-        'ad_user_data': 'granted',
-        'ad_personalization': 'granted',
-        'personalization_storage': 'granted'
-      });
-      log('Servicios de Google Ads inicializados (gtag)');
+      log('Google Consent Mode v2 actualizado de forma granular:', categories);
     }
 
-    // Facebook Pixel
     if (typeof fbq === 'function') {
-      fbq('consent', 'grant');
-      log('Facebook Pixel inicializado');
+      fbq('consent', categories.marketing ? 'grant' : 'revoke');
+      log('Facebook Pixel consent actualizado:', categories.marketing);
     }
-
-    log('Servicios de marketing inicializados');
   } catch (err) {
-    error('Error al inicializar servicios de marketing:', err);
+    console.error('[Cookie Consent] Error aplicando tags granulares:', err);
   }
 }
 
-/**
- * Inicializa servicios de preferencias (solo con consentimiento completo)
- */
-function initializePreferencesServices() {
-  try {
-    // Servicios de personalización
-    log('Servicios de preferencias inicializados');
-  } catch (err) {
-    error('Error al inicializar servicios de preferencias:', err);
-  }
-}
-
-/**
- * Establece una cookie con los parámetros especificados
- * @param {string} name - Nombre de la cookie
- * @param {string} value - Valor de la cookie
- * @param {number} days - Días de validez
- */
 function setCookie(name, value, days) {
-  try {
-    let expires = '';
-    
-    if (days) {
-      const date = new Date();
-      date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-      expires = '; expires=' + date.toUTCString();
-    }
-    
-    // Establecer cookie segura con samesite
-    document.cookie = name + '=' + encodeURIComponent(value) + 
-      expires + '; path=/; samesite=lax; secure';
-    
-    return true;
-  } catch (error) {
-    error('Error al establecer cookie:', error);
-    return false;
+  let expires = '';
+  if (days) {
+    const date = new Date();
+    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+    expires = '; expires=' + date.toUTCString();
   }
+  document.cookie = name + '=' + encodeURIComponent(value) + expires + '; path=/; samesite=lax; secure';
+  return true;
 }
 
-/**
- * Obtiene el valor de una cookie por su nombre
- * @param {string} name - Nombre de la cookie
- * @returns {string|null} Valor de la cookie o null
- */
 function getCookie(name) {
-  try {
-    const nameEQ = name + '=';
-    const ca = document.cookie.split(';');
-    
-    for (let i = 0; i < ca.length; i++) {
-      let c = ca[i];
-      while (c.charAt(0) === ' ') c = c.substring(1, c.length);
-      if (c.indexOf(nameEQ) === 0) {
-        return decodeURIComponent(c.substring(nameEQ.length, c.length));
-      }
-    }
-    
-    return null;
-  } catch (error) {
-    error('Error al leer cookie:', error);
-    return null;
+  const nameEQ = name + '=';
+  const ca = document.cookie.split(';');
+  for (let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+    if (c.indexOf(nameEQ) === 0) return decodeURIComponent(c.substring(nameEQ.length, c.length));
   }
+  return null;
 }
 
-/**
- * Elimina una cookie por su nombre
- * @param {string} name - Nombre de la cookie
- * @returns {boolean} Resultado de la operación
- */
 function eraseCookie(name) {
-  try {
-    document.cookie = name + '=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT; samesite=lax; secure';
-    return true;
-  } catch (err) {
-    error('Error al eliminar cookie:', err);
-    return false;
-  }
+  document.cookie = name + '=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT; samesite=lax; secure';
+  return true;
 }
 
-/**
- * Abre un panel de preferencias de cookies
- * @returns {HTMLElement|null} Elemento del panel o null si hay error
- */
 export function openCookiePreferences() {
   try {
-    // Si ya existe un panel abierto, devolverlo
     if (preferencesPanel && document.body.contains(preferencesPanel)) {
       preferencesPanel.style.display = 'flex';
       focusPreferencesPanel();
       return preferencesPanel;
     }
     
-    // Crear modal de preferencias
     preferencesPanel = document.createElement('div');
     preferencesPanel.className = 'cookie-preferences-modal';
     preferencesPanel.setAttribute('role', 'dialog');
     preferencesPanel.setAttribute('aria-modal', 'true');
     preferencesPanel.setAttribute('aria-labelledby', 'cookie-prefs-title');
     
-    // Obtener consentimiento actual
-    const currentConsent = getConsentStatus();
+    // Obtener las categorías que están permitidas actualmente
+    const currentStatus = getConsentStatus();
+    const cats = currentStatus.categories;
     
-    // Contenido del panel
     preferencesPanel.innerHTML = `
       <div class="cookie-preferences-content">
         <h2 id="cookie-prefs-title">Preferencias de Cookies</h2>
-        <p>Ajuste sus preferencias de privacidad</p>
+        <p>Ajuste sus preferencias de privacidad de forma individual</p>
         
         <div class="cookie-options">
           <div class="cookie-option">
@@ -638,21 +389,21 @@ export function openCookiePreferences() {
           </div>
           
           <div class="cookie-option">
-            <input type="checkbox" id="analytics-cookies" ${currentConsent === ConsentType.FULL ? 'checked' : ''}>
+            <input type="checkbox" id="analytics-cookies" ${cats.analytics ? 'checked' : ''}>
             <label for="analytics-cookies">Cookies Analíticas</label>
-            <p>Nos ayudan a entender cómo utiliza el sitio.</p>
+            <p>Nos ayudan a entender cómo utiliza el sitio de forma anónima.</p>
           </div>
           
           <div class="cookie-option">
-            <input type="checkbox" id="marketing-cookies" ${currentConsent === ConsentType.FULL ? 'checked' : ''}>
+            <input type="checkbox" id="marketing-cookies" ${cats.marketing ? 'checked' : ''}>
             <label for="marketing-cookies">Cookies de Marketing</label>
-            <p>Utilizadas para personalizar anuncios.</p>
+            <p>Utilizadas para medir el rendimiento de anuncios de Google Ads.</p>
           </div>
           
           <div class="cookie-option">
-            <input type="checkbox" id="preferences-cookies" ${currentConsent === ConsentType.FULL ? 'checked' : ''}>
+            <input type="checkbox" id="preferences-cookies" ${cats.preferences ? 'checked' : ''}>
             <label for="preferences-cookies">Cookies de Preferencias</label>
-            <p>Guardan sus preferencias de navegación.</p>
+            <p>Guardan configuraciones de personalización del sitio.</p>
           </div>
         </div>
         
@@ -664,246 +415,133 @@ export function openCookiePreferences() {
     `;
     
     document.body.appendChild(preferencesPanel);
-    
-    // Configurar eventos
     setupPreferencesEvents(preferencesPanel);
     
-    // Mostrar con animación
     setTimeout(() => {
       preferencesPanel.classList.add('visible');
       focusPreferencesPanel();
     }, 10);
     
-    log('Panel de preferencias abierto');
     return preferencesPanel;
   } catch (error) {
-    error('Error al abrir panel de preferencias:', error);
+    console.error('[Cookie Consent] Error abriendo panel:', error);
     return null;
   }
 }
 
-/**
- * Enfoca el primer elemento del panel de preferencias
- */
 function focusPreferencesPanel() {
-  try {
-    if (!preferencesPanel) return;
-    
-    // Enfocar primer elemento interactivo
-    const firstFocusable = preferencesPanel.querySelector('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
-    if (firstFocusable) {
-      firstFocusable.focus();
-    }
-  } catch (err) {
-    error('Error al enfocar panel:', err);
-  }
+  if (!preferencesPanel) return;
+  const firstFocusable = preferencesPanel.querySelector('button, input:not([disabled])');
+  if (firstFocusable) firstFocusable.focus();
 }
 
-/**
- * Configura eventos del panel de preferencias
- * @param {HTMLElement} panel - Panel de preferencias
- */
 function setupPreferencesEvents(panel) {
   try {
     const saveButton = panel.querySelector('#save-preferences');
     const closeButton = panel.querySelector('#close-preferences');
-    const analyticsCheckbox = panel.querySelector('#analytics-cookies');
-    const marketingCheckbox = panel.querySelector('#marketing-cookies');
-    const preferencesCheckbox = panel.querySelector('#preferences-cookies');
     
-    // Sincronizar checkboxes
-    const syncCheckboxes = (checked) => {
-      if (analyticsCheckbox) analyticsCheckbox.checked = checked;
-      if (marketingCheckbox) marketingCheckbox.checked = checked;
-      if (preferencesCheckbox) preferencesCheckbox.checked = checked;
-    };
-    
-    // Guardar preferencias
     if (saveButton) {
       saveButton.addEventListener('click', () => {
-        const allAccepted = (analyticsCheckbox && analyticsCheckbox.checked) ||
-                           (marketingCheckbox && marketingCheckbox.checked) ||
-                           (preferencesCheckbox && preferencesCheckbox.checked);
+        const analyticsChecked = !!panel.querySelector('#analytics-cookies')?.checked;
+        const marketingChecked = !!panel.querySelector('#marketing-cookies')?.checked;
+        const preferencesChecked = !!panel.querySelector('#preferences-cookies')?.checked;
         
-        const newConsentType = allAccepted ? ConsentType.FULL : ConsentType.ESSENTIAL;
+        const newCategories = {
+          essential: true,
+          analytics: analyticsChecked,
+          marketing: marketingChecked,
+          preferences: preferencesChecked
+        };
         
-        // Guardar consentimiento
-        setConsentStatus(newConsentType);
+        // Determinar el nivel de consentimiento en base a una evaluación real (AND)
+        let newType = ConsentType.PARTIAL;
+        if (analyticsChecked && marketingChecked && preferencesChecked) {
+          newType = ConsentType.FULL;
+        } else if (!analyticsChecked && !marketingChecked && !preferencesChecked) {
+          newType = ConsentType.ESSENTIAL;
+        }
         
-        // Inicializar servicios según nuevo consentimiento
-        initializeServices(newConsentType);
-        
-        // Anunciar para lectores de pantalla
-        announceToScreenReader(`Preferencias guardadas: ${getConsentDescription(newConsentType)}`);
-        
-        // Cerrar panel
+        handleConsentChoice(newType, newCategories);
         closePreferencesPanel();
       });
     }
     
-    // Cerrar sin guardar
     if (closeButton) {
-      closeButton.addEventListener('click', () => {
-        closePreferencesPanel();
-      });
+      closeButton.addEventListener('click', () => closePreferencesPanel());
     }
     
-    // Cerrar con escape
     panel.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        closePreferencesPanel();
-      }
+      if (e.key === 'Escape') closePreferencesPanel();
     });
     
-    // Configurar trampa de foco
     setupFocusTrap(panel);
     
-    // Cerrar al hacer clic fuera
     panel.addEventListener('click', (e) => {
-      if (e.target === panel) {
-        closePreferencesPanel();
-      }
+      if (e.target === panel) closePreferencesPanel();
     });
-    
-    log('Eventos del panel de preferencias configurados');
   } catch (error) {
-    error('Error al configurar eventos del panel:', error);
+    console.error('[Cookie Consent] Error al enlazar eventos de modal:', error);
   }
 }
 
-/**
- * Cierra el panel de preferencias
- */
 function closePreferencesPanel() {
-  try {
-    if (!preferencesPanel) return;
-    
-    // Ocultar con animación
-    preferencesPanel.classList.remove('visible');
-    
-    // Remover después de la animación
-    setTimeout(() => {
-      if (preferencesPanel && preferencesPanel.parentNode) {
-        preferencesPanel.parentNode.removeChild(preferencesPanel);
-        preferencesPanel = null;
-        
-        // Devolver foco
-        returnFocusAfterPreferences();
-      }
-    }, CONFIG.ANIMATION_DURATION);
-    
-    log('Panel de preferencias cerrado');
-  } catch (error) {
-    error('Error al cerrar panel de preferencias:', error);
-    
-    // Fallback para asegurar que se cierre
+  if (!preferencesPanel) return;
+  preferencesPanel.classList.remove('visible');
+  setTimeout(() => {
     if (preferencesPanel && preferencesPanel.parentNode) {
       preferencesPanel.parentNode.removeChild(preferencesPanel);
       preferencesPanel = null;
+      returnFocusAfterPreferences();
     }
-  }
+  }, CONFIG.ANIMATION_DURATION);
 }
 
-/**
- * Devuelve el foco después de cerrar el panel de preferencias
- */
 function returnFocusAfterPreferences() {
-  try {
-    // El elemento que debería recibir el foco
-    const mainElement = document.querySelector('[data-cookie-preferences]') || 
-                        document.querySelector('main') ||
-                        document.body;
-    
-    if (mainElement && typeof mainElement.focus === 'function') {
-      mainElement.focus();
-    }
-  } catch (err) {
-    error('Error al devolver foco después de preferencias:', err);
-  }
+  const mainElement = document.querySelector('[data-cookie-preferences]') || document.body;
+  if (mainElement && typeof mainElement.focus === 'function') mainElement.focus();
 }
 
-/**
- * Crea un API público para gestionar el consentimiento
- * @returns {Object} API de consentimiento
- */
 function createConsentAPI() {
   return {
-    /**
-     * Obtiene el estado actual de consentimiento
-     * @returns {string} Tipo de consentimiento
-     */
     getConsent: () => currentConsentType,
-    
-    /**
-     * Actualiza el consentimiento manualmente
-     * @param {string} consentType - Tipo de consentimiento
-     * @returns {boolean} Resultado de la operación
-     */
-    updateConsent: (consentType) => {
-      if (!Object.values(ConsentType).includes(consentType)) {
-        error(`Tipo de consentimiento inválido: ${consentType}`);
-        return false;
+    getAllowedCategories: () => ({ ...allowedCategories }),
+    updateConsent: (consentType, customCategories = null) => {
+      let cats = customCategories;
+      if (!cats) {
+        cats = consentType === ConsentType.FULL 
+          ? { essential: true, analytics: true, marketing: true, preferences: true }
+          : { essential: true, analytics: false, marketing: false, preferences: false };
       }
-      
-      setConsentStatus(consentType);
-      initializeServices(consentType);
+      saveConsentToStorage(consentType, cats);
+      applyConsentToServices(cats);
+      currentConsentType = consentType;
+      allowedCategories = cats;
       return true;
     },
-    
-    /**
-     * Abre el panel de preferencias
-     * @returns {HTMLElement|null} Panel o null si hay error
-     */
     openPreferences: openCookiePreferences,
-    
-    /**
-     * Verifica si una categoría tiene consentimiento
-     * @param {string} category - Categoría a verificar
-     * @returns {boolean} Si la categoría tiene consentimiento
-     */
     hasConsent: (category) => {
-      // Esenciales siempre tienen consentimiento
       if (category === CookieCategory.ESSENTIAL) return true;
-      
-      // Para otras categorías, necesita consentimiento completo
-      return currentConsentType === ConsentType.FULL;
+      return !!allowedCategories[category];
     },
-    
-    /**
-     * Elimina todos los datos de consentimiento
-     * @returns {boolean} Resultado de la operación
-     */
     reset: () => {
       try {
         eraseCookie(CONFIG.COOKIE_CONSENT_KEY);
         localStorage.removeItem(CONFIG.COOKIE_CONSENT_KEY);
         currentConsentType = ConsentType.NONE;
-        
-        // Mostrar banner nuevamente
-        if (cookieBanner) {
-          setupConsentBanner(cookieBanner);
-        }
-        
+        allowedCategories = { essential: true, analytics: false, marketing: false, preferences: false };
+        if (cookieBanner) setupConsentBanner(cookieBanner);
         return true;
       } catch (err) {
-        error('Error al resetear consentimiento:', err);
         return false;
       }
     }
   };
 }
 
-// Funciones de logging
 function log(...args) {
-  if (CONFIG.DEBUG) {
-    console.log('[Cookie Consent]', ...args);
-  }
+  if (CONFIG.DEBUG) console.log('[Cookie Consent]', ...args);
 }
 
 function warn(...args) {
   console.warn('[Cookie Consent]', ...args);
-}
-
-function error(...args) {
-  console.error('[Cookie Consent]', ...args);
 }

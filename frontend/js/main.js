@@ -1,6 +1,6 @@
 // main.js - Archivo principal moderno usando ES Modules
 import { initNavbar } from './modules/navbar.js';
-import { initThemeSystem } from './modules/themeEnhanced.js'; // Usa la versión mejorada
+import { initThemeSystem } from './modules/themeEnhanced.js';
 import { initSliders } from './modules/sliders.js';
 import { initTestimonials } from './modules/testimonials.js';
 import { initContactForm } from './modules/contactForm.js';
@@ -9,10 +9,9 @@ import { initCookieConsent } from './modules/cookies.js';
 import { initLazyLoad } from './modules/lazyLoad.js';
 import { initModalLinks } from './modules/modalLinks.js';
 import { initEmergencyBanner } from './modules/emergencyBanner.js';
-import LogoManager from './modules/logoModule.js'; // Importar la clase LogoManager
-import { initSmoothScroll } from './modules/smoothScroll.js'; // Scroll suave con fallback Safari
-import { initAnalytics } from './modules/analytics.js'; // Analytics y tracking de Google Ads
-
+import LogoManager from './modules/logoModule.js';
+import { initSmoothScroll } from './modules/smoothScroll.js';
+import { initAnalytics } from './modules/analytics.js';
 
 /**
  * Inicialización de la aplicación con patrones modernos de rendimiento
@@ -21,65 +20,54 @@ class App {
   constructor() {
     // Registro de componentes
     this.components = [
-      { name: 'navbar', priority: 'critical', init: initNavbar },
-      { name: 'smoothScroll', priority: 'critical', init: initSmoothScroll }, // Scroll suave con fallback
-      { name: 'contactForm', priority: 'critical', init: initContactForm }, // CRÍTICO: debe estar listo antes de cualquier interacción
-      { name: 'theme', priority: 'high', init: initThemeSystem },
-      { name: 'analytics', priority: 'high', init: initAnalytics }, // Analytics y conversiones de Google Ads
-      { name: 'lazyLoad', priority: 'high', init: initLazyLoad },
-      { name: 'cookies', priority: 'high', init: initCookieConsent },
-      { name: 'sliders', priority: 'medium', init: initSliders, selector: '.slider-area' },
-      { name: 'testimonials', priority: 'medium', init: initTestimonials, selector: '#comentarios-clientes' },
-      { name: 'animations', priority: 'low', init: initScrollAnimations },
-      { name: 'emergencyBanner', priority: 'critical', init: initEmergencyBanner },
-      { name: 'modalLinks', priority: 'high', init: initModalLinks },
+      { name: 'navbar', priority: 'critical', init: initNavbar, initialized: false },
+      { name: 'smoothScroll', priority: 'critical', init: initSmoothScroll, initialized: false },
+      { name: 'contactForm', priority: 'critical', init: initContactForm, initialized: false },
+      { name: 'theme', priority: 'high', init: initThemeSystem, initialized: false },
+      { name: 'analytics', priority: 'high', init: initAnalytics, initialized: false },
+      { name: 'lazyLoad', priority: 'high', init: initLazyLoad, initialized: false },
+      { name: 'cookies', priority: 'high', init: initCookieConsent, initialized: false },
+      { name: 'sliders', priority: 'medium', init: initSliders, selector: '.slider-area', initialized: false },
+      { name: 'testimonials', priority: 'medium', init: initTestimonials, selector: '#comentarios-clientes', initialized: false },
+      { name: 'animations', priority: 'low', init: initScrollAnimations, initialized: false },
+      { name: 'emergencyBanner', priority: 'critical', init: initEmergencyBanner, initialized: false },
+      { name: 'modalLinks', priority: 'high', init: initModalLinks, initialized: false },
       {
         name: 'logo',
         priority: 'high',
+        initialized: false,
         init: () => {
-          // Inicializar LogoManager con constructor
           this.logoManager = new LogoManager();
           return this.logoManager;
         }
       }
     ];
     
-    // Métricas de rendimiento
     this.metrics = { 
       startTime: performance.now(),
       componentsLoaded: 0
     };
     
-    // Iniciar aplicación
     this.init();
   }
   
-  /**
-   * Inicialización optimizada para rendimiento
-   */
   init() {
-    // Registrar tiempo de carga
     document.addEventListener('DOMContentLoaded', () => {
       this.metrics.domContentLoaded = performance.now() - this.metrics.startTime;
 
-      // CRÍTICO: Esperar a que Bootstrap esté completamente inicializado
       this.waitForBootstrap().then(() => {
         console.log('[App] Bootstrap listo, inicializando componentes...');
 
-        // Iniciar componentes críticos después de Bootstrap
         this.initCriticalComponents();
 
-        // Iniciar componentes de alta prioridad
         if ('requestIdleCallback' in window) {
           requestIdleCallback(() => this.initHighPriorityComponents(), { timeout: 500 });
         } else {
           setTimeout(() => this.initHighPriorityComponents(), 50);
         }
 
-        // Iniciar componentes basados en visibilidad (bajo el pliegue)
         this.initVisibilityBasedComponents();
 
-        // Iniciar componentes de baja prioridad
         if ('requestIdleCallback' in window) {
           requestIdleCallback(() => this.initLowPriorityComponents(), { timeout: 2000 });
         } else {
@@ -87,7 +75,6 @@ class App {
         }
       });
 
-      // Registrar tiempo de carga completa
       window.addEventListener('load', () => {
         this.metrics.windowLoaded = performance.now() - this.metrics.startTime;
         this.logPerformance();
@@ -95,21 +82,15 @@ class App {
     });
   }
 
-  /**
-   * Espera a que Bootstrap esté completamente cargado e inicializado
-   * @returns {Promise} Resuelve cuando Bootstrap está listo
-   */
   async waitForBootstrap() {
     return new Promise((resolve) => {
-      // Verificar si Bootstrap ya está disponible
       if (typeof window.bootstrap !== 'undefined' && window.bootstrap.Collapse) {
         resolve();
         return;
       }
 
-      // Si no, esperar hasta que esté disponible (máximo 5 intentos)
       let attempts = 0;
-      const maxAttempts = 50; // 50 * 100ms = 5 segundos máximo
+      const maxAttempts = 50; 
       const checkInterval = setInterval(() => {
         attempts++;
 
@@ -126,43 +107,19 @@ class App {
     });
   }
   
-  /**
-   * Inicializar componentes críticos para la experiencia inicial
-   */
   initCriticalComponents() {
     this.components
       .filter(component => component.priority === 'critical')
-      .forEach(component => {
-        try {
-          component.init();
-          this.metrics.componentsLoaded++;
-        } catch (error) {
-          console.error(`Error al inicializar componente crítico "${component.name}":`, error);
-        }
-      });
+      .forEach(component => this.safeInit(component));
   }
   
-  /**
-   * Inicializar componentes de alta prioridad
-   */
   initHighPriorityComponents() {
     this.components
       .filter(component => component.priority === 'high')
-      .forEach(component => {
-        try {
-          component.init();
-          this.metrics.componentsLoaded++;
-        } catch (error) {
-          console.error(`Error al inicializar componente "${component.name}":`, error);
-        }
-      });
+      .forEach(component => this.safeInit(component));
   }
   
-  /**
-   * Inicializar componentes basados en visibilidad
-   */
   initVisibilityBasedComponents() {
-    // Crear un IntersectionObserver para componentes que se cargan cuando son visibles
     const componentsToObserve = this.components.filter(component => 
       component.priority === 'medium' && component.selector
     );
@@ -173,17 +130,14 @@ class App {
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
-            // Encontrar el componente correspondiente
             const component = componentsToObserve.find(comp => 
               entry.target.matches(comp.selector)
             );
             
             if (component) {
-              try {
-                component.init();
-                this.metrics.componentsLoaded++;
-              } catch (error) {
-                console.error(`Error al inicializar componente "${component.name}":`, error);
+              // Modificación para evitar doble inicialización si hay múltiples selectores iguales
+              if (!component.initialized) {
+                this.safeInit(component);
               }
               observer.unobserve(entry.target);
             }
@@ -191,48 +145,41 @@ class App {
         });
       }, { 
         threshold: 0,
-        rootMargin: '200px 0px' // Carga anticipada
+        rootMargin: '200px 0px' 
       });
       
-      // Observar elementos para cada componente
       componentsToObserve.forEach(component => {
         const elements = document.querySelectorAll(component.selector);
         elements.forEach(element => observer.observe(element));
       });
     } else {
-      // Fallback para navegadores sin IntersectionObserver
+      // Fallback
       setTimeout(() => {
-        componentsToObserve.forEach(component => {
-          try {
-            component.init();
-            this.metrics.componentsLoaded++;
-          } catch (error) {
-            console.error(`Error al inicializar componente "${component.name}":`, error);
-          }
-        });
+        componentsToObserve.forEach(component => this.safeInit(component));
       }, 500);
     }
   }
   
-  /**
-   * Inicializar componentes de baja prioridad
-   */
   initLowPriorityComponents() {
     this.components
       .filter(component => component.priority === 'low')
-      .forEach(component => {
-        try {
-          component.init();
-          this.metrics.componentsLoaded++;
-        } catch (error) {
-          console.error(`Error al inicializar componente "${component.name}":`, error);
-        }
-      });
+      .forEach(component => this.safeInit(component));
+  }
+
+  /**
+   * Encapsula la inicialización de forma segura evitando duplicados
+   */
+  safeInit(component) {
+    if (component.initialized) return;
+    try {
+      component.init();
+      component.initialized = true;
+      this.metrics.componentsLoaded++;
+    } catch (error) {
+      console.error(`Error al inicializar componente "${component.name}":`, error);
+    }
   }
   
-  /**
-   * Registrar métricas de rendimiento
-   */
   logPerformance() {
     console.log('Métricas de rendimiento:', {
       'DOM Content Loaded': `${Math.round(this.metrics.domContentLoaded)}ms`,
@@ -242,11 +189,8 @@ class App {
   }
 }
 
-// Iniciar la aplicación
 const app = new App();
 
-// Exponer app en window para debugging en desarrollo
-// Comprobación de entorno segura para navegador
 const isDevelopment = 
   (typeof window !== 'undefined' && window.location && 
    (window.location.hostname === 'localhost' || 

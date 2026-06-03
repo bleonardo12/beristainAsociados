@@ -43,6 +43,26 @@
 
     /* Transiciones */
     --transition: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* ========== MODO OSCURO (Sobreescritura de variables) ========== */
+.dark-theme {
+    --primary: #E8D5B7;
+    --primary-light: #F5EBD9;
+    --primary-dark: #D4AF77;
+    
+    --secondary: #2C3E50;
+    --secondary-light: #1A252F;
+    
+    --accent: #D4AF77;
+    --accent-light: #5D6D7E;
+
+    --neutral-white: #121212;
+    --neutral-100: #1A1A1A;
+    --neutral-200: #2C2C2C;
+    --neutral-300: #404040;
+    --neutral-600: #A0A0A0;
+    --neutral-700: #E0E0E0;
+}
 }
 
 /* ========== RESET Y BASE ========== */

@@ -1,4 +1,3 @@
-
 /**
  * API Client para Backend Beristain & Asociados
  * Maneja toda la comunicación con el backend
@@ -31,6 +30,11 @@ const API = {
     getUser() {
         const user = localStorage.getItem('auth_user');
         return user ? JSON.parse(user) : null;
+    },
+
+    // Remover usuario
+    removeUser() {
+        localStorage.removeItem('auth_user');
     },
     
     // Verificar si está autenticado
@@ -71,14 +75,19 @@ const API = {
         } catch (error) {
             console.error('API Error:', error);
             
-            // Si es error de autenticación, limpiar token
+            // Si es error de autenticación, limpiar credenciales de forma segura
             if (error.message.includes('token') || error.message.includes('autenticación')) {
-                this.removeToken();
-                localStorage.removeItem('auth_user');
+                this.clearAuth();
             }
             
             throw error;
         }
+    },
+
+    // Centraliza la limpieza de credenciales
+    clearAuth() {
+        this.removeToken();
+        this.removeUser();
     },
     
     // AUTH ENDPOINTS
@@ -99,8 +108,7 @@ const API = {
         },
         
         async logout() {
-            API.removeToken();
-            localStorage.removeItem('auth_user');
+            API.clearAuth();
             window.location.href = '/login.html';
         },
         
@@ -197,7 +205,7 @@ const API = {
 };
 
 // Verificar autenticación en páginas protegidas
-function requireAuth() {
+export function requireAuth() {
     if (!API.isAuthenticated()) {
         window.location.href = '/login.html';
         return false;
@@ -206,7 +214,7 @@ function requireAuth() {
 }
 
 // Mostrar información del usuario en el navbar
-function displayUserInfo() {
+export function displayUserInfo() {
     const user = API.getUser();
     if (user) {
         const userNameElement = document.getElementById('userName');
@@ -215,3 +223,6 @@ function displayUserInfo() {
         }
     }
 }
+
+// Exportación por defecto para usar como: import API from './api.js'
+export default API;

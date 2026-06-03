@@ -1,49 +1,84 @@
 /**
  * Módulo para el banner de emergencia de servicios penales 24h
+ * Optimizado para rendimiento, accesibilidad (A11Y) y control de flujo limpio.
+ * * @version 1.1
  */
 
 export function initEmergencyBanner() {
-    const emergencyBanner = document.getElementById('emergency-banner');
-    const closeButton = document.getElementById('close-emergency-banner');
+  const emergencyBanner = document.getElementById('emergency-banner');
+  const closeButton = document.getElementById('close-emergency-banner');
 
-    console.log('[EmergencyBanner] Inicializando...', { emergencyBanner, closeButton });
+  if (!emergencyBanner || !closeButton) {
+    console.warn('[EmergencyBanner] Elementos del banner no encontrados en el DOM.');
+    return;
+  }
 
-    if (emergencyBanner && closeButton) {
-      // Asegurar que el botón sea clickeable forzando estilos
-      closeButton.style.pointerEvents = 'all';
-      closeButton.style.cursor = 'pointer';
-      closeButton.style.zIndex = '99999';
-      closeButton.style.position = 'absolute';
+  console.log('[EmergencyBanner] Inicializando módulo...');
 
-      // Agregar múltiples event listeners para asegurar que funcione
-      closeButton.addEventListener('click', handleClose, true);
-      closeButton.addEventListener('touchend', handleClose, true);
-      closeButton.addEventListener('mouseup', handleClose, true);
+  // 1. Verificar el estado de la sesión antes de mostrar el banner
+  const isClosedInSession = sessionStorage.getItem('emergencyBannerClosed') === 'true';
 
-      function handleClose(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        console.log('[EmergencyBanner] Botón X clickeado!');
+  if (isClosedInSession) {
+    emergencyBanner.classList.remove('visible');
+    emergencyBanner.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('has-emergency-banner');
+  } else {
+    emergencyBanner.classList.add('visible');
+    emergencyBanner.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('has-emergency-banner');
+  }
 
-        emergencyBanner.classList.remove('visible');
-        emergencyBanner.style.display = 'none';
-        document.body.classList.remove('has-emergency-banner');
+  // 2. Manejador de cierre unificado y limpio
+  function closeBanner() {
+    console.log('[EmergencyBanner] Cerrando banner de emergencia...');
 
-        // Guardar en sessionStorage para que no vuelva a aparecer en esta sesión
-        sessionStorage.setItem('emergencyBannerClosed', 'true');
-      }
+    emergencyBanner.classList.remove('visible');
+    emergencyBanner.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('has-emergency-banner');
 
-      // Log para verificar que el event listener se registró
-      console.log('[EmergencyBanner] Event listeners registrados correctamente');
+    // Persistir la elección en la sesión del usuario
+    sessionStorage.setItem('emergencyBannerClosed', 'true');
 
-      // Verificar si ya lo cerró en esta sesión
-      if (!sessionStorage.getItem('emergencyBannerClosed')) {
-        emergencyBanner.classList.add('visible');
-        document.body.classList.add('has-emergency-banner');
-      } else {
-        emergencyBanner.style.display = 'none';
-      }
-    } else {
-      console.error('[EmergencyBanner] No se encontró el banner o el botón en el DOM');
+    // Devolver el foco a la página por accesibilidad
+    document.body.focus();
+
+    // Limpiar el evento global de teclado
+    document.removeEventListener('keydown', handleEscapeKey);
+  }
+
+  // 3. Callback del evento click (maneja móviles y desktop de forma nativa)
+  function handleCloseEvent(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    closeBanner();
+  }
+
+  // 4. Soporte para cerrar con la tecla Escape
+  function handleEscapeKey(e) {
+    if (e.key === 'Escape' && emergencyBanner.classList.contains('visible')) {
+      closeBanner();
     }
   }
+
+  // 5. Registro de Event Listeners (Unificados)
+  // El evento 'click' nativo es completamente seguro en mobile hoy en día sin demoras (delay) de 300ms
+  closeButton.addEventListener('click', handleCloseEvent);
+  document.addEventListener('keydown', handleEscapeKey);
+
+  // Asegurar semántica mínima de accesibilidad al botón si es un tag <a> o <div>
+  if (closeButton.tagName !== 'BUTTON') {
+    closeButton.setAttribute('role', 'button');
+    if (!closeButton.getAttribute('tabindex')) {
+      closeButton.setAttribute('tabindex', '0');
+    }
+    // Permitir activar con la tecla Enter o Espacio si no es un botón nativo
+    closeButton.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        closeBanner();
+      }
+    });
+  }
+
+  console.log('[EmergencyBanner] Módulo inicializado con soporte A11Y y eventos limpios.');
+}
