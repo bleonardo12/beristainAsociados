@@ -1,19 +1,26 @@
-// analytics.js - Sistema de tracking para Google Analytics y Google Ads
+// analytics.js - Sistema de tracking via Google Tag Manager
+// GTM es la única fuente de tracking (GTM-W6F4XTKN)
+// GA4: G-MLZ2VR5SYR | Google Ads: AW-11107730225
 
-/**
- * Módulo de Analytics para trackear todas las interacciones importantes
- * Integrado con Google Analytics (G-MLZ2VR5SYR) y Google Ads (AW-11107730225)
- */
+// Garantiza que gtag() siempre esté disponible aunque GTM todavía no haya cargado.
+// Los eventos se encolan en dataLayer y GTM los procesa cuando levanta.
+window.dataLayer = window.dataLayer || [];
+if (typeof window.gtag !== 'function') {
+  window.gtag = function() { window.dataLayer.push(arguments); };
+}
 
 export function initAnalytics() {
-  console.log('📊 Inicializando módulo de Analytics...');
+  console.log('📊 Inicializando módulo de Analytics (via GTM)...');
 
-  if (typeof gtag === 'undefined') {
-    console.warn('⚠️ gtag no disponible - Analytics deshabilitado');
-    return;
-  }
+  trackCTAClicks();
+  trackScrollDepth();
+  trackTimeOnPage();
+  trackSectionViews();
+  trackSocialClicks();
+  trackWhatsAppClicks();
+  trackPhoneClicks();
 
-  console.log('✅ gtag disponible, configurando tracking...');
+  console.log('✅ Analytics inicializado correctamente');
 
   trackCTAClicks();
   trackScrollDepth();
@@ -159,15 +166,12 @@ function trackWhatsAppClicks() {
       else if (link.closest('.mobile-call-bar'))location = 'mobile_bar';
       else if (link.classList.contains('whatsapp-float')) location = 'float_button';
 
-      if (typeof gtag !== 'undefined') {
-        gtag('event', 'conversion', {
-          'send_to': 'AW-11107730225/Yg24CK6u4LsbELGGyrAp',
-          'value': 75.0,
-          'currency': 'ARS',
-          'transaction_id': `wa_${Date.now()}`
-        });
-        console.log('📊 Google Ads WhatsApp conversion tracked');
-      }
+      gtag('event', 'conversion', {
+        'send_to': 'AW-11107730225/Yg24CK6u4LsbELGGyrAp',
+        'value': 75.0,
+        'currency': 'ARS',
+        'transaction_id': `wa_${Date.now()}`
+      });
 
       gtag('event', 'contact_click', {
         'contact_method': 'whatsapp',
@@ -195,15 +199,12 @@ function trackPhoneClicks() {
       else if (link.closest('.urgencia-strip')) location = 'urgencia_strip';
       else if (link.closest('.mobile-call-bar'))location = 'mobile_bar';
 
-      if (typeof gtag !== 'undefined') {
-        gtag('event', 'conversion', {
-          'send_to': 'AW-11107730225/MjxGCJ-v6bsbELGGyrAp',
-          'value': 100.0,
-          'currency': 'ARS',
-          'transaction_id': `tel_${Date.now()}`
-        });
-        console.log('📊 Google Ads Phone conversion tracked');
-      }
+      gtag('event', 'conversion', {
+        'send_to': 'AW-11107730225/MjxGCJ-v6bsbELGGyrAp',
+        'value': 100.0,
+        'currency': 'ARS',
+        'transaction_id': `tel_${Date.now()}`
+      });
 
       gtag('event', 'contact_click', {
         'contact_method': 'phone',
@@ -219,13 +220,11 @@ function trackPhoneClicks() {
  * Funciones auxiliares globales exportadas para el resto del sistema modular
  */
 export function trackEvent(eventName, params = {}) {
-  if (typeof gtag === 'undefined') return;
   gtag('event', eventName, params);
   console.log(`📊 Tracked custom event: ${eventName}`, params);
 }
 
 export function trackConversion(conversionLabel, value = 1.0, currency = 'ARS') {
-  if (typeof gtag === 'undefined') return;
   gtag('event', 'conversion', {
     'send_to': `AW-11107730225/${conversionLabel}`,
     'value': value,
@@ -236,7 +235,6 @@ export function trackConversion(conversionLabel, value = 1.0, currency = 'ARS') 
 }
 
 export function trackFormInteraction(fieldName, action) {
-  if (typeof gtag === 'undefined') return;
   gtag('event', 'form_interaction', {
     'form_field': fieldName,
     'form_action': action
@@ -244,14 +242,12 @@ export function trackFormInteraction(fieldName, action) {
 }
 
 export function trackFormAbandonment(lastField) {
-  if (typeof gtag === 'undefined') return;
   gtag('event', 'form_abandonment', {
     'last_active_field': lastField
   });
 }
 
 export function trackFormError(fieldName, errorType) {
-  if (typeof gtag === 'undefined') return;
   gtag('event', 'form_error', {
     'invalid_field': fieldName,
     'error_type': errorType
