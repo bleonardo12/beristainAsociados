@@ -4,6 +4,22 @@
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-W6F4XTKN');</script>
     <!-- End Google Tag Manager -->
+    <script>
+    (function () {
+        var p = new URLSearchParams(location.search);
+        var id = p.get('gclid') || p.get('gbraid') || p.get('wbraid');
+        if (id) {
+            try {
+                localStorage.setItem('ba_gclid', id);
+                localStorage.setItem('ba_gclid_ts', Date.now());
+            } catch (e) {}
+            document.cookie = 'ba_gclid=' + id + ';max-age=7776000;path=/;SameSite=Lax';
+        }
+    })();
+    window.getGclid = function () {
+        try { return localStorage.getItem('ba_gclid') || ''; } catch (e) { return ''; }
+    };
+    </script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
@@ -618,6 +634,7 @@
             nombre:  form.name.value.trim(),
             email:   form.email.value.trim(),
             asunto:  form.asunto.value,
+            gclid:   window.getGclid(),
             mensaje: `Teléfono: ${form.phone.value.trim()}\n\n${form.message?.value?.trim() || '(Sin mensaje adicional)'}`
         };
 
@@ -651,13 +668,20 @@
     // ── TRACKING ──
     function trackCall(loc) {
         if (typeof gtag === 'undefined') return;
-        gtag('event', 'conversion', { send_to: 'AW-11107730225/MjxGCJ-v6bsbELGGyrAp', value: 100, currency: 'ARS', transaction_id: `tel_${Date.now()}` });
-        gtag('event', 'contact_click', { contact_method: 'phone', click_location: loc });
+        gtag('event', 'contact_click', { contact_method: 'phone', click_location: loc, gclid: window.getGclid() || undefined });
     }
     function trackWA(loc) {
+        var g = window.getGclid();
+        if (g) {
+            document.querySelectorAll('a[href*="wa.me"]').forEach(function (a) {
+                var href = a.getAttribute('href') || '';
+                if (!/ref:/.test(href)) {
+                    a.setAttribute('href', href + '%20%5Bref:' + g.slice(-8) + '%5D');
+                }
+            });
+        }
         if (typeof gtag === 'undefined') return;
-        gtag('event', 'conversion', { send_to: 'AW-11107730225/Yg24CK6u4LsbELGGyrAp', value: 75, currency: 'ARS', transaction_id: `wa_${Date.now()}` });
-        gtag('event', 'contact_click', { contact_method: 'whatsapp', click_location: loc });
+        gtag('event', 'contact_click', { contact_method: 'whatsapp', click_location: loc, gclid: g || undefined });
     }
     </script>
 </body>
