@@ -239,6 +239,7 @@ export function initContactForm() {
       nombre: form.elements["name"].value.trim(),
       email: form.elements["email"].value.trim(),
       asunto: form.elements["asunto"].value,
+      gclid: window.getGclid ? window.getGclid() : '',
       mensaje: form.elements["message"].value.trim(),
     };
 
