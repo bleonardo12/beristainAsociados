@@ -584,14 +584,16 @@
         if (typeof gtag === 'undefined') return;
         gtag('event', 'contact_click', { contact_method: 'whatsapp', click_location: loc, area: 'contable', gclid: g || undefined });
     }
-    document.addEventListener('DOMContentLoaded', function () {
-        var g = window.getGclid();
+    (function () {
+        var p = new URLSearchParams(location.search);
+        var g = p.get('gclid') || p.get('gbraid') || p.get('wbraid');
+        if (!g) { try { g = localStorage.getItem('ba_gclid') || ''; } catch (e) { g = ''; } }
         if (!g) return;
         document.querySelectorAll('a[href*="wa.me"]').forEach(function (a) {
             var h = a.getAttribute('href') || '';
             if (h.indexOf('ref:') === -1) a.setAttribute('href', h + '%20%5Bref:' + g.slice(-8) + '%5D');
         });
-    });
+    })();
     </script>
 </body>
 </html>
