@@ -550,7 +550,7 @@
         <a href="tel:+5491135913161" onclick="trackCall('mobile_bar_landing')">
             <i class="bi bi-telephone-fill"></i> Llamar ahora — Urgencias 24hs
         </a>
-        <a href="https://wa.me/5491135913161" target="_blank" class="wa" onclick="trackWA('mobile_bar_landing')">
+        <a href="https://wa.me/5491135913161?text=Hola%2C+necesito+un+abogado+urgente" target="_blank" class="wa" onclick="trackWA('mobile_bar_landing')">
             <i class="bi bi-whatsapp"></i>
         </a>
     </div>
@@ -672,17 +672,17 @@
     }
     function trackWA(loc) {
         var g = window.getGclid();
-        if (g) {
-            document.querySelectorAll('a[href*="wa.me"]').forEach(function (a) {
-                var href = a.getAttribute('href') || '';
-                if (!/ref:/.test(href)) {
-                    a.setAttribute('href', href + '%20%5Bref:' + g.slice(-8) + '%5D');
-                }
-            });
-        }
         if (typeof gtag === 'undefined') return;
         gtag('event', 'contact_click', { contact_method: 'whatsapp', click_location: loc, gclid: g || undefined });
     }
+    document.addEventListener('DOMContentLoaded', function () {
+        var g = window.getGclid();
+        if (!g) return;
+        document.querySelectorAll('a[href*="wa.me"]').forEach(function (a) {
+            var h = a.getAttribute('href') || '';
+            if (h.indexOf('ref:') === -1) a.setAttribute('href', h + '%20%5Bref:' + g.slice(-8) + '%5D');
+        });
+    });
     </script>
 </body>
 </html>
