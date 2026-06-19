@@ -17,7 +17,12 @@
         }
     })();
     window.getGclid = function () {
-        try { return localStorage.getItem('ba_gclid') || ''; } catch (e) { return ''; }
+        try {
+            var ls = localStorage.getItem('ba_gclid');
+            if (ls) return ls;
+            var m = document.cookie.match(/ba_gclid=([^;]+)/);
+            return m ? m[1] : '';
+        } catch (e) { return ''; }
     };
     </script>
     <meta charset="utf-8">
@@ -564,6 +569,8 @@
                 });
             }
 
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({ event: 'form_submit_exitoso', gclid: window.getGclid() });
             fb.textContent = '✅ ¡Consulta enviada! Te contactamos pronto.';
             fb.className   = 'form-feedback success';
             form.reset();

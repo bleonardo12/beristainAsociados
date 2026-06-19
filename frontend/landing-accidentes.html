@@ -17,7 +17,12 @@
         }
     })();
     window.getGclid = function () {
-        try { return localStorage.getItem('ba_gclid') || ''; } catch (e) { return ''; }
+        try {
+            var ls = localStorage.getItem('ba_gclid');
+            if (ls) return ls;
+            var m = document.cookie.match(/ba_gclid=([^;]+)/);
+            return m ? m[1] : '';
+        } catch (e) { return ''; }
     };
     </script>
     <meta charset="utf-8">
@@ -413,6 +418,8 @@
                 gtag('event', 'conversion', { send_to: 'AW-11107730225/1LBbCOr-37sbELGGyrAp', value: 1.0, currency: 'ARS', transaction_id: `acc_${Date.now()}` });
                 gtag('event', 'form_submission_success', { lead_legal_area: 'Accidentes de Tránsito', source: 'landing_accidentes' });
             }
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({ event: 'form_submit_exitoso', gclid: window.getGclid() });
             fb.textContent = '✅ ¡Mensaje enviado! Te contactamos pronto.';
             fb.className   = 'form-feedback success';
             form.reset();
