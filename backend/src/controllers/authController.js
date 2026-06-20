@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const { User } = require('../models');
 const { jwt: jwtConfig } = require('../config/auth');
+const logger = require('../utils/logger');
 
 // Login
 exports.login = async (req, res) => {
@@ -60,7 +61,7 @@ exports.login = async (req, res) => {
             }
         });
     } catch (error) {
-        console.error('Error en login:', error);
+        logger.error('Error en login:', error);
         res.status(500).json({
             success: false,
             message: 'Error en el servidor'
@@ -99,7 +100,7 @@ exports.register = async (req, res) => {
             }
         });
     } catch (error) {
-        console.error('Error en registro:', error);
+        logger.error('Error en registro:', error);
         res.status(500).json({
             success: false,
             message: 'Error al crear usuario'

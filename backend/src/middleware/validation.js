@@ -18,22 +18,23 @@ const validate = (req, res, next) => {
     next();
 };
 
+// Elimina tags HTML para prevenir XSS
+const stripHtml = (str) => str.replace(/<[^>]*>/g, '').trim();
+
 // Middleware para sanitizar entrada
 const sanitizeInput = (req, res, next) => {
-    // Sanitizar query params
     if (req.query) {
         Object.keys(req.query).forEach(key => {
             if (typeof req.query[key] === 'string') {
-                req.query[key] = req.query[key].trim();
+                req.query[key] = stripHtml(req.query[key]);
             }
         });
     }
 
-    // Sanitizar body
     if (req.body) {
         Object.keys(req.body).forEach(key => {
             if (typeof req.body[key] === 'string') {
-                req.body[key] = req.body[key].trim();
+                req.body[key] = stripHtml(req.body[key]);
             }
         });
     }
