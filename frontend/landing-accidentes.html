@@ -172,6 +172,13 @@
         /* ── SCROLL REVEAL ── */
         .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.5s ease, transform 0.5s ease; }
         .reveal.visible { opacity: 1; transform: none; }
+        .eyebrow-c { text-align: center; }
+        .eyebrow-b { text-align: center; display: block; }
+        .faq-ttl { margin-bottom: 24px; }
+        .lbl-opt { color: var(--gray); font-weight: 400; }
+        .btn-ghost { background: transparent; border: 1px solid rgba(212,175,119,0.5); color: var(--gold2); }
+        .ft-strong { color: rgba(255,255,255,0.65); }
+        .ft-link { margin-top: 5px; display: inline-block; }
     </style>
 </head>
 <body>
@@ -207,7 +214,7 @@
                 <a href="https://wa.me/5491135913161?text=Hola%2C+tuve+un+accidente+de+tr%C3%A1nsito+y+necesito+asesoramiento" target="_blank" rel="noopener" class="btn-wa" onclick="trackWA('hero')">
                     <i class="bi bi-whatsapp"></i> WhatsApp urgente
                 </a>
-                <a href="#contacto" class="btn-call" style="background:transparent;border:1px solid rgba(212,175,119,0.5);color:var(--gold2);">
+                <a href="#contacto" class="btn-call btn-ghost">
                     Formulario de consulta
                 </a>
             </div>
@@ -275,7 +282,7 @@
 
     <section class="process">
         <div class="process-inner">
-            <span class="eyebrow" style="text-align:center">Cómo trabajamos</span>
+            <span class="eyebrow eyebrow-c">Cómo trabajamos</span>
             <h2 class="section-title">Tu reclamo, paso a paso</h2>
             <div class="process-steps">
                 <div class="step">
@@ -300,7 +307,7 @@
     <section class="faq-section">
         <div class="faq-inner">
             <span class="eyebrow">Preguntas frecuentes</span>
-            <h2 class="section-title" style="margin-bottom:24px">Lo que más nos preguntan</h2>
+            <h2 class="section-title faq-ttl">Lo que más nos preguntan</h2>
 
             <details class="faq-item">
                 <summary>¿Puedo reclamar si el seguro ya me pagó algo?</summary>
@@ -336,7 +343,7 @@
 
     <section class="form-section" id="contacto">
         <div class="form-inner">
-            <span class="eyebrow" style="text-align:center;display:block">Consulta gratuita</span>
+            <span class="eyebrow eyebrow-b">Consulta gratuita</span>
             <h2 class="section-title">Contanos tu accidente</h2>
             <p class="form-sub">Sin cargo. Te respondemos en menos de 2 horas hábiles.</p>
 
@@ -361,7 +368,7 @@
                     <option value="Seguros y Accidentes">Otro — consulta sobre accidente</option>
                 </select>
 
-                <label for="lp-message">Contanos brevemente qué pasó <span style="color:var(--gray);font-weight:400">(opcional)</span></label>
+                <label for="lp-message">Contanos brevemente qué pasó <span class="lbl-opt">(opcional)</span></label>
                 <textarea id="lp-message" name="message" placeholder="Ej: Tuve un accidente el 15/05, el otro conductor dobló sin señalizar. Tengo lesiones en el cuello y el auto tiene daños..."></textarea>
 
                 <div class="hp" aria-hidden="true">
@@ -381,9 +388,9 @@
     </section>
 
     <footer class="footer-mini">
-        <strong style="color:rgba(255,255,255,0.6)">Beristain & Asociados</strong> · Estudio Jurídico · Av. Rivadavia 8012 5º C, CABA ·
+        <strong class="ft-strong">Beristain & Asociados</strong> · Estudio Jurídico · Av. Rivadavia 8012 5º C, CABA ·
         <a href="mailto:beristainyasociadosej@gmail.com">beristainyasociadosej@gmail.com</a>
-        <br><a href="/index.html" style="margin-top:4px;display:inline-block">← Ir al sitio completo</a> ·
+        <br><a href="/index.html" class="ft-link">← Ir al sitio completo</a> ·
         <a href="/politica-privacidad.html">Política de privacidad</a>
     </footer>
 

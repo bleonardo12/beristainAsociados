@@ -238,6 +238,14 @@
         /* ── SCROLL REVEAL ── */
         .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.5s ease, transform 0.5s ease; }
         .reveal.visible { opacity: 1; transform: none; }
+        .eyebrow-c { text-align: center; }
+        .eyebrow-b { text-align: center; display: block; }
+        .faq-ttl { margin-bottom: 24px; }
+        .section-title-c { text-align: center; }
+        .lbl-opt { color: var(--gray); font-weight: 400; }
+        .detail-list { margin-top: 8px; padding-left: 0; list-style: none; font-size: 0.83rem; color: #6b7280; line-height: 1.8; }
+        .ft-strong { color: rgba(255,255,255,0.65); }
+        .ft-link { margin-top: 5px; display: inline-block; }
     </style>
 </head>
 <body>
@@ -365,7 +373,7 @@
                     <div class="spec-icon"><i class="bi bi-calculator-fill"></i></div>
                     <h3>Liquidación de impuestos</h3>
                     <p>Determinación y presentación mensual o bimestral de los principales impuestos:</p>
-                    <ul style="margin-top:8px;padding-left:0;list-style:none;font-size:0.83rem;color:#6b7280;line-height:1.8">
+                    <ul class="detail-list">
                         <li>› IVA — declaración y pago mensual</li>
                         <li>› Ingresos Brutos (IIBB) — CABA y Convenio Multilateral</li>
                         <li>› Bienes Personales — declaración anual</li>
@@ -394,8 +402,8 @@
     <!-- Proceso -->
     <section class="process">
         <div class="process-inner">
-            <span class="eyebrow" style="text-align:center;display:block">Cómo trabajamos</span>
-            <h2 class="section-title" style="text-align:center">Tres pasos para ordenar tu situación impositiva</h2>
+            <span class="eyebrow eyebrow-b">Cómo trabajamos</span>
+            <h2 class="section-title section-title-c">Tres pasos para ordenar tu situación impositiva</h2>
             <div class="process-steps">
                 <div class="step">
                     <div class="step-num">1</div>
@@ -420,7 +428,7 @@
     <section class="faq-section">
         <div class="faq-inner">
             <span class="eyebrow">Preguntas frecuentes</span>
-            <h2 class="section-title" style="margin-bottom:24px">Lo que más nos preguntan</h2>
+            <h2 class="section-title faq-ttl">Lo que más nos preguntan</h2>
 
             <details class="faq-item">
                 <summary>¿Qué es ARCA y qué reemplazó?</summary>
@@ -452,7 +460,7 @@
     <!-- Formulario -->
     <section class="form-section" id="contacto">
         <div class="form-inner">
-            <span class="eyebrow" style="text-align:center;display:block">Consulta gratuita</span>
+            <span class="eyebrow eyebrow-b">Consulta gratuita</span>
             <h2 class="section-title">Contanos tu situación</h2>
             <p class="form-sub">Sin cargo. Respondemos en menos de 2 horas hábiles.</p>
 
@@ -480,7 +488,7 @@
                     <option value="Consulta contable">Otra consulta contable</option>
                 </select>
 
-                <label for="lp-message">Contanos brevemente tu situación <span style="color:var(--gray);font-weight:400">(opcional)</span></label>
+                <label for="lp-message">Contanos brevemente tu situación <span class="lbl-opt">(opcional)</span></label>
                 <textarea id="lp-message" name="message" placeholder="Ej: Soy autónomo, nunca presenté ganancias y no sé si tengo obligación..."></textarea>
 
                 <div class="hp" aria-hidden="true">
@@ -501,13 +509,13 @@
 
     <footer class="footer-mini">
         <div class="footer-logos">
-            <span><strong style="color:rgba(255,255,255,0.7)">DMB Estudio Contable</strong> · Cra. Daniela M. Bava · <a href="https://dmbestudio.com.ar/" target="_blank" rel="noopener">dmbestudio.com.ar</a></span>
+            <span><strong class="ft-strong">DMB Estudio Contable</strong> · Cra. Daniela M. Bava · <a href="https://dmbestudio.com.ar/" target="_blank" rel="noopener">dmbestudio.com.ar</a></span>
             <span>×</span>
-            <span><strong style="color:rgba(255,255,255,0.7)">Beristain &amp; Asociados</strong> · Estudio Jurídico</span>
+            <span><strong class="ft-strong">Beristain &amp; Asociados</strong> · Estudio Jurídico</span>
         </div>
         Av. Rivadavia 8012 5º C, CABA · <a href="mailto:danielambava@gmail.com">danielambava@gmail.com</a>
         <br>
-        <a href="/index.html" style="margin-top:6px;display:inline-block">← Ir al sitio de Beristain &amp; Asociados</a> ·
+        <a href="/index.html" class="ft-link">← Ir al sitio de Beristain &amp; Asociados</a> ·
         <a href="/politica-privacidad.html">Política de privacidad</a>
     </footer>
 
@@ -520,7 +528,7 @@
         <a href="tel:+5491128276362" onclick="trackCall('mobile_bar_daniela')">
             <i class="bi bi-telephone-fill"></i> Cra. Bava — 11 2827-6362
         </a>
-        <a href="https://wa.me/5491128276362?text=Hola%2C+necesito+asesoramiento+contable" target="_blank" class="wa" onclick="trackWA('mobile_bar')">
+        <a href="https://wa.me/5491128276362?text=Hola%2C+necesito+asesoramiento+contable" target="_blank" rel="noopener noreferrer" class="wa" onclick="trackWA('mobile_bar')">
             <i class="bi bi-whatsapp"></i>
         </a>
     </div>

@@ -419,6 +419,13 @@
         /* ── SCROLL REVEAL ── */
         .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.5s ease, transform 0.5s ease; }
         .reveal.visible { opacity: 1; transform: none; }
+        .eyebrow-c { text-align: center; }
+        .eyebrow-b { text-align: center; display: block; }
+        .faq-ttl { margin-bottom: 24px; }
+        .lbl-opt { color: var(--gray); font-weight: 400; }
+        .btn-ghost { background: transparent; border: 1px solid rgba(212,175,119,0.5); color: var(--gold2); }
+        .ft-strong { color: rgba(255,255,255,0.65); }
+        .ft-link { margin-top: 5px; display: inline-block; }
     </style>
 </head>
 <body>
@@ -506,7 +513,7 @@
     <!-- Formulario -->
     <section class="form-section" id="contacto">
         <div class="form-inner">
-            <span class="eyebrow" style="text-align:center;display:block">Consulta gratuita</span>
+            <span class="eyebrow eyebrow-b">Consulta gratuita</span>
             <h2 class="section-title">Contanos tu caso</h2>
             <p class="form-sub">Sin cargo. Te respondemos en menos de 2 horas.</p>
 
@@ -532,7 +539,7 @@
                     <option value="Otra consulta">Otra consulta</option>
                 </select>
 
-                <label for="lp-message">Tu consulta <span style="color:var(--gray);font-weight:400">(opcional)</span></label>
+                <label for="lp-message">Tu consulta <span class="lbl-opt">(opcional)</span></label>
                 <textarea id="lp-message" name="message" placeholder="Contanos brevemente tu situación..."></textarea>
 
                 <!-- Honeypot anti-spam -->
@@ -554,9 +561,9 @@
 
     <!-- Footer mínimo -->
     <footer class="footer-mini">
-        <strong style="color:rgba(255,255,255,0.6)">Beristain & Asociados</strong> · Estudio Jurídico · CABA, Buenos Aires ·
+        <strong class="ft-strong">Beristain & Asociados</strong> · Estudio Jurídico · CABA, Buenos Aires ·
         <a href="mailto:beristainyasociadosej@gmail.com">beristainyasociadosej@gmail.com</a>
-        <br><a href="/index.html" style="margin-top:4px;display:inline-block">← Ir al sitio completo</a> ·
+        <br><a href="/index.html" class="ft-link">← Ir al sitio completo</a> ·
         <a href="/politica-privacidad.html">Política de privacidad</a>
     </footer>
 
