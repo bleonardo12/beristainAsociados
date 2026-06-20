@@ -48,7 +48,7 @@
 /* ========== RESET ========== */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+html { scroll-behavior: smooth; }
 
 body {
     font-family: var(--font-body);
@@ -94,7 +94,6 @@ h1,h2,h3,h4,h5,h6 {
     box-shadow: 0 4px 16px rgba(0,0,0,0.3);
 }
 .theme-toggle:hover { background: var(--navy-mid); border-color: var(--gold); transform: scale(1.08); }
-.theme-toggle:hover { background: var(--navy-mid); border-color: var(--gold); }
 .dark-icon, .light-icon { position: absolute; transition: var(--transition); }
 .light-icon { opacity: 0; }
 .dark-theme .dark-icon { opacity: 0; }
@@ -830,8 +829,9 @@ h1,h2,h3,h4,h5,h6 {
     color: var(--navy-mid);
     transition: background 0.2s;
     user-select: none;
+    list-style: none;
 }
-.faq-question::-webkit-details-marker { display: none; }
+.faq-question::marker { content: ''; }
 .faq-question:hover { background: var(--gray-100); }
 .faq-icon { color: var(--gold); font-size: 0.85rem; flex-shrink: 0; transition: transform 0.3s ease; }
 
