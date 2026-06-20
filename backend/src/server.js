@@ -16,6 +16,7 @@ const causasRoutes = require('./routes/causas');
 
 // Crear app Express
 const app = express();
+app.set('trust proxy', 1); // Nginx reverse proxy
 
 // ====================
 // MIDDLEWARE DE SEGURIDAD

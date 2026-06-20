@@ -205,7 +205,7 @@ const API = {
 };
 
 // Verificar autenticación en páginas protegidas
-export function requireAuth() {
+function requireAuth() {
     if (!API.isAuthenticated()) {
         window.location.href = '/login.html';
         return false;
@@ -214,7 +214,7 @@ export function requireAuth() {
 }
 
 // Mostrar información del usuario en el navbar
-export function displayUserInfo() {
+function displayUserInfo() {
     const user = API.getUser();
     if (user) {
         const userNameElement = document.getElementById('userName');
@@ -223,6 +223,3 @@ export function displayUserInfo() {
         }
     }
 }
-
-// Exportación por defecto para usar como: import API from './api.js'
-export default API;
