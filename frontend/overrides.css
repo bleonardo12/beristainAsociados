@@ -1940,6 +1940,7 @@ body #close-emergency-banner {
     min-width: 48px !important;
     min-height: 48px !important;
     transition: all 0.3s ease !important;
+    -webkit-backdrop-filter: blur(4px) !important;
     backdrop-filter: blur(4px) !important;
 }
 
