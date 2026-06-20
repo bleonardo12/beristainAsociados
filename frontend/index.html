@@ -33,15 +33,14 @@
             <meta name="twitter:image" content="https://www.beristainyasociados.com.ar/img/logonuevoB.jpg">
 
             <!-- Metadatos para dispositivos móviles y PWA -->
-            <meta name="theme-color" content="#1a365d">
             
 
             <!-- Precargar recursos críticos -->
             <link rel="preconnect" href="https://fonts.googleapis.com">
             <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
             <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-            <link rel="preload" href="img/Facultad_de_derecho_uba.webp" as="image" fetchpriority="high">
-            <link rel="preload" href="img/logonuevoB.webp" as="image" type="image/webp" fetchpriority="high">
+            <link rel="preload" href="img/Facultad_de_derecho_uba.webp" as="image">
+            <link rel="preload" href="img/logonuevoB.webp" as="image" type="image/webp">
 
             <!-- DNS prefetch para CDNs externos -->
             <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
@@ -251,7 +250,7 @@
 
                             <picture>
                                 <source srcset="img/logonuevoB.webp" type="image/webp">
-                                <img src="img/logonuevoB.jpg" alt="Beristain Asociados Abogados" class="logo-principal" width="70" height="70" fetchpriority="high" loading="eager">
+                                <img src="img/logonuevoB.jpg" alt="Beristain Asociados Abogados" class="logo-principal" width="70" height="70" loading="eager">
                             </picture>
 
                             <div class="brand-name">
@@ -1316,8 +1315,8 @@
             <a href="tel:+5491135913161" class="mobile-call-btn">
                 <i class="bi bi-telephone-fill"></i> Llamar ahora — Urgencias 24hs
             </a>
-            <a href="https://wa.me/5491135913161?text=Hola%2C%20necesito%20un%20abogado%20penalista%20urgente" class="mobile-wa-btn">
-                <i class="bi bi-whatsapp"></i>
+            <a href="https://wa.me/5491135913161?text=Hola%2C%20necesito%20un%20abogado%20penalista%20urgente" class="mobile-wa-btn" target="_blank" rel="noopener noreferrer" aria-label="Contactar por WhatsApp" title="Contactar por WhatsApp">
+                <i class="bi bi-whatsapp" aria-hidden="true"></i>
             </a>
         </div>
     <script>
