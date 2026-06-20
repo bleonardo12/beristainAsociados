@@ -1354,6 +1354,9 @@ footer a:hover { color: var(--gold); }
     .brand-name-sub { font-size: 0.52rem; letter-spacing: 0.09em; }
 }
 
+/* ========== UTILIDADES ========== */
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
 /* ========== ACCESIBILIDAD ========== */
 :focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
 @media (prefers-reduced-motion: reduce) {
