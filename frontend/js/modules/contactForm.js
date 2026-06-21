@@ -266,6 +266,9 @@ export function initContactForm() {
         console.warn('⚠️ gtag no disponible - conversión no trackeada');
       }
 
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({ event: 'form_submit_exitoso', gclid: window.getGclid ? window.getGclid() : '' });
+
       form.classList.add('submitted');
       showFeedback("¡Mensaje enviado correctamente! Te contactaremos pronto.");
       form.reset();
