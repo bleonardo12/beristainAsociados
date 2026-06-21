@@ -230,7 +230,7 @@
                 <span>Especialistas en derecho civil · CABA y GBA</span>
             </div>
             <p class="hero-eyebrow">Sucesiones · Daños · Contratos · Locaciones</p>
-            <h1>Resolvemos tu caso<br>civil con <span class="gold">experiencia y claridad</span></h1>
+            <h1>Abogado Civil en CABA<br><span class="gold">Sucesiones · Daños · Contratos</span></h1>
             <p class="hero-desc">
                 Sucesiones, <strong>daños y perjuicios</strong>, cobros ejecutivos, contratos, locaciones y responsabilidad civil. Asesoramiento directo, honorarios transparentes y primera consulta sin cargo.
             </p>
@@ -245,9 +245,6 @@
                 </a>
                 <a href="https://wa.me/5491135913161?text=Hola%2C+necesito+asesoramiento+en+derecho+civil" target="_blank" rel="noopener noreferrer" class="btn-wa" onclick="trackWA('hero')">
                     <i class="bi bi-whatsapp"></i> Consultar por WhatsApp
-                </a>
-                <a href="#contacto" class="btn-call btn-ghost">
-                    Formulario de consulta
                 </a>
             </div>
             <div class="trust-strip">
@@ -375,26 +372,11 @@
                 <label for="lp-name">Nombre</label>
                 <input type="text" id="lp-name" name="name" required placeholder="Tu nombre completo" autocomplete="name">
 
-                <label for="lp-phone">Teléfono</label>
+                <label for="lp-phone">Teléfono / WhatsApp</label>
                 <input type="tel" id="lp-phone" name="phone" required placeholder="+54 9 11 XXXX-XXXX" autocomplete="tel">
 
-                <label for="lp-email">Email</label>
-                <input type="email" id="lp-email" name="email" required placeholder="ejemplo@email.com" autocomplete="email">
-
-                <label for="lp-asunto">¿Sobre qué necesitás asesoramiento?</label>
-                <select id="lp-asunto" name="asunto" required>
-                    <option value="">Seleccioná un área</option>
-                    <option value="Sucesiones">Sucesiones y herencias</option>
-                    <option value="Daños y Perjuicios">Daños y perjuicios</option>
-                    <option value="Cobros Ejecutivos">Cobros ejecutivos / Recupero de deudas</option>
-                    <option value="Contratos Civiles">Contratos — redacción o conflicto</option>
-                    <option value="Locaciones">Locaciones — desalojo o reclamo</option>
-                    <option value="Prescripción Adquisitiva">Prescripción adquisitiva (usucapión)</option>
-                    <option value="Derecho Civil">Otra consulta civil</option>
-                </select>
-
-                <label for="lp-message">Contanos brevemente tu situación <span class="lbl-opt">(opcional)</span></label>
-                <textarea id="lp-message" name="message" placeholder="Ej: Falleció mi padre hace 3 meses y necesito iniciar la sucesión..."></textarea>
+                <label for="lp-message">¿Sobre qué necesitás asesoramiento?</label>
+                <textarea id="lp-message" name="message" placeholder="Ej: Falleció mi padre hace 3 meses y necesito iniciar la sucesión. / Tengo un conflicto con mi inquilino. / Me deben dinero y quiero cobrar..."></textarea>
 
                 <div class="hp" aria-hidden="true">
                     <input type="text" name="hp_website" tabindex="-1" autocomplete="off" value="">
@@ -454,8 +436,8 @@
 
         const params = {
             nombre:  form.name.value.trim(),
-            email:   form.email.value.trim(),
-            asunto:  `[CIVIL] ${form.asunto.value}`,
+            email:   '',
+            asunto:  '[CIVIL] Derecho Civil',
             gclid:   window.getGclid(),
             mensaje: `Teléfono: ${form.phone.value.trim()}\n\n${form.message?.value?.trim() || '(Sin mensaje adicional)'}`
         };

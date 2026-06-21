@@ -219,9 +219,6 @@
                 <a href="https://wa.me/5491135913161?text=Hola%2C+tuve+un+accidente+de+tr%C3%A1nsito+y+necesito+asesoramiento" target="_blank" rel="noopener" class="btn-wa" onclick="trackWA('hero')">
                     <i class="bi bi-whatsapp"></i> WhatsApp urgente
                 </a>
-                <a href="#contacto" class="btn-call btn-ghost">
-                    Formulario de consulta
-                </a>
             </div>
             <div class="trust-strip">
                 <span class="trust-item"><i class="bi bi-check-lg"></i> Primera consulta sin cargo</span>
@@ -356,24 +353,10 @@
                 <label for="lp-name">Nombre</label>
                 <input type="text" id="lp-name" name="name" required placeholder="Tu nombre completo" autocomplete="name">
 
-                <label for="lp-phone">Teléfono</label>
+                <label for="lp-phone">Teléfono / WhatsApp</label>
                 <input type="tel" id="lp-phone" name="phone" required placeholder="+54 9 11 XXXX-XXXX" autocomplete="tel">
 
-                <label for="lp-email">Email</label>
-                <input type="email" id="lp-email" name="email" required placeholder="ejemplo@email.com" autocomplete="email">
-
-                <label for="lp-asunto">¿Cuál es tu situación?</label>
-                <select id="lp-asunto" name="asunto" required>
-                    <option value="">Seleccioná una opción</option>
-                    <option value="Accidente con lesiones">Tuve lesiones en el accidente</option>
-                    <option value="Accidente daño material">Solo daño material al vehículo</option>
-                    <option value="Accidente - seguro ofrece poco">El seguro me ofrece muy poco</option>
-                    <option value="Accidente - contraparte sin seguro">La contraparte no tiene seguro</option>
-                    <option value="Accidente - ya firmé algo">Ya firmé un recibo / quiero saber si tengo derechos</option>
-                    <option value="Seguros y Accidentes">Otro — consulta sobre accidente</option>
-                </select>
-
-                <label for="lp-message">Contanos brevemente qué pasó <span class="lbl-opt">(opcional)</span></label>
+                <label for="lp-message">¿Qué pasó? Contanos brevemente</label>
                 <textarea id="lp-message" name="message" placeholder="Ej: Tuve un accidente el 15/05, el otro conductor dobló sin señalizar. Tengo lesiones en el cuello y el auto tiene daños..."></textarea>
 
                 <div class="hp" aria-hidden="true">
@@ -432,8 +415,8 @@
 
         const params = {
             nombre:  form.name.value.trim(),
-            email:   form.email.value.trim(),
-            asunto:  `[ACCIDENTES] ${form.asunto.value}`,
+            email:   '',
+            asunto:  '[ACCIDENTES] Seguros y Accidentes',
             gclid:   window.getGclid(),
             mensaje: `Teléfono: ${form.phone.value.trim()}\n\n${form.message?.value?.trim() || '(Sin mensaje adicional)'}`
         };

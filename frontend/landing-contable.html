@@ -473,28 +473,11 @@
                 <label for="lp-name">Nombre</label>
                 <input type="text" id="lp-name" name="name" required placeholder="Tu nombre completo" autocomplete="name">
 
-                <label for="lp-phone">Teléfono</label>
+                <label for="lp-phone">Teléfono / WhatsApp</label>
                 <input type="tel" id="lp-phone" name="phone" required placeholder="+54 9 11 XXXX-XXXX" autocomplete="tel">
 
-                <label for="lp-email">Email</label>
-                <input type="email" id="lp-email" name="email" required placeholder="ejemplo@email.com" autocomplete="email">
-
-                <label for="lp-asunto">¿Qué servicio necesitás?</label>
-                <select id="lp-asunto" name="asunto" required>
-                    <option value="">Seleccioná un servicio</option>
-                    <option value="Ganancias 4ta categoría">Ganancias 4ta categoría (profesionales / autónomos)</option>
-                    <option value="Ganancias 3ra categoría">Ganancias 3ra categoría (empresa / sociedad)</option>
-                    <option value="Monotributo">Monotributo — alta, categorización o recategorización</option>
-                    <option value="Responsable Inscripto">Responsable Inscripto (IVA · Ganancias · IIBB)</option>
-                    <option value="Balance e informe">Balance / Estado contable / Certificación</option>
-                    <option value="Asesoría PYME">Asesoría contable a PYME o empresa</option>
-                    <option value="Administración de consorcios">Administración de consorcios</option>
-                    <option value="Peritaje Contable Judicial">Peritaje Contable Judicial</option>
-                    <option value="Consulta contable">Otra consulta contable</option>
-                </select>
-
-                <label for="lp-message">Contanos brevemente tu situación <span class="lbl-opt">(opcional)</span></label>
-                <textarea id="lp-message" name="message" placeholder="Ej: Soy autónomo, nunca presenté ganancias y no sé si tengo obligación..."></textarea>
+                <label for="lp-message">¿Qué servicio necesitás?</label>
+                <textarea id="lp-message" name="message" placeholder="Ej: Soy autónomo y necesito presentar ganancias. / Tengo una SRL y necesito balance. / Quiero pasarme de monotributo a responsable inscripto..."></textarea>
 
                 <div class="hp" aria-hidden="true">
                     <input type="text" name="hp_website" tabindex="-1" autocomplete="off" value="">
@@ -567,8 +550,8 @@
 
         const baseParams = {
             nombre:  form.name.value.trim(),
-            email:   form.email.value.trim(),
-            asunto:  `[CONTABLE] ${form.asunto.value}`,
+            email:   '',
+            asunto:  '[CONTABLE] Servicios Contables',
             gclid:   window.getGclid(),
             mensaje: `Teléfono: ${form.phone.value.trim()}\nLanding: Contable (DMB × Beristain)\n\n${form.message?.value?.trim() || '(Sin mensaje adicional)'}`
         };
