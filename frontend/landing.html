@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
     <!-- Google Tag Manager -->
@@ -698,9 +698,7 @@
         gtag('event', 'contact_click', { contact_method: 'whatsapp', click_location: loc, gclid: g || undefined });
     }
     (function () {
-        var p = new URLSearchParams(location.search);
-        var g = p.get('gclid') || p.get('gbraid') || p.get('wbraid');
-        if (!g) { try { g = localStorage.getItem('ba_gclid') || ''; } catch (e) { g = ''; } }
+        var g = window.getGclid();
         if (!g) return;
         document.querySelectorAll('a[href*="wa.me"]').forEach(function (a) {
             var h = a.getAttribute('href') || '';
