@@ -1179,6 +1179,8 @@
             document.getElementById('saldo').value = saldo.toFixed(2);
         }
 
+        const esc = s => s == null ? '' : String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+
         // Gestión de presupuestos
         class PresupuestosManager {
             constructor() {
@@ -1331,28 +1333,28 @@
                 modalBody.innerHTML = `
                     <div class="detail-row">
                         <div class="detail-label">Número:</div>
-                        <div class="detail-value"><strong>${p.numero || 'N/A'}</strong></div>
+                        <div class="detail-value"><strong>${esc(p.numero) || 'N/A'}</strong></div>
                     </div>
                     <div class="detail-row">
                         <div class="detail-label">Fecha:</div>
-                        <div class="detail-value">${p.fecha}</div>
+                        <div class="detail-value">${esc(p.fecha)}</div>
                     </div>
                     <div class="detail-row">
                         <div class="detail-label">Cliente:</div>
-                        <div class="detail-value"><strong>${p.cliente}</strong></div>
+                        <div class="detail-value"><strong>${esc(p.cliente)}</strong></div>
                     </div>
                     <div class="detail-row">
                         <div class="detail-label">DNI:</div>
-                        <div class="detail-value">${p.dni || 'N/A'}</div>
+                        <div class="detail-value">${esc(p.dni) || 'N/A'}</div>
                     </div>
-                    ${p.email ? `<div class="detail-row"><div class="detail-label">Email:</div><div class="detail-value">${p.email}</div></div>` : ''}
-                    ${p.telefono ? `<div class="detail-row"><div class="detail-label">Teléfono:</div><div class="detail-value">${p.telefono}</div></div>` : ''}
+                    ${p.email ? `<div class="detail-row"><div class="detail-label">Email:</div><div class="detail-value">${esc(p.email)}</div></div>` : ''}
+                    ${p.telefono ? `<div class="detail-row"><div class="detail-label">Teléfono:</div><div class="detail-value">${esc(p.telefono)}</div></div>` : ''}
                     <div class="detail-row">
                         <div class="detail-label">Servicios:</div>
                         <div class="detail-value">
                             ${(p.servicios && p.servicios.length > 0) ? p.servicios.map(s => `
                                 <div style="margin-bottom: 0.5rem; padding: 0.5rem; background: #f8fafc; border-left: 3px solid var(--accent-color); border-radius: 4px;">
-                                    <strong>${s.nombre}</strong><br>
+                                    <strong>${esc(s.nombre)}</strong><br>
                                     <small>Valor UMA: $${s.valorUMA.toLocaleString('es-AR')} × ${s.cantidadUMA} = $${s.total.toLocaleString('es-AR', { minimumFractionDigits: 2 })}</small>
                                 </div>
                             `).join('') : 'Sin servicios especificados'}
@@ -1360,7 +1362,7 @@
                     </div>
                     <div class="detail-row">
                         <div class="detail-label">Descripción:</div>
-                        <div class="detail-value">${p.descripcion || 'Sin descripción'}</div>
+                        <div class="detail-value">${esc(p.descripcion) || 'Sin descripción'}</div>
                     </div>
                     <div class="detail-row">
                         <div class="detail-label">Honorarios Profesionales:</div>
@@ -1398,8 +1400,8 @@
                             </span>
                         </div>
                     </div>
-                    ${p.notas ? `<div class="detail-row"><div class="detail-label">Observaciones:</div><div class="detail-value">${p.notas}</div></div>` : ''}
-                    ${p.detalleAdicional ? `<div class="detail-row"><div class="detail-label">Detalle Adicional:</div><div class="detail-value">${p.detalleAdicional}</div></div>` : ''}
+                    ${p.notas ? `<div class="detail-row"><div class="detail-label">Observaciones:</div><div class="detail-value">${esc(p.notas)}</div></div>` : ''}
+                    ${p.detalleAdicional ? `<div class="detail-row"><div class="detail-label">Detalle Adicional:</div><div class="detail-value">${esc(p.detalleAdicional)}</div></div>` : ''}
                 `;
                 document.getElementById('modalDetalles').classList.add('active');
             }
@@ -1778,11 +1780,11 @@
                     const servicioCorto = servicio.length > 40 ? servicio.substring(0, 40) + '...' : servicio;
                     return `
                     <tr>
-                        <td><strong>${p.numero || 'N/A'}</strong></td>
-                        <td>${p.fecha || 'N/A'}</td>
-                        <td><strong>${p.cliente || 'N/A'}</strong></td>
-                        <td>${p.dni || 'N/A'}</td>
-                        <td>${servicioCorto}</td>
+                        <td><strong>${esc(p.numero) || 'N/A'}</strong></td>
+                        <td>${esc(p.fecha) || 'N/A'}</td>
+                        <td><strong>${esc(p.cliente) || 'N/A'}</strong></td>
+                        <td>${esc(p.dni) || 'N/A'}</td>
+                        <td>${esc(servicioCorto)}</td>
                         <td><strong>$${(p.total || 0).toLocaleString('es-AR', { minimumFractionDigits: 2 })}</strong></td>
                         <td>
                             <div class="estado-selector">

@@ -1074,6 +1074,8 @@
         // Mostrar información del usuario
         displayUserInfo();
 
+        const esc = s => s == null ? '' : String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+
         // Clase para gestionar causas
         class CausasManager {
             constructor() {
@@ -1209,16 +1211,18 @@
                 const causa = this.causas.find(c => c.id == id);
                 if (!causa) return;
 
+                const ESTADOS_VALIDOS = ['activa','archivada','cerrada','pendiente','en_juicio','apelacion'];
+                const estadoSafe = ESTADOS_VALIDOS.includes(causa.estado) ? causa.estado : 'pendiente';
                 const content = `
                     <div style="line-height: 1.8;">
-                        <p><strong>Número de Expediente:</strong> ${causa.numeroExpediente}</p>
-                        <p><strong>Tipo de Causa:</strong> ${causa.tipoCausa}</p>
-                        <p><strong>Carátula:</strong> ${causa.caratula}</p>
-                        <p><strong>Cliente:</strong> ${causa.cliente}</p>
-                        <p><strong>Estado:</strong> <span class="status-badge status-${causa.estado}">${this.getEstadoLabel(causa.estado)}</span></p>
-                        <p><strong>Juzgado/Fuero:</strong> ${causa.juzgado || 'No especificado'}</p>
+                        <p><strong>Número de Expediente:</strong> ${esc(causa.numeroExpediente)}</p>
+                        <p><strong>Tipo de Causa:</strong> ${esc(causa.tipoCausa)}</p>
+                        <p><strong>Carátula:</strong> ${esc(causa.caratula)}</p>
+                        <p><strong>Cliente:</strong> ${esc(causa.cliente)}</p>
+                        <p><strong>Estado:</strong> <span class="status-badge status-${estadoSafe}">${esc(this.getEstadoLabel(causa.estado))}</span></p>
+                        <p><strong>Juzgado/Fuero:</strong> ${esc(causa.juzgado) || 'No especificado'}</p>
                         <p><strong>Fecha de Inicio:</strong> ${causa.fechaInicio ? this.formatDate(causa.fechaInicio) : 'No especificada'}</p>
-                        <p><strong>Observaciones:</strong> ${causa.observaciones || 'Sin observaciones'}</p>
+                        <p><strong>Observaciones:</strong> ${esc(causa.observaciones) || 'Sin observaciones'}</p>
                         <p><strong>Tareas totales:</strong> ${causa.tareas?.length || 0}</p>
                         <p><strong>Tareas completadas:</strong> ${causa.tareas?.filter(t => t.completada).length || 0}</p>
                     </div>
@@ -1280,30 +1284,34 @@
 
                 emptyTasks.style.display = 'none';
 
-                tasksList.innerHTML = tareas.map(task => `
+                const PRIORIDADES_VALIDAS = ['alta','media','baja'];
+                tasksList.innerHTML = tareas.map(task => {
+                    const prioSafe = PRIORIDADES_VALIDAS.includes(task.prioridad) ? task.prioridad : 'media';
+                    return `
                     <li class="task-item ${task.completada ? 'completed' : ''}">
                         <input type="checkbox"
                                class="task-checkbox"
                                ${task.completada ? 'checked' : ''}
-                               onchange="manager.toggleTask(${task.id})">
+                               onchange="manager.toggleTask(${Number(task.id)})">
                         <div class="task-content">
                             <div class="task-header">
-                                <span class="task-description">${task.descripcion}</span>
-                                <span class="priority-badge priority-${task.prioridad}">${task.prioridad.toUpperCase()}</span>
+                                <span class="task-description">${esc(task.descripcion)}</span>
+                                <span class="priority-badge priority-${prioSafe}">${prioSafe.toUpperCase()}</span>
                             </div>
                             <div class="task-meta">
                                 ${task.vencimiento ? `<span><i class="bi bi-calendar"></i> ${this.formatDate(task.vencimiento)}</span>` : ''}
-                                ${task.hora ? `<span><i class="bi bi-clock"></i> ${task.hora}</span>` : ''}
+                                ${task.hora ? `<span><i class="bi bi-clock"></i> ${esc(task.hora)}</span>` : ''}
                             </div>
-                            ${task.notas ? `<div class="task-notes">${task.notas}</div>` : ''}
+                            ${task.notas ? `<div class="task-notes">${esc(task.notas)}</div>` : ''}
                         </div>
                         <div class="task-actions">
-                            <button class="btn-small btn-delete" onclick="manager.deleteTask(${task.id})">
+                            <button class="btn-small btn-delete" onclick="manager.deleteTask(${Number(task.id)})">
                                 <i class="bi bi-trash"></i>
                             </button>
                         </div>
                     </li>
-                `).join('');
+                `;
+                }).join('');
             }
 
             toggleTask(taskId) {
