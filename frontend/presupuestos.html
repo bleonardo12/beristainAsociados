@@ -714,6 +714,17 @@
                 flex-direction: column;
             }
         }
+        .hidden { display: none; }
+        .btn-row { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+        .btn-excel { background: #10b981; }
+        .btn-backup { background: #f59e0b; }
+        .btn-restore { background: #8b5cf6; }
+        .form-title { margin-bottom: 1.5rem; color: var(--primary-color); }
+        .uma-calculator-highlight { background: linear-gradient(135deg, #fef3c7 0%, #fef9e3 100%); border-color: var(--accent-color); }
+        .btn-add-servicio-full { width: 100%; margin-top: 0.5rem; }
+        .empty-inbox-icon { font-size: 2rem; opacity: 0.3; }
+        .td-empty { text-align: center; padding: 3rem; color: var(--text-light); }
+        .empty-icon-xl { font-size: 3rem; display: block; margin-bottom: 1rem; }
     </style>
 </head>
 <body>
@@ -791,20 +802,20 @@
         <div class="content-section">
             <div class="section-header">
                 <h2>Listado de Presupuestos</h2>
-                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                    <button id="btnExportarExcel" class="btn-primary-custom" style="background: #10b981;" title="Exportar todos los presupuestos a Excel">
+                <div class="btn-row">
+                    <button type="button" id="btnExportarExcel" class="btn-primary-custom btn-excel" title="Exportar todos los presupuestos a Excel">
                         <i class="bi bi-file-earmark-spreadsheet"></i>
                         Exportar Excel
                     </button>
-                    <button id="btnBackupCompleto" class="btn-primary-custom" style="background: #f59e0b;" title="Descargar backup completo (JSON)">
+                    <button type="button" id="btnBackupCompleto" class="btn-primary-custom btn-backup" title="Descargar backup completo (JSON)">
                         <i class="bi bi-cloud-download"></i>
                         Backup
                     </button>
-                    <button id="btnRestaurarBackup" class="btn-primary-custom" style="background: #8b5cf6;" title="Restaurar desde backup">
+                    <button type="button" id="btnRestaurarBackup" class="btn-primary-custom btn-restore" title="Restaurar desde backup">
                         <i class="bi bi-cloud-upload"></i>
                         Restaurar
                     </button>
-                    <button id="btnNuevoPresupuesto" class="btn-primary-custom">
+                    <button type="button" id="btnNuevoPresupuesto" class="btn-primary-custom">
                         <i class="bi bi-plus-circle"></i>
                         Nuevo Presupuesto
                     </button>
@@ -813,7 +824,7 @@
 
             <!-- Formulario de presupuesto -->
             <div id="formPresupuesto" class="form-presupuesto">
-                <h3 style="margin-bottom: 1.5rem; color: var(--primary-color);" id="formTitle">
+                <h3 class="form-title" id="formTitle">
                     <i class="bi bi-file-earmark-plus me-2"></i>Crear Nuevo Presupuesto
                 </h3>
                 <form id="presupuestoForm">
@@ -854,7 +865,7 @@
                     </div>
 
                     <!-- Calculadora para agregar servicios -->
-                    <div class="uma-calculator" style="background: linear-gradient(135deg, #fef3c7 0%, #fef9e3 100%); border-color: var(--accent-color);">
+                    <div class="uma-calculator uma-calculator-highlight">
                         <h6><i class="bi bi-plus-circle me-2"></i>Agregar Servicio</h6>
                         <div class="form-row">
                             <div class="form-group">
@@ -915,7 +926,7 @@
                                     <span class="input-group-text">$</span>
                                     <input type="text" id="totalServicio" class="form-control fw-bold" readonly>
                                 </div>
-                                <button type="button" class="btn-add-servicio" id="btnAgregarServicio" style="width: 100%; margin-top: 0.5rem;">
+                                <button type="button" class="btn-add-servicio btn-add-servicio-full" id="btnAgregarServicio">
                                     <i class="bi bi-plus-lg"></i> Agregar Servicio
                                 </button>
                             </div>
@@ -925,7 +936,7 @@
                     <!-- Lista de servicios agregados -->
                     <div class="servicios-agregados" id="serviciosAgregados">
                         <div class="servicios-empty" id="serviciosEmpty">
-                            <i class="bi bi-inbox" style="font-size: 2rem; opacity: 0.3;"></i>
+                            <i class="bi bi-inbox empty-inbox-icon"></i>
                             <p>No hay servicios agregados. Use el formulario arriba para agregar servicios.</p>
                         </div>
                     </div>
@@ -1088,8 +1099,8 @@
                     </thead>
                     <tbody id="presupuestosTableBody">
                         <tr>
-                            <td colspan="8" style="text-align: center; padding: 3rem; color: var(--text-light);">
-                                <i class="bi bi-inbox" style="font-size: 3rem; display: block; margin-bottom: 1rem;"></i>
+                            <td colspan="8" class="td-empty">
+                                <i class="bi bi-inbox empty-icon-xl"></i>
                                 No hay presupuestos registrados. Haga clic en "Nuevo Presupuesto" para comenzar.
                             </td>
                         </tr>
@@ -1766,8 +1777,8 @@
                 if (this.presupuestos.length === 0) {
                     tbody.innerHTML = `
                         <tr>
-                            <td colspan="8" style="text-align: center; padding: 3rem; color: var(--text-light);">
-                                <i class="bi bi-inbox" style="font-size: 3rem; display: block; margin-bottom: 1rem;"></i>
+                            <td colspan="8" class="td-empty">
+                                <i class="bi bi-inbox empty-icon-xl"></i>
                                 No hay presupuestos registrados. Haga clic en "Nuevo Presupuesto" para comenzar.
                             </td>
                         </tr>
