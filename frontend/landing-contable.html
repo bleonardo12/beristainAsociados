@@ -251,6 +251,19 @@
         .detail-list { margin-top: 8px; padding-left: 0; list-style: none; font-size: 0.83rem; color: #6b7280; line-height: 1.8; }
         .ft-strong { color: rgba(255,255,255,0.65); }
         .ft-link { margin-top: 5px; display: inline-block; }
+
+        /* ── POR QUÉ NOSOTROS ── */
+        .why-us { background: var(--white); padding: 48px 24px; }
+        .why-us-inner { max-width: 800px; margin: 0 auto; }
+        .why-us .eyebrow { display: block; text-align: center; }
+        .why-us .section-title { text-align: center; }
+        .why-us .section-title::after { left: 50%; transform: translateX(-50%); }
+        .why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 32px; }
+        .why-card { background: var(--cream); border-radius: 6px; padding: 24px 18px; border-top: 3px solid var(--gold); }
+        .why-card i { font-size: 1.4rem; color: var(--gold); margin-bottom: 10px; display: block; }
+        .why-card h4 { font-family: var(--font-d); font-size: 1.1rem; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+        .why-card p { font-size: 0.85rem; color: var(--gray); line-height: 1.65; }
+        @media (max-width: 600px) { .why-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
@@ -281,7 +294,7 @@
                 <span>Contadora Pública · Perito Contadora Judicial · Matrícula CABA</span>
             </div>
             <p class="hero-eyebrow">Servicios contables e impositivos · CABA</p>
-            <h1>Contabilidad e impuestos<br>con <span class="gold">respaldo profesional</span></h1>
+            <h1>Contadora Pública en CABA<br><span class="gold">Ganancias · Monotributo · Balances</span></h1>
             <p class="hero-desc">
                 Ganancias 3ra y 4ta categoría, monotributo, responsable inscripto, balances y asesoría impositiva a PYMEs. <strong>Cra. Daniela Magalí Bava</strong>, Contadora Pública con matrícula en CABA, también actúa como Perito Contadora Judicial en causas civiles y penales.
             </p>
@@ -327,7 +340,7 @@
     <div class="stats">
         <div><span class="stat-num">CABA</span><span class="stat-label">Matrícula</span></div>
         <div><span class="stat-num">3ra · 4ta</span><span class="stat-label">Ganancias</span></div>
-        <div><span class="stat-num">ARCA</span><span class="stat-label">Trámites</span></div>
+        <div><span class="stat-num">Directa</span><span class="stat-label">Atención Cra. Bava</span></div>
         <div><span class="stat-num">&lt; 2hs</span><span class="stat-label">Respuesta</span></div>
     </div>
 
@@ -403,6 +416,31 @@
             </div>
         </div>
     </div>
+
+    <!-- Por qué nosotros -->
+    <section class="why-us">
+        <div class="why-us-inner">
+            <span class="eyebrow">Por qué elegirnos</span>
+            <h2 class="section-title">Lo que nos diferencia</h2>
+            <div class="why-grid">
+                <div class="why-card">
+                    <i class="bi bi-person-check-fill"></i>
+                    <h4>Atención directa de la Cra. Bava</h4>
+                    <p>Hablás siempre con la contadora — no con un empleado. Tu liquidación, balance o peritaje los maneja la profesional de principio a fin.</p>
+                </div>
+                <div class="why-card">
+                    <i class="bi bi-patch-check-fill"></i>
+                    <h4>Matrícula activa en CPCE-CABA</h4>
+                    <p>Profesional matriculada con pleno ejercicio. Interviene también como Perito Contadora Judicial en causas civiles y penales ante los tribunales de CABA.</p>
+                </div>
+                <div class="why-card">
+                    <i class="bi bi-shield-check"></i>
+                    <h4>Honorarios claros desde la primera reunión</h4>
+                    <p>Sin estimaciones vagas ni costos por sorpresa. Te decimos exactamente cuánto cuesta cada servicio antes de que empieces.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Proceso -->
     <section class="process">

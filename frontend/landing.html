@@ -432,6 +432,19 @@
         .btn-ghost { background: transparent; border: 1px solid rgba(212,175,119,0.5); color: var(--gold2); }
         .ft-strong { color: rgba(255,255,255,0.65); }
         .ft-link { margin-top: 5px; display: inline-block; }
+
+        /* ── POR QUÉ NOSOTROS ── */
+        .why-us { background: var(--white); padding: 48px 24px; }
+        .why-us-inner { max-width: 800px; margin: 0 auto; }
+        .why-us .eyebrow { display: block; text-align: center; }
+        .why-us .section-title { text-align: center; }
+        .why-us .section-title::after { left: 50%; transform: translateX(-50%); }
+        .why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 32px; }
+        .why-card { background: var(--cream); border-radius: 6px; padding: 24px 18px; border-top: 3px solid var(--gold); }
+        .why-card i { font-size: 1.4rem; color: var(--gold); margin-bottom: 10px; display: block; }
+        .why-card h4 { font-family: var(--font-d); font-size: 1.1rem; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+        .why-card p { font-size: 0.85rem; color: var(--gray); line-height: 1.65; }
+        @media (max-width: 600px) { .why-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
@@ -481,7 +494,7 @@
     <!-- Stats -->
     <div class="stats">
         <div><span class="stat-num">24hs</span><span class="stat-label">Disponibilidad</span></div>
-        <div><span class="stat-num">UBA</span><span class="stat-label">Formación</span></div>
+        <div><span class="stat-num">Directo</span><span class="stat-label">Al abogado</span></div>
         <div><span class="stat-num">CABA · GBA</span><span class="stat-label">Cobertura</span></div>
         <div><span class="stat-num">&lt; 2hs</span><span class="stat-label">Respuesta</span></div>
     </div>
@@ -521,6 +534,31 @@
                     <div class="spec-icon"><i class="bi bi-cash-coin"></i></div>
                     <h3>Delitos económicos</h3>
                     <p>Estafas, fraude, administración infiel, lavado de activos y delitos contra la administración pública.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Por qué nosotros -->
+    <section class="why-us">
+        <div class="why-us-inner">
+            <span class="eyebrow">Por qué elegirnos</span>
+            <h2 class="section-title">Lo que nos diferencia</h2>
+            <div class="why-grid">
+                <div class="why-card">
+                    <i class="bi bi-telephone-fill"></i>
+                    <h4>Disponible las 24hs, incluso el fin de semana</h4>
+                    <p>Las detenciones no esperan. Atendemos urgencias penales en cualquier horario — noche, fin de semana o feriado.</p>
+                </div>
+                <div class="why-card">
+                    <i class="bi bi-person-check-fill"></i>
+                    <h4>Atención directa del Dr. Beristain</h4>
+                    <p>Hablás siempre con el abogado, no con un asistente ni secretaria. Tu defensa la maneja el profesional desde el primer contacto.</p>
+                </div>
+                <div class="why-card">
+                    <i class="bi bi-shield-check"></i>
+                    <h4>Honorarios claros antes de cualquier decisión</h4>
+                    <p>Te informamos el costo antes de que te comprometas a nada. Sin sorpresas, sin costos ocultos, con total transparencia.</p>
                 </div>
             </div>
         </div>
