@@ -445,6 +445,17 @@
         .why-card h4 { font-family: var(--font-d); font-size: 1.1rem; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
         .why-card p { font-size: 0.85rem; color: var(--gray); line-height: 1.65; }
         @media (max-width: 600px) { .why-grid { grid-template-columns: 1fr; } }
+
+        /* ── QUIÉN TE ATIENDE ── */
+        .prof-strip { background: var(--navy); padding: 40px 24px; }
+        .prof-strip-inner { max-width: 800px; margin: 0 auto; display: flex; align-items: center; gap: 32px; }
+        .prof-strip picture { flex: 0 0 260px; }
+        .prof-strip img { width: 260px; height: 175px; object-fit: cover; object-position: center 20%; border-radius: 6px; border: 1px solid rgba(212,175,119,0.3); }
+        .prof-strip-text .eyebrow-prof { color: rgba(212,175,119,0.65); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; display: block; margin-bottom: 6px; }
+        .prof-strip-text h3 { font-family: var(--font-d); font-size: 1.7rem; font-weight: 700; color: var(--white); line-height: 1.1; }
+        .prof-strip-text .prof-cred { color: var(--gold); font-size: 0.82rem; font-weight: 500; display: block; margin: 6px 0 12px; }
+        .prof-strip-text p { font-size: 0.87rem; color: rgba(255,255,255,0.6); line-height: 1.7; }
+        @media (max-width: 640px) { .prof-strip-inner { flex-direction: column; } .prof-strip picture { flex: none; width: 100%; } .prof-strip img { width: 100%; height: 210px; } }
     </style>
 </head>
 <body>
@@ -563,6 +574,25 @@
             </div>
         </div>
     </section>
+
+    <!-- Quién te atiende -->
+    <div class="prof-strip">
+        <div class="prof-strip-inner">
+            <picture>
+                <source srcset="img/me.webp" type="image/webp">
+                <img src="img/me.jpg"
+                     alt="Dr. Leonardo Beristain frente a la Facultad de Derecho UBA — CABA"
+                     width="260" height="175"
+                     loading="lazy">
+            </picture>
+            <div class="prof-strip-text">
+                <span class="eyebrow-prof">Quién te atiende</span>
+                <h3>Dr. Leonardo Beristain</h3>
+                <span class="prof-cred">Abogado Penalista · Colegiado CPACF · UBA</span>
+                <p>Cuando llamás o escribís, es el Dr. Beristain quien responde — no un asistente ni secretaria. Tu defensa la maneja el profesional desde el primer contacto hasta el cierre del caso.</p>
+            </div>
+        </div>
+    </div>
 
     <!-- Formulario -->
     <section class="form-section" id="contacto">
