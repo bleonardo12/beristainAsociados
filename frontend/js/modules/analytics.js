@@ -21,16 +21,6 @@ export function initAnalytics() {
   trackPhoneClicks();
 
   console.log('✅ Analytics inicializado correctamente');
-
-  trackCTAClicks();
-  trackScrollDepth();
-  trackTimeOnPage();
-  trackSectionViews();
-  trackSocialClicks();
-  trackWhatsAppClicks();
-  trackPhoneClicks();
-
-  console.log('✅ Analytics inicializado correctamente');
 }
 
 /**

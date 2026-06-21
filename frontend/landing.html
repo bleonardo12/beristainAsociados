@@ -669,16 +669,7 @@
             if (typeof emailjs === 'undefined') throw new Error('EmailJS no cargó');
             await emailjs.send(EJSCONFIG.serviceID, EJSCONFIG.templateID, params);
 
-            // Conversión Google Ads
-            if (typeof gtag !== 'undefined') {
-                gtag('event', 'conversion', {
-                    send_to: 'AW-11107730225/1LBbCOr-37sbELGGyrAp',
-                    value: 1.0, currency: 'ARS',
-                    transaction_id: `lp_${Date.now()}`
-                });
-                gtag('event', 'form_submission_success', { lead_legal_area: params.asunto, source: 'landing' });
-            }
-
+            // GTM dispara la conversión de Google Ads al recibir form_submit_exitoso
             window.dataLayer = window.dataLayer || [];
             window.dataLayer.push({ event: 'form_submit_exitoso', gclid: window.getGclid() });
             fb.textContent = '✅ ¡Mensaje enviado! Te contactamos pronto.';
