@@ -247,25 +247,10 @@ export function initContactForm() {
       const result = await sendWithEmailJS(templateParams);
       console.log('✅ Email enviado exitosamente:', result);
 
-      // 📊 GOOGLE ADS & GA4 INTEGRADO: Trackear conversión limpia
-      if (typeof gtag !== 'undefined') {
-        // 1. Conversión directa a Google Ads vinculada a tus campañas
-        gtag('event', 'conversion', {
-          'send_to': 'AW-11107730225/1LBbCOr-37sbELGGyrAp',
-          'value': 1.0,
-          'currency': 'ARS',
-          'transaction_id': `form_${Date.now()}`
-        });
-        console.log('📊 Google Ads conversion tracked: Formulario');
+      // GA4: evento informativo (no conversión de Google Ads)
+      trackEvent('form_submission_success', { 'lead_legal_area': templateParams.asunto });
 
-        // 2. Evento nativo GA4 optimizado utilizando propiedades limpias
-        trackEvent('form_submission_success', {
-          'lead_legal_area': templateParams.asunto
-        });
-      } else {
-        console.warn('⚠️ gtag no disponible - conversión no trackeada');
-      }
-
+      // GTM maneja la conversión de Google Ads al recibir este evento
       window.dataLayer = window.dataLayer || [];
       window.dataLayer.push({ event: 'form_submit_exitoso', gclid: window.getGclid ? window.getGclid() : '' });
 
