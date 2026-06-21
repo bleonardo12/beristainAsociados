@@ -686,6 +686,7 @@
             form.reset();
             sel.value = copy.area;
         } catch (err) {
+            console.error('[EmailJS error]', err);
             fb.textContent = '❌ Error al enviar. Llamanos directo al +54 9 11 3591-3161.';
             fb.className   = 'form-feedback error';
         } finally {

@@ -597,7 +597,8 @@
             fb.textContent = '✅ ¡Consulta enviada! Te contactamos pronto.';
             fb.className   = 'form-feedback success';
             form.reset();
-        } catch {
+        } catch (err) {
+            console.error('[EmailJS error]', err);
             fb.textContent = '❌ Error al enviar. Llamanos al 11 2827-6362.';
             fb.className   = 'form-feedback error';
         } finally {

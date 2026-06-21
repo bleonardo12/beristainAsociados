@@ -445,7 +445,8 @@
             fb.textContent = '✅ ¡Mensaje enviado! Te contactamos pronto.';
             fb.className   = 'form-feedback success';
             form.reset();
-        } catch {
+        } catch (err) {
+            console.error('[EmailJS error]', err);
             fb.textContent = '❌ Error al enviar. Llamanos al +54 9 11 3591-3161.';
             fb.className   = 'form-feedback error';
         } finally {
