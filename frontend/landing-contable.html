@@ -625,13 +625,12 @@
     });
 
     function trackCall(loc) {
-        if (typeof gtag === 'undefined') return;
-        gtag('event', 'contact_click', { contact_method: 'phone', click_location: loc, area: 'contable', gclid: window.getGclid() || undefined });
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({ event: 'phone_click', click_location: loc, area: 'contable', gclid: window.getGclid() || undefined });
     }
     function trackWA(loc) {
-        var g = window.getGclid();
-        if (typeof gtag === 'undefined') return;
-        gtag('event', 'contact_click', { contact_method: 'whatsapp', click_location: loc, area: 'contable', gclid: g || undefined });
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({ event: 'whatsapp_click', click_location: loc, area: 'contable', gclid: window.getGclid() || undefined });
     }
     (function () {
         var g = window.getGclid();

@@ -654,7 +654,7 @@
             <h2 class="section-title">Contanos tu caso</h2>
             <p class="form-sub">Sin cargo. Te respondemos en menos de 2 horas.</p>
 
-            <form id="lp-contact-form" class="lp-form" novalidate>
+            <form id="lp-form" class="lp-form" novalidate>
                 <label for="lp-name">Nombre</label>
                 <input type="text" id="lp-name" name="name" required placeholder="Tu nombre completo" autocomplete="name">
 
@@ -759,7 +759,7 @@
         if (typeof emailjs !== 'undefined') emailjs.init(EJSCONFIG.publicKey);
     });
 
-    document.getElementById('lp-contact-form').addEventListener('submit', async (e) => {
+    document.getElementById('lp-form').addEventListener('submit', async (e) => {
         e.preventDefault();
         const form = e.target;
         const fb   = document.getElementById('lp-feedback');
@@ -802,13 +802,12 @@
 
     // ── TRACKING ──
     function trackCall(loc) {
-        if (typeof gtag === 'undefined') return;
-        gtag('event', 'contact_click', { contact_method: 'phone', click_location: loc, gclid: window.getGclid() || undefined });
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({ event: 'phone_click', click_location: loc, area: 'penal', gclid: window.getGclid() || undefined });
     }
     function trackWA(loc) {
-        var g = window.getGclid();
-        if (typeof gtag === 'undefined') return;
-        gtag('event', 'contact_click', { contact_method: 'whatsapp', click_location: loc, gclid: g || undefined });
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({ event: 'whatsapp_click', click_location: loc, area: 'penal', gclid: window.getGclid() || undefined });
     }
     (function () {
         var g = window.getGclid();
