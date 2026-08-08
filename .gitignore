@@ -37,3 +37,7 @@ coverage/
 # Caché
 .cache/deploy_key_nueva
 deploy_key_nueva.pub
+
+# Backups y capturas de trabajo
+*.bak
+sc_hero.png

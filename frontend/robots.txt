@@ -1,19 +1,10 @@
-# robots.txt para Beristain & Asociados
 User-agent: *
 Allow: /
 
-# Bloquear área privada de socios
+# Área privada de socios
 Disallow: /login.html
 Disallow: /presupuestos.html
 Disallow: /causas.html
 Disallow: /backups/
 
-# Sitemap
 Sitemap: https://www.beristainyasociados.com.ar/sitemap.xml
-
-# Bots de búsqueda
-User-agent: Googlebot
-Allow: /
-
-User-agent: Bingbot
-Allow: /

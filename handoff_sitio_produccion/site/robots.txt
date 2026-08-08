@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://www.beristainyasociados.com.ar/sitemap.xml

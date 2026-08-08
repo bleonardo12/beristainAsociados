@@ -1,0 +1,5 @@
+# Landings de Google Ads -> páginas nuevas (301)
+/landing.html area=penal /penal.html 301
+/landing.html /penal.html 301
+/landing-civil.html /civil.html 301
+/landing-contable.html /contable.html 301
