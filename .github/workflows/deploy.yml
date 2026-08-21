@@ -22,20 +22,22 @@ jobs:
       - name: Registrar Host de Confianza
         run: |
           mkdir -p ~/.ssh
-          # -4: los runners de GitHub no tienen ruta IPv6, y el host resuelve
-          # a IPv6 primero. Sin esto el keyscan falla de forma intermitente.
-          for intento in 1 2 3; do
-            if ssh-keyscan -4 -T 20 -p 2222 -H srv777726.hstgr.cloud >> ~/.ssh/known_hosts 2>/dev/null; then
-              if [ -s ~/.ssh/known_hosts ]; then
-                echo "Host registrado en el intento $intento"
-                exit 0
-              fi
-            fi
-            echo "Intento $intento sin respuesta; reintentando en 10s..."
-            sleep 10
-          done
-          echo "No se pudo registrar el host tras 3 intentos"
-          exit 1
+          # La clave del host va fija en lugar de escanearse en cada corrida.
+          # ssh-keyscan fallaba de forma intermitente desde los runners de
+          # GitHub (rangos de Azure hacia el VPS), y tumbaba el deploy antes
+          # de intentar conectarse. Fijarla es además más seguro: evita
+          # confiar en la primera clave que responda.
+          # Si algún día se regeneran las claves del VPS, actualizar con:
+          #   ssh-keyscan -4 -p 2222 -t ed25519 srv777726.hstgr.cloud
+          cat >> ~/.ssh/known_hosts <<'EOF'
+          [srv777726.hstgr.cloud]:2222 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDJwPDt8iTSLb1b3AV5fe/sH9p//IwBabyHIJiPNqYt3
+          [69.62.95.98]:2222 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDJwPDt8iTSLb1b3AV5fe/sH9p//IwBabyHIJiPNqYt3
+          EOF
+          # El heredoc indentado agrega espacios al inicio; se limpian.
+          sed -i 's/^[[:space:]]*//' ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
+          echo "Host fijado:"
+          cut -d' ' -f1 ~/.ssh/known_hosts
 
       - name: Deploy al VPS
         run: |
