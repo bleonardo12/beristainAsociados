@@ -13,7 +13,7 @@ Ejecuta estos comandos **desde tu terminal local** (no desde este entorno):
 ssh root@srv777726.hstgr.cloud
 ```
 
-**Contraseña:** `Racingcampeon2025#`
+**Contraseña:** guardala en tu gestor de contraseñas. No se versiona en el repositorio.
 
 ### Paso 2: Una vez conectado al VPS, ejecuta estos comandos:
 
