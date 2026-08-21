@@ -15,10 +15,17 @@ if('IntersectionObserver' in window){
 }else{document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('in')})}
 // GA4 events (call / whatsapp)
 function track(n,p){if(typeof gtag==='function')gtag('event',n,p||{})}
+// Google Ads conversions
+var ADS_ID='AW-11107730225';
+var ADS_CALL='MjxGCJ-v6bsbELGGyrAp',ADS_WA='Yg24CK6u4LsbELGGyrAp';
+function conv(label,value){
+  if(typeof gtag!=='function')return;
+  gtag('event','conversion',{send_to:ADS_ID+'/'+label,value:value,currency:'ARS',transaction_id:label.slice(0,4)+'_'+Date.now()});
+}
 document.addEventListener('click',function(ev){
   var a=ev.target.closest('a');if(!a)return;
-  if(a.matches('[data-ga="call"],a[href^="tel:"]'))track('call_click',{link_url:a.href,page:location.pathname});
-  else if(a.matches('[data-ga="wa"]')||(a.href&&a.href.indexOf('wa.me')>-1))track('whatsapp_click',{link_url:a.href,page:location.pathname});
+  if(a.matches('[data-ga="call"],a[href^="tel:"]')){track('call_click',{link_url:a.href,page:location.pathname});conv(ADS_CALL,100)}
+  else if(a.matches('[data-ga="wa"]')||(a.href&&a.href.indexOf('wa.me')>-1)){track('whatsapp_click',{link_url:a.href,page:location.pathname});conv(ADS_WA,75)}
 });
 // qualification chips
 document.querySelectorAll('.chips-row').forEach(function(row){

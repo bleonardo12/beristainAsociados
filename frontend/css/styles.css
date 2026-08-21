@@ -246,6 +246,7 @@ textarea{resize:vertical}
 .consent a{text-decoration:underline}
 /* legal */
 .legal p{max-width:70ch;color:var(--ink2)}
+.legal h2{font-family:var(--serif);font-weight:400;font-size:1.4rem;color:var(--ink);margin:36px 0 12px;line-height:1.25}
 /* responsive */
 @media (max-width:1020px){
  .hero-foot,.duo,.split,.hero-area,.contact,.team{grid-template-columns:1fr}
@@ -305,4 +306,11 @@ textarea{resize:vertical}
 .art-next{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:24px}
 @media (max-width:860px){
  .art h2{margin-top:36px}
+}
+
+/* área táctil mínima en móvil (Google recomienda 48px) */
+@media (max-width:760px){
+ .ftr p{line-height:1.5}
+ .ftr p a{display:inline-block;box-sizing:border-box;min-height:44px;padding:11px 0}
+ .prof-strip a[data-ga="call"],.hdr a[data-ga="call"]{display:inline-flex;align-items:center;min-height:44px}
 }
