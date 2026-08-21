@@ -7,7 +7,24 @@ var onScroll=function(){hdr.classList.toggle('scrolled',window.scrollY>8)};
 window.addEventListener('scroll',onScroll,{passive:true});onScroll();
 // mobile nav
 var tg=document.getElementById('navToggle'),nav=document.getElementById('nav');
-if(tg)tg.addEventListener('click',function(){var o=nav.classList.toggle('open');tg.setAttribute('aria-expanded',o)});
+if(tg&&nav){
+  var setNav=function(abierto){
+    nav.classList.toggle('open',abierto);
+    tg.setAttribute('aria-expanded',abierto);
+    if(hdr)hdr.classList.toggle('nav-open',abierto);
+    document.body.classList.toggle('nav-lock',abierto);
+  };
+  tg.addEventListener('click',function(){setNav(!nav.classList.contains('open'))});
+  // cerrar al elegir una sección, con Escape, o al tocar fuera del panel
+  nav.addEventListener('click',function(ev){if(ev.target.closest('a'))setNav(false)});
+  document.addEventListener('keydown',function(ev){if(ev.key==='Escape'&&nav.classList.contains('open'))setNav(false)});
+  document.addEventListener('click',function(ev){
+    if(!nav.classList.contains('open'))return;
+    if(!nav.contains(ev.target)&&!tg.contains(ev.target))setNav(false);
+  });
+  // al volver a escritorio el panel no debe quedar abierto
+  window.addEventListener('resize',function(){if(innerWidth>860&&nav.classList.contains('open'))setNav(false)});
+}
 // scroll reveal
 if('IntersectionObserver' in window){
   var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12,rootMargin:'0px 0px -40px 0px'});

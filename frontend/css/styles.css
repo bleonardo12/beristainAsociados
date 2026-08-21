@@ -264,11 +264,32 @@ textarea{resize:vertical}
  .area-badge{top:-14px;left:-6px}
 }
 @media (max-width:860px){
- .nav{position:fixed;inset:0;top:73px;background:var(--bg);flex-direction:column;align-items:flex-start;padding:28px;gap:6px;display:none;border-top:1px solid var(--sand)}
- .nav.open{display:flex}
- .nav a{font-size:1.1rem;padding:12px 8px;width:100%}
- .nav-cta{margin:12px 0 0}
- .nav-toggle{display:block}
+ /* Panel lateral. El backdrop-filter del header crea un bloque contenedor:
+    un hijo position:fixed queda encerrado en la barra (75px) en lugar de
+    ocupar la pantalla. Por eso se desactiva mientras el panel está abierto. */
+ .hdr.nav-open{backdrop-filter:none;-webkit-backdrop-filter:none;background:var(--bg)}
+ .hdr.nav-open::after{content:"";position:fixed;inset:0;z-index:1;background:rgba(35,38,42,.5)}
+ .nav{
+  position:fixed;top:0;right:0;bottom:0;left:auto;
+  width:min(80vw,320px);max-width:320px;
+  background:var(--bg);border-left:1px solid var(--sand);
+  box-shadow:-10px 0 40px rgba(35,38,42,.22);
+  flex-direction:column;align-items:stretch;
+  padding:86px 20px 28px;gap:2px;
+  z-index:2;overflow-y:auto;overscroll-behavior:contain;
+  display:flex;visibility:hidden;transform:translateX(100%);
+  transition:transform .26s cubic-bezier(.4,0,.2,1),visibility 0s linear .26s;
+ }
+ .nav.open{visibility:visible;transform:translateX(0);transition:transform .26s cubic-bezier(.4,0,.2,1)}
+ .nav a{font-size:1.05rem;padding:14px 12px;width:100%;border-radius:var(--r)}
+ .nav a.on{background:var(--sand);color:var(--ink)}
+ .nav-cta{margin:18px 0 0;justify-content:center}
+ .nav-toggle{display:block;position:relative;z-index:3}
+ .nav-toggle span{transition:transform .22s,opacity .18s}
+ .nav-toggle[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+ .nav-toggle[aria-expanded="true"] span:nth-child(2){opacity:0}
+ .nav-toggle[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+ body.nav-lock{overflow:hidden}
  .brand-txt strong{font-size:1.05rem}
  .fld-row,.chips-row{grid-template-columns:1fr}
  .sec{padding-top:64px;padding-bottom:64px}
