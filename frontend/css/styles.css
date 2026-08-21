@@ -2,7 +2,12 @@
 :root{--bg:#F5F2EC;--card:#FBFAF6;--sand:#E5DCCB;--ink:#23262A;--ink2:#4A4F55;--ink3:#5F6469;--dim:#8B8377;--dim2:#8B7A66;--slate:#2F3E46;--slate2:#23262A;--mocha:#A47864;--mocha2:#C9A896;--teal:#3E6F73;--teal2:#33595C;--r:6px;--sh:0 1px 2px rgba(35,38,42,.05),0 8px 24px rgba(35,38,42,.07);--sh2:0 2px 4px rgba(35,38,42,.06),0 16px 40px rgba(35,38,42,.13);--serif:'Instrument Serif',Georgia,serif;--sans:'Albert Sans',system-ui,sans-serif}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6}
+/* El panel del menú vive fuera de pantalla a la derecha mientras está cerrado
+   y, aunque esté oculto, sumaba área desplazable: se podía deslizar el sitio
+   de costado y aparecía una franja vacía. `clip` la recorta sin crear un
+   contenedor de scroll, así el header sticky sigue funcionando. */
+html{overflow-x:clip}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;overflow-x:clip;overscroll-behavior-x:none}
 img{max-width:100%;display:block}
 a{color:var(--slate);text-decoration:none;transition:color .18s}
 a:hover{color:var(--mocha)}
