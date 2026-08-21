@@ -315,24 +315,17 @@ textarea{resize:vertical}
  .prof-strip a[data-ga="call"],.hdr a[data-ga="call"]{display:inline-flex;align-items:center;min-height:44px}
 }
 
-/* hero home: retrato del profesional + texto.
-   Clase propia: .hero (full-bleed) la siguen usando las landings viejas. */
-.hero-home{background:var(--slate);position:relative;overflow:hidden}
-.hero-home::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(120% 90% at 82% 30%,rgba(164,120,100,.14) 0%,transparent 62%)}
-.hero-home-in{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:56px;align-items:center;padding-top:76px;padding-bottom:80px}
-.hero-home-txt .eyebrow{color:var(--mocha2);margin-bottom:18px}
-.hero-home-txt .display{font-size:clamp(2.4rem,4.4vw,3.8rem);max-width:16ch;margin:0 0 22px}
-.hero-home-txt .lead{color:rgba(245,242,236,.78);max-width:54ch;margin:0}
-.hero-home .btn-row{margin-top:30px}
-.hero-home-micro{color:rgba(245,242,236,.6);margin-top:16px}
-.hero-home-img{margin:0}
-.hero-home-img img{width:100%;max-width:430px;height:auto;aspect-ratio:4/5;object-fit:cover;object-position:center 18%;display:block;margin-left:auto;border-radius:10px;box-shadow:var(--sh2);filter:saturate(.94) contrast(1.03)}
-@media (max-width:1020px){
- .hero-home-in{grid-template-columns:1fr;gap:38px;padding-top:108px;padding-bottom:68px}
+
+/* hero home: tipográfico, sobre el fondo claro del sitio */
+.hero-home{background:var(--bg);border-bottom:1px solid var(--sand)}
+.hero-home-in{padding-top:60px;padding-bottom:60px}
+.hero-home-txt{max-width:62ch}
+.hero-home-txt .eyebrow{color:var(--dim2);margin-bottom:16px}
+.hero-home-txt .display{font-size:clamp(2.1rem,4vw,3.3rem);max-width:19ch;margin:0 0 20px}
+.hero-home-txt .lead{max-width:56ch;margin:0}
+.hero-home .btn-row{margin-top:26px}
+.hero-home-micro{margin-top:14px}
+@media (max-width:700px){
+ .hero-home-in{padding-top:44px;padding-bottom:44px}
  .hero-home-txt .display{max-width:none}
- .hero-home-img{max-width:330px}
-}
-@media (max-width:560px){
- .hero-home-in{padding-top:96px;padding-bottom:56px}
- .hero-home-img{max-width:260px}
 }
