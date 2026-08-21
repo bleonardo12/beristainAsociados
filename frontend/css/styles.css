@@ -319,9 +319,9 @@ textarea{resize:vertical}
 /* hero home: fondo oscuro con el retrato disuelto al costado.
    La foto no es un objeto sino atmósfera: desaturada, con opacidad baja
    y fundida por los bordes con máscaras de degradado. */
-.hero-home{background:var(--slate);position:relative;overflow:hidden;isolation:isolate}
-.hero-home-bg{position:absolute;top:0;right:0;bottom:0;width:52%;z-index:0;pointer-events:none;user-select:none}
-.hero-home-bg img{
+.hero-dark{background:var(--slate);position:relative;overflow:hidden;isolation:isolate}
+.hero-dark-bg{position:absolute;top:0;right:0;bottom:0;width:52%;z-index:0;pointer-events:none;user-select:none}
+.hero-dark-bg img{
   width:100%;height:100%;object-fit:cover;object-position:62% 16%;display:block;
   filter:grayscale(1) contrast(1.14) brightness(.86);
   opacity:.42;
@@ -332,17 +332,21 @@ textarea{resize:vertical}
   mask-composite:intersect;
 }
 /* velo que asienta el retrato sobre el color de marca */
-.hero-home::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(100deg,var(--slate) 34%,rgba(47,62,70,.72) 56%,rgba(47,62,70,.42) 100%)}
-.hero-home-in{position:relative;z-index:2;padding-top:78px;padding-bottom:78px}
-.hero-home-txt{max-width:60ch}
-.hero-home-txt .eyebrow{color:var(--mocha2);margin-bottom:16px}
-.hero-home-txt .display{font-size:clamp(2.1rem,4vw,3.3rem);max-width:18ch;margin:0 0 20px}
-.hero-home-txt .lead{color:rgba(245,242,236,.8);max-width:54ch;margin:0}
-.hero-home .btn-row{margin-top:26px}
-.hero-home-micro{color:rgba(245,242,236,.62);margin-top:14px}
+.hero-dark::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(100deg,var(--slate) 34%,rgba(47,62,70,.72) 56%,rgba(47,62,70,.42) 100%)}
+.hero-dark-in{position:relative;z-index:2;padding-top:78px;padding-bottom:78px}
+.hero-dark-txt{max-width:60ch}
+.hero-dark-txt .eyebrow{color:var(--mocha2);margin-bottom:16px}
+.hero-dark-txt .display{font-size:clamp(2.1rem,4vw,3.3rem);max-width:18ch;margin:0 0 20px}
+.hero-dark-txt .lead{color:rgba(245,242,236,.8);max-width:54ch;margin:0}
+.hero-dark .btn-row{margin-top:26px}
+.hero-dark-micro{color:rgba(245,242,236,.62);margin-top:14px}
 @media (max-width:860px){
- .hero-home-bg{width:100%;opacity:.55}
- .hero-home::after{background:linear-gradient(160deg,var(--slate) 42%,rgba(47,62,70,.86) 100%)}
- .hero-home-in{padding-top:52px;padding-bottom:52px}
- .hero-home-txt .display{max-width:none}
+ .hero-dark-bg{width:100%;opacity:.55}
+ .hero-dark::after{background:linear-gradient(160deg,var(--slate) 42%,rgba(47,62,70,.86) 100%)}
+ .hero-dark-in{padding-top:52px;padding-bottom:52px}
+ .hero-dark-txt .display{max-width:none}
 }
+/* la banda de guardia comparte color con el hero oscuro: se separa con un filete */
+.hero-dark + .guard-band{border-top:1px solid rgba(245,242,236,.16)}
+/* migas de pan justo antes del hero oscuro: se pegan al header, sin aire muerto */
+.crumbs + .hero-dark{margin-top:4px}
