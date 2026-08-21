@@ -22,6 +22,9 @@ function conv(label,value){
   if(typeof gtag!=='function')return;
   gtag('event','conversion',{send_to:ADS_ID+'/'+label,value:value,currency:'ARS',transaction_id:label.slice(0,4)+'_'+Date.now()});
 }
+// gclid: identifica el anuncio del que vino la visita; se adjunta a la consulta
+try{var _g=new URLSearchParams(location.search).get('gclid');if(_g)sessionStorage.setItem('gclid',_g)}catch(e){}
+function getGclid(){try{return sessionStorage.getItem('gclid')||''}catch(e){return ''}}
 document.addEventListener('click',function(ev){
   var a=ev.target.closest('a');if(!a)return;
   if(a.matches('[data-ga="call"],a[href^="tel:"]')){track('call_click',{link_url:a.href,page:location.pathname});conv(ADS_CALL,100)}
@@ -47,6 +50,7 @@ if(form){
     d.append('_subject','Nueva consulta desde el sitio — '+(d.get('area')||'sin área'));
     if(d.get('email'))d.append('_replyto',d.get('email'));
     d.append('_template','table');
+    var _gc=getGclid();if(_gc)d.append('origen_anuncio',_gc);
     var btn=form.querySelector('[type=submit]');btn.disabled=true;btn.textContent='Enviando…';
     var waMsg='Hola, quiero hacer una consulta.%0AÁrea: '+encodeURIComponent(d.get('area')||'')+'%0ASituación: '+encodeURIComponent(d.get('descripcion')||'')+'%0AUrgencia: '+encodeURIComponent(d.get('urgencia')||'')+'%0ANombre: '+encodeURIComponent(d.get('nombre')||'');
     var waUrl='https://wa.me/5491135913161?text='+waMsg;

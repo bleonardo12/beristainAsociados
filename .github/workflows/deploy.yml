@@ -22,12 +22,25 @@ jobs:
       - name: Registrar Host de Confianza
         run: |
           mkdir -p ~/.ssh
-          ssh-keyscan -p 2222 -H srv777726.hstgr.cloud >> ~/.ssh/known_hosts
+          # -4: los runners de GitHub no tienen ruta IPv6, y el host resuelve
+          # a IPv6 primero. Sin esto el keyscan falla de forma intermitente.
+          for intento in 1 2 3; do
+            if ssh-keyscan -4 -T 20 -p 2222 -H srv777726.hstgr.cloud >> ~/.ssh/known_hosts 2>/dev/null; then
+              if [ -s ~/.ssh/known_hosts ]; then
+                echo "Host registrado en el intento $intento"
+                exit 0
+              fi
+            fi
+            echo "Intento $intento sin respuesta; reintentando en 10s..."
+            sleep 10
+          done
+          echo "No se pudo registrar el host tras 3 intentos"
+          exit 1
 
       - name: Deploy al VPS
         run: |
           # Ahora ya no necesitas pasarle el "-i", el agente la inyecta solo
-          ssh -p 2222 root@srv777726.hstgr.cloud << 'ENDSSH'
+          ssh -4 -p 2222 root@srv777726.hstgr.cloud << 'ENDSSH'
             set -e
             echo "📦 Iniciando deploy..."
             cd /var/www/beristainAsociados
