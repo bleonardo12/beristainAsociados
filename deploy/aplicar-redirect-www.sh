@@ -57,8 +57,9 @@ if [ "$YA_REDIRECT" -eq 0 ]; then
   cat >> "$TMP" <<'BLOQUE'
 
 # redirect-www-beristain
-# Atiende SOLO al dominio sin www. nginx elige el server_name más específico,
-# así que este bloque gana sobre el de arriba, que declara los dos nombres.
+# Atiende SOLO al dominio sin www. Para que nginx lo use, el bloque principal
+# deja de declarar ese nombre (más abajo): si los dos lo declaran, son ambas
+# coincidencias exactas y nginx se queda con la primera e ignora esta.
 server {
     listen 443 ssl;
     listen [::]:443 ssl;
@@ -71,6 +72,18 @@ server {
 }
 BLOQUE
 fi
+
+# El bloque principal de 443 debe dejar de atender el dominio sin www. Si los
+# dos bloques lo declaran, nginx avisa "conflicting server name ... ignored",
+# se queda con el primero y el redirect no llega a ejecutarse nunca.
+# Solo se toca la PRIMERA aparición, que es la del bloque 443; la del bloque
+# de puerto 80 se deja intacta para que siga atendiendo los dos nombres.
+VIEJO_NAME='    server_name beristainyasociados.com.ar www.beristainyasociados.com.ar;'
+NUEVO_NAME='    server_name www.beristainyasociados.com.ar;'
+awk -v viejo="$VIEJO_NAME" -v nuevo="$NUEVO_NAME" '
+  !hecho && $0 == viejo { print nuevo; hecho=1; next }
+  { print }
+' "$TMP" > "$TMP.2" && mv "$TMP.2" "$TMP"
 
 echo ""
 echo "=== Aplicando ==="
