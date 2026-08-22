@@ -1,4 +1,16 @@
-name: Deploy al VPS
+name: Verificar publicación
+
+# El deploy ya no se hace desde aquí. El VPS trae los cambios por su cuenta
+# cada dos minutos (deploy/auto-pull.sh en cron), así que GitHub no necesita
+# entrar por SSH al servidor.
+#
+# El motivo es de seguridad: la clave privada de deploy vivía en los secretos
+# de este repositorio —que es público— y daba acceso root a un servidor con
+# cuatro sitios. Al invertir la dirección del deploy, esa clave dejó de ser
+# necesaria y se revocó.
+#
+# Este flujo ya no despliega: solo confirma que el sitio sigue en pie después
+# de publicar. No usa secretos ni credenciales.
 
 on:
   push:
@@ -6,59 +18,33 @@ on:
       - master
 
 jobs:
-  deploy:
+  verificar:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout del código
-        uses: actions/checkout@v3
+      - name: Esperar a que el VPS tome los cambios
+        run: sleep 150
 
-      # REEMPLAZAMOS EL PASO ANTERIOR POR ESTE AGENTE OFICIAL
-      - name: Configurar SSH Agent y Clave
-        uses: webfactory/ssh-agent@v0.8.0
-        with:
-          ssh-private-key: ${{ secrets.DEPLOY_KEY }}
-
-      - name: Registrar Host de Confianza
+      - name: Comprobar que el sitio responde
         run: |
-          mkdir -p ~/.ssh
-          # La clave del host va fija en lugar de escanearse en cada corrida.
-          # ssh-keyscan fallaba de forma intermitente desde los runners de
-          # GitHub (rangos de Azure hacia el VPS), y tumbaba el deploy antes
-          # de intentar conectarse. Fijarla es además más seguro: evita
-          # confiar en la primera clave que responda.
-          # Si algún día se regeneran las claves del VPS, actualizar con:
-          #   ssh-keyscan -4 -p 2222 -t ed25519 srv777726.hstgr.cloud
-          cat >> ~/.ssh/known_hosts <<'EOF'
-          [srv777726.hstgr.cloud]:2222 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDJwPDt8iTSLb1b3AV5fe/sH9p//IwBabyHIJiPNqYt3
-          [69.62.95.98]:2222 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDJwPDt8iTSLb1b3AV5fe/sH9p//IwBabyHIJiPNqYt3
-          EOF
-          # El heredoc indentado agrega espacios al inicio; se limpian.
-          sed -i 's/^[[:space:]]*//' ~/.ssh/known_hosts
-          chmod 600 ~/.ssh/known_hosts
-          echo "Host fijado:"
-          cut -d' ' -f1 ~/.ssh/known_hosts
-
-      - name: Deploy al VPS
-        run: |
-          # Ahora ya no necesitas pasarle el "-i", el agente la inyecta solo
-          ssh -4 -p 2222 root@srv777726.hstgr.cloud << 'ENDSSH'
-            set -e
-            echo "📦 Iniciando deploy..."
-            cd /var/www/beristainAsociados
-
-            echo "🔄 Fetching cambios de master..."
-            git fetch origin master
-
-            echo "✨ Aplicando cambios..."
-            git reset --hard origin/master
-
-            echo "✅ Último commit desplegado:"
-            git log -1 --oneline
-
-            echo "🎉 Deploy completado exitosamente!"
-          ENDSSH
-
-      - name: Notificar resultado
-        if: success()
-        run: echo "✅ Deploy exitoso a srv777726.hstgr.cloud"
+          fallos=0
+          for url in \
+            "https://www.beristainyasociados.com.ar/" \
+            "https://www.beristainyasociados.com.ar/penal.html" \
+            "https://www.beristainyasociados.com.ar/civil.html" \
+            "https://www.beristainyasociados.com.ar/contacto.html"
+          do
+            codigo=$(curl -s -o /dev/null -w "%{http_code}" -L --max-time 20 "$url" || echo "000")
+            if [ "$codigo" = "200" ]; then
+              echo "OK   $codigo  $url"
+            else
+              echo "FALLA $codigo  $url"
+              fallos=$((fallos + 1))
+            fi
+          done
+          if [ "$fallos" -gt 0 ]; then
+            echo ""
+            echo "$fallos página(s) no responden. Revisar el VPS."
+            exit 1
+          fi
+          echo ""
+          echo "El sitio responde correctamente."
