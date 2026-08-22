@@ -30,22 +30,22 @@ if('IntersectionObserver' in window){
   var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12,rootMargin:'0px 0px -40px 0px'});
   document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
 }else{document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('in')})}
-// GA4 events (call / whatsapp)
+// Eventos de contacto.
+//
+// El sitio SOLO emite el evento; la conversión de Google Ads la dispara Tag
+// Manager, que ya tiene sus etiquetas escuchando estos mismos eventos:
+//   whatsapp_click -> "Google Ads - Conversion - WhatsApp"
+//   call_click     -> "Google Ads - Conversion - Llamada"
+//   form_submit    -> "Google Ads - Conversion - Formulario"
+// No agregar acá el envío de conversiones: se contarían dos veces.
 function track(n,p){if(typeof gtag==='function')gtag('event',n,p||{})}
-// Google Ads conversions
-var ADS_ID='AW-11107730225';
-var ADS_CALL='MjxGCJ-v6bsbELGGyrAp',ADS_WA='Yg24CK6u4LsbELGGyrAp';
-function conv(label,value){
-  if(typeof gtag!=='function')return;
-  gtag('event','conversion',{send_to:ADS_ID+'/'+label,value:value,currency:'ARS',transaction_id:label.slice(0,4)+'_'+Date.now()});
-}
 // gclid: identifica el anuncio del que vino la visita; se adjunta a la consulta
 try{var _g=new URLSearchParams(location.search).get('gclid');if(_g)sessionStorage.setItem('gclid',_g)}catch(e){}
 function getGclid(){try{return sessionStorage.getItem('gclid')||''}catch(e){return ''}}
 document.addEventListener('click',function(ev){
   var a=ev.target.closest('a');if(!a)return;
-  if(a.matches('[data-ga="call"],a[href^="tel:"]')){track('call_click',{link_url:a.href,page:location.pathname});conv(ADS_CALL,100)}
-  else if(a.matches('[data-ga="wa"]')||(a.href&&a.href.indexOf('wa.me')>-1)){track('whatsapp_click',{link_url:a.href,page:location.pathname});conv(ADS_WA,75)}
+  if(a.matches('[data-ga="call"],a[href^="tel:"]'))track('call_click',{link_url:a.href,page:location.pathname});
+  else if(a.matches('[data-ga="wa"]')||(a.href&&a.href.indexOf('wa.me')>-1))track('whatsapp_click',{link_url:a.href,page:location.pathname});
 });
 // qualification chips
 document.querySelectorAll('.chips-row').forEach(function(row){
