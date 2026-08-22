@@ -30,22 +30,33 @@ if('IntersectionObserver' in window){
   var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12,rootMargin:'0px 0px -40px 0px'});
   document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
 }else{document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('in')})}
-// Eventos de contacto.
+// Eventos de contacto y conversiones de Google Ads.
 //
-// El sitio SOLO emite el evento; la conversión de Google Ads la dispara Tag
-// Manager, que ya tiene sus etiquetas escuchando estos mismos eventos:
-//   whatsapp_click -> "Google Ads - Conversion - WhatsApp"
-//   call_click     -> "Google Ads - Conversion - Llamada"
-//   form_submit    -> "Google Ads - Conversion - Formulario"
-// No agregar acá el envío de conversiones: se contarían dos veces.
+// IMPORTANTE: este sitio NO carga el contenedor de Tag Manager. Usa gtag
+// directo (ver el <head> de cada página). Existe un contenedor GTM con
+// etiquetas de conversión configuradas, pero ninguna página lo incluye, así
+// que esas etiquetas nunca se ejecutan.
+//
+// Por eso la conversión se envía desde acá. Las etiquetas usadas son las
+// mismas que definió ese contenedor, para que las conversiones caigan en las
+// acciones que el estudio ya tenía creadas.
+//
+// Si algún día se agrega el contenedor de GTM al sitio, HAY QUE QUITAR el
+// envío de conv() de este archivo: si no, cada contacto se contaría dos veces.
 function track(n,p){if(typeof gtag==='function')gtag('event',n,p||{})}
+var ADS_ID='AW-11107730225';
+var ADS_CALL='7dcGCM7ztrwbELGGyrAp',ADS_WA='Yg24CK6u4LsbELGGyrAp',ADS_FORM='1LBbCOr-37sbELGGyrAp';
+function conv(label){
+  if(typeof gtag!=='function')return;
+  gtag('event','conversion',{send_to:ADS_ID+'/'+label,transaction_id:label.slice(0,4)+'_'+Date.now()});
+}
 // gclid: identifica el anuncio del que vino la visita; se adjunta a la consulta
 try{var _g=new URLSearchParams(location.search).get('gclid');if(_g)sessionStorage.setItem('gclid',_g)}catch(e){}
 function getGclid(){try{return sessionStorage.getItem('gclid')||''}catch(e){return ''}}
 document.addEventListener('click',function(ev){
   var a=ev.target.closest('a');if(!a)return;
-  if(a.matches('[data-ga="call"],a[href^="tel:"]'))track('call_click',{link_url:a.href,page:location.pathname});
-  else if(a.matches('[data-ga="wa"]')||(a.href&&a.href.indexOf('wa.me')>-1))track('whatsapp_click',{link_url:a.href,page:location.pathname});
+  if(a.matches('[data-ga="call"],a[href^="tel:"]')){track('call_click',{link_url:a.href,page:location.pathname});conv(ADS_CALL)}
+  else if(a.matches('[data-ga="wa"]')||(a.href&&a.href.indexOf('wa.me')>-1)){track('whatsapp_click',{link_url:a.href,page:location.pathname});conv(ADS_WA)}
 });
 // qualification chips
 document.querySelectorAll('.chips-row').forEach(function(row){
@@ -75,6 +86,7 @@ if(form){
     .then(function(r){if(!r.ok)throw 0;return r.json()})
     .then(function(){
       track('form_submit',{area:d.get('area'),urgencia:d.get('urgencia'),page:location.pathname});
+      conv(ADS_FORM);
       Array.prototype.forEach.call(form.children,function(c){if(!c.classList.contains('form-ok'))c.hidden=true});
       var ok=form.querySelector('.form-ok');ok.hidden=false;
       var pref=(d.get('contacto_preferido')||'WhatsApp').toLowerCase();
