@@ -50,9 +50,40 @@ function conv(label){
   if(typeof gtag!=='function')return;
   gtag('event','conversion',{send_to:ADS_ID+'/'+label,transaction_id:label.slice(0,4)+'_'+Date.now()});
 }
-// gclid: identifica el anuncio del que vino la visita; se adjunta a la consulta
-try{var _g=new URLSearchParams(location.search).get('gclid');if(_g)sessionStorage.setItem('gclid',_g)}catch(e){}
-function getGclid(){try{return sessionStorage.getItem('gclid')||''}catch(e){return ''}}
+// gclid: identifica el anuncio del que vino la visita.
+//
+// Se guarda en localStorage y no en sessionStorage porque casi nadie consulta
+// en la misma pestaña en la que llegó: mira el sitio, lo piensa, y escribe por
+// WhatsApp horas o días después. Con sessionStorage ese origen se perdía, que
+// es el caso más común en este estudio.
+var GCLID_DIAS=90;
+try{var _g=new URLSearchParams(location.search).get('gclid');
+    if(_g)localStorage.setItem('gclid',JSON.stringify({v:_g,t:Date.now()}))}catch(e){}
+function getGclid(){
+  try{
+    var r=JSON.parse(localStorage.getItem('gclid')||'null');
+    if(!r||!r.v)return '';
+    if(Date.now()-r.t>GCLID_DIAS*864e5){localStorage.removeItem('gclid');return ''}
+    return r.v;
+  }catch(e){return ''}
+}
+// Adjunta el origen del anuncio al mensaje de WhatsApp.
+//
+// Las consultas entran por WhatsApp, casi nunca por el formulario, y todas
+// llegan iguales: no hay manera de saber cuál vino de un anuncio ni de qué
+// búsqueda. Para Google, el que pregunta si es gratis y el propietario que
+// necesita un desalojo son el mismo evento, así que la puja automática busca
+// el toque más barato — y lo encuentra entre los que no contratan.
+//
+// Con la referencia en el mensaje, cuando una consulta termina en cliente ese
+// identificador se sube a Google Ads como conversión offline. Recién ahí la
+// puja aprende a buscar clientes en lugar de toques en el botón.
+function conRef(url){
+  var g=getGclid();
+  if(!g||url.indexOf('ref%3A')>-1)return url;
+  return url+'%0A%0A(ref%3A%20'+encodeURIComponent(g)+')';
+}
+Array.prototype.forEach.call(document.querySelectorAll('a[href*="wa.me"]'),function(a){a.href=conRef(a.href)});
 document.addEventListener('click',function(ev){
   var a=ev.target.closest('a');if(!a)return;
   if(a.matches('[data-ga="call"],a[href^="tel:"]')){track('call_click',{link_url:a.href,page:location.pathname});conv(ADS_CALL)}
@@ -81,7 +112,7 @@ if(form){
     var _gc=getGclid();if(_gc)d.append('origen_anuncio',_gc);
     var btn=form.querySelector('[type=submit]');btn.disabled=true;btn.textContent='Enviando…';
     var waMsg='Hola, quiero hacer una consulta.%0AÁrea: '+encodeURIComponent(d.get('area')||'')+'%0ASituación: '+encodeURIComponent(d.get('descripcion')||'')+'%0AUrgencia: '+encodeURIComponent(d.get('urgencia')||'')+'%0ANombre: '+encodeURIComponent(d.get('nombre')||'');
-    var waUrl='https://wa.me/5491135913161?text='+waMsg;
+    var waUrl=conRef('https://wa.me/5491135913161?text='+waMsg);
     fetch('https://formsubmit.co/ajax/beristainyasociadosej@gmail.com',{method:'POST',body:d,headers:{'Accept':'application/json'}})
     .then(function(r){if(!r.ok)throw 0;return r.json()})
     .then(function(){
