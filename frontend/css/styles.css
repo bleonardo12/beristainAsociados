@@ -364,3 +364,13 @@ textarea{resize:vertical}
 .hero-dark + .guard-band{border-top:1px solid rgba(245,242,236,.16)}
 /* migas de pan justo antes del hero oscuro: se pegan al header, sin aire muerto */
 .crumbs + .hero-dark{margin-top:4px}
+
+/* Páginas de servicio ampliadas (2026-09-11) */
+a.card.svc{display:block;color:inherit;text-decoration:none}
+a.card.svc h3{color:var(--ink)}
+.card.faq h3{font-family:var(--serif);font-weight:400;font-size:1.4rem;line-height:1.25;margin:0}
+.art .zonas{list-style:none;padding:0;margin:0 0 20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px 28px}
+.art .zonas li{margin:0;font-size:.95rem;line-height:1.65;padding-left:16px;position:relative}
+.art .zonas li:before{content:"◆";position:absolute;left:0;top:.35em;font-size:.55rem;color:var(--mocha)}
+.art .eyebrow{margin-bottom:8px}
+.art h2.h-serif:first-of-type{margin-top:0}
