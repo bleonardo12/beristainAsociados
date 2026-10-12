@@ -374,3 +374,11 @@ a.card.svc h3{color:var(--ink)}
 .art .zonas li:before{content:"◆";position:absolute;left:0;top:.35em;font-size:.55rem;color:var(--mocha)}
 .art .eyebrow{margin-bottom:8px}
 .art h2.h-serif:first-of-type{margin-top:0}
+
+/* CTA dentro de cada sección de civil.html (2026-10-12) */
+.cta-inline{margin:28px 0 44px;padding:22px 24px;border:1px solid var(--sand);border-left:4px solid var(--mocha);border-radius:8px;background:#FBF9F5;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px}
+.cta-inline p{margin:0;font-size:.95rem;line-height:1.55;color:var(--slate);max-width:52ch}
+.cta-inline p strong{font-family:var(--serif);font-weight:600;font-size:1.05rem;display:block;margin-bottom:2px}
+.cta-inline .btn-row{margin-top:0}
+.cta-inline .btn{padding:12px 20px;font-size:.9rem}
+@media (max-width:640px){.cta-inline{padding:18px}.cta-inline .btn-row{width:100%}.cta-inline .btn{flex:1 1 auto;justify-content:center}}
