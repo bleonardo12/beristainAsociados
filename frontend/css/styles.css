@@ -382,3 +382,26 @@ a.card.svc h3{color:var(--ink)}
 .cta-inline .btn-row{margin-top:0}
 .cta-inline .btn{padding:12px 20px;font-size:.9rem}
 @media (max-width:640px){.cta-inline{padding:18px}.cta-inline .btn-row{width:100%}.cta-inline .btn{flex:1 1 auto;justify-content:center}}
+
+/* Barra de contacto fija en móvil y triage de urgencia (2026-10-14) */
+/* Barra de contacto fija, solo móvil */
+.cta-bar{display:none}
+@media (max-width:860px){
+  body.has-cta-bar{padding-bottom:calc(72px + env(safe-area-inset-bottom))}
+  .cta-bar{position:fixed;left:0;right:0;bottom:0;z-index:60;display:flex;gap:10px;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:rgba(28,30,34,.96);backdrop-filter:blur(6px);box-shadow:0 -6px 20px rgba(0,0,0,.25)}
+  .cta-bar .btn{flex:1 1 0;justify-content:center;padding:14px 10px;font-size:.95rem;font-weight:600;border-radius:10px;white-space:nowrap}
+  .cta-bar .btn-wa{background:#25D366;color:#0b1a12!important}
+  body.nav-lock .cta-bar{display:none}
+}
+/* Triage de urgencia bajo el hero */
+.triage{background:var(--card);border-bottom:1px solid var(--sand)}
+.triage-in{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding-top:22px;padding-bottom:22px}
+.triage a{display:block;padding:16px 18px;border:1px solid var(--sand);border-radius:10px;background:var(--bg);color:var(--ink);text-decoration:none;transition:border-color .2s,transform .2s}
+.triage a:hover{border-color:var(--teal);transform:translateY(-2px)}
+.triage a strong{display:block;font-family:var(--serif);font-size:1.05rem;margin-bottom:4px}
+.triage a span{font-size:.88rem;color:var(--slate);line-height:1.45}
+.triage a em{display:block;margin-top:8px;font-style:normal;font-size:.85rem;color:var(--teal);font-weight:600}
+@media (max-width:860px){.triage-in{grid-template-columns:1fr 1fr;gap:10px;padding-top:16px;padding-bottom:16px}.triage a{padding:14px}}
+@media (max-width:480px){.triage-in{grid-template-columns:1fr}}
+/* Con la barra presente, los botones flotantes redondos sobran en móvil: quedarían encima de ella */
+@media (max-width:860px){.cta-bar ~ .float{display:none}}
