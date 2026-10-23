@@ -33,9 +33,9 @@ echo "Respaldo: $BACKUP"
 
 awk -v n="$ANCLA" 'NR==n{
   print
-  print "    location = /landing-societario.html { return 301 /societario.html; }"
-  print "    location = /politica-privacidad.html { return 301 /privacidad.html; }"
-  print "    location = /honorarios.html { return 301 /recursos/cuanto-cuesta-un-abogado-penalista.html; }"
+  print "    location = /landing-societario.html { return 301 /societario.html$is_args$args; }"
+  print "    location = /politica-privacidad.html { return 301 /privacidad.html$is_args$args; }"
+  print "    location = /honorarios.html { return 301 /recursos/cuanto-cuesta-un-abogado-penalista.html$is_args$args; }"
   next
 }1' "$VHOST" > /tmp/vhost.redirects
 mv /tmp/vhost.redirects "$VHOST"
