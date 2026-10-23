@@ -29,7 +29,7 @@ Sitio actual en producción: https://www.beristainyasociados.com.ar/ — repo `b
 - Fotos: solo existen 2 reales (Facultad de Derecho UBA y retrato del Dr. Beristain frente a la Facultad, usado en B&N). No hay oficina ni foto de la contadora: por eso Civil/Contable/Societario llevan paneles tipográficos sobrios y la Cra. Bava un monograma "DB". Cuando haya sesión de fotos, reemplazar esos paneles por `<img>`.
 - Cra. Daniela Magalí Bava: **Contadora Pública Nacional** y Perito Contadora Judicial (NO atribuirle UBA). Su estudio propio está enlazado: https://dmbestudio.com.ar/ (verificar con el cliente si la URL correcta es .com o .com.ar).
 - Dr. Leonardo Beristain: abogado UBA, CPACF, ejerce en CABA, GBA y fuero federal.
-- NAP: +54 9 11 3591-3161 · beristainyasociadosej@gmail.com · Av. Rivadavia 8012, 5º C, CABA (C1407DYS).
+- NAP: +54 9 11 3591-3161 · beristainyasociadosej@gmail.com · Capital Federal.
 - Reseñas textuales de Google: Martin Zarate, Liliana Serrano, Evelyn.
 
 ## Cambios v3 (ajustes finales ya aplicados)
