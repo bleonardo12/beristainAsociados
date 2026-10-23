@@ -1,4 +1,8 @@
 /* Beristain & Asociados — producción */
+/* Fuentes propias (antes Google Fonts), subconjunto latino. Se precargan en el <head> de cada página. */
+@font-face{font-family:'Instrument Serif';font-style:normal;font-weight:400;font-display:swap;src:url(/fonts/instrument-serif-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:'Instrument Serif';font-style:italic;font-weight:400;font-display:swap;src:url(/fonts/instrument-serif-italic-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:'Albert Sans';font-style:normal;font-weight:400 700;font-display:swap;src:url(/fonts/albert-sans-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
 :root{--bg:#F5F2EC;--card:#FBFAF6;--sand:#E5DCCB;--ink:#23262A;--ink2:#4A4F55;--ink3:#5F6469;--dim:#8B8377;--dim2:#8B7A66;--slate:#2F3E46;--slate2:#23262A;--mocha:#A47864;--mocha2:#C9A896;--teal:#3E6F73;--teal2:#33595C;--r:6px;--sh:0 1px 2px rgba(35,38,42,.05),0 8px 24px rgba(35,38,42,.07);--sh2:0 2px 4px rgba(35,38,42,.06),0 16px 40px rgba(35,38,42,.13);--serif:'Instrument Serif',Georgia,serif;--sans:'Albert Sans',system-ui,sans-serif}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
