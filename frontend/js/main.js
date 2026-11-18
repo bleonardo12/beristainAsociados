@@ -45,7 +45,7 @@ if('IntersectionObserver' in window){
 // envío de conv() de este archivo: si no, cada contacto se contaría dos veces.
 function track(n,p){if(typeof gtag==='function')gtag('event',n,p||{})}
 var ADS_ID='AW-11107730225';
-var ADS_CALL='7dcGCM7ztrwbELGGyrAp',ADS_WA='Yg24CK6u4LsbELGGyrAp',ADS_FORM='1LBbCOr-37sbELGGyrAp';
+var ADS_CALL='OhT9CP22v7odELGGyrAp',ADS_WA='Yg24CK6u4LsbELGGyrAp',ADS_FORM='1LBbCOr-37sbELGGyrAp';
 function conv(label){
   if(typeof gtag!=='function')return;
   gtag('event','conversion',{send_to:ADS_ID+'/'+label,transaction_id:label.slice(0,4)+'_'+Date.now()});
